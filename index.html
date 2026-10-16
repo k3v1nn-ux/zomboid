@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
+<title>Ficha de Sobrevivente B42</title>
+<meta name="description" content="Project Zomboid B42.21: montador de build, 15 builds de canais explicadas, combos de esquadrão para co-op e dicas dos primeiros dias.">
+<meta property="og:title" content="Ficha de Sobrevivente B42 · Project Zomboid 42.21">
+<meta property="og:description" content="Builds dos canais explicadas, combos de esquadrão e montador de traços. Tudo conferido na 42.21.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1d2720">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231d2720'/%3E%3Ctext x='16' y='23' font-family='Impact,Arial' font-size='18' font-weight='700' text-anchor='middle' fill='%23e09a3a'%3EPZ%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: ficha de campo de Knox County — barra de saldo fixa no topo, abas (Montador · Builds meta · Esquadrão), resumo da build fixo à direita */
+:root{
+  --bg:#e3e6db; --surface:#f1f3eb; --surface2:#e9ece2; --ink:#1d2720; --muted:#5a6457; --line:#c2c8b5;
+  --accent:#b06d12; --accent-ink:#fff8ec; --good:#3a7536; --bad:#a3301d; --bad-soft:#f3dcd5; --good-soft:#dcead6; --accent-soft:#f3e3c7;
+  --f-display:"Stardos Stencil","Impact","Arial Narrow",sans-serif;
+  --f-body:"Barlow","Segoe UI",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141915; --surface:#1d241e; --surface2:#232b24; --ink:#e2e6d8; --muted:#98a28f; --line:#344034;
+  --accent:#e09a3a; --accent-ink:#1b1408; --good:#78b96d; --bad:#e46a52; --bad-soft:#3a201b; --good-soft:#1f3320; --accent-soft:#3a2c14; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141915; --surface:#1d241e; --surface2:#232b24; --ink:#e2e6d8; --muted:#98a28f; --line:#344034;
+  --accent:#e09a3a; --accent-ink:#1b1408; --good:#78b96d; --bad:#e46a52; --bad-soft:#3a201b; --good-soft:#1f3320; --accent-soft:#3a2c14; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:.02em;text-wrap:balance;margin:0}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* Barra */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--ink);color:var(--bg)}
+.bar .wrap{display:flex;align-items:center;gap:10px 20px;flex-wrap:wrap;padding-block:10px}
+.bar h1{font-size:22px;line-height:1;flex:1 1 220px;min-width:0}
+.bar h1 small{display:block;font-family:var(--f-body);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.7;margin-top:4px}
+.saldo{display:flex;align-items:baseline;gap:8px}
+.saldo .lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;opacity:.75}
+.saldo .num{font-family:var(--f-mono);font-weight:700;font-size:30px;line-height:1;padding:4px 10px;border-radius:4px;background:var(--good);color:var(--surface);min-width:3.2ch;text-align:center}
+.saldo.neg .num{background:var(--bad)}
+.saldo.pos .num{background:var(--accent);color:var(--accent-ink)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab{border:1px solid color-mix(in srgb,var(--bg) 35%,transparent);background:transparent;color:var(--bg);padding:7px 12px;border-radius:4px;cursor:pointer;font-weight:700;font-size:13px;letter-spacing:.03em}
+.tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:4px;cursor:pointer;font-weight:600;font-size:13px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn.sm{padding:4px 8px;font-size:12px}
+
+/* Intro */
+.intro{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;padding-block:20px 8px}
+.intro p{margin:0;max-width:72ch;color:var(--muted)}
+.intro a{color:var(--accent);font-weight:600}
+.legend{display:flex;flex-wrap:wrap;gap:6px}
+.patch{border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--surface);padding:8px 14px;border-radius:0 4px 4px 0;font-size:13.5px;margin-bottom:8px}
+.patch summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;list-style:none}
+.patch summary::-webkit-details-marker{display:none}
+.patch summary::before{content:"▸";color:var(--accent);font-weight:700}
+.patch[open] summary::before{content:"▾"}
+.patch b{font-family:var(--f-display);font-size:15px;letter-spacing:.03em}
+.patch ul{margin:8px 0 2px;padding-left:18px;display:grid;gap:2px}
+
+/* Grid */
+.main{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;padding-block:12px 40px;align-items:start}
+.section{display:grid;gap:10px}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.sec-head h2{font-size:20px}
+.sec-head .hint,.hint{font-size:12px;color:var(--muted)}
+.col-left{display:grid;gap:24px;min-width:0}
+.panel{padding-block:16px 40px;display:grid;gap:22px}
+
+/* Profissão */
+.profs{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.prof{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:8px 10px;cursor:pointer;display:grid;gap:3px;min-width:0}
+.prof:hover{border-color:var(--accent)}
+.prof[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);background:var(--accent-soft)}
+.prof .top{display:flex;justify-content:space-between;gap:6px;align-items:baseline}
+.prof .nm{font-weight:700;font-size:14px}
+.prof .sk{font-size:11.5px;color:var(--muted);line-height:1.3}
+.cost{font-family:var(--f-mono);font-weight:700;font-size:12px;white-space:nowrap}
+.cost.spend{color:var(--bad)} .cost.gain{color:var(--good)} .cost.zero{color:var(--muted)}
+
+/* Filtros */
+.filters{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);padding:5px 10px;border-radius:999px;font-size:12.5px;font-weight:600;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* Traços */
+.traits-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tlist{display:grid;gap:6px}
+.trait{position:relative;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:8px 10px 8px 38px;cursor:pointer;display:grid;gap:2px;min-width:0}
+.trait::before{content:"";position:absolute;left:11px;top:11px;width:16px;height:16px;border:2px solid var(--muted);border-radius:3px;background:var(--surface)}
+.trait[aria-pressed="true"]{border-color:var(--ink);background:var(--surface2)}
+.trait[aria-pressed="true"]::before{background:var(--ink);border-color:var(--ink);box-shadow:inset 0 0 0 3px var(--surface2)}
+.trait:hover:not(:disabled){border-color:var(--accent)}
+.trait:disabled{cursor:not-allowed;opacity:.5}
+.trait .top{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.trait .nm{font-weight:700;font-size:14px}
+.trait .en{font-size:11.5px;color:var(--muted)}
+.trait .cost{margin-left:auto}
+.trait .note{font-size:12.5px;color:var(--muted);line-height:1.35}
+.trait .lock{font-size:11.5px;color:var(--bad);font-weight:600}
+
+.tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:3px;border:1px solid transparent;white-space:nowrap}
+.v-obr{background:var(--accent);color:var(--accent-ink)}
+.v-meta{background:var(--good-soft);color:var(--good);border-color:var(--good)}
+.v-opc{background:transparent;color:var(--ink);border-color:var(--line)}
+.v-dis{background:transparent;color:var(--muted);border-color:var(--line);border-style:dashed}
+.v-evi{background:var(--bad-soft);color:var(--bad);border-color:var(--bad)}
+.v-nun{background:var(--bad);color:var(--surface)}
+.v-neu{background:transparent;color:var(--muted);border-color:transparent;padding-left:0}
+.role{font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;border:1px solid var(--line);background:var(--surface2);white-space:nowrap}
+
+/* Resumo */
+.summary{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);display:grid;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:14px}
+.summary h2{font-size:18px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat{border:1px solid var(--line);border-radius:4px;padding:8px;background:var(--surface2)}
+.stat .lbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stat .val{font-family:var(--f-mono);font-weight:700;font-size:26px;line-height:1.1}
+.pips{display:flex;gap:2px;margin-top:4px}
+.pips i{flex:1;height:6px;background:var(--line);border-radius:1px}
+.pips i.on{background:var(--ink)}
+.stat.warn .pips i.on{background:var(--bad)}
+.stat.warn .val{color:var(--bad)}
+.skills{display:grid;gap:3px;font-size:13px}
+.skill{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center}
+.skill .lv{display:flex;gap:2px;align-items:center}
+.skill .lv i{width:9px;height:9px;border:1px solid var(--muted);border-radius:1px}
+.skill .lv i.on{background:var(--accent);border-color:var(--accent)}
+.sublbl{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px}
+.warns{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.warns li{font-size:12.5px;padding:6px 8px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 3px 3px 0}
+.warns li.bad{border-color:var(--bad);background:var(--bad-soft)}
+.warns li.ok{border-color:var(--good);background:var(--good-soft)}
+.picked{font-size:12.5px;line-height:1.5;color:var(--muted)}
+.picked b{color:var(--ink)}
+.rolesrow{display:flex;flex-wrap:wrap;gap:4px}
+.code-row{display:grid;gap:6px}
+.code-row input{width:100%;font-family:var(--f-mono);font-size:12px;padding:7px 8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
+.code-row .row{display:flex;gap:6px;flex-wrap:wrap}
+.msg{font-size:12px;color:var(--good);min-height:1.2em}
+
+/* Biblioteca */
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.bcard{border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:12px;display:grid;gap:8px;align-content:start;min-width:0}
+.bcard .hd{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.bcard h3{font-size:18px}
+.bcard .pf{font-size:12.5px;color:var(--muted)}
+.bcard p{margin:0;font-size:13px}
+.bcard .tl{font-size:12px;color:var(--muted);line-height:1.4}
+.bcard .tl b{color:var(--ink);font-weight:600}
+.minis{display:flex;gap:10px;font-size:12px;color:var(--muted)}
+.minis b{font-family:var(--f-mono);color:var(--ink)}
+.ok-n{color:var(--good)} .bad-n{color:var(--bad)}
+.lib.ch{grid-template-columns:repeat(auto-fill,minmax(min(320px,100%),1fr))}
+.bcard .src{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;font-size:12px;color:var(--muted)}
+.bcard .src a{color:var(--accent);font-weight:600;text-decoration:none}
+.bcard .src a:hover{text-decoration:underline}
+.chn{font-family:var(--f-display);font-size:13px;letter-spacing:.04em;background:var(--ink);color:var(--bg);padding:2px 7px;border-radius:3px;white-space:nowrap}
+.lang{font-size:10px;font-weight:700;letter-spacing:.08em;border:1px solid var(--line);padding:1px 4px;border-radius:3px}
+.bcard .idea{font-weight:500}
+.bcard ul.why{margin:0;padding-left:18px;font-size:13px;display:grid;gap:3px}
+.bcard .care{font-size:12.5px;padding:6px 8px;border-left:3px solid var(--bad);background:var(--bad-soft);border-radius:0 3px 3px 0}
+.bcard .fix{font-size:12.5px;padding:6px 8px;border-left:3px solid var(--accent);background:var(--accent-soft);border-radius:0 3px 3px 0}
+.bcard .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:2px}
+.valid{font-size:11px;font-weight:700;color:var(--good);border:1px solid var(--good);background:var(--good-soft);padding:1px 6px;border-radius:3px;white-space:nowrap}
+.valid.no{color:var(--bad);border-color:var(--bad);background:var(--bad-soft)}
+.frow{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.frow .hint{min-width:44px}
+.cons{font-family:var(--f-mono);font-size:11px;color:var(--muted);white-space:nowrap}
+.cons b{color:var(--ink)}
+
+/* Esquadrão */
+.sizes{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.comps{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.comp{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:12px;cursor:pointer;display:grid;gap:6px}
+.comp:hover{border-color:var(--accent)}
+.comp[aria-pressed="true"]{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink);background:var(--accent-soft)}
+.comp strong{font-family:var(--f-display);font-size:17px;letter-spacing:.02em}
+.comp span{font-size:12.5px;color:var(--muted)}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.slot{border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:10px;display:grid;gap:6px;min-width:0;align-content:start}
+.slot .who{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.slot h3{font-size:17px}
+.slot select{width:100%;padding:6px;border:1px solid var(--line);border-radius:4px;background:var(--bg)}
+.slot .btns{display:flex;gap:6px;flex-wrap:wrap}
+.matrix-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:4px;background:var(--surface)}
+table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
+.matrix th,.matrix td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:center;white-space:nowrap}
+.matrix th:first-child,.matrix td:first-child{text-align:left}
+.matrix thead th{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.matrix td.y{color:var(--good);font-weight:700}
+.matrix td.n{color:var(--line)}
+.matrix tr.gap td:first-child{color:var(--bad);font-weight:700}
+.matrix td.cnt{font-family:var(--f-mono)}
+.split{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+
+/* Combos */
+.combos{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(380px,100%),1fr));gap:12px}
+.combo{border:1px solid var(--line);border-top:3px solid var(--accent);background:var(--surface);border-radius:4px;padding:12px;display:grid;gap:10px;align-content:start;min-width:0}
+.combo .hd{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.combo h3{font-size:19px}
+.members{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.members li{display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;background:var(--surface2);border:1px solid var(--line);border-radius:4px;padding:7px 9px;font-size:13.5px}
+.members .who{font-family:var(--f-mono);font-weight:700;font-size:12px;background:var(--ink);color:var(--bg);border-radius:3px;padding:2px 5px;margin-top:1px}
+.members .mb{min-width:0;line-height:1.5}
+.members .by{font-size:11.5px;color:var(--accent);font-weight:700;margin-right:4px}
+.members .role{font-size:10.5px;padding:1px 6px}
+.cover{display:flex;flex-wrap:wrap;gap:4px}
+.cv{font-size:11.5px;font-weight:600;padding:2px 7px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.cv.on{background:var(--good-soft);color:var(--good);border-color:var(--good)}
+.cv.off{color:var(--bad);border-style:dashed;border-color:var(--bad)}
+.combo .why{margin:0;padding-left:18px;font-size:13px;display:grid;gap:3px}
+.combo .care{font-size:12.5px;padding:6px 8px;border-left:3px solid var(--bad);background:var(--bad-soft);border-radius:0 3px 3px 0}
+.combo .acts{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Rotina da TV */
+.tvrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.tvslot{border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:10px;display:grid;gap:4px;font-size:13px}
+.tvslot b{font-size:22px;color:var(--accent)}
+@media (max-width:680px){.tvrow{grid-template-columns:1fr}}
+/* Dicas */
+.tips{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.tip{border-top:3px solid var(--ink);padding-top:6px;font-size:13.5px}
+.tip b{display:block;font-family:var(--f-display);font-size:15px;letter-spacing:.02em}
+.foot{font-size:12px;color:var(--muted);padding-block:0 32px}
+.foot a{color:var(--accent)}
+
+@media (max-width:980px){
+  .main,.split{grid-template-columns:minmax(0,1fr)}
+  .summary{position:static}
+}
+@media (max-width:680px){
+  body{font-size:14.5px}
+  .bar .wrap{gap:8px 12px;padding-block:8px 0}
+  .bar h1{font-size:17px;flex:1 1 0}
+  .bar h1 small{display:none}
+  .saldo .lbl{font-size:9.5px}
+  .tabs{order:3;flex:1 0 100%;min-width:0;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:8px;-webkit-overflow-scrolling:touch}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:0 0 auto;padding:8px 12px}
+  .summary{top:0}
+  .sec-head h2{font-size:18px}
+  .traits-cols{grid-template-columns:minmax(0,1fr)}
+  .intro{grid-template-columns:1fr}
+  .saldo .num{font-size:24px}
+}
+@media (prefers-reduced-motion:no-preference){.saldo .num{transition:background-color .2s}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <h1>Ficha de Sobrevivente B42<small>Project Zomboid · Build 42.21 · montador de build e esquadrão</small></h1>
+    <div class="saldo" id="saldo" aria-live="polite">
+      <span class="lbl">Saldo<br>do montador</span><span class="num" id="saldoNum">0</span>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Seções">
+      <button class="tab" role="tab" id="tab-montador" data-tab="montador" type="button">Montador</button>
+      <button class="tab" role="tab" id="tab-builds" data-tab="builds" type="button">Builds dos canais</button>
+      <button class="tab" role="tab" id="tab-combos" data-tab="combos" type="button">Combos</button>
+      <button class="tab" role="tab" id="tab-esquadrao" data-tab="esquadrao" type="button">Esquadrão</button>
+      <button class="tab" role="tab" id="tab-guia" data-tab="guia" type="button">Primeiros dias</button>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="intro">
+    <p>Monte a build marcando profissão e traços. O saldo precisa terminar em 0 ou mais para o jogo aceitar. A aba <b>Builds dos canais</b> reúne 15 builds de 7 canais (ShivasBR, GabrielKnine, Gambarine, Laughter, OVERCHARGED EGG, Orbanjo Gaming e Anzony Kaiser), todas gravadas depois do lançamento da B42 e recalculadas com os custos da 42.21. As etiquetas de cada traço (Obrigatório, Meta…) vêm do <a href="https://www.youtube.com/watch?v=C_mnw8MkdEY" target="_blank" rel="noopener">vídeo do ShivasBR</a>; o contador “x/15” mostra em quantas builds dos canais o traço aparece. A aba <b>Combos</b> junta essas builds em esquadrões de 2 a 6 jogadores que se completam. A aba Primeiros dias traz as dicas do <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">GabrielKnine</a>.</p>
+    <div class="legend" aria-label="Legenda">
+      <span class="tag v-obr">Obrigatório</span><span class="tag v-meta">Meta</span><span class="tag v-opc">Opcional</span><span class="tag v-dis">Dispensável</span><span class="tag v-evi">Evitar</span><span class="tag v-nun">Nunca</span>
+    </div>
+  </section>
+  <details class="patch" id="patch">
+    <summary><b>O que muda na 42.21</b><span class="hint">Nenhum custo de traço mudou · toque para ver</span></summary>
+    <ul>
+      <li>A 42.21 virou a versão estável em 28/09/2026 e é a mais recente (ficha revisada em 16/10/2026). Nenhum custo de traço ou de profissão mudou desde a 42.20, então toda build feita a partir da B42 estável continua fechando.</li>
+      <li>O Soldador agora começa com as receitas de Soldagem. Antes vinha com as de Ferraria por engano, então ele voltou a ser útil para muro de metal cedo.</li>
+      <li>No multiplayer: Agilidade volta a ganhar XP em postura de combate, zumbi volta a cambalear com o golpe e a leitura de livro não trava mais no meio.</li>
+      <li>Quem está dormindo não acorda mais quando outro jogador mira no mesmo chunk.</li>
+    </ul>
+  </details>
+
+  <!-- MONTADOR -->
+  <div id="panel-montador" role="tabpanel" aria-labelledby="tab-montador">
+  <div class="main">
+    <div class="col-left">
+      <section class="section" aria-labelledby="hProf">
+        <div class="sec-head"><h2 id="hProf">1 · Profissão</h2><span class="hint">Custo em pontos. Desempregado devolve 8.</span></div>
+        <div class="profs" id="profs"></div>
+      </section>
+
+      <section class="section" aria-labelledby="hTraits">
+        <div class="sec-head"><h2 id="hTraits">2 · Traços</h2>
+          <div class="filters" role="group" aria-label="Filtrar traços">
+            <button class="chip" type="button" data-f="all" aria-pressed="true">Todos</button>
+            <button class="chip" type="button" data-f="rec" aria-pressed="false">Recomendados</button>
+            <button class="chip" type="button" data-f="top" aria-pressed="false">Mais usados nos canais</button>
+            <button class="chip" type="button" data-f="opc" aria-pressed="false">Opcionais</button>
+            <button class="chip" type="button" data-f="bad" aria-pressed="false">Evitar / Nunca</button>
+            <button class="chip" type="button" data-f="sel" aria-pressed="false">Só marcados</button>
+          </div>
+        </div>
+        <div class="traits-cols">
+          <div class="section">
+            <div class="sec-head"><h3>Negativos <span class="hint">· dão pontos</span></h3><span class="hint mono" id="sumNeg">+0</span></div>
+            <div class="tlist" id="negList"></div>
+          </div>
+          <div class="section">
+            <div class="sec-head"><h3>Positivos <span class="hint">· custam pontos</span></h3><span class="hint mono" id="sumPos">−0</span></div>
+            <div class="tlist" id="posList"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="hTips">
+        <div class="sec-head"><h2 id="hTips">3 · Dicas do vídeo para a build fechar</h2></div>
+        <div class="tips">
+          <div class="tip"><b>Arma vem do Entalhamento</b>Na B42 o caminho é fabricar a arma. Com Entalhamento (Carving) dá para fazer o Short Bat e o taco de beisebol, que pedem nível 9–10. Por isso o Entalhador entra mesmo custando 2.</div>
+          <div class="tip"><b>Construtor Civil é o único com duas armas</b>Começa com bônus em Contundente Curto e Longo, além de Carpintaria, Alvenaria e Manutenção. Com Alvenaria sai a marreta de pedra, a melhor contundente curta para upar.</div>
+          <div class="tip"><b>Claustrofóbico se controla com álcool</b>Mande beber ¼ da bebida e cancele logo depois do primeiro gole: o pânico passa. Depois de 3 a 5 meses vivo o pânico praticamente para de aparecer.</div>
+          <div class="tip"><b>Míope se resolve na criação</b>Escolha óculos na roupa inicial do personagem e a penalidade some.</div>
+          <div class="tip"><b>Herbalista acaba com a fome</b>Ligue a coleta (lupa na tela) e você sempre acha fruta ou cogumelo. Sem o traço, procure a revista que ensina a separar o que é venenoso.</div>
+          <div class="tip"><b>Andarilho só em clima frio</b>Resfriado e pneumonia não matam. O que mata é ficar com frio por muito tempo. No clima padrão ele é dispensável.</div>
+          <div class="tip"><b>Fracote + Sedentário = 20 pontos</b>O Shivas usa porque upa Força e Aptidão até 5 rápido e perde os dois traços. Ele mesmo não recomenda para quem está começando.</div>
+          <div class="tip"><b>Salve a build no jogo</b>Na tela de criação, salve com um nome (ex.: “construtor civil”) para não refazer a cada morte.</div>
+        </div>
+      </section>
+    </div>
+
+    <aside class="summary" aria-labelledby="hSum">
+      <h2 id="hSum">Personagem inicial</h2>
+      <div class="stats">
+        <div class="stat" id="stStr"><div class="lbl">Força</div><div class="val" id="vStr">5</div><div class="pips" id="pStr"></div></div>
+        <div class="stat" id="stFit"><div class="lbl">Aptidão física</div><div class="val" id="vFit">5</div><div class="pips" id="pFit"></div></div>
+      </div>
+      <div>
+        <div class="sublbl">Papel no time</div>
+        <div class="rolesrow" id="myRoles"></div>
+      </div>
+      <div>
+        <div class="sublbl">Perícias iniciais</div>
+        <div class="skills" id="skills"></div>
+      </div>
+      <div>
+        <div class="sublbl">Alertas</div>
+        <ul class="warns" id="warns"></ul>
+      </div>
+      <div class="picked" id="picked"></div>
+      <div class="code-row">
+        <div class="sublbl">Compartilhar com o grupo</div>
+        <div class="row">
+          <button class="btn" type="button" id="btnCopyText">Copiar resumo</button>
+          <button class="btn" type="button" id="btnCopyCode">Copiar código</button>
+          <button class="btn" type="button" id="btnClear">Zerar traços</button>
+        </div>
+        <label for="codeIn" class="sublbl" style="margin:4px 0 0">Colar código de um amigo</label>
+        <div class="row">
+          <input id="codeIn" type="text" placeholder="B42:construction:keen_hearing,..." autocomplete="off" spellcheck="false" style="flex:1 1 160px">
+          <button class="btn" type="button" id="btnLoad">Carregar</button>
+        </div>
+        <div class="msg" id="msg" role="status"></div>
+        <textarea id="fallback" hidden readonly style="width:100%;height:90px;font-family:var(--f-mono);font-size:11px"></textarea>
+      </div>
+    </aside>
+  </div>
+  </div>
+
+  <!-- BUILDS META -->
+  <div id="panel-builds" role="tabpanel" aria-labelledby="tab-builds" hidden>
+    <div class="panel">
+      <section class="section">
+        <div class="sec-head"><h2>Builds dos canais</h2><span class="hint" id="libCount"></span></div>
+        <p class="hint" style="margin:0;max-width:80ch">Só entram builds de vídeos gravados com a B42 (42.19 em diante) cujo saldo fecha com os custos da 42.21. Os traços foram tirados da transcrição de cada vídeo. Quando a conta do vídeo não fecha ou o vídeo não mostra tudo, a ficha diz o que ajustou. “Abrir no montador” carrega a build para você mexer.</p>
+        <div class="frow" role="group" aria-label="Filtrar por canal" id="chFilters"></div>
+        <div class="frow" role="group" aria-label="Filtrar por estilo" id="styFilters"></div>
+        <div class="lib ch" id="lib"></div>
+      </section>
+      <section class="section">
+        <div class="sec-head"><h2>Papéis para co-op</h2><span class="hint">Montadas pela ficha, não vêm de vídeo</span></div>
+        <p class="hint" style="margin:0;max-width:80ch">Suporte para o Esquadrão: médico, gerador, carro, base e comida. Usam o núcleo que mais se repete nas builds dos canais (Aprendiz Rápido, Mãos Ágeis, Audição Aguçada, Olhos de Gato, Madrugador) pago com os negativos baratos que quase todos pegam.</p>
+        <div class="lib" id="libTeam"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- COMBOS -->
+  <div id="panel-combos" role="tabpanel" aria-labelledby="tab-combos" hidden>
+    <div class="panel">
+      <section class="section">
+        <div class="sec-head"><h2>Combos de esquadrão</h2><span class="hint" id="comboCount"></span></div>
+        <p class="hint" style="margin:0;max-width:80ch">Grupos de builds que se completam: um cobre o ponto fraco do outro e, juntos, dão conta dos papéis que um time precisa. Cada combo diz por que as builds combinam, quais papéis ficam cobertos e o que ainda falta. “Montar no Esquadrão” carrega o grupo para você trocar quem quiser.</p>
+        <div class="frow" role="group" aria-label="Filtrar por tamanho" id="comboSizes"></div>
+        <div class="combos" id="comboList"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- ESQUADRÃO -->
+  <div id="panel-esquadrao" role="tabpanel" aria-labelledby="tab-esquadrao" hidden>
+    <div class="panel">
+      <section class="section">
+        <div class="sec-head"><h2>1 · Tamanho do grupo</h2><span class="hint">Escolha quantos vão jogar e uma composição pronta</span></div>
+        <div class="sizes" id="sizes"></div>
+        <div class="comps" id="comps"></div>
+      </section>
+      <div class="split">
+        <section class="section">
+          <div class="sec-head"><h2>2 · Integrantes</h2><span class="hint">Troque a build de cada vaga ou edite no montador</span></div>
+          <div class="slots" id="slots"></div>
+          <div class="sec-head" style="margin-top:8px"><h2>3 · Cobertura de papéis</h2><span class="hint">Linha em vermelho = ninguém cobre</span></div>
+          <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
+        </section>
+        <aside class="summary" style="top:calc(env(safe-area-inset-top,0px) + 76px)">
+          <h2>Leitura do time</h2>
+          <ul class="warns" id="teamWarns"></ul>
+          <div class="code-row">
+            <div class="sublbl">Mandar para o grupo</div>
+            <div class="row">
+              <button class="btn primary" type="button" id="btnTeamText">Copiar plano do time</button>
+              <button class="btn" type="button" id="btnTeamCode">Copiar código do time</button>
+            </div>
+            <label for="teamIn" class="sublbl" style="margin:4px 0 0">Colar código de time</label>
+            <div class="row">
+              <input id="teamIn" type="text" placeholder="B42:...|B42:..." autocomplete="off" spellcheck="false" style="flex:1 1 160px">
+              <button class="btn" type="button" id="btnTeamLoad">Carregar</button>
+            </div>
+            <div class="msg" id="teamMsg" role="status"></div>
+            <textarea id="teamFallback" hidden readonly style="width:100%;height:110px;font-family:var(--f-mono);font-size:11px"></textarea>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIA -->
+  <div id="panel-guia" role="tabpanel" aria-labelledby="tab-guia" hidden>
+    <div class="panel">
+      <p class="hint" style="margin:0;max-width:75ch">Dicas do GabrielKnine no vídeo <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Como sobreviver no Project Zomboid em 2026</a> (B42.20, ago/2026). A ideia central dele: não tenha pressa nas duas primeiras semanas.</p>
+
+      <section class="section">
+        <div class="sec-head"><h2>Rotina da TV</h2><span class="hint">Canal Life and Living, nas duas primeiras semanas</span></div>
+        <div class="tvrow">
+          <div class="tvslot"><b class="mono">06:00</b><span>1º programa. Ponha o despertador para 05:50 e durma tranquilo.</span></div>
+          <div class="tvslot"><b class="mono">12:00</b><span>2º programa. No vídeo saiu Carpintaria.</span></div>
+          <div class="tvslot"><b class="mono">18:00</b><span>3º programa, geralmente Pesca, Coleta ou Armadilhas.</span></div>
+        </div>
+        <ul class="warns">
+          <li>Ao ligar a TV, abaixe o volume na hora. O ícone de barulho quer dizer que zumbi está ouvindo.</li>
+          <li>Desligue a TV fora do horário e acelere o tempo enquanto espera. Dá para assistir em pé.</li>
+          <li>VHS: arraste a fita para a TV e reproduza. Algumas dão XP (no vídeo, Primeiros Socorros). TV antiga não toca VHS: guarde a fita para depois.</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <div class="sec-head"><h2>Antes de começar</h2></div>
+        <div class="tips">
+          <div class="tip"><b>Faça o tutorial</b>Se é a primeira vez, o básico está lá.</div>
+          <div class="tip"><b>Modo</b>Apocalipse é o padrão. Extinção é o mais difícil. Surto tem menos tarefa repetitiva e mais loot. Reconstrução tem menos zumbi.</div>
+          <div class="tip"><b>Cidade</b>Rosewood é a recomendação dele: na B42.20 ganhou loja de VHS, loja de armas e armazéns, além de bombeiros, polícia e posto. Riverside também serve. Muldraugh tem mais zumbi.</div>
+          <div class="tip"><b>Sem paciência para traços?</b>Vá de Bombeiro sem traço nenhum. Ele já começa com roupa de bombeiro e machado no nível 1.</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="sec-head"><h2>Dia 1 · primeira casa</h2></div>
+        <div class="tips">
+          <div class="tip"><b>A casa inicial não tem zumbi</b>Vale para mundo novo. Ande agachado (C) só para não chamar os de fora. Personagem novo no mesmo mundo pode nascer com zumbi dentro.</div>
+          <div class="tip"><b>Saqueie tudo antes de sair</b>Pegue lençol para fazer bolsa (remover cortina também dá lençol) e corda improvisada.</div>
+          <div class="tip"><b>Rasgue a roupa inicial</b>Os trapos são o curativo. Segundo ele, corte de zumbi infecta em ~25% e arranhão em ~7%. Mordida é morte.</div>
+          <div class="tip"><b>Marque o mapa</b>Com lápis ou caneta, aperte M e faça um X nas casas já saqueadas.</div>
+          <div class="tip"><b>Água</b>Beba da pia enquanto tem. Garrafa de água sanitária vazia vira cantil. Deixe a opção de beber automaticamente ligada.</div>
+          <div class="tip"><b>Comida fresca primeiro</b>Lata dura, comida fresca estraga. Ícone vermelho = dá tristeza ou sede. Carne crua vai no fogão. Atum e carne em lata abrem sem abridor.</div>
+          <div class="tip"><b>Peso</b>Mantenha entre 75 e 85 kg. Fome não mata, mas emagrece.</div>
+          <div class="tip"><b>Relógio digital</b>Mostra dia, mês e temperatura. Troque para Celsius em Opções › Interface.</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="sec-head"><h2>Saquear casas</h2></div>
+        <div class="tips">
+          <div class="tip"><b>Entre mirando</b>Da 2ª casa em diante, entre com o botão direito pressionado. Olhe pela janela da porta antes.</div>
+          <div class="tip"><b>Teste a porta</b>Bata na porta ou aperte Q (agachado sussurra, em pé grita). Se tiver zumbi, ele vem. Abra e dê um passo para trás.</div>
+          <div class="tip"><b>Alarme tocou?</b>Corra para qualquer lado e não fique na casa.</div>
+          <div class="tip"><b>Garagem</b>Costuma ter coisa boa. No vídeo saiu respirador, que filtra o cheiro de zumbi morto e ainda deixa usar óculos.</div>
+          <div class="tip"><b>Luz é obrigatória</b>A noite ficou escura. Pegue lanterna, ou ao menos a caneta-lanterna, e pilhas.</div>
+          <div class="tip"><b>Míope piorou</b>Na B42 tudo embaça a 2–3 m. Use óculos de grau desde a criação.</div>
+          <div class="tip"><b>Banheiro</b>Pinça para tirar vidro e bala, remédios, antibiótico e lenço com álcool.</div>
+          <div class="tip"><b>Ferramenta no cinto</b>Martelo e chave de fenda presos no cinto pesam menos. Largue tranqueira: peso cansa e deixa lento.</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="sec-head"><h2>Combate</h2></div>
+        <div class="tips">
+          <div class="tip"><b>Um de cada vez</b>O ideal é um zumbi. Dois é o limite. Agachado, chame um só e espere ele vir.</div>
+          <div class="tip"><b>Empurra e pisa</b>Mire nele, espaço para empurrar e pise na cabeça. Fique bem em cima, não no braço, ou ele levanta.</div>
+          <div class="tip"><b>Rastejando</b>Segure Alt para bater no chão. Não suba em cima de zumbi rastejando, que ele agarra a perna.</div>
+          <div class="tip"><b>Braço levantado</b>Esse zumbi está mais rápido, mas você ainda corre mais que ele se não estiver cansado.</div>
+          <div class="tip"><b>Sem fôlego = pare</b>Continuar lutando cansado gera distensão muscular, que demora a sarar.</div>
+          <div class="tip"><b>Zumbi “morto”</b>Pode estar fingindo. Teste antes de passar do lado.</div>
+          <div class="tip"><b>Não mate dentro da base</b>O cheiro incomoda. Arraste o cadáver alguns quadrados para longe (mecânica nova).</div>
+          <div class="tip"><b>Mochila de zumbi</b>Se for melhor, troque: largue a sua, Ctrl+A e passe tudo.</div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="sec-head"><h2>Noite e semanas seguintes</h2></div>
+        <div class="tips">
+          <div class="tip"><b>Não saia à noite</b>No começo, feche as cortinas e fique lendo. Travesseiro na cama melhora o sono.</div>
+          <div class="tip"><b>Livros de perícia</b>O volume 1 multiplica XP nos níveis 1–2, o 2 nos 3–4, o 3 nos 5–6, o 4 nos 7–8 e o 5 nos 9–10. Leia perto da TV entre os programas.</div>
+          <div class="tip"><b>Fumante sem cigarro</b>Acorda em pânico e estressado. Só pegue o traço se tiver cigarro garantido.</div>
+          <div class="tip"><b>Sem Andarilho</b>Arbusto arranha, principalmente com Pele Frágil. Desinfete e enfaixe: não mata, só deixa lento.</div>
+          <div class="tip"><b>Água e luz acabam</b>Nas semanas 3 a 5 a água encanada e a energia caem. Encha garrafas antes.</div>
+          <div class="tip"><b>Saqueie cedo</b>Casa comum tem bastante item até perto do dia 45 e depois esvazia.</div>
+          <div class="tip"><b>Casa de sobrevivente: espere</b>No começo ela tem pouco. Não entre nem olhe pela janela, ou ela para de receber itens novos.</div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <p class="foot">Custos de pontos da Build 42 extraídos dos arquivos do jogo em <a href="https://pz-guide.com/en/character/trait/" target="_blank" rel="noopener">pz-guide.com</a> e conferidos com as contas dos vídeos: as 8 builds do Laughter, a do OVERCHARGED EGG e a do Orbanjo fecham exatamente em 0 com esses números. A 42.21 não alterou custos (<a href="https://theindiestone.com/forums/topic/101693-4221-patch-notes/" target="_blank" rel="noopener">notas oficiais da 42.21</a>). Builds: <a href="https://www.youtube.com/watch?v=C_mnw8MkdEY" target="_blank" rel="noopener">ShivasBR</a>, <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">GabrielKnine</a>, <a href="https://www.youtube.com/shorts/i_-P271YcQo" target="_blank" rel="noopener">Gambarine</a>, <a href="https://www.youtube.com/watch?v=ujrLpaM8HPI" target="_blank" rel="noopener">Laughter</a>, <a href="https://www.youtube.com/watch?v=ETUHLVlcf38" target="_blank" rel="noopener">OVERCHARGED EGG</a>, <a href="https://www.youtube.com/watch?v=2PZNukP6bUY" target="_blank" rel="noopener">Orbanjo Gaming</a> e <a href="https://www.youtube.com/watch?v=BkGqWQSLemM" target="_blank" rel="noopener">Anzony Kaiser</a>. Dicas de início do <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">vídeo do GabrielKnine</a>. Papéis de time a partir de <a href="https://projectzomboid.wiki/builds/occupations/" target="_blank" rel="noopener">projectzomboid.wiki</a> e <a href="https://build42guide.wiki/multiplayer/build-42-multiplayer" target="_blank" rel="noopener">build42guide</a>. Se o seu patch mostrar outro valor na tela de criação, vale o do jogo.</p>
+</div>
+
+<script>
+(function(){
+// ---------- DADOS ----------
+// cost > 0 gasta pontos; cost < 0 devolve. gr = traços grátis (ids da lista); grn = nomes de traços grátis sem custo próprio.
+const PROFS=[
+ {id:"construction",pt:"Construtor Civil",en:"Construction Worker",cost:2,sk:{"Contundente Curto":2,"Contundente Longo":1,"Alvenaria":2,"Carpintaria":1,"Manutenção":1},meta:true},
+ {id:"carpenter",pt:"Carpinteiro",en:"Carpenter",cost:2,sk:{"Carpintaria":4,"Entalhamento":1,"Contundente Curto":1,"Alvenaria":1,"Manutenção":1}},
+ {id:"firefighter",pt:"Bombeiro",en:"Fire Officer",cost:0,sk:{"Corrida":1,"Machado":1,"Agilidade":1,"Passos Leves":1},str:1,fit:1,note:"já começa com roupa de bombeiro"},
+ {id:"unemployed",pt:"Desempregado",en:"Custom Occupation",cost:-8,sk:{}},
+ {id:"diy",pt:"Faz-Tudo",en:"DIY Expert",cost:2,sk:{"Carpintaria":1,"Manutenção":2,"Contundente Curto":1,"Alvenaria":1}},
+ {id:"lumberjack",pt:"Lenhador",en:"Lumberjack",cost:0,sk:{"Machado":2,"Manutenção":1},str:1,grn:["Ax-pert"]},
+ {id:"security",pt:"Segurança",en:"Security Guard",cost:2,sk:{"Corrida":2,"Passos Leves":1,"Contundente Curto":1}},
+ {id:"nurse",pt:"Enfermeiro",en:"Nurse",cost:0,sk:{"Primeiros Socorros":3,"Passos Leves":1},fit:1,grn:["Night Owl"]},
+ {id:"doctor",pt:"Médico",en:"Doctor",cost:0,sk:{"Primeiros Socorros":6,"Lâmina Curta":1}},
+ {id:"farmer",pt:"Fazendeiro",en:"Farmer",cost:0,sk:{"Agricultura":4,"Cuidado Animal":1},str:1},
+ {id:"rancher",pt:"Rancheiro",en:"Rancher",cost:0,sk:{"Cuidado Animal":4,"Açougue":3},fit:1},
+ {id:"burger",pt:"Chapeiro",en:"Burger Flipper",cost:-2,sk:{"Culinária":2,"Manutenção":1,"Lâmina Curta":1},gr:["keen_cook"]},
+ {id:"tailor",pt:"Alfaiate",en:"Tailor",cost:-2,sk:{"Costura":4}},
+ {id:"chef",pt:"Chef",en:"Chef",cost:2,sk:{"Culinária":4,"Manutenção":1,"Lâmina Curta":1,"Açougue":2}},
+ {id:"electrician",pt:"Eletricista",en:"Electrician",cost:2,sk:{"Elétrica":5}},
+ {id:"fishing",pt:"Guia de Pesca",en:"Fishing Guide",cost:2,sk:{"Pesca":3,"Coleta":1,"Açougue":1}},
+ {id:"engineer",pt:"Engenheiro",en:"Engineer",cost:4,sk:{"Elétrica":1,"Carpintaria":1,"Alvenaria":1}},
+ {id:"mechanic",pt:"Mecânico",en:"Mechanic",cost:4,sk:{"Mecânica":4,"Soldagem":1}},
+ {id:"ranger",pt:"Guarda-Parque",en:"Park Ranger",cost:4,sk:{"Armadilhas":1,"Primeiros Socorros":1,"Coleta":1,"Lascamento":1,"Entalhamento":1},gr:["herbalist"]},
+ {id:"police",pt:"Policial",en:"Police Officer",cost:4,sk:{"Mira":4,"Recarga":1,"Agilidade":1}},
+ {id:"welder",pt:"Soldador",en:"Welder",cost:4,sk:{"Soldagem":4},note:"42.21: começa com receitas de Soldagem"},
+ {id:"blacksmith",pt:"Ferreiro",en:"Blacksmith",cost:6,sk:{"Ferraria":4,"Manutenção":1,"Contundente Curto":1},gr:["blacksmith_k"]},
+ {id:"burglar",pt:"Ladrão",en:"Burglar",cost:6,sk:{"Agilidade":2,"Furtividade":2,"Passos Leves":2},grn:["Ligação direta"]},
+ {id:"fitness",pt:"Instrutor Fitness",en:"Fitness Instructor",cost:6,sk:{"Corrida":2},fit:3,str:1},
+ {id:"veteran",pt:"Veterano",en:"Veteran",cost:8,sk:{"Mira":2,"Recarga":2},grn:["Desensitized"],ex:["claustrophobic","agoraphobic","hemophobic","cowardly","adrenaline"]}
+];
+
+const POS=[
+ {id:"keen_hearing",pt:"Audição Aguçada",en:"Keen Hearing",cost:6,v:"obr",note:"Vê zumbi nas costas de muito mais longe. Sem ele o Shivas nunca passou de 1 ano.",ex:["hard_of_hearing","deaf"]},
+ {id:"gymnast",pt:"Ginasta",en:"Gymnast",cost:5,v:"obr",note:"+1 Agilidade e +1 Passos Leves. Agilidade é a perícia mais difícil de upar e evita agarrões.",sk:{"Agilidade":1,"Passos Leves":1}},
+ {id:"fast_learner",pt:"Aprendiz Rápido",en:"Fast Learner",cost:6,v:"obr",note:"+30% de XP em tudo, menos Força e Aptidão. Entra em toda build.",ex:["slow_learner"]},
+ {id:"cats_eyes",pt:"Olhos de Gato",en:"Cat's Eyes",cost:3,v:"obr",note:"Na B42 a noite ficou bem mais escura. Sem ele você não enxerga nada."},
+ {id:"wakeful",pt:"Madrugador",en:"Wakeful",cost:3,v:"obr",note:"Dorme menos e recupera fadiga mais rápido. “Tem que ter em toda build.”",ex:["sleepyhead"]},
+ {id:"dextrous",pt:"Mãos Ágeis",en:"Dextrous",cost:2,v:"obr",note:"Transfere itens bem mais rápido.",ex:["all_thumbs"]},
+ {id:"whittler",pt:"Entalhador",en:"Whittler",cost:2,v:"obr",note:"+2 Entalhamento. Obrigatório na build do Shivas para fabricar Short Bat e taco (nível 9–10).",sk:{"Entalhamento":2}},
+ {id:"fit",pt:"Em Forma",en:"Fit",cost:6,v:"meta",note:"+2 Aptidão. Entrou no fim, no lugar do Herbalista, com o Desastrado pagando a diferença.",fit:2,ex:["athletic","out_of_shape","unfit"]},
+ {id:"herbalist",pt:"Herbalista",en:"Herbalist",cost:4,v:"opc",note:"+1 Coleta e identifica comida venenosa. Com a coleta ligada você não passa fome.",sk:{"Coleta":1}},
+ {id:"organized",pt:"Organizado",en:"Organized",cost:4,v:"opc",note:"+30% de espaço em mochilas e contêineres. Ele não joga sem, mas não coube aqui.",ex:["disorganized"]},
+ {id:"adrenaline",pt:"Viciado em Adrenalina",en:"Adrenaline Junkie",cost:4,v:"opc",note:"Corre mais rápido em pânico extremo. Muito bom contra corredores."},
+ {id:"speed_demon",pt:"Bom de Volante",en:"Speed Demon",cost:1,v:"opc",note:"Carro mais rápido, mas a ré faz muito barulho. Iniciante: deixe o ponto sobrando.",ex:["sunday_driver"]},
+ {id:"brave",pt:"Corajoso",en:"Brave",cost:4,v:"opc",note:"Menos pânico no começo. Depois de alguns meses vivo faz pouca diferença.",ex:["cowardly"]},
+ {id:"graceful",pt:"Gracioso",en:"Graceful",cost:4,v:"opc",note:"Passos mais silenciosos e menos tropeço. Tanto faz.",ex:["clumsy"]},
+ {id:"outdoorsy",pt:"Andarilho",en:"Outdoorsman",cost:2,v:"opc",note:"Só obrigatório se o servidor tiver clima muito frio."},
+ {id:"target_shooter",pt:"Atirador",en:"Target Shooter",cost:5,v:"opc",note:"Traço novo da B42, +1 Mira. Só se a build for de tiro.",sk:{"Mira":1}},
+ {id:"athletic",pt:"Atlético",en:"Athletic",cost:10,v:"dis",note:"+4 Aptidão. Ótimo, mas não cabe nos pontos da build do Shivas.",fit:4,ex:["fit","out_of_shape","unfit","smoker"]},
+ {id:"strong",pt:"Forte",en:"Strong",cost:10,v:"dis",note:"+4 Força. Não cabe na build do Shivas.",str:4,ex:["stout","weak","puny"]},
+ {id:"stout",pt:"Robusto",en:"Stout",cost:6,v:"neu",note:"+2 Força.",str:2,ex:["strong","weak","puny"]},
+ {id:"handy",pt:"Habilidoso",en:"Handy",cost:8,v:"dis",note:"O Construtor Civil já dá Carpintaria e Manutenção. Bom para o construtor de um time.",sk:{"Entalhamento":1,"Manutenção":1,"Alvenaria":1,"Carpintaria":1}},
+ {id:"hunter",pt:"Caçador",en:"Hunter",cost:8,v:"dis",note:"Não precisa na build solo. No time, vai bem no batedor que caça.",sk:{"Mira":1,"Rastreamento":1,"Furtividade":1,"Lâmina Curta":1,"Açougue":1}},
+ {id:"bushcrafter",pt:"Bushcraft",en:"Bushcrafter",cost:8,v:"dis",note:"Caro demais para a build solo.",sk:{"Coleta":1,"Lascamento":1,"Manutenção":1,"Entalhamento":1}},
+ {id:"blacksmith_k",pt:"Ferreiro (traço)",en:"Blacksmith Knowledge",cost:6,v:"dis",note:"Não precisa na build solo.",sk:{"Ferraria":2,"Manutenção":1}},
+ {id:"hiker",pt:"Sobrevivencialista",en:"Hiker",cost:5,v:"dis",note:"+1 Coleta e +1 Armadilhas. Ficou de fora.",sk:{"Coleta":1,"Armadilhas":1}},
+ {id:"former_scout",pt:"Escoteiro",en:"Former Scout",cost:6,v:"dis",note:"Ficou de fora.",sk:{"Primeiros Socorros":1,"Coleta":1,"Pesca":1}},
+ {id:"brawler",pt:"Brigão",en:"Brawler",cost:6,v:"dis",note:"+1 Contundente Longo e +1 Machado.",sk:{"Machado":1,"Contundente Longo":1}},
+ {id:"baseball",pt:"Jogador de Beisebol",en:"Baseball Player",cost:4,v:"dis",note:"O Construtor já começa com Contundente Longo.",sk:{"Contundente Longo":1}},
+ {id:"tinkerer",pt:"Mexedor",en:"Tinkerer",cost:4,v:"dis",note:"+1 Manutenção.",sk:{"Manutenção":1}},
+ {id:"angler",pt:"Pescador",en:"Angler",cost:4,v:"dis",note:"Pescar é fácil, ainda mais vendo os programas de TV no início.",sk:{"Pesca":1}},
+ {id:"sewer",pt:"Costureiro",en:"Sewer",cost:4,v:"dis",note:"Não precisa na build solo.",sk:{"Costura":1}},
+ {id:"runner",pt:"Corredor",en:"Runner",cost:4,v:"dis",note:"Não precisa na build solo.",sk:{"Corrida":1}},
+ {id:"vehicle_k",pt:"Mecânico Amador",en:"Vehicle Knowledge",cost:3,v:"dis",note:"+1 Mecânica.",sk:{"Mecânica":1}},
+ {id:"nutritionist",pt:"Nutricionista",en:"Nutritionist",cost:2,v:"dis",note:"Mostra valores nutricionais. Não precisa."},
+ {id:"fast_reader",pt:"Leitor Rápido",en:"Fast Reader",cost:2,v:"neu",note:"Lê 30% mais rápido.",ex:["slow_reader","illiterate"]},
+ {id:"eagle_eyed",pt:"Olhos de Águia",en:"Eagle Eyed",cost:4,v:"neu",note:"Campo de visão maior.",ex:["short_sighted"]},
+ {id:"inconspicuous",pt:"Discreto",en:"Inconspicuous",cost:4,v:"neu",note:"Zumbis te notam menos.",ex:["conspicuous"]},
+ {id:"resilient",pt:"Resistente",en:"Resilient",cost:4,v:"neu",note:"Adoece menos.",ex:["prone_illness"]},
+ {id:"fast_healer",pt:"Cura Rápida",en:"Fast Healer",cost:6,v:"neu",note:"Ferimentos mais leves.",ex:["slow_healer"]},
+ {id:"thick_skinned",pt:"Pele Grossa",en:"Thick-skinned",cost:8,v:"neu",note:"Menos chance de ferimento.",ex:["thin_skinned"]},
+ {id:"iron_gut",pt:"Estômago de Ferro",en:"Iron Gut",cost:2,v:"neu",note:"Menos intoxicação alimentar.",ex:["weak_stomach"]},
+ {id:"light_eater",pt:"Come Pouco",en:"Light Eater",cost:2,v:"neu",note:"Menos fome.",ex:["hearty_appetite"]},
+ {id:"low_thirst",pt:"Pouca Sede",en:"Low Thirst",cost:2,v:"neu",note:"Menos sede.",ex:["high_thirst"]},
+ {id:"crafty",pt:"Engenhoso",en:"Crafty",cost:3,v:"neu",note:"+30% de XP de fabricação."},
+ {id:"mason",pt:"Pedreiro",en:"Mason",cost:2,v:"neu",note:"+2 Alvenaria.",sk:{"Alvenaria":2}},
+ {id:"first_aider",pt:"Socorrista",en:"First Aider",cost:2,v:"neu",note:"+1 Primeiros Socorros.",sk:{"Primeiros Socorros":1}},
+ {id:"gardener",pt:"Jardineiro",en:"Gardener",cost:2,v:"neu",note:"+1 Agricultura.",sk:{"Agricultura":1}},
+ {id:"keen_cook",pt:"Cozinheiro",en:"Keen Cook",cost:3,v:"neu",note:"+2 Culinária, +1 Açougue.",sk:{"Culinária":2,"Açougue":1}},
+ {id:"artisan",pt:"Artesão",en:"Artisan",cost:2,v:"neu",note:"+1 Vidraria, +1 Cerâmica.",sk:{"Vidraria":1,"Cerâmica":1}},
+ {id:"inventive",pt:"Inventor",en:"Inventive",cost:2,v:"neu",note:"Aprende receitas pesquisando itens com menos exigência de perícia. O Knine usa na build dele."}
+];
+
+const NEG=[
+ {id:"thin_skinned",pt:"Pele Frágil",en:"Thin-skinned",cost:8,v:"meta",note:"Mais chance de ferir nos arbustos e da mordida passar a roupa. Solução: não seja mordido.",ex:["thick_skinned"]},
+ {id:"conspicuous",pt:"Estabanado",en:"Conspicuous",cost:4,v:"meta",note:"Zumbis te percebem mais. “Todo mundo pega.” Evite só em gameplay furtiva.",ex:["inconspicuous"]},
+ {id:"prone_illness",pt:"Baixa Imunidade",en:"Prone to Illness",cost:4,v:"meta",note:"Zumbifica mais rápido, mas mordido já está morto de qualquer jeito.",ex:["resilient"]},
+ {id:"slow_healer",pt:"Saúde Fraca",en:"Slow Healer",cost:3,v:"meta",note:"Recupera mais devagar. Ele sempre pega.",ex:["fast_healer"]},
+ {id:"weak_stomach",pt:"Estômago Fraco",en:"Weak Stomach",cost:2,v:"meta",note:"Só não coma nada podre, cru ou queimado.",ex:["iron_gut"]},
+ {id:"short_sighted",pt:"Míope",en:"Short Sighted",cost:2,v:"meta",note:"Pegue óculos na roupa inicial e a penalidade some.",ex:["eagle_eyed"]},
+ {id:"slow_reader",pt:"Semianalfabeto",en:"Slow Reader",cost:2,v:"meta",note:"No multiplayer a leitura costuma ser acelerada. No offline, acelere o tempo.",ex:["fast_reader","illiterate"]},
+ {id:"high_thirst",pt:"Sedento",en:"High Thirst",cost:2,v:"meta",note:"Dobro de sede. Ande com 2 ou 3 garrafas d'água.",ex:["low_thirst"]},
+ {id:"claustrophobic",pt:"Claustrofóbico",en:"Claustrophobic",cost:4,v:"opc",note:"Pânico em lugar fechado. Um gole de álcool resolve. Para de incomodar depois de 3–5 meses."},
+ {id:"smoker",pt:"Fumante",en:"Smoker",cost:3,v:"opc",note:"Na B42 é mais difícil achar cigarro. No time, no máximo um fumante.",ex:["athletic"]},
+ {id:"clumsy",pt:"Desastrado",en:"Clumsy",cost:2,v:"opc",note:"+10% de chance de cair e se corta abrindo lata sem abridor. Entrou para pagar o Em Forma.",ex:["graceful"]},
+ {id:"slow_metabolism",pt:"Metabolismo Lento",en:"Slow Metabolism",cost:2,v:"opc",note:"Ganhar peso é o difícil no Zomboid. Ele pega, mas tira 1 de Aptidão.",fit:-1,ex:["fast_metabolism"]},
+ {id:"weak",pt:"Fraco",en:"Weak",cost:6,v:"opc",note:"Força 5→3. Alternativa ao Desastrado para fechar a build.",str:-2,ex:["puny","stout","strong"]},
+ {id:"out_of_shape",pt:"Fora de Forma",en:"Out of Shape",cost:6,v:"opc",note:"Aptidão −2. Aptidão é mais difícil de upar que Força.",fit:-2,ex:["fit","athletic","unfit"]},
+ {id:"sunday_driver",pt:"Ruim de Volante",en:"Sunday Driver",cost:1,v:"evi",note:"Dirige muito devagar. Só se você quase não dirige.",ex:["speed_demon"]},
+ {id:"puny",pt:"Fracote",en:"Puny",cost:10,v:"evi",note:"Força 0. O Shivas usa e upa para 5 rápido, mas não recomenda para a maioria.",str:-5,ex:["weak","stout","strong"]},
+ {id:"unfit",pt:"Sedentário",en:"Unfit",cost:10,v:"evi",note:"Aptidão 1. Mesma lógica do Fracote: só para quem upa rápido.",fit:-4,ex:["fit","athletic","out_of_shape"]},
+ {id:"pacifist",pt:"Pacifista",en:"Reluctant Fighter",cost:5,v:"evi",note:"−25% XP em armas. Ele pegaria, mas não recomenda para o público geral."},
+ {id:"fast_metabolism",pt:"Metabolismo Rápido",en:"Fast Metabolism",cost:2,v:"evi",note:"O meta é o lento: perder peso é fácil, ganhar é difícil.",fit:-1,ex:["slow_metabolism"]},
+ {id:"hearty_appetite",pt:"Comilão",en:"Hearty Appetite",cost:4,v:"evi",note:"+50% de fome. Só em último caso para fechar pontos.",ex:["light_eater"]},
+ {id:"agoraphobic",pt:"Agorafóbico",en:"Agoraphobic",cost:4,v:"evi",note:"Pânico em qualquer lugar aberto."},
+ {id:"disorganized",pt:"Desorganizado",en:"Disorganized",cost:6,v:"evi",note:"−30% de espaço em tudo.",ex:["organized"]},
+ {id:"all_thumbs",pt:"Desajeitado",en:"All Thumbs",cost:2,v:"nun",note:"Transferência 100% mais lenta, saca arma devagar, mira pior.",ex:["dextrous"]},
+ {id:"cowardly",pt:"Covarde",en:"Cowardly",cost:2,v:"nun",note:"Não se perde com o tempo. Sempre vai ter pânico te perturbando.",ex:["brave"]},
+ {id:"deaf",pt:"Surdo",en:"Deaf",cost:12,v:"nun",note:"Horroroso. Nunca escolha.",ex:["keen_hearing","hard_of_hearing"]},
+ {id:"hard_of_hearing",pt:"Ruim de Audição",en:"Hard of Hearing",cost:4,v:"nun",note:"Parece que você está dentro de uma piscina.",ex:["keen_hearing","deaf"]},
+ {id:"restless",pt:"Sono Leve",en:"Restless Sleeper",cost:6,v:"nun",note:"Nunca escolha."},
+ {id:"sleepyhead",pt:"Dorminhoco",en:"Sleepyhead",cost:4,v:"nun",note:"Precisa dormir mais. Nunca escolha.",ex:["wakeful"]},
+ {id:"slow_learner",pt:"Aprendiz Lento",en:"Slow Learner",cost:6,v:"nun",note:"−30% de XP em tudo.",ex:["fast_learner"]},
+ {id:"hemophobic",pt:"Fobia de Sangue",en:"Fear of Blood",cost:5,v:"nun",note:"Em jogo de zumbi você vive sujo de sangue: estresse e −30% de dano."},
+ {id:"asthmatic",pt:"Asmático",en:"Short of Breath",cost:5,v:"nun",note:"Permanente. +40% de perda de fôlego correndo, +20% batendo."},
+ {id:"illiterate",pt:"Analfabeto",en:"Illiterate",cost:10,v:"neu",note:"Não lê livros nem aprende receitas por leitura.",ex:["slow_reader","fast_reader"]}
+];
+
+const VLABEL={obr:"Obrigatório",meta:"Meta",opc:"Opcional",dis:"Dispensável",evi:"Evitar",nun:"Nunca",neu:"Sem opinião no vídeo"};
+const ALL={}; POS.forEach(t=>{t.side="pos";ALL[t.id]=t}); NEG.forEach(t=>{t.side="neg";ALL[t.id]=t});
+const EX={}; Object.values(ALL).forEach(t=>{EX[t.id]=EX[t.id]||new Set();(t.ex||[]).forEach(o=>{if(!ALL[o])return;EX[t.id].add(o);(EX[o]=EX[o]||new Set()).add(t.id)})});
+const PROF=Object.fromEntries(PROFS.map(p=>[p.id,p]));
+
+// Papéis de time
+const ROLES=[
+ {id:"frente",pt:"Linha de frente",hint:"limpa prédio e segura a porta"},
+ {id:"base",pt:"Construção",hint:"muros, barricadas, móveis"},
+ {id:"medico",pt:"Médico",hint:"pontos, fratura, infecção"},
+ {id:"energia",pt:"Energia",hint:"gerador e eletrônica"},
+ {id:"veiculo",pt:"Veículos",hint:"conserta carro e combustível"},
+ {id:"comida",pt:"Comida",hint:"coleta, plantio, cozinha, caça"},
+ {id:"loot",pt:"Loot furtivo",hint:"entra e sai sem horda"}
+];
+const FRONT_PROFS=["construction","firefighter","lumberjack","security","veteran","police","fitness"];
+
+// Canais de referência. pt = patch em que o vídeo foi gravado.
+const CH={
+ shivas:{nm:"ShivasBR",lg:"PT",url:"https://www.youtube.com/watch?v=C_mnw8MkdEY",t:"Dicas de Criação de Personagem Que Funcionam na Build 42",dt:"28/06/2026",pt:"42.19"},
+ knine:{nm:"GabrielKnine",lg:"PT",url:"https://www.youtube.com/watch?v=gDiWSBv_W0g",t:"Como sobreviver no Project Zomboid em 2026",dt:"22/08/2026",pt:"42.20"},
+ gambarine:{nm:"Gambarine",lg:"PT",url:"https://www.youtube.com/shorts/i_-P271YcQo",t:"Boa Build para Novatos na B42 Estável",dt:"29/07/2026",pt:"42.20"},
+ laughter:{nm:"Laughter",lg:"EN",url:"https://www.youtube.com/watch?v=ujrLpaM8HPI",t:"Top 8 Character Builds in Build 42",dt:"11/08/2026",pt:"42.20"},
+ egg:{nm:"OVERCHARGED EGG",lg:"EN",url:"https://www.youtube.com/watch?v=ETUHLVlcf38",t:"The Ultimate Noobs Guide to Project Zomboid Build 42",dt:"07/08/2026",pt:"42.20"},
+ orbanjo:{nm:"Orbanjo Gaming",lg:"EN",url:"https://www.youtube.com/watch?v=2PZNukP6bUY",t:"Project Zomboid is Lying about XP — Build 42 Traits Explained",dt:"24/08/2026",pt:"42.20"},
+ anzony:{nm:"Anzony Kaiser",lg:"ES",url:"https://www.youtube.com/watch?v=BkGqWQSLemM",t:"El Personaje PERFECTO de Project Zomboid Build 42.20",dt:"01/08/2026",pt:"42.20"}
+};
+// Os 6 negativos que o Laughter chama de "padrão" e que quase todo canal repete (23 pontos)
+const STD6=["thin_skinned","prone_illness","slow_healer","weak_stomach","conspicuous","slow_reader"];
+// Negativos padrão de time: pagam a build sem atrapalhar papel de suporte (25 pontos)
+const NEG_TIME=["conspicuous","prone_illness","slow_healer","weak_stomach","short_sighted","high_thirst","slow_reader","claustrophobic","clumsy"];
+const CORE=["keen_hearing","fast_learner","cats_eyes","wakeful","dextrous"]; // 20 pontos
+
+// ch = canal; sty = estilos; why = por que funciona; care = ponto fraco; fix = ajuste feito pela ficha
+const LIB=[
+ {id:"shivas",ch:"shivas",nm:"Construtor do Taco",sty:["Combate","Longo prazo"],prof:"construction",
+  d:"A build que o Shivas usa no save de quase 10 anos: começa batendo com duas contundentes e sobe Entalhamento para fabricar a própria arma.",
+  why:["Construtor Civil é a única profissão com Contundente Curto e Longo, além de Alvenaria (marreta de pedra) e Manutenção.","Entalhador +2 acelera o Carving até 9–10, onde saem o Short Bat e o taco de beisebol.","Audição Aguçada, Olhos de Gato, Madrugador e Mãos Ágeis são o que ele chama de obrigatório em toda build.","Paga tudo com negativos que só pesam se você errar: não ser mordido, não comer podre, usar óculos."],
+  care:"Fumante e Claustrofóbico exigem cigarro e álcool por perto. Pele Frágil não perdoa descuido.",
+  traits:["thin_skinned","prone_illness","claustrophobic","conspicuous","smoker","slow_healer","clumsy","weak_stomach","short_sighted","high_thirst","slow_reader","speed_demon","dextrous","whittler","wakeful","cats_eyes","gymnast","fast_learner","keen_hearing","fit"]},
+ {id:"shivas_herb",ch:"shivas",nm:"Construtor Herbalista",sty:["Combate","Longo prazo"],prof:"construction",
+  d:"Variante do mesmo vídeo: troca Em Forma + Desastrado pelo Herbalista.",
+  why:["Com a coleta ligada você sempre acha fruta e cogumelo e nunca passa fome.","Herbalista identifica o que é venenoso sem precisar achar a revista.","O resto da build é igual à principal."],
+  care:"Aptidão fica em 5: cansa mais rápido nas primeiras brigas.",
+  traits:["thin_skinned","prone_illness","claustrophobic","conspicuous","smoker","slow_healer","weak_stomach","short_sighted","high_thirst","slow_reader","speed_demon","dextrous","whittler","wakeful","cats_eyes","gymnast","fast_learner","keen_hearing","herbalist"]},
+ {id:"knine",ch:"knine",nm:"Bombeiro 8/8",sty:["Iniciante","Combate"],prof:"firefighter",
+  d:"A build que o Knine diz usar “bastante” na versão nova: Bombeiro com Força e Aptidão 8, pago com 12 negativos.",
+  why:["Bombeiro custa 0, nasce com roupa de bombeiro e machado, e já soma +1 Força e +1 Aptidão.","Em Forma + Robusto levam os dois atributos a 8: menos cansaço e mais dano desde o dia 1.","Organizado e Mãos Ágeis aceleram o loot; Inventor ajuda a aprender receitas.","Audição Aguçada e Olhos de Gato cobrem as costas e a noite escura da B42."],
+  care:"São 12 negativos. Fumante sem cigarro acorda em pânico, e Pacifista corta 25% do XP de arma.",
+  traits:["thin_skinned","pacifist","prone_illness","conspicuous","hearty_appetite","slow_healer","smoker","clumsy","weak_stomach","slow_reader","short_sighted","high_thirst","speed_demon","inventive","dextrous","cats_eyes","organized","gymnast","fast_learner","keen_hearing","fit","stout"]},
+ {id:"gambarine",ch:"gambarine",nm:"Construtor Sem Cansaço",sty:["Iniciante","Combate"],prof:"construction",
+  d:"A primeira build que o Gambarine sugere para quem chega na B42: aprender a lidar com o cansaço muscular.",
+  why:["O maior choque da B42 é o cansaço muscular, e ele cai conforme o nível da arma que você usa.","Brigão + Jogador de Beisebol levam Contundente Longo a 3. Segundo ele, assim você “praticamente não sente” o cansaço.","Habilidoso dá Manutenção 2 para a arma durar, e Em Forma deixa Aptidão em 7."],
+  care:"Ele mesmo diz que não é a melhor build, é uma build de treino. Depois de pegar o jeito, troque por outra.",
+  fix:"O short só mostra os positivos. Os negativos aqui são os 6 padrão + Míope + Sedento, completados pela ficha.",
+  traits:STD6.concat(["short_sighted","high_thirst","brawler","baseball","handy","fit"])},
+ {id:"laughter_constr",ch:"laughter",nm:"Construtor de Saque",sty:["Iniciante","Combate"],prof:"construction",
+  d:"A “build de luta mais simples do jogo”: mata tudo na área e depois entra com as bolsas para saquear.",
+  why:["Construtor já começa com Contundente Curto, Longo e Manutenção.","Atlético dá Aptidão 9 e muito fôlego; Ginasta dá +1 Agilidade.","Aprendiz Rápido + Mãos Ágeis, que ele considera obrigatórios em qualquer build.","Só usa os 6 negativos padrão + Sedento: nada que atrapalhe a luta."],
+  care:"Sem Audição Aguçada e sem Olhos de Gato. Cuidado com a noite e com zumbi nas costas.",
+  traits:STD6.concat(["high_thirst","athletic","gymnast","fast_learner","dextrous"])},
+ {id:"laughter_fire",ch:"laughter",nm:"Bombeiro da Extinção",sty:["Extinção","Combate"],prof:"firefighter",
+  d:"Feita para o modo Extinção, onde o começo é a parte mais difícil.",
+  why:["Para ele, Bombeiro é a melhor profissão de Extinção: +1 Força, +1 Corrida para fugir de corredor e +1 Machado.","Brigão soma +1 Machado: começa com Machado 2 e, com Aprendiz Rápido, sobe cerca de 7x mais rápido que o normal.","Atlético e Ginasta para aguentar a luta.","Claustrofóbico só pesa em lugar fechado, e quase toda briga é na rua."],
+  care:"Também sem Audição Aguçada. Funciona no Apocalipse, mas brilha mesmo no Extinção.",
+  traits:STD6.concat(["high_thirst","claustrophobic","dextrous","fast_learner","gymnast","athletic","brawler"])},
+ {id:"laughter_cop",ch:"laughter",nm:"Policial Mira 6",sty:["Tiro"],prof:"police",
+  d:"Build especializada em uma coisa só: matar zumbi com arma de fogo.",
+  why:["Atirador + Caçador somam +2 Mira: começa com Mira 6, nível em que o pânico não atrapalha mais o tiro.","Robusto e Organizado aumentam a carga para levar munição.","Fobia de Sangue, Asmático e Fora de Forma quase não pesam porque você mantém distância.","Come Pouco entrou por falta de outro traço de 2, mas significa menos pausa para comer."],
+  care:"Tiro faz barulho e chama horda. Sem munição a build fica fraca no corpo a corpo.",
+  traits:STD6.concat(["cowardly","claustrophobic","hemophobic","asthmatic","out_of_shape","target_shooter","hunter","stout","organized","speed_demon","inventive","dextrous","fast_learner","gymnast","light_eater"])},
+ {id:"laughter_burglar",ch:"laughter",nm:"Atropelador",sty:["Iniciante","Veículos"],prof:"burglar",
+  d:"Combate pelo para-brisa: o Ladrão faz ligação direta desde o início, então tem carro sobrando para gastar limpando horda.",
+  why:["Ligação direta de saída: não precisa de Mecânica nem Elétrica para pegar carro.","Bom de Volante deixa o carro uma arma viável.","Atlético e Forte deixam a build fácil para iniciante. Dá para trocar por traços de sobrevivência.","Sobrevivencialista (+1 Coleta, +1 Armadilhas) garante comida a longo prazo."],
+  care:"Pacifista, Fobia de Sangue, Asmático e Covarde: fora do carro você é ruim de briga. Pensado para o Apocalipse, não para o Extinção.",
+  traits:STD6.concat(["cowardly","pacifist","asthmatic","hemophobic","athletic","strong","fast_learner","dextrous","speed_demon","hiker"])},
+ {id:"laughter_smith",ch:"laughter",nm:"Ferreiro de Longo Prazo",sty:["Longo prazo"],prof:"blacksmith",r:["base"],
+  d:"Para quem vai jogar meses no mesmo save: fica mais forte com o tempo sem ser fraco no começo.",
+  why:["Ferreiro é a profissão mais “endgame”: faz as próprias ferramentas e armas depois.","Fraco e Fora de Forma dão 12 pontos; Força e Aptidão sobem com exercício a longo prazo.","Covarde e Claustrofóbico perdem efeito com o tempo, porque o pânico zera segundos depois que a ameaça some.","Muitos traços de +1 (Escoteiro, Ginasta, Atirador, Mecânico Amador) e utilidade (Olhos de Gato, Madrugador, Inventor)."],
+  care:"Começa com Força 3 e Aptidão 3. Para saves de mais de um ano, ele sugere trocar por Fracote e Sedentário.",
+  traits:STD6.concat(["cowardly","claustrophobic","out_of_shape","weak","dextrous","fast_learner","former_scout","gymnast","target_shooter","cats_eyes","wakeful","inventive","vehicle_k"])},
+ {id:"laughter_burger",ch:"laughter",nm:"Chapeiro da Faca",sty:["Extinção","Furtivo"],prof:"burger",
+  d:"Alternativa ao Bombeiro no Extinção: furtiva e focada em Lâmina Curta.",
+  why:["No Extinção os zumbis têm mais vida, e a morte instantânea da faca passa a valer muito.","Chapeiro devolve 2 pontos e já dá Lâmina Curta e Manutenção.","Ginasta e Gracioso para furtividade e Agilidade; Robusto e Em Forma para Força e Aptidão 7."],
+  care:"No Apocalipse a faca rende menos, porque machado e contundente longo já matam rápido.",
+  traits:STD6.concat(["claustrophobic","dextrous","fast_learner","gymnast","graceful","stout","fit"])},
+ {id:"laughter_eng",ch:"laughter",nm:"Engenheiro Cientista Maluco",sty:["Longo prazo"],prof:"engineer",r:["energia"],
+  d:"A build “mais eficiente para matar zumbi” da lista dele: bônus em quase toda perícia e bomba de cano para limpar cidade.",
+  why:["Engenheiro faz bombas de cano que limpam uma cidade com poucas unidades.","Começa com Elétrica 1 e, com Mecânico Amador, faz ligação direta cedo. Também sabe operar gerador.","Habilidoso, Caçador, Escoteiro e Sobrevivencialista dão nível em quase tudo."],
+  care:"Muito ruim no corpo a corpo e propenso a pânico (7 negativos extras). Se quiser lutar normal, ele sugere tirar Pacifista, Habilidoso e Inventor e pôr Atirador.",
+  traits:STD6.concat(["hemophobic","disorganized","pacifist","asthmatic","claustrophobic","smoker","cowardly","speed_demon","dextrous","inventive","cats_eyes","vehicle_k","gymnast","hiker","fast_learner","former_scout","handy","hunter"])},
+ {id:"laughter_cozy",ch:"laughter",nm:"Rancheiro Tranquilo",sty:["Sem combate"],prof:"rancher",
+  d:"Para quem quer fazenda e bicho, não briga: todos os negativos são de combate.",
+  why:["Rancheiro dá Cuidado Animal 4 (mais leite e ovos) e Açougue 3.","Fobia de Sangue, Pacifista, Asmático, Covarde e Desastrado não pesam se você não luta.","Forte para carregar tora e tábua; Habilidoso, Sobrevivencialista, Escoteiro e Ferreiro (traço) cobrem construção e sobrevivência."],
+  care:"Péssimo em briga. No multiplayer ele sugere tirar Semianalfabeto, porque não dá para acelerar o tempo.",
+  traits:STD6.concat(["short_sighted","out_of_shape","hemophobic","pacifist","asthmatic","cowardly","clumsy","strong","handy","hiker","former_scout","blacksmith_k","speed_demon","wakeful","cats_eyes","dextrous","fast_learner"])},
+ {id:"egg",ch:"egg",nm:"Desempregado Forte e Atlético",sty:["Iniciante","Combate"],prof:"unemployed",r:["frente"],
+  d:"A build da série de iniciante do canal: sem profissão para ter o máximo de pontos e gastar em atributo.",
+  why:["Desempregado devolve 8 pontos, e os 8 negativos baratos fecham 35 pontos para gastar.","Atlético e Forte: Aptidão 9, Força 9. Ele considera os dois os mais chatos de upar, então compra logo.","Olhos de Gato porque a noite da B42 ficou muito escura; Organizado e Mãos Ágeis para o loot."],
+  care:"Começa sem nenhuma perícia de arma. Os livros e revistas que achar decidem a arma.",
+  traits:["clumsy","high_thirst","slow_reader","weak_stomach","slow_healer","conspicuous","prone_illness","thin_skinned","athletic","strong","fast_learner","cats_eyes","organized","dextrous"]},
+ {id:"orbanjo",ch:"orbanjo",nm:"Construtor Equilibrado",sty:["Combate"],prof:"construction",
+  d:"A build que ele usa sempre: corpo a corpo forte no começo e pontos espalhados em outras coisas.",
+  why:["Construtor é a profissão padrão dele por causa do bônus nas duas contundentes.","Robusto dá Força 7 sem pagar os 10 pontos do Forte.","Ginasta pelo +1 Agilidade, a perícia mais difícil de upar, e +1 Passos Leves para compensar o Estabanado.","Corajoso e Organizado (que também aumenta o porta-malas)."],
+  care:"Pacifista corta XP de arma; o Aprendiz Rápido está lá para compensar. Míope exige óculos de grau na criação.",
+  traits:["thin_skinned","conspicuous","slow_healer","weak_stomach","slow_reader","short_sighted","high_thirst","pacifist","stout","fast_learner","organized","brave","gymnast","speed_demon"]},
+ {id:"anzony",ch:"anzony",nm:"Obrero Perfeito",sty:["Iniciante","Combate"],prof:"construction",
+  d:"A build que ele chama de “personagem perfeito” na 42.20, com o Construtor (obrero) de base.",
+  why:["Para ele, contundente curta e longa são as melhores armas do começo, e o Construtor é o único com as duas.","Atlético é essencial: na B42, quatro ou cinco zumbis já cansam o personagem.","Audição Aguçada vê corredor vindo por trás; Aprendiz Rápido acelera martelo, taco, Carpintaria e Manutenção.","Andarilho anula boa parte do Pele Frágil, Saúde Fraca e Baixa Imunidade no mato e na chuva."],
+  care:"Comilão entrou só para fechar a conta, e ele não gosta do traço. Se não quiser Olhos de Gato, ele sugere trocar por outro traço barato.",
+  traits:["weak_stomach","high_thirst","slow_healer","prone_illness","conspicuous","thin_skinned","slow_reader","short_sighted","hearty_appetite","athletic","keen_hearing","fast_learner","cats_eyes","dextrous","outdoorsy"]},
+
+ // Papéis para co-op (montados pela ficha)
+ {id:"enfermeiro",team:true,nm:"Enfermeiro do Grupo",tag:"Suporte",prof:"nurse",d:"Primeiros Socorros 3 desde o dia 1, Night Owl grátis. Fica com a caixa de remédios da base.",
+  traits:["conspicuous","slow_healer","weak_stomach","short_sighted","high_thirst","claustrophobic","clumsy","sunday_driver"].concat(CORE)},
+ {id:"eletricista",team:true,nm:"Eletricista do Gerador",tag:"Suporte",prof:"electrician",d:"Elétrica 5: liga gerador sem precisar da revista e faz a base ter luz e geladeira quando a energia cair.",
+  traits:NEG_TIME.concat(CORE,["whittler"])},
+ {id:"mecanico",team:true,nm:"Mecânico Motorista",tag:"Suporte",prof:"mechanic",d:"Mecânica 4 e Soldagem 1. Dirige nas runs, conserta e mantém o combustível do grupo.",
+  traits:NEG_TIME.concat(CORE)},
+ {id:"carpinteiro",team:true,nm:"Carpinteiro da Base",tag:"Base",prof:"carpenter",d:"Carpintaria 4 com Organizado e Pedreiro. Levanta muro e móvel enquanto o resto do time faz loot.",
+  traits:NEG_TIME.concat(["keen_hearing","fast_learner","organized","dextrous","wakeful","mason"])},
+ {id:"soldador",team:true,nm:"Soldador de Muralha",tag:"Base",prof:"welder",d:"Soldagem 4. Na 42.21 ele voltou a nascer com as receitas certas: barricada de metal e conserto de lataria cedo.",
+  traits:NEG_TIME.concat(CORE)},
+ {id:"batedor",team:true,nm:"Batedor Guarda-Parque",tag:"Comida",prof:"ranger",d:"Herbalista grátis e Caçador. Marca poço, traz carne e erva medicinal, conhece o mato.",
+  traits:NEG_TIME.concat(["keen_hearing","cats_eyes","hunter","wakeful"])},
+ {id:"agricultor",team:true,nm:"Agricultor",tag:"Comida",prof:"farmer",d:"Agricultura 4. Com plantação andando o time para de depender de lata.",
+  traits:NEG_TIME.concat(CORE,["herbalist"])},
+ {id:"chef",team:true,nm:"Chef da Base",tag:"Comida",prof:"chef",d:"Culinária 4 e Açougue 2. Comida boa segura o humor do grupo nos meses longos.",
+  traits:NEG_TIME.concat(CORE,["outdoorsy"])},
+ {id:"fantasma",team:true,nm:"Fantasma Ladrão",tag:"Loot",prof:"burglar",d:"Liga carro sem chave e entra calado. Sem Estabanado, que vai contra a proposta.",
+  traits:["prone_illness","slow_healer","weak_stomach","short_sighted","high_thirst","slow_reader","claustrophobic","hearty_appetite","inconspicuous","keen_hearing","cats_eyes","dextrous"]}
+];
+const LIBM=Object.fromEntries(LIB.map(b=>[b.id,b]));
+const CHLIB=LIB.filter(b=>b.ch), TEAMLIB=LIB.filter(b=>b.team);
+// Em quantas builds dos canais cada traço aparece
+const CONS={}; CHLIB.forEach(b=>b.traits.forEach(id=>CONS[id]=(CONS[id]||0)+1));
+const TOPN=Math.ceil(CHLIB.length/3);
+
+// Combos: builds que se completam. why = por que combinam; care = o que ainda falta ou exige atenção.
+const COMBOS=[
+ {id:"escudo",nm:"Escudo e Enxada",para:"Dupla tranquila · base no mato",m:["shivas","laughter_cozy"],
+  why:["O Rancheiro não luta (todos os negativos dele são de combate), e o Construtor do Shivas é quem segura a porta.","O Rancheiro tem Força 9 e Habilidoso: carrega tora e tábua enquanto o Construtor levanta a base.","Bicho dá leite, ovo e carne: o Construtor não precisa sair para caçar comida."],
+  care:"Ninguém é médico. O Shivas é fumante: guarde cigarro para ele."},
+ {id:"rodas",nm:"Rodas e Machado",para:"Dupla urbana · vive de run na cidade",m:["laughter_burglar","knine"],
+  why:["O Atropelador faz ligação direta em qualquer carro e limpa horda com o para-choque.","O Bombeiro 8/8 entra a pé onde o carro não chega: prédio, loja, delegacia.","Os dois têm Força alta e o Bombeiro tem Organizado: o loot volta inteiro no porta-malas."],
+  care:"Sem médico e sem base fixa. Combinem quem vai upar Primeiros Socorros e Carpintaria."},
+ {id:"mira",nm:"Mira e Muralha",para:"Dupla de tiro · cidade grande",m:["laughter_cop","egg"],
+  why:["O Policial começa com Mira 6 e atira de longe sem tremer no pânico.","Tiro chama horda. O Desempregado do OVERCHARGED EGG, com Força e Aptidão 9, segura no corpo a corpo o que chega perto.","O Policial é fraco de perto (Fora de Forma, Asmático). O parceiro cobre exatamente isso."],
+  care:"Munição acaba. Alternem: arma de fogo para emergência, corpo a corpo no dia a dia."},
+ {id:"medico",nm:"Frente + Médico",para:"Dupla para quem morre muito no começo",m:["shivas","enfermeiro"],
+  why:["O Construtor apanha e o Enfermeiro trata: Primeiros Socorros 3 desde o dia 1.","O Enfermeiro já nasce com Night Owl e cuida da base à noite."],
+  care:"Só um luta. Se o Construtor cair, o Enfermeiro não aguenta sozinho."},
+
+ {id:"longo",nm:"Trio do Longo Prazo",para:"Trio · save de meses",m:["orbanjo","laughter_smith","laughter_eng"],
+  why:["O Construtor do Orbanjo segura o começo, quando o Ferreiro e o Engenheiro ainda são fracos.","O Ferreiro faz ferramenta e arma de metal. O Engenheiro faz bomba de cano, liga gerador e faz ligação direta cedo.","Juntos cobrem frente, base, energia e comida, e ficam mais fortes a cada mês."],
+  care:"Sem médico. O Engenheiro é fumante e entra em pânico fácil: deixe-o longe da linha de frente."},
+ {id:"extincao",nm:"Pacote Extinção",para:"Trio · modo Extinção",m:["laughter_fire","laughter_burger","enfermeiro"],
+  why:["O Bombeiro da Extinção começa com Machado 2 e Aptidão 10: aguenta o começo mais difícil do jogo.","O Chapeiro da Faca é furtivo e mata na hora com faca, o que vale muito com zumbi de mais vida.","O Enfermeiro trata o que os dois levam, porque no Extinção todo erro custa caro."],
+  care:"Sem veículo e sem energia. No Extinção, gerador e carro viram prioridade do segundo mês."},
+ {id:"novatos",nm:"Trio de Quem Está Começando",para:"Trio · primeira vez na B42",m:["knine","gambarine","enfermeiro"],
+  why:["Bombeiro 8/8 e Construtor Sem Cansaço são as duas builds mais fáceis da lista: aguentam o cansaço muscular da B42.","O Construtor do Gambarine começa com Contundente Longo 3 e Manutenção 2: arma dura mais e ele quase não cansa.","O Enfermeiro segura o time vivo enquanto todo mundo aprende."],
+  care:"Ninguém conserta carro nem liga gerador. Procurem as revistas de Mecânica e o Generator Magazine."},
+ {id:"equilibrado",nm:"Trio Equilibrado",para:"Trio · o que a wiki recomenda para co-op",m:["knine","enfermeiro","eletricista"],
+  why:["Luta, cura e energia: os três papéis que mais fazem falta no segundo mês.","O Eletricista liga gerador sem precisar da revista quando a energia cair."],
+  care:"Sem veículo. O Bombeiro é fumante."},
+
+ {id:"quarteto",nm:"Quarteto Completo",para:"4 jogadores · base na cidade",m:["shivas","enfermeiro","eletricista","mecanico"],
+  why:["Cobre frente, construção, médico, energia e veículos.","O Construtor do Shivas segura a porta e constrói; os outros três mantêm a base funcionando."],
+  care:"Só um combatente. Em run grande, leve o Mecânico como motorista."},
+ {id:"saque",nm:"Corrida de Loot",para:"4 jogadores · saquear muito e rápido",m:["egg","batedor","laughter_burglar","carpinteiro"],
+  why:["O Desempregado do OVERCHARGED EGG limpa, o Atropelador liga qualquer carro e abre caminho.","O Batedor explora o mato e traz carne e erva; o Carpinteiro transforma o loot em base."],
+  care:"Sem médico e sem energia."},
+ {id:"fazenda",nm:"Fazenda Fortificada",para:"4 jogadores · vida no campo",m:["orbanjo","laughter_cozy","laughter_smith","enfermeiro"],
+  why:["O Construtor do Orbanjo defende; o Rancheiro cuida dos bichos e não precisa lutar.","O Ferreiro faz ferramenta e prego, e o Rancheiro tem Ferreiro (traço) para ajudar na forja.","O Enfermeiro cobre a parte médica que nenhum dos outros tem."],
+  care:"Sem energia e sem veículo. O Ferreiro começa com Força e Aptidão 3: deixe-o na base no início."},
+
+ {id:"longo5",nm:"Base de Longo Prazo",para:"5 jogadores · não depender de lata",m:["shivas","enfermeiro","eletricista","mecanico","agricultor"],
+  why:["O Quarteto Completo + Agricultor: com plantação andando, o inverno não mata ninguém de fome."],
+  care:"Só um combatente para cinco pessoas."},
+ {id:"duasfrentes",nm:"Duas Frentes",para:"5 jogadores · corpo a corpo e tiro",m:["shivas","laughter_cop","enfermeiro","eletricista","batedor"],
+  why:["O Construtor vai no corpo a corpo e o Policial no tiro: alternam as runs e a base nunca fica vazia.","O Batedor caça e o Eletricista mantém a luz."],
+  care:"Sem veículo. Combinem quem dirige."},
+
+ {id:"completo",nm:"Esquadrão Completo",para:"6 jogadores · todos os papéis cobertos",m:["orbanjo","laughter_cop","laughter_eng","laughter_burglar","laughter_cozy","enfermeiro"],
+  why:["Os 7 papéis têm dono: frente, construção, médico, energia, veículos, comida e loot.","Corpo a corpo (Orbanjo), tiro (Policial) e carro (Atropelador) dão três jeitos de limpar área.","O Engenheiro cuida de gerador e bomba de cano; o Rancheiro, de comida; o Enfermeiro, de todo mundo."],
+  care:"O Engenheiro é o único fumante: guardem cigarro para ele."},
+ {id:"cidade",nm:"Cidade Fortificada",para:"6 jogadores · base de metal",m:["shivas","enfermeiro","soldador","eletricista","mecanico","chef"],
+  why:["Um na frente e cinco especialistas.","O Soldador fecha a base com metal, e o Chef segura o humor do grupo nos meses longos."],
+  care:"Só um combatente. Para run pesada, troque o Chef por um combatente."}
+];
+const COMBOM=Object.fromEntries(COMBOS.map(c=>[c.id,c]));
+// Esquadrão usa os mesmos combos, agrupados por tamanho
+const COMPS={}; COMBOS.forEach(c=>(COMPS[c.m.length]=COMPS[c.m.length]||[]).push(c));
+
+// ---------- CÁLCULO ----------
+function compute(profId,sel){
+  const p=PROF[profId]||PROFS[0]; let neg=0,pos=0,str=5+(p.str||0),fit=5+(p.fit||0); const sk={};
+  Object.entries(p.sk||{}).forEach(([k,v])=>sk[k]=(sk[k]||0)+v);
+  const granted=new Set(p.gr||[]);
+  granted.forEach(id=>{const t=ALL[id];if(t)Object.entries(t.sk||{}).forEach(([k,v])=>sk[k]=(sk[k]||0)+v)});
+  sel.forEach(id=>{const t=ALL[id];if(!t||granted.has(id))return;if(t.side==="neg")neg+=t.cost;else pos+=t.cost;str+=t.str||0;fit+=t.fit||0;Object.entries(t.sk||{}).forEach(([k,v])=>sk[k]=(sk[k]||0)+v)});
+  return {p,neg,pos,saldo:neg-pos-p.cost,str:Math.max(0,Math.min(10,str)),fit:Math.max(0,Math.min(10,fit)),sk,granted};
+}
+function rolesOf(profId,sel,libId){
+  const c=compute(profId,sel), s=c.sk, has=id=>sel.has?sel.has(id):sel.includes(id), r=new Set();
+  const melee=Math.max(s["Contundente Curto"]||0,s["Contundente Longo"]||0,s["Machado"]||0,s["Lâmina Curta"]||0,s["Lança"]||0);
+  if(FRONT_PROFS.includes(profId)||melee>=2||(c.str>=7&&c.fit>=6))r.add("frente");
+  if((s["Carpintaria"]||0)>=3||(s["Alvenaria"]||0)>=3||(s["Soldagem"]||0)>=3||(s["Carpintaria"]||0)+(s["Alvenaria"]||0)>=3)r.add("base");
+  if((s["Primeiros Socorros"]||0)>=3)r.add("medico");
+  if((s["Elétrica"]||0)>=3)r.add("energia");
+  if((s["Mecânica"]||0)>=3||profId==="burglar")r.add("veiculo");
+  if((s["Agricultura"]||0)>=3||(s["Culinária"]||0)>=2||(s["Pesca"]||0)>=3||(s["Cuidado Animal"]||0)>=3||c.granted.has("herbalist")||has("herbalist")||has("hunter"))r.add("comida");
+  if(profId==="burglar"||has("inconspicuous")||(s["Furtividade"]||0)>=2)r.add("loot");
+  if(libId&&LIBM[libId]&&LIBM[libId].r)LIBM[libId].r.forEach(x=>r.add(x));
+  return r;
+}
+const ROLEPT=Object.fromEntries(ROLES.map(r=>[r.id,r.pt]));
+
+// ---------- ESTADO ----------
+const KEY="pz-b42-ficha", TKEY="pz-b42-time";
+let state={prof:LIB[0].prof,sel:new Set(LIB[0].traits)};
+let filter="all", chFilter="all", styFilter="all";
+try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&PROF[s.prof]&&Array.isArray(s.sel)){state={prof:s.prof,sel:new Set(s.sel.filter(id=>ALL[id]))}}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify({prof:state.prof,sel:[...state.sel]}))}catch(e){}}
+let team={size:2,comp:0,members:COMPS[2][0].m.map(id=>({lib:id,prof:LIBM[id].prof,sel:LIBM[id].traits.slice(),nm:LIBM[id].nm}))};
+try{const t=JSON.parse(localStorage.getItem(TKEY)||"null");if(t&&COMPS[t.size]&&Array.isArray(t.members)&&t.members.every(m=>PROF[m.prof])){t.members.forEach(m=>{if(m.lib&&!LIBM[m.lib])m.lib=""});team=t}}catch(e){}
+function saveTeam(){try{localStorage.setItem(TKEY,JSON.stringify(team))}catch(e){}}
+
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+function fmtCost(n,side){if(n===0)return '<span class="cost zero">0</span>';if(side==="gain")return '<span class="cost gain">+'+n+'</span>';return '<span class="cost spend">−'+n+'</span>'}
+function profCost(p){return p.cost>0?fmtCost(p.cost,"spend"):p.cost<0?fmtCost(-p.cost,"gain"):fmtCost(0)}
+function skillLine(sk){return Object.entries(sk||{}).map(([k,v])=>k+" "+v).join(" · ")}
+function roleChips(r){return [...r].map(id=>`<span class="role">${esc(ROLEPT[id])}</span>`).join("")||'<span class="hint">Sem papel definido ainda</span>'}
+
+// ---------- MONTADOR ----------
+function renderProfs(){
+  $("profs").innerHTML=PROFS.map(p=>{
+    const free=[...(p.gr||[]).map(id=>ALL[id].pt),...(p.grn||[])];
+    return `<button type="button" class="prof" data-p="${p.id}" aria-pressed="${p.id===state.prof}">
+    <span class="top"><span class="nm">${esc(p.pt)}</span>${profCost(p)}</span>
+    ${p.meta?'<span><span class="tag v-obr">Meta do vídeo</span></span>':''}
+    <span class="sk">${esc((skillLine(p.sk)+(p.str?" · Força +"+p.str:"")+(p.fit?" · Aptidão +"+p.fit:""))||"Sem bônus")}${free.length?" · grátis: "+esc(free.join(", ")):""}${p.note?" · "+esc(p.note):""}</span>
+  </button>`}).join("");
+}
+function blockedBy(t){
+  const p=PROF[state.prof];
+  if((p.gr||[]).includes(t.id))return {pt:"profissão (já vem grátis)"};
+  if((p.ex||[]).includes(t.id))return {pt:"Desensitized do "+p.pt};
+  for(const o of EX[t.id]||[]){if(state.sel.has(o))return ALL[o]}return null}
+function visible(t){
+  if(filter==="all")return true;
+  if(filter==="sel")return state.sel.has(t.id);
+  if(filter==="rec")return t.v==="obr"||t.v==="meta";
+  if(filter==="top")return (CONS[t.id]||0)>=TOPN;
+  if(filter==="opc")return t.v==="opc";
+  if(filter==="bad")return t.v==="evi"||t.v==="nun";
+  return true;
+}
+function traitHTML(t){
+  const on=state.sel.has(t.id), b=on?null:blockedBy(t);
+  const sk=skillLine(t.sk)+(t.str?(t.sk?" · ":"")+"Força "+(t.str>0?"+":"")+t.str:"")+(t.fit?((t.sk||t.str)?" · ":"")+"Aptidão "+(t.fit>0?"+":"")+t.fit:"");
+  return `<button type="button" class="trait" data-t="${t.id}" aria-pressed="${on}" ${b?"disabled":""}>
+    <span class="top"><span class="nm">${esc(t.pt)}</span><span class="en">${esc(t.en)}</span>${fmtCost(t.cost,t.side==="neg"?"gain":"spend")}</span>
+    <span class="top"><span class="tag v-${t.v}">${VLABEL[t.v]}</span>${sk?`<span class="en">${esc(sk)}</span>`:""}<span class="cons" style="margin-left:auto" title="Em quantas das ${CHLIB.length} builds dos canais este traço aparece"><b>${CONS[t.id]||0}</b>/${CHLIB.length}</span></span>
+    <span class="note">${esc(t.note)}</span>
+    ${b?`<span class="lock">Bloqueado por ${esc(b.pt)}</span>`:""}
+  </button>`;
+}
+function renderTraits(){
+  const order={obr:0,meta:1,opc:2,dis:3,neu:4,evi:5,nun:6};
+  const sort=a=>a.slice().sort((x,y)=>order[x.v]-order[y.v]);
+  const n=sort(NEG).filter(visible), p=sort(POS).filter(visible);
+  const none='<p class="note" style="color:var(--muted);font-size:13px">Nenhum traço neste filtro.</p>';
+  $("negList").innerHTML=n.map(traitHTML).join("")||none;
+  $("posList").innerHTML=p.map(traitHTML).join("")||none;
+}
+function pips(n){let h="";for(let i=1;i<=10;i++)h+=`<i class="${i<=n?"on":""}"></i>`;return h}
+function renderSummary(){
+  const c=compute(state.prof,state.sel);
+  $("saldoNum").textContent=c.saldo;
+  $("saldo").className="saldo"+(c.saldo<0?" neg":c.saldo>0?" pos":"");
+  $("sumNeg").textContent="+"+c.neg; $("sumPos").textContent="−"+c.pos;
+  $("vStr").textContent=c.str; $("pStr").innerHTML=pips(c.str); $("stStr").classList.toggle("warn",c.str<5);
+  $("vFit").textContent=c.fit; $("pFit").innerHTML=pips(c.fit); $("stFit").classList.toggle("warn",c.fit<5);
+  $("myRoles").innerHTML=roleChips(rolesOf(state.prof,state.sel));
+  const sks=Object.entries(c.sk).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
+  $("skills").innerHTML=sks.length?sks.map(([k,v])=>`<div class="skill"><span>${esc(k)}</span><span class="lv" aria-label="nível ${v}">${Array.from({length:Math.max(v,3)},(_,i)=>`<i class="${i<v?"on":""}"></i>`).join("")}<span class="mono" style="font-size:11px;margin-left:4px">${v}</span></span></div>`).join(""):'<span style="color:var(--muted);font-size:12.5px">Nenhuma perícia acima de 0.</span>';
+  const w=[];
+  if(c.saldo<0)w.push(["bad",`Faltam ${-c.saldo} ponto${c.saldo===-1?"":"s"}. Tire um positivo ou marque mais um negativo. O jogo não deixa começar assim.`]);
+  else if(c.saldo>0)w.push(["",`Sobram ${c.saldo} ponto${c.saldo===1?"":"s"}. Dá para pegar ${c.saldo>=4?"Herbalista ou Organizado":c.saldo>=2?"Andarilho ou um traço de 2":"Bom de Volante"}, ou deixar sobrando.`]);
+  else w.push(["ok","Saldo zerado. Build válida para o jogo."]);
+  if(!state.sel.has("keen_hearing"))w.push(["","Sem Audição Aguçada. O Shivas só passou de 1 ano de sobrevivência depois que começou a pegar (Laughter e OVERCHARGED EGG abrem mão dela para comprar atributo)."]);
+  if(c.fit<5)w.push(["bad",`Aptidão ${c.fit}: vai cansar toda hora. Só vale se você sabe upar rápido.`]);
+  if(c.str<5)w.push(["",`Força ${c.str}: menos dano e peso. Força sobe rápido, mas o começo é mais duro.`]);
+  const nun=[...state.sel].filter(id=>ALL[id].v==="nun").map(id=>ALL[id].pt);
+  if(nun.length)w.push(["bad","Marcado como “nunca” no vídeo: "+nun.join(", ")+"."]);
+  if(state.sel.has("speed_demon"))w.push(["","Bom de Volante: a ré chama muito zumbi. Se for iniciante, deixe o ponto sobrando."]);
+  if(state.sel.has("claustrophobic"))w.push(["","Claustrofóbico: leve álcool e dê um gole antes de dormir em lugar fechado."]);
+  if(state.sel.has("short_sighted"))w.push(["","Míope: escolha óculos na roupa inicial."]);
+  if(state.prof==="construction"&&!state.sel.has("whittler"))w.push(["","Sem Entalhador vai demorar mais para chegar no Carving 9–10 e fabricar as armas."]);
+  $("warns").innerHTML=w.map(([k,t])=>`<li class="${k}">${esc(t)}</li>`).join("");
+  const posSel=[...state.sel].filter(id=>ALL[id].side==="pos").map(id=>ALL[id].pt);
+  const negSel=[...state.sel].filter(id=>ALL[id].side==="neg").map(id=>ALL[id].pt);
+  $("picked").innerHTML=`<b>${esc(c.p.pt)}</b><br><b>Positivos (${posSel.length}):</b> ${esc(posSel.join(", ")||"nenhum")}<br><b>Negativos (${negSel.length}):</b> ${esc(negSel.join(", ")||"nenhum")}`;
+}
+function renderMontador(){renderProfs();renderTraits();renderSummary();save()}
+
+$("profs").addEventListener("click",e=>{const b=e.target.closest(".prof");if(!b)return;state.prof=b.dataset.p;const p=PROF[state.prof];[...(p.gr||[]),...(p.ex||[])].forEach(id=>state.sel.delete(id));renderMontador()});
+function onTrait(e){const b=e.target.closest(".trait");if(!b||b.disabled)return;const id=b.dataset.t;state.sel.has(id)?state.sel.delete(id):state.sel.add(id);renderMontador()}
+$("negList").addEventListener("click",onTrait);$("posList").addEventListener("click",onTrait);
+document.querySelectorAll("#panel-montador .chip").forEach(c=>c.addEventListener("click",()=>{filter=c.dataset.f;document.querySelectorAll("#panel-montador .chip").forEach(x=>x.setAttribute("aria-pressed",x===c));renderTraits()}));
+$("btnClear").addEventListener("click",()=>{state={prof:state.prof,sel:new Set()};renderMontador();flash("msg","Traços zerados. Profissão mantida.")});
+
+function flash(id,t){$(id).textContent=t;clearTimeout(flash[id]);flash[id]=setTimeout(()=>$(id).textContent="",3500)}
+function code(prof,sel){return "B42:"+prof+":"+[...sel].join(",")}
+function parseCode(raw){const m=/^B42:([a-z_]+):([a-z_,]*)$/i.exec(raw.trim());if(!m||!PROF[m[1]])return null;return {prof:m[1],sel:m[2].split(",").filter(id=>ALL[id])}}
+function buildText(prof,sel,title){const c=compute(prof,sel);const s=[...sel].filter(id=>!c.granted.has(id));const posSel=s.filter(id=>ALL[id].side==="pos").map(id=>ALL[id].pt);const negSel=s.filter(id=>ALL[id].side==="neg").map(id=>ALL[id].pt);
+  return `${title?title+" — ":""}${c.p.pt}\nForça ${c.str} · Aptidão ${c.fit} · Saldo ${c.saldo}\nPositivos: ${posSel.join(", ")||"—"}\nNegativos: ${negSel.join(", ")||"—"}\nCódigo: ${code(prof,s)}`}
+async function copy(t,ok,msgId,fbId){try{await navigator.clipboard.writeText(t);$(fbId).hidden=true;flash(msgId,ok)}catch(e){const f=$(fbId);f.hidden=false;f.value=t;f.focus();f.select();flash(msgId,"Selecionei o texto abaixo. Use Ctrl/Cmd+C.")}}
+$("btnCopyText").addEventListener("click",()=>copy("Build PZ B42.21\n"+buildText(state.prof,state.sel),"Resumo copiado. Cole no grupo.","msg","fallback"));
+$("btnCopyCode").addEventListener("click",()=>copy(code(state.prof,state.sel),"Código copiado.","msg","fallback"));
+$("btnLoad").addEventListener("click",()=>{const r=parseCode($("codeIn").value);if(!r){flash("msg","Código inválido. Ele começa com B42: e vem do botão Copiar código.");return}state={prof:r.prof,sel:new Set(r.sel)};renderMontador();flash("msg","Build do amigo carregada.")});
+
+// ---------- BIBLIOTECA ----------
+const STYLES=["Iniciante","Combate","Longo prazo","Extinção","Tiro","Veículos","Furtivo","Sem combate"];
+function chip(attr,val,label,on){return `<button class="chip" type="button" ${attr}="${esc(val)}" aria-pressed="${on}">${esc(label)}</button>`}
+function renderLibFilters(){
+  $("chFilters").innerHTML='<span class="hint">Canal</span>'+chip("data-ch","all","Todos",chFilter==="all")+Object.entries(CH).map(([k,c])=>chip("data-ch",k,c.nm+" · "+CHLIB.filter(b=>b.ch===k).length,chFilter===k)).join("");
+  $("styFilters").innerHTML='<span class="hint">Estilo</span>'+chip("data-sty","all","Todos",styFilter==="all")+STYLES.map(s=>chip("data-sty",s,s,styFilter===s)).join("");
+}
+$("chFilters").addEventListener("click",e=>{const b=e.target.closest("[data-ch]");if(!b)return;chFilter=b.dataset.ch;renderLibFilters();renderLib()});
+$("styFilters").addEventListener("click",e=>{const b=e.target.closest("[data-sty]");if(!b)return;styFilter=b.dataset.sty;renderLibFilters();renderLib()});
+function traitLists(b){
+  const pr=PROF[b.prof], free=new Set(pr.gr||[]);
+  const posSel=b.traits.filter(id=>ALL[id].side==="pos"&&!free.has(id)).map(id=>ALL[id].pt);
+  const negSel=b.traits.filter(id=>ALL[id].side==="neg").map(id=>ALL[id].pt);
+  return `<div class="tl"><b>+</b> ${esc(posSel.join(", "))}<br><b>−</b> ${esc(negSel.join(", "))}</div>`;
+}
+function statsRow(b,c){return `<div class="minis"><span>Força <b>${c.str}</b></span><span>Aptidão <b>${c.fit}</b></span><span>Saldo <b class="${c.saldo<0?"bad-n":"ok-n"}">${c.saldo}</b></span></div>`}
+function chCard(b){
+  const sel=new Set(b.traits), c=compute(b.prof,sel), ch=CH[b.ch];
+  return `<article class="bcard">
+    <div class="hd"><h3>${esc(b.nm)}</h3><span class="chn">${esc(ch.nm)}</span></div>
+    <div class="src"><span>${esc(c.p.pt)} · ${profCost(c.p)}</span><span class="lang">${ch.lg}</span><span>gravada na ${ch.pt} · ${ch.dt}</span>${c.saldo>=0?'<span class="valid">Fecha na 42.21</span>':'<span class="valid no">Não fecha na 42.21</span>'}</div>
+    <p class="idea">${esc(b.d)}</p>
+    <ul class="why">${b.why.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
+    <div class="care"><b>Cuidado:</b> ${esc(b.care)}</div>
+    ${b.fix?`<div class="fix"><b>Ajuste da ficha:</b> ${esc(b.fix)}</div>`:""}
+    ${statsRow(b,c)}
+    <div class="rolesrow">${roleChips(rolesOf(b.prof,sel,b.id))}${b.sty.map(s=>`<span class="tag v-opc">${esc(s)}</span>`).join("")}</div>
+    ${traitLists(b)}
+    <div class="acts"><button class="btn primary sm" type="button" data-open="${b.id}">Abrir no montador</button><span class="src"><a href="${ch.url}" target="_blank" rel="noopener">▶ ${esc(ch.t)}</a></span></div>
+  </article>`;
+}
+function teamCard(b){
+  const sel=new Set(b.traits), c=compute(b.prof,sel);
+  return `<article class="bcard">
+    <div class="hd"><h3>${esc(b.nm)}</h3><span class="tag v-opc">${esc(b.tag)}</span></div>
+    <div class="pf">${esc(c.p.pt)} · ${profCost(c.p)}</div>
+    <p>${esc(b.d)}</p>
+    <div class="rolesrow">${roleChips(rolesOf(b.prof,sel,b.id))}</div>
+    ${statsRow(b,c)}
+    ${traitLists(b)}
+    <div><button class="btn primary sm" type="button" data-open="${b.id}">Abrir no montador</button></div>
+  </article>`;
+}
+function renderLib(){
+  const list=CHLIB.filter(b=>(chFilter==="all"||b.ch===chFilter)&&(styFilter==="all"||b.sty.includes(styFilter)));
+  $("libCount").textContent=list.length+" de "+CHLIB.length+" builds";
+  $("lib").innerHTML=list.map(chCard).join("")||'<p class="hint">Nenhuma build com esse canal e estilo. Tente outro filtro.</p>';
+  $("libTeam").innerHTML=TEAMLIB.map(teamCard).join("");
+}
+function openBuild(e){const b=e.target.closest("[data-open]");if(!b)return;const L=LIBM[b.dataset.open];state={prof:L.prof,sel:new Set(L.traits)};renderMontador();go("montador");flash("msg",L.nm+(L.ch?" ("+CH[L.ch].nm+")":"")+" carregada.")}
+$("lib").addEventListener("click",openBuild);$("libTeam").addEventListener("click",openBuild);
+
+// ---------- ESQUADRÃO ----------
+function memberFromLib(id){const L=LIBM[id];return {lib:id,prof:L.prof,sel:L.traits.slice(),nm:L.nm}}
+function renderSizes(){
+  $("sizes").innerHTML='<span class="hint" style="margin-right:4px">Jogadores:</span>'+Object.keys(COMPS).map(n=>`<button class="chip" type="button" data-size="${n}" aria-pressed="${+n===team.size}">${n}${n==="6"?"+":""}</button>`).join("");
+  $("comps").innerHTML=COMPS[team.size].map((c,i)=>`<button class="comp" type="button" data-comp="${i}" aria-pressed="${i===team.comp}">
+    <strong>${esc(c.nm)}</strong><span>${esc(c.para)}. ${esc(c.why[0])}</span>
+    <span class="rolesrow">${c.m.map(id=>`<span class="role">${esc(LIBM[id].nm)}</span>`).join("")}</span></button>`).join("");
+}
+$("sizes").addEventListener("click",e=>{const b=e.target.closest("[data-size]");if(!b)return;team.size=+b.dataset.size;team.comp=0;team.members=COMPS[team.size][0].m.map(memberFromLib);renderTeam()});
+$("comps").addEventListener("click",e=>{const b=e.target.closest("[data-comp]");if(!b)return;team.comp=+b.dataset.comp;team.members=COMPS[team.size][team.comp].m.map(memberFromLib);renderTeam()});
+
+function renderSlots(){
+  const opt=b=>`<option value="${b.id}">${esc(b.nm)} · ${esc(PROF[b.prof].pt)}${b.ch?" · "+esc(CH[b.ch].nm):""}</option>`;
+  const opts=`<optgroup label="Builds dos canais">${CHLIB.map(opt).join("")}</optgroup><optgroup label="Papéis para co-op">${TEAMLIB.map(opt).join("")}</optgroup>`;
+  $("slots").innerHTML=team.members.map((m,i)=>{
+    const sel=new Set(m.sel), c=compute(m.prof,sel);
+    return `<div class="slot">
+      <span class="who">Jogador ${i+1}</span>
+      <h3>${esc(m.nm)}</h3>
+      <div class="pf hint">${esc(c.p.pt)} · Força ${c.str} · Aptidão ${c.fit} · Saldo <span class="mono ${c.saldo<0?"bad-n":"ok-n"}">${c.saldo}</span></div>
+      <div class="rolesrow">${roleChips(rolesOf(m.prof,sel,m.lib))}</div>
+      <label class="sublbl" for="slotSel${i}" style="margin:2px 0 0">Trocar build</label>
+      <select id="slotSel${i}" data-slot="${i}">${m.lib?"":`<option value="" selected>Personalizada</option>`}${opts.replace(`value="${m.lib}"`,`value="${m.lib}" selected`)}</select>
+      <div class="btns">
+        <button class="btn sm" type="button" data-edit="${i}">Editar no montador</button>
+        <button class="btn sm" type="button" data-take="${i}">Usar a do montador</button>
+      </div>
+    </div>`}).join("");
+}
+$("slots").addEventListener("change",e=>{const s=e.target.closest("select[data-slot]");if(!s||!s.value)return;team.members[+s.dataset.slot]=memberFromLib(s.value);team.comp=-1;renderTeam()});
+$("slots").addEventListener("click",e=>{
+  const ed=e.target.closest("[data-edit]"), tk=e.target.closest("[data-take]");
+  if(ed){const m=team.members[+ed.dataset.edit];state={prof:m.prof,sel:new Set(m.sel)};renderMontador();go("montador");flash("msg",`Editando ${m.nm}. Volte ao Esquadrão e clique “Usar a do montador” na vaga.`)}
+  if(tk){const i=+tk.dataset.take;team.members[i]={lib:"",prof:state.prof,sel:[...state.sel],nm:"Build do montador · "+PROF[state.prof].pt};team.comp=-1;renderTeam();flash("teamMsg",`Vaga ${i+1} atualizada com a build do montador.`)}
+});
+
+function renderMatrix(){
+  const rs=team.members.map(m=>rolesOf(m.prof,new Set(m.sel),m.lib));
+  let h=`<thead><tr><th>Papel</th>${team.members.map((m,i)=>`<th title="${esc(m.nm)}">J${i+1}</th>`).join("")}<th>Total</th></tr></thead><tbody>`;
+  ROLES.forEach(r=>{const n=rs.filter(s=>s.has(r.id)).length;
+    h+=`<tr class="${n?"":"gap"}"><td>${esc(r.pt)} <span class="hint">· ${esc(r.hint)}</span></td>${rs.map(s=>s.has(r.id)?'<td class="y">✓</td>':'<td class="n">·</td>').join("")}<td class="cnt">${n}</td></tr>`});
+  $("matrix").innerHTML=h+"</tbody>";
+  return rs;
+}
+function renderTeamWarns(rs){
+  const w=[], ms=team.members, cs=ms.map(m=>compute(m.prof,new Set(m.sel)));
+  const cover=id=>rs.some(s=>s.has(id));
+  const neg=cs.map((c,i)=>c.saldo<0?i+1:0).filter(Boolean);
+  if(neg.length)w.push(["bad",`Jogador ${neg.join(", ")} com saldo negativo. O jogo não deixa criar.`]);
+  if(!cover("frente"))w.push(["bad","Ninguém na linha de frente. Alguém precisa limpar prédio e segurar porta."]);
+  else if(rs.filter(s=>s.has("frente")).length===ms.length&&ms.length>2)w.push(["bad","Todo mundo é combatente. A wiki alerta: sem gerador e sem médico o time trava no 2º mês."]);
+  if(!cover("medico"))w.push(["","Sem médico. Escolha quem vai upar Primeiros Socorros e guarde o kit na base."]);
+  if(!cover("energia"))w.push(["","Sem Energia. Gerador só depois de achar a revista Generator Magazine."]);
+  if(!cover("veiculo"))w.push(["","Sem Veículos. Carro quebrado vira sucata; procure a revista de mecânica do modelo."]);
+  if(!cover("comida"))w.push(["","Sem Comida. Depois que as latas acabarem, alguém precisa pescar, plantar ou coletar."]);
+  if(!cover("base"))w.push(["","Sem Construção. Barricada com Carpintaria baixa quebra rápido."]);
+  const smokers=ms.map((m,i)=>m.sel.includes("smoker")?i+1:0).filter(Boolean);
+  if(smokers.length>1)w.push(["bad",`${smokers.length} fumantes (J${smokers.join(", J")}). Na B42 cigarro é raro: mantenha só um.`]);
+  const profs={};ms.forEach((m,i)=>{(profs[m.prof]=profs[m.prof]||[]).push(i+1)});
+  Object.entries(profs).filter(([,v])=>v.length>1).forEach(([p,v])=>w.push(["",`${PROF[p].pt} repetido (J${v.join(", J")}). Perícias sobrepostas; considere trocar um.`]));
+  const slow=ms.filter(m=>m.sel.includes("slow_reader")).length;
+  if(slow===ms.length&&ms.length>1)w.push(["","Todos com Semianalfabeto. No servidor, peça leitura acelerada ou alguém deixe de pegar."]);
+  if(!w.some(x=>x[0]==="bad"))w.unshift(["ok",w.length?"Time válido: todos com saldo ≥ 0 e alguém na linha de frente. Os avisos abaixo são papéis que alguém vai precisar upar.":"Time válido e com todos os papéis principais cobertos."]);
+  $("teamWarns").innerHTML=w.map(([k,t])=>`<li class="${k}">${esc(t)}</li>`).join("");
+}
+function renderTeam(){renderSizes();renderSlots();renderTeamWarns(renderMatrix());saveTeam()}
+function teamText(){
+  const comp=team.comp>=0?COMPS[team.size][team.comp]:null;
+  return `Plano do time · PZ B42.21 · ${team.members.length} jogadores${comp?" · "+comp.nm:""}\n\n`+team.members.map((m,i)=>`J${i+1}: `+buildText(m.prof,new Set(m.sel),m.nm)+"\nPapel: "+([...rolesOf(m.prof,new Set(m.sel),m.lib)].map(r=>ROLEPT[r]).join(", ")||"—")).join("\n\n");
+}
+$("btnTeamText").addEventListener("click",()=>copy(teamText(),"Plano copiado. Cole no Discord.","teamMsg","teamFallback"));
+$("btnTeamCode").addEventListener("click",()=>copy(team.members.map(m=>code(m.prof,m.sel)).join("|"),"Código do time copiado.","teamMsg","teamFallback"));
+$("btnTeamLoad").addEventListener("click",()=>{
+  const parts=$("teamIn").value.split("|").map(parseCode);
+  if(!parts.length||parts.some(p=>!p)||parts.length>6){flash("teamMsg","Código inválido. Use o que sai de “Copiar código do time”.");return}
+  team={size:Math.max(2,Math.min(6,parts.length)),comp:-1,members:parts.map(p=>({lib:"",prof:p.prof,sel:p.sel,nm:"Build importada · "+PROF[p.prof].pt}))};
+  renderTeam();flash("teamMsg","Time carregado.");
+});
+
+// ---------- COMBOS ----------
+let comboSize="all";
+function coverage(ms){return ms.map(id=>{const b=LIBM[id];return rolesOf(b.prof,new Set(b.traits),b.id)})}
+function comboWarns(c){
+  const w=[], bs=c.m.map(id=>LIBM[id]);
+  const smk=bs.filter(b=>b.traits.includes("smoker")).map(b=>b.nm);
+  if(smk.length>1)w.push(`${smk.length} fumantes (${smk.join(", ")}): na B42 cigarro é raro.`);
+  const pr={};bs.forEach(b=>(pr[b.prof]=pr[b.prof]||[]).push(b.nm));
+  Object.entries(pr).filter(([,v])=>v.length>1).forEach(([p,v])=>w.push(`${PROF[p].pt} repetido (${v.join(", ")}): perícias se sobrepõem.`));
+  return w;
+}
+function renderCombos(){
+  const sizes=[...new Set(COMBOS.map(c=>c.m.length))].sort();
+  $("comboSizes").innerHTML='<span class="hint">Jogadores</span>'+chip("data-cs","all","Todos",comboSize==="all")+sizes.map(n=>chip("data-cs",n,n+(n===6?"+":""),String(comboSize)===String(n))).join("");
+  const list=COMBOS.filter(c=>comboSize==="all"||c.m.length===+comboSize);
+  $("comboCount").textContent=list.length+" combos";
+  $("comboList").innerHTML=list.map(c=>{
+    const rs=coverage(c.m), has=id=>rs.some(r=>r.has(id)), miss=ROLES.filter(r=>!has(r.id)).length, w=comboWarns(c);
+    return `<article class="combo">
+      <div class="hd"><h3>${esc(c.nm)}</h3><span class="chn">${c.m.length} jogadores</span></div>
+      <div class="hint">${esc(c.para)}</div>
+      <ol class="members">${c.m.map((id,i)=>{const b=LIBM[id],k=compute(b.prof,new Set(b.traits));
+        return `<li><span class="who">J${i+1}</span><span class="mb"><b>${esc(b.nm)}</b> <span class="hint">${esc(PROF[b.prof].pt)} · F${k.str} A${k.fit}</span><br><span class="by">${b.ch?esc(CH[b.ch].nm):"papel de co-op"}</span> ${[...rs[i]].map(r=>`<span class="role">${esc(ROLEPT[r])}</span>`).join("")}</span></li>`}).join("")}</ol>
+      <div><div class="sublbl">Por que combinam</div><ul class="why">${c.why.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+      <div><div class="sublbl">Papéis cobertos · ${ROLES.length-miss}/${ROLES.length}</div><div class="cover">${ROLES.map(r=>`<span class="cv ${has(r.id)?"on":"off"}" title="${esc(r.hint)}">${has(r.id)?"✓":"✗"} ${esc(r.pt)}</span>`).join("")}</div></div>
+      <div class="care"><b>Atenção:</b> ${esc(c.care)}${w.length?" "+esc(w.join(" ")):""}</div>
+      <div class="acts"><button class="btn primary sm" type="button" data-combo="${c.id}">Montar no Esquadrão</button><button class="btn sm" type="button" data-combocode="${c.id}">Copiar código do time</button></div>
+    </article>`}).join("");
+}
+$("comboSizes").addEventListener("click",e=>{const b=e.target.closest("[data-cs]");if(!b)return;comboSize=b.dataset.cs;renderCombos()});
+$("comboList").addEventListener("click",e=>{
+  const b=e.target.closest("[data-combo]"), k=e.target.closest("[data-combocode]");
+  if(b){const c=COMBOM[b.dataset.combo];team={size:c.m.length,comp:COMPS[c.m.length].indexOf(c),members:c.m.map(memberFromLib)};go("esquadrao");flash("teamMsg",c.nm+" carregado.")}
+  if(k){const c=COMBOM[k.dataset.combocode];navigator.clipboard?.writeText(c.m.map(id=>code(LIBM[id].prof,LIBM[id].traits)).join("|")).then(()=>{k.textContent="Copiado!";setTimeout(()=>k.textContent="Copiar código do time",2000)},()=>{k.textContent="Não deu para copiar"})}
+});
+
+// ---------- ABAS ----------
+const TABS=["montador","builds","combos","esquadrao","guia"];
+function go(t){
+  if(!TABS.includes(t))t="montador";
+  TABS.forEach(x=>{$("panel-"+x).hidden=x!==t;$("tab-"+x).setAttribute("aria-selected",x===t)});
+  if(t==="esquadrao")renderTeam();
+  const tb=$("tab-"+t), nav=tb.parentElement; if(nav.scrollWidth>nav.clientWidth)nav.scrollLeft=tb.offsetLeft-nav.offsetLeft-(nav.clientWidth-tb.offsetWidth)/2;
+  try{history.replaceState(null,"","#"+t)}catch(e){}
+  window.scrollTo({top:0});
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>go(b.dataset.tab)));
+
+renderMontador();renderLibFilters();renderLib();renderCombos();renderTeam();
+go((location.hash||"").replace("#",""));
+})();
+</script>
+
+</body>
+</html>
