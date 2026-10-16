@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
 <title>Ficha de Sobrevivente B42</title>
-<meta name="description" content="Ficha do grupo Evangeliteens para Project Zomboid B42.21: montador de build com boneco 3D, 16 builds de canais explicadas, combos de esquadrão, rotas de Rosewood, Riverside e Muldraugh no mapa e guia de fabricação.">
+<meta name="description" content="Ficha do grupo Evangeliteens para Project Zomboid B42.21: montador de build com boneco 3D, 16 builds de canais explicadas, combos de esquadrão, rotas de Rosewood, Riverside e Muldraugh, guia de fabricação, regras do mundo e mods.">
 <meta property="og:title" content="Ficha de Sobrevivente B42 · Project Zomboid 42.21">
 <meta property="og:description" content="Ficha do grupo Evangeliteens. Builds dos canais explicadas, combos de esquadrão e montador de traços. Tudo conferido na 42.21.">
 <meta property="og:type" content="website">
@@ -291,6 +291,23 @@ img.pt.lg{width:96px;height:120px}
 .combo.flash{animation:flash 1.4s ease 2}
 @keyframes flash{50%{box-shadow:0 0 0 3px var(--accent)}}
 /* Mapa */
+/* Mods */
+.mods{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px;align-items:start}
+.mod-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));gap:8px}
+.mod{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;align-content:start;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:12px;cursor:pointer}
+.mod:has(input:checked){border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.mod input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent)}
+.mod h3{font-family:var(--f-body);font-size:15px;font-weight:700;letter-spacing:0;line-height:1.25}
+.mod .meta{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center;font-size:11.5px;color:var(--muted);margin-top:2px}
+.mod .meta .tag{background:var(--surface2);border-color:var(--line);color:var(--ink)}
+.mod p{grid-column:2;margin:0;font-size:13px}
+.mod .ok{grid-column:2;font-size:12px;color:var(--good);font-weight:600}
+.mod .dep{grid-column:2;font-size:12px;color:var(--muted)}
+.mod .dep b{color:var(--ink)}
+.mod a{grid-column:2;justify-self:start;font-size:12px;font-weight:600;color:var(--accent)}
+.srv{display:grid;gap:3px;font-family:var(--f-mono);font-size:11.5px;font-weight:700;color:var(--muted)}
+.srv textarea{width:100%;resize:vertical;font-family:var(--f-mono);font-size:12px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);overflow-wrap:anywhere}
+@media (max-width:760px){.mods{grid-template-columns:minmax(0,1fr)}}
 /* Mundo */
 .mnome{display:grid;gap:4px;max-width:420px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .mnome input{font:inherit;font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink);padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
@@ -427,6 +444,7 @@ img.pt.lg{width:96px;height:120px}
       <button class="tab" role="tab" id="tab-guia" data-tab="guia" type="button">Sobrevivência</button>
       <button class="tab" role="tab" id="tab-fab" data-tab="fab" type="button">Fabricar</button>
       <button class="tab" role="tab" id="tab-mundo" data-tab="mundo" type="button">Mundo</button>
+      <button class="tab" role="tab" id="tab-mods" data-tab="mods" type="button">Mods</button>
     </nav>
   </div>
 </header>
@@ -452,6 +470,7 @@ img.pt.lg{width:96px;height:120px}
       <button class="qcard" type="button" data-go="guia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg><b>Sobrevivência</b><small>Rotas de Rosewood, Riverside e Muldraugh</small></button>
       <button class="qcard" type="button" data-go="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4.5l5 5-2.5 2.5-5-5z"/><path d="M12 7l-8.5 8.5a1.8 1.8 0 0 0 2.5 2.5L14.5 9.5"/></svg><b>Fabricar</b><small>O que fazer primeiro e como</small></button>
       <button class="qcard" type="button" data-go="mundo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><b>Mundo</b><small>Regras do servidor para mandar ao grupo</small></button>
+      <button class="qcard" type="button" data-go="mods"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h4V5a2 2 0 1 1 4 0v2h4v4h-2a2 2 0 1 0 0 4h2v4H4v-4h2a2 2 0 1 0 0-4H4z"/></svg><b>Mods</b><small>Os mais baixados da Oficina que rodam na B42</small></button>
     </nav>
     <div class="intro-foot">
       <div class="legend" aria-label="Legenda das etiquetas">
@@ -648,6 +667,39 @@ img.pt.lg{width:96px;height:120px}
         <div class="frow" role="group" aria-label="Categoria" id="fabCats"></div>
         <div class="frow" role="group" aria-label="Dificuldade" id="fabDifs"></div>
         <div class="fab-list" id="fabList"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- MODS -->
+  <div id="panel-mods" role="tabpanel" aria-labelledby="tab-mods" hidden>
+    <div class="panel">
+      <section class="section" aria-labelledby="hMods">
+        <div class="sec-head"><h2 id="hMods">Mods do grupo</h2><span class="hint">Os mais baixados da Oficina Steam que funcionam na B42</span></div>
+        <p class="hint" style="margin:0;max-width:85ch">Levantamento de 16/10/2026: itens da Oficina com a etiqueta Build 42, em ordem de total de inscritos. Entraram só os que dizem na própria página que funcionam na B42 estável; ficaram de fora os marcados como descontinuados, legado ou só B41. Marque os que o grupo vai usar: as dependências entram sozinhas e a escolha vai junto no link da aba Mundo.</p>
+        <div class="frow" role="group" aria-label="Tipo de mod" id="modCats"></div>
+        <div class="mods">
+          <div class="mod-list" id="modList"></div>
+          <aside class="mres" aria-labelledby="hModSrv">
+            <h3 id="hModSrv">Para o servidor</h3>
+            <div class="mres-n" id="modN"></div>
+            <label class="srv"><span>Mods=</span><textarea id="modMods" rows="3" readonly></textarea></label>
+            <label class="srv"><span>WorkshopItems=</span><textarea id="modWs" rows="3" readonly></textarea></label>
+            <div class="mres-acts">
+              <button class="btn primary" type="button" id="modCopy">Copiar as duas linhas</button>
+              <button class="btn" type="button" id="modShare">Copiar link do mundo com mods</button>
+            </div>
+            <span class="hint" id="modFlash" aria-live="polite"></span>
+            <details class="mcomo"><summary>Como usar</summary>
+              <ol>
+                <li><b>Cada jogador:</b> inscreva-se nos mods marcados (botão Inscrever-se na Oficina) antes de entrar.</li>
+                <li><b>Quem hospeda pelo menu:</b> nas configurações do servidor, em Mods, adicione os mesmos mods.</li>
+                <li><b>Servidor dedicado:</b> troque as linhas <span class="mono">Mods=</span> e <span class="mono">WorkshopItems=</span> do arquivo <span class="mono">Zomboid/Server/servertest.ini</span> (o nome muda com o servidor) por estas.</li>
+                <li>Mod novo em save antigo pode quebrar o mundo. Combine a lista antes de começar.</li>
+              </ol>
+            </details>
+          </aside>
+        </div>
       </section>
     </div>
   </div>
@@ -1594,6 +1646,34 @@ const MGR=[
   ["CarGasConsumption","Consumo de Combustível","d",[0,100,0.1]]]]
 ];
 
+// ---------- MODS (Oficina Steam, 16/10/2026: etiqueta Build 42, ordem de total de inscritos; inscritos em mil) ----------
+// [workshop id, nome, Mod IDs, categoria, mil inscritos, o que faz, onde o autor diz que funciona, dependências (workshop ids), vem marcado]
+const MODS=[
+ ["2313387159","Better Sorting","BetterSortCC","Interface",3311,"Reorganiza as categorias dos itens e deixa o inventário mais fácil de ler.","B42, B41 e multiplayer",[],1],
+ ["2544353492","Has Been Read","P4HasBeenRead","Interface",2904,"Marca livros, revistas, mapas e panfletos que você já leu.","B42 estável (42.20) e multiplayer",[],1],
+ ["2503622437","Skill Recovery Journal","SkillRecoveryJournal","Jogabilidade",2814,"Diário que guarda parte do XP para o próximo personagem recuperar quando você morrer.","Etiqueta Build 42, atualizado em set/2026",["2896041179","3077900375"],1],
+ ["2447729538","Fluffy Hair","FH","Visual",2767,"Cabelos com mais volume e mais naturais.","B41, B42 e multiplayer hospedado",[],1],
+ ["2847184718","Proximity Inventory","ProximityInventory","Interface",2217,"Junta numa aba só os itens de todos os contêineres por perto.","B42.20+ e multiplayer",[],1],
+ ["2710167561","Map Legend UI","MapLegendUI","Interface",2000,"Legenda mais clara para o mapa do jogo.","B42.20 estável e multiplayer",[],1],
+ ["2409333430","'91 Range Rover Classic","91range","Veículos",1977,"Range Rover clássico, com interior e peças próprias (KI5).","B42.20+ e multiplayer",["3171167894"],0],
+ ["2956146279","Rain Cleans Blood","RainCleansBlood","Jogabilidade",1761,"A chuva lava aos poucos o sangue do chão, das roupas e dos carros.","B42.20 e multiplayer",[],1],
+ ["2625625421","Containers!","isoContainers","Construção",1747,"Contêineres de carga para usar como depósito ou base (KI5).","B42.20+ e multiplayer",[],0],
+ ["2142622992","Repair Any Clothes","RepairAnyClothes","Jogabilidade",1598,"Deixa consertar qualquer roupa.","B42, solo e multiplayer",[],1],
+ ["2866258937","Mini Health Panel","MiniHealthPanel","Interface",1578,"Painel de saúde pequeno sempre na tela. Na B42 mostra a tensão muscular de cada parte do corpo.","B42.20",[],1],
+ ["2757712197","Vehicle Repair Overhaul","VehicleRepairOverhaul;VehicleSalvageOverhaulB42","Jogabilidade",1543,"Desmonta carros para tirar peças e material. Precisa de Metalurgia 4 e Mecânica 3.","B42 e multiplayer",[],0],
+ ["515555911","More Builds","MoreBuilds","Construção",1258,"Muitos móveis, portas, muros e luzes novos no estilo do jogo. Pode pôr ou tirar no meio do save.","B42, solo e multiplayer",[],1],
+ ["3461263912","Clean HotBar","CleanHotBar","Interface",1202,"Barra de atalhos mais limpa, com barras coloridas para líquidos.","B42.12.3 até 42.21.0, solo e multiplayer",[],1],
+ ["2769706949","Tidy Up Meister","P4TidyUpMeister","Interface",1115,"Depois de uma ação, guarda de volta o item que você tirou da mochila.","B42.20 (versão 2) e multiplayer",[],1],
+ ["2650547917","Manage Containers","manageContainers","Interface",1047,"Atalhos para mover tudo de um inventário para outro.","B42, solo e multiplayer",[],1],
+ ["3268487204","Bandits NPC","Bandits2","Desafio",1040,"Bandidos e sobreviventes armados andando pelo mapa. Deixa o jogo bem mais difícil.","Só B42 (42.20+), solo e multiplayer",[],0],
+ ["2940354599","Fitness & Workout Overhaul","FWOFitnessWorkoutOverhaul;FWOBenchPressTreadmill","Jogabilidade",849,"Refaz os exercícios e acrescenta supino e esteira.","B42.20 estável e multiplayer",[],0],
+ // dependências
+ ["2896041179","errorMagnifier","errorMagnifier","Base",2650,"Mostra os erros de mod de um jeito legível. Pedido pelo Skill Recovery Journal.","B41 e B42",[],0],
+ ["3077900375","Mod Update and Alert System","ChuckleberryFinnAlertSystem","Base",1701,"Avisos de atualização dos mods do Chuckleberry Finn. O autor diz que é obrigatório na B42.","B42",[],0],
+ ["3171167894","that DAMN Library","damnlib","Base",3154,"Biblioteca dos carros do KI5. Necessária para o Range Rover.","B42.20+ e multiplayer",[],0]
+];
+const MODM={};MODS.forEach(x=>MODM[x[0]]=x);
+
 // ---------- CÁLCULO ----------
 function compute(profId,sel){
   const p=PROF[profId]||PROFS[0]; let neg=0,pos=0,str=5+(p.str||0),fit=5+(p.fit||0); const sk={};
@@ -2104,9 +2184,10 @@ $("fabOrder").addEventListener("click",e=>{const b=e.target.closest("[data-fq]")
 const SBD={};SB.A.forEach(([k,v])=>{if(Array.isArray(v))v.forEach(([k2,v2])=>SBD[k+"."+k2]=v2);else SBD[k]=v});
 const MOPT={};MGR.forEach(([,L])=>L.forEach(o=>MOPT[o[0]]=o));
 const presetVals=p=>Object.assign({},SBD,SB.P[p]||{});
-let mundo={n:"",p:"Apocalypse",c:{}};
+let mundo={n:"",p:"Apocalypse",c:{},m:MODS.filter(x=>x[8]).map(x=>x[0])};
 try{const o=JSON.parse(localStorage.getItem("pzMundo")||"null");if(o)mundo=cleanMundo(o)||mundo}catch(e){}
-function cleanMundo(o){if(!o||!MPRE[o.p])return null;const c={};Object.entries(o.c||{}).forEach(([k,v])=>{if(k in SBD&&typeof v===typeof SBD[k])c[k]=v});return {n:String(o.n||"").slice(0,40),p:o.p,c}}
+function cleanMundo(o){if(!o||!MPRE[o.p])return null;const c={};Object.entries(o.c||{}).forEach(([k,v])=>{if(k in SBD&&typeof v===typeof SBD[k])c[k]=v});
+  const m=Array.isArray(o.m)?o.m.filter(id=>MODM[id]):MODS.filter(x=>x[8]).map(x=>x[0]);return {n:String(o.n||"").slice(0,40),p:o.p,c,m}}
 function mVals(){return Object.assign(presetVals(mundo.p),mundo.c)}
 function saveMundo(){try{localStorage.setItem("pzMundo",JSON.stringify(mundo))}catch(e){}}
 function mSet(k,v){const base=presetVals(mundo.p);if(v===base[k])delete mundo.c[k];else mundo.c[k]=v}
@@ -2129,15 +2210,16 @@ function renderMundoRes(){
   $("mResN").textContent=`Preset ${MPRE[mundo.p].n}`+(d.length?` com ${d.length} mudança${d.length>1?"s":""}:`:", sem mudanças.");
   $("mResL").innerHTML=d.map(k=>`<li><b>${esc(MOPT[k][1])}:</b> ${esc(mShow(k,v[k]))} <span class="hint">(era ${esc(mShow(k,base[k]))})</span></li>`).join("");
   $("mResL").hidden=!d.length;
+  const ms=modsComDeps();$("mResN").textContent+=ms.length?` Mods: ${ms.length} (veja a aba Mods).`:" Sem mods.";
 }
-function mundoTxt(){const v=mVals(),d=mDiff();return `${mundo.n||"Mundo Evangeliteens"} · Project Zomboid 42.21\nPreset: ${MPRE[mundo.p].n}\n`+(d.length?d.map(k=>`- ${MOPT[k][1]}: ${mShow(k,v[k])}`).join("\n"):"Sem mudanças no preset.")+`\n${mundoLink()}`}
+function mundoTxt(){const v=mVals(),d=mDiff(),ms=modsComDeps();return `${mundo.n||"Mundo Evangeliteens"} · Project Zomboid 42.21\nPreset: ${MPRE[mundo.p].n}\n`+(d.length?d.map(k=>`- ${MOPT[k][1]}: ${mShow(k,v[k])}`).join("\n"):"Sem mudanças no preset.")+(ms.length?`\nMods (${ms.length}): ${ms.map(x=>x[1]).join(", ")}`:"")+`\n${mundoLink()}`}
 function mundoLink(){return BASE+"?w="+b64e(JSON.stringify(mundo))+"#mundo"}
 function sbNum(k,x){return SB.fl.includes(k)?(Number.isInteger(x)?x.toFixed(1):String(x)):String(Math.round(x))}
 function sbFmt(k,x){return typeof x==="boolean"?String(x):typeof x==="string"?JSON.stringify(x):sbNum(k,x)}
 function sandboxLua(){const v=mVals(),L=["SandboxVars = {","    VERSION = 6,"];
   SB.A.forEach(([k,x])=>{if(k==="Version")return;if(Array.isArray(x)){L.push(`    ${k} = {`);x.forEach(([k2])=>L.push(`        ${k2} = ${sbFmt(k+"."+k2,v[k+"."+k2])},`));L.push("    },")}else L.push(`    ${k} = ${sbFmt(k,v[k])},`)});
   L.push("}");return L.join("\n")+"\n"}
-function mCopy(txt,btn,ok){(navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>flash("mFlash",ok),()=>{prompt("Copie:",txt)})}
+function mCopy(txt,btn,ok,fid){(navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>flash(fid||"mFlash",ok),()=>{prompt("Copie:",txt)})}
 $("mNome").addEventListener("input",e=>{mundo.n=e.target.value.slice(0,40);saveMundo()});
 $("mPre").addEventListener("click",e=>{const b=e.target.closest("[data-mp]");if(!b||b.dataset.mp===mundo.p)return;const n=Object.keys(mundo.c).length;mundo.p=b.dataset.mp;mundo.c={};saveMundo();renderMundo();flash("mFlash",`Preset ${MPRE[mundo.p].n}`+(n?". As mudanças anteriores foram descartadas.":"."))});
 $("mGrupos").addEventListener("change",e=>{const el=e.target,k=el.dataset.mk;if(!k)return;const o=MOPT[k];let v;
@@ -2152,6 +2234,29 @@ $("mLink").addEventListener("click",e=>mCopy(mundoLink(),e.target,"Link copiado.
 $("mTxt").addEventListener("click",e=>mCopy(mundoTxt(),e.target,"Resumo copiado."));
 $("mLua").addEventListener("click",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([sandboxLua()],{type:"text/plain"}));a.download="servertest_SandboxVars.lua";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);flash("mFlash","Arquivo baixado. Troque “servertest” pelo nome do seu servidor.")});
 $("mReset").addEventListener("click",()=>{mundo.c={};saveMundo();renderMundo();flash("mFlash","Voltou ao preset.")});
+
+// ---------- MODS ----------
+let modCat="Todos";
+// selecionados + dependências, com as dependências antes de quem precisa delas
+function modsComDeps(){const out=[],seen=new Set(),add=id=>{const x=MODM[id];if(!x||seen.has(id))return;seen.add(id);x[7].forEach(add);out.push(x)};
+  MODS.forEach(x=>{if(mundo.m.includes(x[0]))add(x[0])});return out}
+function renderMods(){
+  const cats=["Todos",...new Set(MODS.map(x=>x[3]))];
+  $("modCats").innerHTML='<span class="hint">Tipo</span>'+cats.map(c=>chip("data-mc",c,c,c===modCat)).join("");
+  const sel=new Set(mundo.m),need=new Set(modsComDeps().map(x=>x[0]));
+  $("modList").innerHTML=MODS.filter(x=>modCat==="Todos"||x[3]===modCat).map(([id,n,mid,cat,k,txt,ok,deps])=>{const auto=!sel.has(id)&&need.has(id);
+    return `<label class="mod"><input type="checkbox" data-mod="${id}"${sel.has(id)||auto?" checked":""}${auto?" disabled":""}><div><h3>${esc(n)}</h3><div class="meta"><span class="tag">${esc(cat)}</span><span>${(k/1000).toLocaleString("pt-BR",{maximumFractionDigits:1})} mi de inscritos</span></div></div>
+      <p>${esc(txt)}</p><span class="ok">✓ ${esc(ok)}</span>${deps.length?`<span class="dep">Precisa de: <b>${deps.map(d=>esc(MODM[d][1])).join(", ")}</b> (entra sozinho)</span>`:""}${auto?`<span class="dep">Marcado porque outro mod precisa dele.</span>`:""}
+      <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=${id}" target="_blank" rel="noopener">Abrir na Oficina ↗</a></label>`}).join("");
+  const ms=modsComDeps(),dep=ms.length-mundo.m.filter(id=>MODM[id]).length;
+  $("modN").textContent=ms.length?`${ms.length} mods`+(dep?`, ${dep} como dependência.`:"."):"Nenhum mod marcado: o jogo fica vanilla.";
+  $("modMods").value="Mods="+ms.map(x=>x[2]).join(";");$("modWs").value="WorkshopItems="+ms.map(x=>x[0]).join(";");
+  renderMundoRes();
+}
+$("modCats").addEventListener("click",e=>{const b=e.target.closest("[data-mc]");if(b){modCat=b.dataset.mc;renderMods()}});
+$("modList").addEventListener("change",e=>{const id=e.target.dataset.mod;if(!id)return;mundo.m=mundo.m.filter(x=>x!==id);if(e.target.checked)mundo.m.push(id);saveMundo();renderMods()});
+$("modCopy").addEventListener("click",()=>mCopy($("modMods").value+"\n"+$("modWs").value,null,"Copiado.","modFlash"));
+$("modShare").addEventListener("click",()=>mCopy(mundoLink(),null,"Link copiado. Ele leva as regras do mundo e os mods.","modFlash"));
 
 // ---------- LINK RECEBIDO ----------
 function showInbox(r){const box=$("inbox");
@@ -2170,7 +2275,7 @@ $("inbox").addEventListener("click",e=>{const b=e.target.closest("[data-ib]");if
   box.hidden=true});
 
 // ---------- ABAS ----------
-const TABS=["montador","builds","combos","esquadrao","guia","fab","mundo"];
+const TABS=["montador","builds","combos","esquadrao","guia","fab","mundo","mods"];
 function go(t){
   if(!TABS.includes(t))t="montador";
   TABS.forEach(x=>{$("panel-"+x).hidden=x!==t;$("tab-"+x).setAttribute("aria-selected",x===t)});
@@ -2188,7 +2293,7 @@ renderMontador();renderLibFilters();renderLib();renderCombos();renderTeam();rend
 // link de mundo (?w=)
 {let w=null;try{w=new URL(location.href).searchParams.get("w")}catch(e){}if(w){let o=null;try{o=cleanMundo(JSON.parse(b64d(w)))}catch(e){}
   if(o){mundo=o;saveMundo();$("mundoMsg").textContent=`Você abriu o mundo “${o.n||"sem nome"}” que mandaram para você. Ele ficou salvo aqui.`;$("mundoMsg").hidden=false;try{history.replaceState(null,"",location.pathname+"#mundo")}catch(e){}}}}
-renderMundo();
+renderMundo();renderMods();
 go((location.hash||"").replace("#",""));
 // link de build (?b=) ou de esquadrão (?t=)
 if(/[?&][bt]=/.test(location.search)){const r=parseAny(location.href);if(r)showInbox(r);try{history.replaceState(null,"",location.pathname+location.hash)}catch(e){}}
