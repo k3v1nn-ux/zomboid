@@ -1150,6 +1150,7 @@ const TABS=["montador","builds","combos","esquadrao","guia"];
 function go(t){
   if(!TABS.includes(t))t="montador";
   TABS.forEach(x=>{$("panel-"+x).hidden=x!==t;$("tab-"+x).setAttribute("aria-selected",x===t)});
+  document.querySelector(".intro").hidden=t!=="montador";
   if(t==="esquadrao")renderTeam();
   const tb=$("tab-"+t), nav=tb.parentElement; if(nav.scrollWidth>nav.clientWidth)nav.scrollLeft=tb.offsetLeft-nav.offsetLeft-(nav.clientWidth-tb.offsetWidth)/2;
   try{history.replaceState(null,"","#"+t)}catch(e){}
