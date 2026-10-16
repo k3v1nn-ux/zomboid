@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
 <title>Ficha de Sobrevivente B42</title>
-<meta name="description" content="Project Zomboid B42.21: montador de build, 15 builds de canais explicadas, combos de esquadrão para co-op e dicas dos primeiros dias.">
+<meta name="description" content="Project Zomboid B42.21: montador de build com boneco 3D, 16 builds de canais explicadas, combos de esquadrão, rota de Rosewood no mapa e guia de fabricação.">
 <meta property="og:title" content="Ficha de Sobrevivente B42 · Project Zomboid 42.21">
 <meta property="og:description" content="Builds dos canais explicadas, combos de esquadrão e montador de traços. Tudo conferido na 42.21.">
 <meta property="og:type" content="website">
@@ -225,6 +225,98 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
 .combo .care{font-size:12.5px;padding:6px 8px;border-left:3px solid var(--bad);background:var(--bad-soft);border-radius:0 3px 3px 0}
 .combo .acts{display:flex;gap:8px;flex-wrap:wrap}
 
+/* Boneco 3D */
+.hero3d{position:relative;height:300px;border-radius:6px;background:radial-gradient(ellipse at 50% 85%,color-mix(in srgb,var(--accent) 22%,transparent),transparent 60%),linear-gradient(180deg,var(--surface2),var(--bg));border:1px solid var(--line);overflow:hidden;cursor:grab}
+.hero3d canvas,.squad3d canvas{display:block;width:100%;height:100%}
+.hero3d:active{cursor:grabbing}
+.hero-hint{position:absolute;left:8px;bottom:6px;font-size:11px;color:var(--muted);pointer-events:none}
+.hero3d.nogl{display:grid;place-items:center}
+.hero3d.nogl::after{content:"Seu navegador não abriu o 3D. O resto da ficha funciona normal.";font-size:12px;color:var(--muted);padding:12px;text-align:center}
+.name-row{display:grid;gap:4px}
+.name-row input,.pname,.fab-search input,.imp input{width:100%;padding:7px 9px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink);font-size:14px}
+.squad3d{position:relative;height:300px;border-radius:6px;border:1px solid var(--line);background:radial-gradient(ellipse at 50% 90%,color-mix(in srgb,var(--good) 18%,transparent),transparent 60%),linear-gradient(180deg,var(--surface2),var(--bg));overflow:hidden;cursor:grab;touch-action:pan-y}
+.sq-labels{position:absolute;inset:0;pointer-events:none}
+.sq-lb{position:absolute;left:0;top:0;display:grid;justify-items:center;background:var(--ink);color:var(--bg);border-radius:4px;padding:3px 7px;font-size:12px;line-height:1.2;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.sq-lb span{font-size:10.5px;opacity:.75}
+img.pt{display:block;width:72px;height:90px;object-fit:cover;border-radius:4px;background:var(--surface2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'%3E%3Cg fill='%2398a28f' opacity='.5'%3E%3Crect x='14' y='6' width='12' height='12' rx='2'/%3E%3Crect x='11' y='19' width='18' height='16' rx='2'/%3E%3Crect x='13' y='35' width='6' height='12'/%3E%3Crect x='21' y='35' width='6' height='12'/%3E%3C/g%3E%3C/svg%3E") center/60% no-repeat;border:1px solid var(--line)}
+img.pt.sm{width:44px;height:55px}
+img.pt.lg{width:96px;height:120px}
+/* Caixa de entrada e edição de vaga */
+.inbox{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;border:2px solid var(--accent);background:var(--accent-soft);border-radius:6px;padding:12px;margin:10px 0}
+.inbox h3{font-size:17px}
+.inbox .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.inbox .ppl{display:flex;gap:6px;flex-wrap:wrap}
+.slot-edit{display:flex;gap:10px;align-items:center;flex-wrap:wrap;border:2px solid var(--good);background:var(--good-soft);border-radius:6px;padding:10px 12px;font-size:14px}
+.slot-edit b{font-family:var(--f-display)}
+.slot .top3{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.slot .imp{display:flex;gap:6px}
+.slot .src-tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.recv{display:grid;gap:6px}
+.recv .r{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font-size:12.5px;border:1px solid var(--line);border-radius:4px;padding:5px;background:var(--surface2)}
+.recv .r b{display:block;font-size:13px}
+/* Builds: retrato e combos */
+.bcard .hd2{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.cmbs{display:grid;gap:6px}
+.cmb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;text-align:left;border:1px dashed var(--line);background:var(--surface2);border-radius:4px;padding:6px;cursor:pointer;font-size:12.5px;color:var(--ink)}
+.cmb:hover{border-color:var(--accent)}
+.cmb .plus{font-family:var(--f-display);font-size:18px;color:var(--accent)}
+.cmb b{flex-basis:100%;font-size:12px}
+.members li{grid-template-columns:auto 1fr}
+.members .pwrap{position:relative}
+.members .pwrap .who{position:absolute;left:-4px;top:-4px}
+.combo.flash{animation:flash 1.4s ease 2}
+@keyframes flash{50%{box-shadow:0 0 0 3px var(--accent)}}
+/* Mapa */
+.steps{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.step{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
+.step b{font-family:var(--f-mono);color:var(--accent);margin-right:4px}
+.step[aria-selected="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.step[aria-selected="true"] b{color:var(--accent)}
+.rota{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:14px;align-items:start}
+.mapbox{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#3f5a3a}
+#rwMap{display:block;width:100%;height:auto;max-height:78vh;touch-action:pan-y}
+.map-ctl{position:absolute;top:8px;right:8px;display:flex;gap:6px}
+.map-leg{display:flex;flex-wrap:wrap;gap:4px 10px;padding:6px 8px;font-size:11px;background:color-mix(in srgb,var(--surface) 92%,transparent);border-top:1px solid var(--line)}
+.map-leg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:-1px}
+.rota-info{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px}
+.rota-info h3{font-size:20px}
+.rota-info .when{font-family:var(--f-mono);font-size:12px;color:var(--accent);font-weight:700}
+.rota-info ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+.rota-info .stops{display:grid;gap:4px}
+.rota-info .stop{display:flex;gap:8px;align-items:center;font-size:13.5px}
+.rota-info .stop .n{font-family:var(--f-mono);font-weight:700;background:var(--accent);color:var(--accent-ink);border-radius:50%;width:22px;height:22px;display:grid;place-items:center;font-size:12px;flex:0 0 auto}
+.rota-info .stop a{margin-left:auto;font-size:12px;color:var(--accent);font-weight:600;white-space:nowrap}
+.rota-info .pega{font-size:13.5px;border-left:3px solid var(--good);background:var(--good-soft);padding:6px 8px;border-radius:0 3px 3px 0}
+.rota-info .nav{display:flex;gap:6px;justify-content:space-between}
+.realmap summary{cursor:pointer;font-weight:700;font-size:13.5px;color:var(--accent)}
+.realmap-box iframe{width:100%;height:520px;border:1px solid var(--line);border-radius:6px;margin-top:8px;background:var(--surface2)}
+@media (prefers-reduced-motion:no-preference){.route-line{animation:dash 1.2s linear infinite}}
+@keyframes dash{to{stroke-dashoffset:-28}}
+.rota-info .care{font-size:13.5px;padding:6px 8px;border-left:3px solid var(--bad);background:var(--bad-soft);border-radius:0 3px 3px 0}
+.slot img.pt{width:72px;height:90px}
+/* Fabricar */
+.fab-order{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr));gap:8px}
+.fo{border:1px solid var(--line);border-top:3px solid var(--accent);background:var(--surface);border-radius:4px;padding:8px 10px;font-size:12.5px}
+.fo b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:4px}
+.fo button{border:0;background:none;padding:0;color:var(--ink);text-decoration:underline dotted;cursor:pointer;font:inherit;text-align:left}
+.fo button:hover{color:var(--accent)}
+.fab-search input{font-size:15px;padding:10px 12px}
+.fab-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:10px}
+.fcard{border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:12px;display:grid;gap:6px;align-content:start}
+.fcard .hd{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
+.fcard h3{font-size:17px;flex:1 1 auto}
+.fcard p{margin:0;font-size:13px}
+.fcard dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:12.5px}
+.fcard dt{color:var(--muted);font-weight:600}
+.fcard dd{margin:0}
+.fcard a{font-size:12px;color:var(--accent);font-weight:600}
+.d1{background:var(--good-soft);color:var(--good);border-color:var(--good)}
+.d2{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.d3{background:var(--bad-soft);color:var(--bad);border-color:var(--bad)}
+.pri{background:var(--ink);color:var(--bg)}
+@media (max-width:860px){.rota{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:680px){.hero3d{height:260px}.squad3d{height:260px}.inbox{grid-template-columns:1fr}.realmap-box iframe{height:420px}}
+
 /* Rotina da TV */
 .tvrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
 .tvslot{border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:10px;display:grid;gap:4px;font-size:13px}
@@ -272,14 +364,15 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
       <button class="tab" role="tab" id="tab-builds" data-tab="builds" type="button">Builds dos canais</button>
       <button class="tab" role="tab" id="tab-combos" data-tab="combos" type="button">Combos</button>
       <button class="tab" role="tab" id="tab-esquadrao" data-tab="esquadrao" type="button">Esquadrão</button>
-      <button class="tab" role="tab" id="tab-guia" data-tab="guia" type="button">Primeiros dias</button>
+      <button class="tab" role="tab" id="tab-guia" data-tab="guia" type="button">Sobrevivência</button>
+      <button class="tab" role="tab" id="tab-fab" data-tab="fab" type="button">Fabricar</button>
     </nav>
   </div>
 </header>
 
 <div class="wrap">
   <section class="intro">
-    <p>Monte a build marcando profissão e traços. O saldo precisa terminar em 0 ou mais para o jogo aceitar. A aba <b>Builds dos canais</b> reúne 15 builds de 7 canais (ShivasBR, GabrielKnine, Gambarine, Laughter, OVERCHARGED EGG, Orbanjo Gaming e Anzony Kaiser), todas gravadas depois do lançamento da B42 e recalculadas com os custos da 42.21. As etiquetas de cada traço (Obrigatório, Meta…) vêm do <a href="https://www.youtube.com/watch?v=C_mnw8MkdEY" target="_blank" rel="noopener">vídeo do ShivasBR</a>; o contador “x/15” mostra em quantas builds dos canais o traço aparece. A aba <b>Combos</b> junta essas builds em esquadrões de 2 a 6 jogadores que se completam. A aba Primeiros dias traz as dicas do <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">GabrielKnine</a>.</p>
+    <p>Monte a build marcando profissão e traços. O saldo precisa terminar em 0 ou mais para o jogo aceitar. A aba <b>Builds dos canais</b> reúne 16 builds de 7 canais (ShivasBR, GabrielKnine, Gambarine, Laughter, OVERCHARGED EGG, Orbanjo Gaming e Anzony Kaiser), todas gravadas depois do lançamento da B42 e recalculadas com os custos da 42.21. As etiquetas de cada traço (Obrigatório, Meta…) vêm do <a href="https://www.youtube.com/watch?v=C_mnw8MkdEY" target="_blank" rel="noopener">vídeo do ShivasBR</a>; o contador “x/16” mostra em quantas builds dos canais o traço aparece. A aba <b>Combos</b> junta essas builds em esquadrões de 2 a 6 jogadores que se completam, e a aba <b>Fabricar</b> mostra como fazer cada coisa. A aba Sobrevivência tem a rota de Rosewood no mapa e as dicas do <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">GabrielKnine</a>.</p>
     <div class="legend" aria-label="Legenda">
       <span class="tag v-obr">Obrigatório</span><span class="tag v-meta">Meta</span><span class="tag v-opc">Opcional</span><span class="tag v-dis">Dispensável</span><span class="tag v-evi">Evitar</span><span class="tag v-nun">Nunca</span>
     </div>
@@ -294,10 +387,13 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
     </ul>
   </details>
 
+  <div class="inbox" id="inbox" hidden></div>
+
   <!-- MONTADOR -->
   <div id="panel-montador" role="tabpanel" aria-labelledby="tab-montador">
   <div class="main">
     <div class="col-left">
+      <div class="slot-edit" id="slotEdit" hidden></div>
       <section class="section" aria-labelledby="hProf">
         <div class="sec-head"><h2 id="hProf">1 · Profissão</h2><span class="hint">Custo em pontos. Desempregado devolve 8.</span></div>
         <div class="profs" id="profs"></div>
@@ -329,8 +425,8 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
       <section class="section" aria-labelledby="hTips">
         <div class="sec-head"><h2 id="hTips">3 · Dicas do vídeo para a build fechar</h2></div>
         <div class="tips">
-          <div class="tip"><b>Arma vem do Entalhamento</b>Na B42 o caminho é fabricar a arma. Com Entalhamento (Carving) dá para fazer o Short Bat e o taco de beisebol, que pedem nível 9–10. Por isso o Entalhador entra mesmo custando 2.</div>
-          <div class="tip"><b>Construtor Civil é o único com duas armas</b>Começa com bônus em Contundente Curto e Longo, além de Carpintaria, Alvenaria e Manutenção. Com Alvenaria sai a marreta de pedra, a melhor contundente curta para upar.</div>
+          <div class="tip"><b>Arma vem do Entalhamento</b>Na B42 o caminho é fabricar a arma. O Bastão Curto pede Entalhamento 7 com a revista Medieval Armory (sem revista, 9) e o Taco Artesanal pede 9 com a revista The Louisville Bruiser (sem revista, 10). Por isso o Entalhador entra mesmo custando 2.</div>
+          <div class="tip"><b>Construtor Civil é o único com duas armas</b>Começa com bônus em Contundente Curto e Longo, além de Carpintaria, Alvenaria e Manutenção. Para treinar desde o dia 1, o Martelo de Pedra (contundente curta) sai com galho, pedra e amarração.</div>
           <div class="tip"><b>Claustrofóbico se controla com álcool</b>Mande beber ¼ da bebida e cancele logo depois do primeiro gole: o pânico passa. Depois de 3 a 5 meses vivo o pânico praticamente para de aparecer.</div>
           <div class="tip"><b>Míope se resolve na criação</b>Escolha óculos na roupa inicial do personagem e a penalidade some.</div>
           <div class="tip"><b>Herbalista acaba com a fome</b>Ligue a coleta (lupa na tela) e você sempre acha fruta ou cogumelo. Sem o traço, procure a revista que ensina a separar o que é venenoso.</div>
@@ -342,7 +438,9 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
     </div>
 
     <aside class="summary" aria-labelledby="hSum">
-      <h2 id="hSum">Personagem inicial</h2>
+      <h2 id="hSum">Seu sobrevivente</h2>
+      <div class="hero3d" id="hero3d" aria-label="Boneco 3D do personagem. Arraste para girar."><span class="hero-hint">Arraste para girar</span></div>
+      <div class="name-row"><label for="myName" class="sublbl">Seu nome</label><input id="myName" type="text" maxlength="24" placeholder="Como o grupo te chama" autocomplete="nickname"></div>
       <div class="stats">
         <div class="stat" id="stStr"><div class="lbl">Força</div><div class="val" id="vStr">5</div><div class="pips" id="pStr"></div></div>
         <div class="stat" id="stFit"><div class="lbl">Aptidão física</div><div class="val" id="vFit">5</div><div class="pips" id="pFit"></div></div>
@@ -363,13 +461,15 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
       <div class="code-row">
         <div class="sublbl">Compartilhar com o grupo</div>
         <div class="row">
+          <button class="btn primary" type="button" id="btnCopyLink">Copiar link da build</button>
+          <button class="btn" type="button" id="btnShare" hidden>Enviar…</button>
           <button class="btn" type="button" id="btnCopyText">Copiar resumo</button>
-          <button class="btn" type="button" id="btnCopyCode">Copiar código</button>
           <button class="btn" type="button" id="btnClear">Zerar traços</button>
         </div>
-        <label for="codeIn" class="sublbl" style="margin:4px 0 0">Colar código de um amigo</label>
+        <p class="hint" style="margin:0">Quem abrir o link vê a build com o seu nome e pode pôr no esquadrão.</p>
+        <label for="codeIn" class="sublbl" style="margin:4px 0 0">Colar link ou código de um amigo</label>
         <div class="row">
-          <input id="codeIn" type="text" placeholder="B42:construction:keen_hearing,..." autocomplete="off" spellcheck="false" style="flex:1 1 160px">
+          <input id="codeIn" type="text" placeholder="https://…/zomboid/?b=… ou B42:…" autocomplete="off" spellcheck="false" style="flex:1 1 160px">
           <button class="btn" type="button" id="btnLoad">Carregar</button>
         </div>
         <div class="msg" id="msg" role="status"></div>
@@ -417,9 +517,13 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
         <div class="sizes" id="sizes"></div>
         <div class="comps" id="comps"></div>
       </section>
+      <section class="section">
+        <div class="sec-head"><h2>Seu esquadrão</h2><span class="hint">Arraste para girar · o nome em cima é de quem joga</span></div>
+        <div class="squad3d" id="squad3d"></div>
+      </section>
       <div class="split">
         <section class="section">
-          <div class="sec-head"><h2>2 · Integrantes</h2><span class="hint">Troque a build de cada vaga ou edite no montador</span></div>
+          <div class="sec-head"><h2>2 · Integrantes</h2><span class="hint">Em cada vaga: sua build, uma meta, uma recebida, importada ou criada do zero</span></div>
           <div class="slots" id="slots"></div>
           <div class="sec-head" style="margin-top:8px"><h2>3 · Cobertura de papéis</h2><span class="hint">Linha em vermelho = ninguém cobre</span></div>
           <div class="matrix-wrap"><table class="matrix" id="matrix"></table></div>
@@ -430,25 +534,58 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
           <div class="code-row">
             <div class="sublbl">Mandar para o grupo</div>
             <div class="row">
-              <button class="btn primary" type="button" id="btnTeamText">Copiar plano do time</button>
-              <button class="btn" type="button" id="btnTeamCode">Copiar código do time</button>
+              <button class="btn primary" type="button" id="btnTeamLink">Copiar link do esquadrão</button>
+              <button class="btn" type="button" id="btnTeamText">Copiar plano em texto</button>
             </div>
-            <label for="teamIn" class="sublbl" style="margin:4px 0 0">Colar código de time</label>
+            <label for="teamIn" class="sublbl" style="margin:4px 0 0">Colar link de esquadrão ou de build</label>
             <div class="row">
-              <input id="teamIn" type="text" placeholder="B42:...|B42:..." autocomplete="off" spellcheck="false" style="flex:1 1 160px">
+              <input id="teamIn" type="text" placeholder="https://…/zomboid/?t=… ou ?b=…" autocomplete="off" spellcheck="false" style="flex:1 1 160px">
               <button class="btn" type="button" id="btnTeamLoad">Carregar</button>
             </div>
             <div class="msg" id="teamMsg" role="status"></div>
             <textarea id="teamFallback" hidden readonly style="width:100%;height:110px;font-family:var(--f-mono);font-size:11px"></textarea>
+          </div>
+          <div>
+            <div class="sublbl">Builds recebidas</div>
+            <div class="recv" id="recvList"></div>
           </div>
         </aside>
       </div>
     </div>
   </div>
 
+  <!-- FABRICAR -->
+  <div id="panel-fab" role="tabpanel" aria-labelledby="tab-fab" hidden>
+    <div class="panel">
+      <section class="section">
+        <div class="sec-head"><h2>Como fabricar</h2><span class="hint" id="fabCount"></span></div>
+        <p class="hint" style="margin:0;max-width:80ch">As receitas mais úteis para sobreviver, com o que precisa, a perícia exigida, como aprender e quando vale fazer. Receitas tiradas do banco de itens do projectzomboidmap.com (versão 42.20.4); construção pela PZwiki. “Receita completa” abre a página com todas as variações.</p>
+        <div class="fab-order" id="fabOrder"></div>
+        <div class="fab-search"><input id="fabQ" type="search" placeholder="Buscar: lança, martelo, armadilha, bandagem, Carpintaria…" autocomplete="off" aria-label="Buscar receita"></div>
+        <div class="frow" role="group" aria-label="Categoria" id="fabCats"></div>
+        <div class="frow" role="group" aria-label="Dificuldade" id="fabDifs"></div>
+        <div class="fab-list" id="fabList"></div>
+      </section>
+    </div>
+  </div>
+
   <!-- GUIA -->
   <div id="panel-guia" role="tabpanel" aria-labelledby="tab-guia" hidden>
     <div class="panel">
+      <section class="section" aria-labelledby="hRota">
+        <div class="sec-head"><h2 id="hRota">Rota de Rosewood, dia a dia</h2><span class="hint">Cidade que Knine e OVERCHARGED EGG indicam para começar</span></div>
+        <p class="hint" style="margin:0;max-width:80ch">Toque em um passo: o mapa aproxima, desenha a rota e mostra o que fazer. Ruas, prédios e lugares vêm do mapa da versão 42.20 (pzmap.org). O mapa é visto de cima, com o norte para cima, igual ao mapa do jogo (tecla M). Cada parada tem link para o mapa real.</p>
+        <div class="steps" id="rotaSteps" role="tablist" aria-label="Passos da rota"></div>
+        <div class="rota">
+          <div class="mapbox"><svg id="rwMap" viewBox="0 0 960 1180" role="img" aria-label="Mapa de Rosewood com a rota do passo escolhido"></svg>
+            <div class="map-ctl"><button class="btn sm" type="button" id="mapAll">Cidade toda</button><button class="btn sm" type="button" id="mapPlay">▶ Animar rota</button></div>
+            <div class="map-leg" id="mapLeg"></div>
+          </div>
+          <div class="rota-info" id="rotaInfo"></div>
+        </div>
+        <details class="realmap"><summary>Abrir o mapa real aqui (projectzomboidmap.com)</summary><div class="realmap-box" id="realMap"></div></details>
+      </section>
+
       <p class="hint" style="margin:0;max-width:75ch">Dicas do GabrielKnine no vídeo <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Como sobreviver no Project Zomboid em 2026</a> (B42.20, ago/2026). A ideia central dele: não tenha pressa nas duas primeiras semanas.</p>
 
       <section class="section">
@@ -532,9 +669,232 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
     </div>
   </div>
 
-  <p class="foot">Custos de pontos da Build 42 extraídos dos arquivos do jogo em <a href="https://pz-guide.com/en/character/trait/" target="_blank" rel="noopener">pz-guide.com</a> e conferidos com as contas dos vídeos: as 8 builds do Laughter, a do OVERCHARGED EGG e a do Orbanjo fecham exatamente em 0 com esses números. A 42.21 não alterou custos (<a href="https://theindiestone.com/forums/topic/101693-4221-patch-notes/" target="_blank" rel="noopener">notas oficiais da 42.21</a>). Builds: <a href="https://www.youtube.com/watch?v=C_mnw8MkdEY" target="_blank" rel="noopener">ShivasBR</a>, <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">GabrielKnine</a>, <a href="https://www.youtube.com/shorts/i_-P271YcQo" target="_blank" rel="noopener">Gambarine</a>, <a href="https://www.youtube.com/watch?v=ujrLpaM8HPI" target="_blank" rel="noopener">Laughter</a>, <a href="https://www.youtube.com/watch?v=ETUHLVlcf38" target="_blank" rel="noopener">OVERCHARGED EGG</a>, <a href="https://www.youtube.com/watch?v=2PZNukP6bUY" target="_blank" rel="noopener">Orbanjo Gaming</a> e <a href="https://www.youtube.com/watch?v=BkGqWQSLemM" target="_blank" rel="noopener">Anzony Kaiser</a>. Dicas de início do <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">vídeo do GabrielKnine</a>. Papéis de time a partir de <a href="https://projectzomboid.wiki/builds/occupations/" target="_blank" rel="noopener">projectzomboid.wiki</a> e <a href="https://build42guide.wiki/multiplayer/build-42-multiplayer" target="_blank" rel="noopener">build42guide</a>. Se o seu patch mostrar outro valor na tela de criação, vale o do jogo.</p>
 </div>
 
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
+<script type="module">
+// Boneco 3D do sobrevivente: montado com formas simples, roupa pela profissão, acessórios pelos traços.
+import * as THREE from "three";
+
+const LOOK={
+ construction:{shirt:0x3b6ea5,pants:0x2f4a6b,vest:0xff8a1f,hat:"hard",hatC:0xf2c230,tool:"hammer"},
+ carpenter:{shirt:0x9b3b2f,plaid:1,pants:0x4a5a7a,belt:0x6b4a2a,tool:"hammer"},
+ firefighter:{shirt:0x4a3e2a,coat:0x4a3e2a,stripes:0xe8e04a,pants:0x3a3226,hat:"fire",hatC:0xb3201a,tool:"axe"},
+ unemployed:{shirt:0x7a7f86,hood:1,pants:0x34405a},
+ diy:{shirt:0xc9a15a,overall:0x3f5f8f,pants:0x3f5f8f,tool:"wrench"},
+ lumberjack:{shirt:0xa82424,plaid:1,pants:0x3d4a63,hat:"beanie",hatC:0x2d2d2d,tool:"axe"},
+ security:{shirt:0x2b3a55,pants:0x1f2a3d,hat:"cap",hatC:0x1f2a3d,tool:"baton"},
+ nurse:{shirt:0x3aa39a,pants:0x3aa39a,tool:"kit"},
+ doctor:{shirt:0xe9eef2,coat:0xf7f7f7,pants:0x2f3f5a,tool:"kit"},
+ farmer:{shirt:0xd8c9a0,overall:0x4f6f9f,pants:0x4f6f9f,hat:"straw",hatC:0xd9b860,tool:"fork"},
+ rancher:{shirt:0x8a5a3a,pants:0x3d4a63,hat:"cowboy",hatC:0x6b4a2a,tool:"rope"},
+ burger:{shirt:0xf4f4f4,pants:0x2a2a2a,hat:"cap",hatC:0xd63a2a,tool:"knife"},
+ tailor:{shirt:0xeae3d2,vest:0x4a4a6a,pants:0x2b2b3b,tool:"scissors"},
+ chef:{shirt:0xf6f6f6,pants:0x2a2a2a,hat:"chef",hatC:0xffffff,tool:"knife"},
+ electrician:{shirt:0x2f5f9f,pants:0x23324a,hat:"hard",hatC:0xf4f4f4,tool:"wrench"},
+ fishing:{shirt:0x6f7f4a,vest:0x9a9a6a,pants:0x4a4a3a,hat:"bucket",hatC:0x8a8a5a,tool:"rod"},
+ engineer:{shirt:0xdfe7f0,pants:0x3a4a5a,hat:"hard",hatC:0xf4f4f4,tool:"wrench"},
+ mechanic:{shirt:0x5a6066,overall:0x4a5258,pants:0x4a5258,tool:"wrench"},
+ ranger:{shirt:0x5d6b3a,pants:0x4a4030,hat:"ranger",hatC:0x7a6440,tool:"axe"},
+ police:{shirt:0x22314f,pants:0x1a2238,hat:"police",hatC:0x1a2238,tool:"pistol"},
+ welder:{shirt:0x4a4a4a,apron:0x6b4a2a,pants:0x2f2f2f,hat:"weld",hatC:0x2a2a2a,tool:"torch"},
+ blacksmith:{shirt:0x5a4a3a,apron:0x3d2a1a,pants:0x2f2a26,tool:"hammer"},
+ burglar:{shirt:0x1e1e22,pants:0x1e1e22,hat:"beanie",hatC:0x111111,mask:1,tool:"crowbar"},
+ fitness:{shirt:0xff4f8a,pants:0x2a2a4a,band:0x3ad0ff},
+ veteran:{shirt:0x5b6340,camo:1,pants:0x4b5236,hat:"beret",hatC:0x3a4a2a,tool:"rifle"}
+};
+const SKIN=[0xf1c9a5,0xe0ac7e,0xc68642,0x8d5524,0x5c3a21];
+const HAIR=[0x2b1d14,0x4a2f1b,0x8a5a2b,0xc9a15a,0x1a1a1a,0x6b6b6b];
+function hash(s){let h=2166136261;for(const c of String(s))h=Math.imul(h^c.charCodeAt(0),16777619);return h>>>0}
+
+const texCache={};
+function patternTex(kind,base){
+  const k=kind+base; if(texCache[k])return texCache[k];
+  const c=document.createElement("canvas");c.width=c.height=32;const g=c.getContext("2d");
+  const col="#"+base.toString(16).padStart(6,"0");g.fillStyle=col;g.fillRect(0,0,32,32);
+  if(kind==="plaid"){g.fillStyle="rgba(0,0,0,.35)";for(let i=0;i<32;i+=8){g.fillRect(i,0,3,32);g.fillRect(0,i,32,3)}g.fillStyle="rgba(255,255,255,.12)";for(let i=4;i<32;i+=8){g.fillRect(i,0,1,32);g.fillRect(0,i,32,1)}}
+  if(kind==="camo"){const cs=["#3d4228","#6b6a3e","#2b2f1e","#7d7550"];for(let i=0;i<26;i++){g.fillStyle=cs[i%4];g.beginPath();g.ellipse((i*13)%32,(i*7)%32,3+i%4,2+i%3,i,0,7);g.fill()}}
+  const t=new THREE.CanvasTexture(c);t.magFilter=THREE.NearestFilter;t.colorSpace=THREE.SRGBColorSpace;texCache[k]=t;return t;
+}
+function mat(color,opt={}){return new THREE.MeshStandardMaterial({color,roughness:.85,metalness:0,...opt})}
+function box(w,h,d,m){const o=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),m);o.castShadow=true;return o}
+function textSprite(txt,color){
+  const c=document.createElement("canvas");c.width=c.height=64;const g=c.getContext("2d");
+  g.font="bold 54px Impact,Arial";g.textAlign="center";g.textBaseline="middle";g.lineWidth=6;g.strokeStyle="#1d2720";g.strokeText(txt,32,34);g.fillStyle=color;g.fillText(txt,32,34);
+  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false}));s.scale.set(.32,.32,.32);return s;
+}
+
+function tool(kind){
+  const g=new THREE.Group(), wood=mat(0x8a5a2b), metal=mat(0x9aa3ab,{metalness:.6,roughness:.35}), dark=mat(0x2a2a2a);
+  const add=(o,x,y,z)=>{o.position.set(x,y,z);g.add(o);return o};
+  if(kind==="hammer"){add(box(.05,.5,.05,wood),0,-.2,0);add(box(.2,.08,.08,metal),0,.05,0)}
+  else if(kind==="axe"){add(box(.05,.7,.05,wood),0,-.25,0);add(box(.04,.2,.22,mat(0xb7c0c8,{metalness:.6,roughness:.3})),0,.05,.1)}
+  else if(kind==="wrench"){add(box(.05,.45,.03,metal),0,-.15,0);add(box(.12,.08,.03,metal),0,.08,0)}
+  else if(kind==="knife"){add(box(.04,.14,.04,dark),0,-.12,0);add(box(.02,.22,.06,metal),0,.06,0)}
+  else if(kind==="baton"){add(box(.06,.55,.06,dark),0,-.2,0)}
+  else if(kind==="pistol"){add(box(.05,.12,.05,dark),0,-.08,0);add(box(.05,.07,.2,dark),0,0,.06)}
+  else if(kind==="rifle"){add(box(.05,.05,.8,mat(0x3a2a1a)),0,0,.2);add(box(.04,.1,.05,dark),0,-.07,0)}
+  else if(kind==="crowbar"){add(box(.04,.6,.04,mat(0x8a2a2a,{metalness:.5})),0,-.2,0);add(box(.04,.04,.14,mat(0x8a2a2a,{metalness:.5})),0,.1,.05)}
+  else if(kind==="kit"){add(box(.22,.16,.08,mat(0xd63a2a)),0,-.1,0);add(box(.04,.1,.09,mat(0xffffff)),0,-.1,0);add(box(.1,.04,.09,mat(0xffffff)),0,-.1,0)}
+  else if(kind==="fork"){add(box(.04,.9,.04,wood),0,-.3,0);for(let i=-1;i<=1;i++)add(box(.015,.15,.015,metal),i*.04,.22,0)}
+  else if(kind==="rod"){const r=add(box(.03,.9,.03,mat(0x2a2a2a)),0,.1,.1);r.rotation.x=-.5}
+  else if(kind==="scissors"){add(box(.03,.18,.03,metal),-.02,0,0);add(box(.03,.18,.03,metal),.02,0,0)}
+  else if(kind==="torch"){add(box(.06,.2,.06,mat(0x3a7ac0)),0,-.05,0);add(box(.03,.12,.03,metal),0,.1,.03)}
+  else if(kind==="rope"){const t=new THREE.Mesh(new THREE.TorusGeometry(.1,.025,6,14),mat(0xc9a15a));t.rotation.y=Math.PI/2;add(t,0,-.12,0)}
+  return g;
+}
+
+function buildChar(spec){
+  const L=LOOK[spec.prof]||LOOK.unemployed, T=new Set(spec.traits||[]), h=hash((spec.seed||spec.name||"")+spec.prof);
+  const str=spec.str??5, fit=spec.fit??5;
+  const skin=mat(SKIN[h%SKIN.length]), hairM=mat(HAIR[(h>>3)%HAIR.length]);
+  const shirtM=mat(L.plaid||L.camo?0xffffff:L.shirt,{map:L.plaid?patternTex("plaid",L.shirt):L.camo?patternTex("camo",L.shirt):null});
+  const pantsM=mat(L.pants), shoeM=mat(0x2a2522);
+  const g=new THREE.Group(), body=new THREE.Group(); g.add(body);
+  const sw=.86+str*.045, bulk=fit<4?1.12:fit>7?.92:1; // ombros pela Força, barriga pela Aptidão
+  // pernas
+  const legs=[];for(const s of[-1,1]){const lg=new THREE.Group();lg.position.set(s*.13,.82,0);const p=box(.21,.74,.23,pantsM);p.position.y=-.37;lg.add(p);const sh=box(.23,.1,.3,shoeM);sh.position.set(0,-.76,.04);lg.add(sh);body.add(lg);legs.push(lg)}
+  // tronco
+  const torso=new THREE.Group();torso.position.y=1.17;body.add(torso);
+  const chest=box(.6*sw,.7,.32*bulk,shirtM);torso.add(chest);
+  if(fit<4){const b=box(.5*sw,.32,.1,L.overall?mat(L.overall):shirtM);b.position.set(0,-.18,.17*bulk+.03);torso.add(b)}
+  if(L.overall){const o=box(.6*sw+.01,.42,.33*bulk+.01,mat(L.overall));o.position.y=-.14;torso.add(o);for(const s of[-1,1]){const st=box(.07,.3,.335*bulk+.01,mat(L.overall));st.position.set(s*.15,.2,0);torso.add(st)}}
+  if(L.vest){const v=box(.6*sw+.02,.62,.34*bulk+.02,mat(L.vest));v.position.y=.02;v.scale.x=1;torso.add(v);const op=box(.12,.64,.36*bulk+.03,shirtM);op.position.set(0,.02,.01);torso.add(op);if(L.vest===0xff8a1f){const r=box(.6*sw+.03,.06,.35*bulk+.03,mat(0xe8e8a0,{emissive:0x555500}));r.position.y=-.1;torso.add(r)}}
+  if(L.coat){const c=box(.62*sw+.02,.78,.35*bulk+.02,mat(L.coat));c.position.y=-.06;torso.add(c);if(L.stripes){for(const y of[-.3,0]){const r=box(.62*sw+.03,.05,.36*bulk+.03,mat(L.stripes,{emissive:0x444400}));r.position.y=y;torso.add(r)}}}
+  if(L.apron){const a=box(.5*sw,.8,.04,mat(L.apron));a.position.set(0,-.12,.18*bulk);torso.add(a)}
+  if(L.belt){const b=box(.6*sw+.02,.07,.34*bulk+.02,mat(L.belt));b.position.y=-.33;torso.add(b)}
+  // braços
+  const arms=[];for(const s of[-1,1]){const a=new THREE.Group();a.position.set(s*(.3*sw+.1),.3,0);const up=box(.17+str*.008,.62,.19+str*.006,shirtM);up.position.y=-.3;a.add(up);
+    const hand=box(.15,.14,.15,T.has("dextrous")?mat(0x3a3a3a):skin);hand.position.y=-.67;a.add(hand);torso.add(a);arms.push(a)}
+  // cabeça
+  const head=new THREE.Group();head.position.y=1.82;body.add(head);
+  const skull=box(.42,.46,.42,skin);head.add(skull);
+  const hair=box(.44,.12,.44,hairM);hair.position.y=.2;head.add(hair);const hb=box(.44,.3,.08,hairM);hb.position.set(0,.06,-.19);head.add(hb);
+  const eyeM=T.has("cats_eyes")?mat(0xfff35a,{emissive:0xffd400,emissiveIntensity:2.2}):mat(0x1d1d1d);
+  for(const s of[-1,1]){const e=box(.07,.07,.02,eyeM);e.position.set(s*.1,.03,.215);head.add(e)}
+  const mouth=box(.12,.03,.02,mat(0x6b2a2a));mouth.position.set(0,-.12,.215);head.add(mouth);
+  if(L.mask){const m=box(.43,.18,.43,mat(0x111111));m.position.y=-.1;head.add(m)}
+  if(T.has("short_sighted")){const gm=mat(0x111111);for(const s of[-1,1]){const fr=box(.12,.1,.02,gm);fr.position.set(s*.1,.03,.23);head.add(fr);const ln=box(.09,.07,.01,mat(0x9fd3ff,{transparent:true,opacity:.55}));ln.position.set(s*.1,.03,.242);head.add(ln)}const br=box(.06,.02,.02,gm);br.position.set(0,.05,.23);head.add(br)}
+  if(T.has("thin_skinned")){const p=box(.08,.04,.01,mat(0xe8c39a));p.position.set(.13,-.06,.22);p.rotation.z=.4;head.add(p)}
+  if(L.band||T.has("athletic")){const b=box(.45,.07,.45,mat(L.band||0xff4040));b.position.y=.13;head.add(b)}
+  // chapéu
+  const hc=mat(L.hatC||0x333333);
+  const hat=new THREE.Group();head.add(hat);
+  if(L.hat==="hard"||L.hat==="fire"){const d=new THREE.Mesh(new THREE.SphereGeometry(.26,16,10,0,Math.PI*2,0,Math.PI/2),hc);d.position.y=.2;hat.add(d);const br=new THREE.Mesh(new THREE.CylinderGeometry(.3,.3,.03,18),hc);br.position.set(0,.2,L.hat==="fire"?-.04:.03);if(L.hat==="fire")br.scale.z=1.3;hat.add(br)}
+  else if(L.hat==="cap"||L.hat==="police"){const c=box(.45,.12,.45,hc);c.position.y=.26;hat.add(c);const v=box(.42,.03,.2,hc);v.position.set(0,.21,.28);hat.add(v);if(L.hat==="police"){const t=box(.48,.12,.48,hc);t.position.y=.33;hat.add(t);const bd=box(.08,.08,.02,mat(0xd4af37,{metalness:.7,roughness:.3}));bd.position.set(0,.3,.245);hat.add(bd)}}
+  else if(L.hat==="beanie"){const b=box(.46,.2,.46,hc);b.position.y=.25;hat.add(b)}
+  else if(L.hat==="straw"||L.hat==="cowboy"||L.hat==="ranger"){const br=new THREE.Mesh(new THREE.CylinderGeometry(.42,.42,.03,20),hc);br.position.y=.24;hat.add(br);const cr=new THREE.Mesh(new THREE.CylinderGeometry(.2,.24,.22,16),hc);cr.position.y=.35;hat.add(cr);if(L.hat==="cowboy"){br.scale.set(1,1,.8)}}
+  else if(L.hat==="chef"){const cr=new THREE.Mesh(new THREE.CylinderGeometry(.22,.2,.34,16),hc);cr.position.y=.4;hat.add(cr);const pf=new THREE.Mesh(new THREE.SphereGeometry(.26,14,10),hc);pf.position.y=.6;hat.add(pf)}
+  else if(L.hat==="bucket"){const cr=new THREE.Mesh(new THREE.CylinderGeometry(.24,.3,.2,16),hc);cr.position.y=.3;hat.add(cr)}
+  else if(L.hat==="weld"){const m=box(.46,.4,.1,hc);m.position.set(0,.33,.12);m.rotation.x=-1.1;hat.add(m)}
+  else if(L.hat==="beret"){const b=new THREE.Mesh(new THREE.CylinderGeometry(.26,.24,.08,16),hc);b.position.set(.03,.27,0);b.rotation.z=-.15;hat.add(b)}
+  if(L.hood&&!L.hat){const hd=box(.48,.2,.12,shirtM);hd.position.set(0,-.18,-.24);head.add(hd)}
+  // mochila (Organizado) e extras nas costas
+  if(T.has("organized")||T.has("hiker")){const bp=box(.44,.5,.2,mat(T.has("organized")?0x3a6b3a:0x6b5a3a));bp.position.set(0,0,-.28*bulk);torso.add(bp);const fl=box(.38,.12,.06,mat(0x2a4a2a));fl.position.set(0,.2,-.39*bulk);torso.add(fl)}
+  if(T.has("hunter")&&L.tool!=="rifle"){const r=tool("rifle");r.rotation.set(0,0,.9);r.position.set(0,0,-.22);torso.add(r)}
+  if(T.has("target_shooter")&&L.tool!=="pistol"){const hl=box(.08,.16,.1,mat(0x2a2a2a));hl.position.set(.32*sw,-.32,.05);torso.add(hl)}
+  // ferramenta na mão direita
+  if(L.tool){const tl=tool(L.tool);tl.position.set(0,-.72,.06);tl.rotation.x=L.tool==="rifle"?0:.2;arms[1].add(tl)}
+  // cigarro
+  let cig=null;if(T.has("smoker")){cig=box(.02,.02,.1,mat(0xf4f4f4));cig.position.set(.06,-.12,.26);head.add(cig);const tip=box(.022,.022,.02,mat(0xff5a1a,{emissive:0xff3300,emissiveIntensity:2}));tip.position.set(.06,-.12,.31);head.add(tip)}
+  // livro flutuante (Aprendiz Rápido)
+  let book=null;if(T.has("fast_learner")){book=new THREE.Group();const c=box(.2,.26,.05,mat(0xb06d12,{emissive:0x3a2000}));book.add(c);const pg=box(.18,.24,.052,mat(0xf4ecd8));pg.position.x=.01;book.add(pg);book.position.set(.55,1.95,0);g.add(book)}
+  // "!" (Estabanado)
+  let bang=null;if(T.has("conspicuous")){bang=textSprite("!","#e46a52");bang.position.set(0,2.55,0);g.add(bang)}
+  // ondas de som (Audição Aguçada)
+  const rings=[];if(T.has("keen_hearing")){for(let i=0;i<2;i++){const r=new THREE.Mesh(new THREE.TorusGeometry(.32,.012,6,32),new THREE.MeshBasicMaterial({color:0x78b9ff,transparent:true,opacity:.6}));r.rotation.x=Math.PI/2;r.position.y=1.85;g.add(r);rings.push(r)}}
+  // fumaça
+  const puffs=[];if(cig){for(let i=0;i<6;i++){const p=new THREE.Mesh(new THREE.SphereGeometry(.035,6,6),new THREE.MeshBasicMaterial({color:0xcfcfcf,transparent:true,opacity:0}));g.add(p);puffs.push({m:p,t:i/6})}}
+  // olhos de gato: brilho
+  const phase=(h%100)/100*6.28;
+  g.userData={tick(t){
+    const b=Math.sin(t*2+phase);torso.scale.y=1+b*.012;head.position.y=1.82+b*.008;
+    arms[0].rotation.x=Math.sin(t*1.3+phase)*.06;arms[1].rotation.x=-.25+Math.sin(t*1.3+phase+1)*.05;arms[0].rotation.z=-.05;arms[1].rotation.z=.05;
+    head.rotation.y=Math.sin(t*.6+phase)*.15;
+    if(book){book.position.y=1.95+Math.sin(t*2.2)*.06;book.rotation.y=t*1.4}
+    if(bang){bang.position.y=2.5+Math.abs(Math.sin(t*3))*.08}
+    rings.forEach((r,i)=>{const k=((t*.7+i*.5)%1);r.scale.setScalar(1+k*1.4);r.material.opacity=.55*(1-k)});
+    if(cig){const w=new THREE.Vector3();cig.getWorldPosition(w);g.worldToLocal(w);puffs.forEach(p=>{const k=(t*.35+p.t)%1;p.m.position.set(w.x+Math.sin(k*9+p.t*7)*.05,w.y+k*.7,w.z+.05+k*.1);p.m.scale.setScalar(1+k*2.5);p.m.material.opacity=.3*(1-k)})}
+  },legs,arms};
+  return g;
+}
+
+function stage(scene){
+  scene.add(new THREE.HemisphereLight(0xdfe8d8,0x3a3226,1.1));
+  const d=new THREE.DirectionalLight(0xffffff,1.6);d.position.set(2.5,4,3);d.castShadow=true;d.shadow.mapSize.set(512,512);d.shadow.camera.left=-4;d.shadow.camera.right=4;d.shadow.camera.top=4;d.shadow.camera.bottom=-1;scene.add(d);
+}
+function makeRenderer(canvas){const r=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,preserveDrawingBuffer:!!canvas&&canvas.dataset.keep==="1"});r.setPixelRatio(Math.min(2,window.devicePixelRatio||1));r.outputColorSpace=THREE.SRGBColorSpace;r.shadowMap.enabled=true;return r}
+function dragRotate(el,get,set){
+  let down=false,x0=0,r0=0,last=0;el.style.touchAction="pan-y";
+  el.addEventListener("pointerdown",e=>{down=true;x0=e.clientX;r0=get();last=performance.now();el.setPointerCapture(e.pointerId)});
+  el.addEventListener("pointermove",e=>{if(!down)return;set(r0+(e.clientX-x0)*.012)});
+  const up=()=>{down=false};el.addEventListener("pointerup",up);el.addEventListener("pointercancel",up);
+  return()=>down;
+}
+const visible=el=>el.offsetParent!==null&&!document.hidden;
+
+// ---------- Montador: um boneco grande ----------
+function hero(el){
+  const canvas=document.createElement("canvas");el.appendChild(canvas);
+  const R=makeRenderer(canvas), scene=new THREE.Scene(), cam=new THREE.PerspectiveCamera(32,1,.1,50);cam.position.set(0,1.55,5.2);cam.lookAt(0,1.2,0);
+  stage(scene);
+  const floor=new THREE.Mesh(new THREE.CircleGeometry(1.1,40),new THREE.MeshStandardMaterial({color:0x2a3a2c,roughness:1,transparent:true,opacity:.55}));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
+  const ring=new THREE.Mesh(new THREE.RingGeometry(.95,1.05,48),new THREE.MeshBasicMaterial({color:0x78b96d,transparent:true,opacity:.8}));ring.rotation.x=-Math.PI/2;ring.position.y=.01;scene.add(ring);
+  const holder=new THREE.Group();scene.add(holder);let ch=null,rot=.35,spec=null,shake=0,state=0;
+  const sparks=[];const sparkGeo=new THREE.SphereGeometry(.035,6,6);
+  function burst(color,n=26){for(let i=0;i<n;i++){const m=new THREE.Mesh(sparkGeo,new THREE.MeshBasicMaterial({color,transparent:true}));m.position.set(0,1.3,0);const a=Math.random()*6.28,s=1+Math.random()*1.6;sparks.push({m,v:new THREE.Vector3(Math.cos(a)*s,1.5+Math.random()*2,Math.sin(a)*s),life:1});scene.add(m)}}
+  const isDown=dragRotate(canvas,()=>rot,v=>rot=v);
+  function size(){const w=el.clientWidth||300,h=el.clientHeight||300;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()}
+  new ResizeObserver(size).observe(el);size();
+  let t0=performance.now(),prev=t0;
+  (function loop(now){requestAnimationFrame(loop);if(!visible(el))return;const dt=Math.min(.05,(now-prev)/1000);prev=now;const t=(now-t0)/1000;
+    if(!isDown())rot+=dt*.25;holder.rotation.y=rot;if(ch)ch.userData.tick(t);
+    if(shake>0){shake-=dt;holder.position.x=Math.sin(t*60)*.04*shake/.5}else holder.position.x=0;
+    const pulse=state<0?1+Math.sin(t*6)*.08:1;ring.scale.setScalar(pulse);
+    for(let i=sparks.length-1;i>=0;i--){const s=sparks[i];s.life-=dt*1.4;s.v.y-=dt*4;s.m.position.addScaledVector(s.v,dt);s.m.material.opacity=Math.max(0,s.life);if(s.life<=0){scene.remove(s.m);s.m.material.dispose();sparks.splice(i,1)}}
+    R.render(scene,cam)})(t0);
+  return{set(s,how){const key=JSON.stringify([s.prof,s.traits,s.str,s.fit,s.seed]);if(spec&&key===spec.key&&s.saldo===spec.saldo)return;
+      const prevKey=spec&&spec.key;spec={...s,key};
+      if(key!==prevKey){if(ch)holder.remove(ch);ch=buildChar(s);ch.traverse(o=>{if(o.isMesh)o.castShadow=true});holder.add(ch)}
+      state=s.saldo<0?-1:s.saldo>0?1:0;ring.material.color.setHex(state<0?0xe46a52:state>0?0xe09a3a:0x78b96d);
+      if(how==="add")burst(0x78b96d);else if(how==="remove")burst(0x9a9a9a,14);else if(how==="prof")burst(0xe09a3a,40);
+      if(state<0&&how)shake=.5}};
+}
+
+// ---------- Esquadrão: todos lado a lado ----------
+function squad(el){
+  const canvas=document.createElement("canvas");el.appendChild(canvas);const labels=document.createElement("div");labels.className="sq-labels";el.appendChild(labels);
+  const R=makeRenderer(canvas), scene=new THREE.Scene(), cam=new THREE.PerspectiveCamera(30,1,.1,60);
+  stage(scene);
+  const floor=new THREE.Mesh(new THREE.CircleGeometry(5,48),new THREE.MeshStandardMaterial({color:0x2a3a2c,roughness:1,transparent:true,opacity:.45}));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
+  const holder=new THREE.Group();scene.add(holder);let chars=[],rot=0,specs=[];
+  const isDown=dragRotate(canvas,()=>rot,v=>rot=Math.max(-.9,Math.min(.9,v)));
+  function size(){const w=el.clientWidth||300,h=el.clientHeight||260;R.setSize(w,h,false);cam.aspect=w/h;const n=Math.max(2,chars.length);const dist=Math.max(6.4,n*1.9/Math.min(1.6,cam.aspect)+2.4);cam.position.set(0,2.3,dist);cam.lookAt(0,1.05,0);cam.updateProjectionMatrix()}
+  new ResizeObserver(size).observe(el);
+  let t0=performance.now();const v=new THREE.Vector3();
+  (function loop(now){requestAnimationFrame(loop);if(!visible(el))return;const t=(now-t0)/1000;if(!isDown())rot*=.97;holder.rotation.y=rot+Math.sin(t*.3)*.08;
+    chars.forEach(c=>c.userData.tick(t));R.render(scene,cam);
+    const w=el.clientWidth,h=el.clientHeight;[...labels.children].forEach((lb,i)=>{const c=chars[i];if(!c)return;v.set(0,-.02,.25);c.localToWorld(v);v.project(cam);lb.style.transform=`translate(${(v.x*.5+.5)*w}px,${(-v.y*.5+.5)*h}px) translate(-50%,6px)`})})(t0);
+  return{set(list){specs=list;holder.clear();chars=list.map((s,i)=>{const c=buildChar(s);const n=list.length;c.position.x=(i-(n-1)/2)*1.45;c.position.z=-Math.abs(i-(n-1)/2)*.35;c.rotation.y=-c.position.x*.08;holder.add(c);return c});
+      labels.innerHTML=list.map((s,i)=>`<div class="sq-lb"><b>${String(s.who||"Jogador "+(i+1)).replace(/[&<>]/g,"")}</b><span>${String(s.label||"").replace(/[&<>]/g,"")}</span></div>`).join("");size()}};
+}
+
+// ---------- Retratos (imagens) para cards ----------
+let PR=null,PS=null,PC=null;const pcache=new Map();
+function portrait(spec,w=180,h=220){
+  const key=JSON.stringify([spec.prof,spec.traits,spec.str,spec.fit,spec.seed,w,h]);if(pcache.has(key))return pcache.get(key);
+  if(!PR){const c=document.createElement("canvas");c.dataset.keep="1";PR=makeRenderer(c);PR.setPixelRatio(1);PS=new THREE.Scene();stage(PS);PC=new THREE.PerspectiveCamera(30,1,.1,30)}
+  PR.setSize(w,h,false);PC.aspect=w/h;PC.position.set(1.4,1.75,4.4);PC.lookAt(0,1.25,0);PC.updateProjectionMatrix();
+  const ch=buildChar(spec);ch.rotation.y=.25;ch.userData.tick(1.2);PS.add(ch);PR.render(PS,PC);const url=PR.domElement.toDataURL("image/png");PS.remove(ch);
+  ch.traverse(o=>{if(o.geometry)o.geometry.dispose()});pcache.set(key,url);return url;
+}
+function fill(root=document){
+  const imgs=[...root.querySelectorAll("img[data-pz]:not([data-done])")].sort((x,y)=>(y.offsetParent?1:0)-(x.offsetParent?1:0));let i=0;
+  (function step(){const end=performance.now()+14;while(i<imgs.length&&performance.now()<end){const im=imgs[i++];if(im.dataset.done)continue;try{const s=JSON.parse(im.dataset.pz);im.src=portrait(s,+im.width||180,+im.height||220);im.dataset.done="1"}catch(e){im.dataset.done="err"}}if(i<imgs.length)requestAnimationFrame(step)})();
+}
+
+window.PZ3D={hero,squad,portrait,fill};dispatchEvent(new Event("pz3d"));
+</script>
 <script>
 (function(){
 // ---------- DADOS ----------
@@ -691,7 +1051,7 @@ const CORE=["keen_hearing","fast_learner","cats_eyes","wakeful","dextrous"]; // 
 const LIB=[
  {id:"shivas",ch:"shivas",nm:"Construtor do Taco",sty:["Combate","Longo prazo"],prof:"construction",
   d:"A build que o Shivas usa no save de quase 10 anos: começa batendo com duas contundentes e sobe Entalhamento para fabricar a própria arma.",
-  why:["Construtor Civil é a única profissão com Contundente Curto e Longo, além de Alvenaria (marreta de pedra) e Manutenção.","Entalhador +2 acelera o Carving até 9–10, onde saem o Short Bat e o taco de beisebol.","Audição Aguçada, Olhos de Gato, Madrugador e Mãos Ágeis são o que ele chama de obrigatório em toda build.","Paga tudo com negativos que só pesam se você errar: não ser mordido, não comer podre, usar óculos."],
+  why:["Construtor Civil é a única profissão com Contundente Curto e Longo, além de Alvenaria e Manutenção.","Entalhador +2 acelera o Entalhamento: o Bastão Curto sai no 7 (com revista) e o taco artesanal no 9.","Audição Aguçada, Olhos de Gato, Madrugador e Mãos Ágeis são o que ele chama de obrigatório em toda build.","Paga tudo com negativos que só pesam se você errar: não ser mordido, não comer podre, usar óculos."],
   care:"Fumante e Claustrofóbico exigem cigarro e álcool por perto. Pele Frágil não perdoa descuido.",
   traits:["thin_skinned","prone_illness","claustrophobic","conspicuous","smoker","slow_healer","clumsy","weak_stomach","short_sighted","high_thirst","slow_reader","speed_demon","dextrous","whittler","wakeful","cats_eyes","gymnast","fast_learner","keen_hearing","fit"]},
  {id:"shivas_herb",ch:"shivas",nm:"Construtor Herbalista",sty:["Combate","Longo prazo"],prof:"construction",
@@ -765,6 +1125,13 @@ const LIB=[
   why:["Para ele, contundente curta e longa são as melhores armas do começo, e o Construtor é o único com as duas.","Atlético é essencial: na B42, quatro ou cinco zumbis já cansam o personagem.","Audição Aguçada vê corredor vindo por trás; Aprendiz Rápido acelera martelo, taco, Carpintaria e Manutenção.","Andarilho anula boa parte do Pele Frágil, Saúde Fraca e Baixa Imunidade no mato e na chuva."],
   care:"Comilão entrou só para fechar a conta, e ele não gosta do traço. Se não quiser Olhos de Gato, ele sugere trocar por outro traço barato.",
   traits:["weak_stomach","high_thirst","slow_healer","prone_illness","conspicuous","thin_skinned","slow_reader","short_sighted","hearty_appetite","athletic","keen_hearing","fast_learner","cats_eyes","dextrous","outdoorsy"]},
+ {id:"anzony2",ch:"anzony",nm:"Obrero Perfeito 2 (avançado)",sty:["Combate","Longo prazo"],prof:"construction",
+  v:{url:"https://www.youtube.com/watch?v=9x4oIhfHltM",t:"El Obrero PERFECTO | Project Zomboid Build 42.20",dt:"30/09/2026",pt:"42.20"},
+  d:"A segunda versão do obrero, para quem já tem algumas centenas de horas de jogo.",
+  why:["Atlético dá Aptidão 9 e Madrugador (o “insomne”) dorme menos e cansa 30% menos: juntos, quase não cansam.","Pacifista corta XP de arma, mas o Construtor já começa com as duas contundentes e o Aprendiz Rápido compensa.","Mecânico Amador: com Elétrica 1 e Mecânica 2 você já faz ligação direta.","Ginasta pelo +1 Agilidade, que deixa você recuar mais rápido no meio da briga."],
+  care:"Sem Audição Aguçada: ele acha o som da 42.20 bugado e só volta a pegar com zumbi corredor. Comilão e Míope entram para fechar a conta.",
+  fix:"No vídeo ele usa o traço Sentimental do mod More Traits. Sem mods, a ficha troca por Míope, que ele mesmo sugere, e a conta fecha em 0.",
+  traits:["thin_skinned","pacifist","conspicuous","prone_illness","slow_healer","slow_reader","weak_stomach","hearty_appetite","short_sighted","athletic","fast_learner","gymnast","wakeful","vehicle_k","cats_eyes","dextrous"]},
 
  // Papéis para co-op (montados pela ficha)
  {id:"enfermeiro",team:true,nm:"Enfermeiro do Grupo",tag:"Suporte",prof:"nurse",d:"Primeiros Socorros 3 desde o dia 1, Night Owl grátis. Fica com a caixa de remédios da base.",
@@ -848,6 +1215,102 @@ const COMBOM=Object.fromEntries(COMBOS.map(c=>[c.id,c]));
 // Esquadrão usa os mesmos combos, agrupados por tamanho
 const COMPS={}; COMBOS.forEach(c=>(COMPS[c.m.length]=COMPS[c.m.length]||[]).push(c));
 
+// ---------- FABRICAÇÃO (receitas da B42.20.4 no banco de itens do projectzomboidmap.com; construção pela PZwiki) ----------
+// dif: 1 fácil · 2 médio · 3 difícil | pri: quando vale fazer | ap: como se aprende | slug: página no banco de itens
+const FAB=[
+ {n:"Lança de Madeira",cat:"Armas",dif:1,pri:"Dia 1",para:"Primeira arma: mantém o zumbi longe e ainda dá XP de Entalhamento.",pr:"Vara longa ou muda (serve cabo de vassoura, esfregão ou ancinho) + qualquer faca",sk:"Nenhuma",ap:"Já vem sabendo",slug:"wooden-spear"},
+ {n:"Lança com Ponta (faca, chave de fenda, vidro, pedra, osso)",cat:"Armas",dif:1,pri:"Semana 1",para:"Bem mais dano que a lança de madeira. A faca de cozinha vira ponta.",pr:"Vara longa + uma ponta + 2 abraçadeiras, 2 tiras de couro ou 2 barbantes",sk:"Nenhuma",ap:"Revista Wilderness Survival ou Tool Use of Early Man; automática em Manutenção 3 + Lança 1",slug:"spear-with-kitchen-knife"},
+ {n:"Lança Endurecida no Fogo",cat:"Armas",dif:1,pri:"Semana 1",para:"Lança de madeira mais resistente.",pr:"Lança de madeira + faca + fogo aceso",sk:"Nenhuma",ap:"Revista Wilderness Survival; automática em Lança 6",slug:"wooden-spear-fire-hardened"},
+ {n:"Arma com Pregos (taco, tábua, galho, bastão)",cat:"Armas",dif:1,pri:"Dia 1",para:"Transforma taco, tábua ou galho em arma bem melhor.",pr:"Martelo (vale o de pedra) + a arma de madeira + 3 a 5 pregos",sk:"Carpintaria 1 para taco e tábua",ap:"Já vem sabendo",slug:"baseball-bat-with-nails"},
+ {n:"Martelo de Pedra",cat:"Ferramentas",dif:1,pri:"Dia 1",para:"Martelo sem precisar achar um: prega barricada e serve de arma curta.",pr:"Galho + pedra + 2 amarrações (trapo, tira de jeans, fita, couro ou barbante) + faca",sk:"Manutenção 1",ap:"Já vem sabendo",slug:"stone-hammer"},
+ {n:"Lasca Afiada de Sílex",cat:"Ferramentas",dif:1,pri:"Semana 1",para:"Serve como faca e é a base de tudo de pedra.",pr:"Nódulo de sílex + pedra (ou martelo de pedra) + bastão curto ou macete + ferramenta de lascamento",sk:"Nenhuma",ap:"Já vem sabendo",slug:"sharp-flint-flake"},
+ {n:"Ferramenta de Lascamento",cat:"Ferramentas",dif:1,pri:"Semana 1",para:"Necessária para lascar pedra.",pr:"Galhada (chifre) + faca",sk:"Entalhamento 1",ap:"Já vem sabendo",slug:"knapping-tool"},
+ {n:"Machado Rústico de Pedra",cat:"Armas",dif:1,pri:"Semana 1",para:"Corta árvore e serve de arma enquanto não acha machado de verdade.",pr:"Galho + lasca afiada de sílex + 2 amarrações",sk:"Manutenção 1",ap:"Já vem sabendo",slug:"crude-stone-axe"},
+ {n:"Lâmina de Pedra",cat:"Ferramentas",dif:2,pri:"Semana 1",para:"Vira faca de pedra ou ponta de lança.",pr:"Lasca de sílex + pedra ou martelo de pedra + bastão ou macete + ferramenta de lascamento",sk:"Lascamento 1",ap:"Revista Wilderness Survival ou Tool Use of Early Man; automática em Lascamento 3",slug:"stone-blade"},
+ {n:"Faca de Pedra",cat:"Armas",dif:2,pri:"Semana 1",para:"Faca para cortar, esfolar e fabricar quando não há faca de cozinha.",pr:"Lâmina de pedra + cabo pequeno + 1 amarração",sk:"Manutenção 1",ap:"Já vem sabendo",slug:"stone-knife"},
+ {n:"Serra de Sílex",cat:"Ferramentas",dif:2,pri:"Semana 2",para:"Serra para armadilhas e tábuas sem achar serrote.",pr:"Galho ou cabo médio + lasca de sílex + barbante ou couro + pedra + bastão ou macete + ferramenta de lascamento",sk:"Lascamento 3",ap:"Revista Cultures of Prehistory; automática em Lascamento 6",slug:"flint-saw"},
+ {n:"Cabo Pequeno / Cabo Grande",cat:"Ferramentas",dif:1,pri:"Semana 1",para:"Peças para faca, machado e marreta de pedra.",pr:"Galho, tábua ou galho grande + faca",sk:"Entalhamento 1 (pequeno) · 3 (grande)",ap:"Já vem sabendo",slug:"large-handle"},
+ {n:"Estaca",cat:"Ferramentas",dif:1,pri:"Semana 1",para:"Para barraca e jardim.",pr:"Galho ou cabo + faca",sk:"Nenhuma",ap:"Já vem sabendo",slug:"stake"},
+ {n:"Bastão Curto (Short Bat)",cat:"Armas",dif:3,pri:"Mês 1",para:"A arma contundente curta que o Shivas fabrica: forte e fácil de repor.",pr:"Tábua, galho ou galho grande + faca ou cutelo",sk:"Entalhamento 7",ap:"Revista Medieval Armory (May 1993) ou pesquisando um taco; sem revista só em Entalhamento 9 + Contundente Curto 9",slug:"short-bat"},
+ {n:"Taco de Beisebol Artesanal",cat:"Armas",dif:3,pri:"Longo prazo",para:"Contundente longa que você mesmo repõe.",pr:"Galho grande + faca ou cutelo",sk:"Entalhamento 9",ap:"Revista The Louisville Bruiser ou pesquisando um taco; sem revista só em Entalhamento 10 + Contundente Longo 10",slug:"crafted-baseball-bat"},
+ {n:"Machado Grande de Pedra",cat:"Armas",dif:3,pri:"Mês 1",para:"Machado de duas mãos sem metal.",pr:"Cabo grande + cabeça de machado grande de pedra (Lascamento 4) + 3 amarrações + faca",sk:"Manutenção 1 · cabeça pede Lascamento 4",ap:"Cabeça: revista Tool Use of Early Man",slug:"large-stone-axe"},
+ {n:"Marreta de Pedra",cat:"Armas",dif:3,pri:"Mês 1",para:"Contundente longa pesada, feita do zero.",pr:"Cabo grande + cabeça de marreta de pedra (Lascamento 5) + 3 amarrações + faca",sk:"Manutenção 1 · cabeça pede Lascamento 5",ap:"Cabeça: revista Tool Use of Early Man",slug:"stone-maul"},
+ {n:"Clava de Osso",cat:"Armas",dif:2,pri:"Mês 1",para:"Arma curta para quem caça.",pr:"Osso de animal + 2 tiras de couro",sk:"Manutenção 1",ap:"Revista The First Weapons; automática em Manutenção 3 + Contundente Curto 1",slug:"bone-club"},
+ {n:"Punhal de Vidro",cat:"Armas",dif:2,pri:"Semana 1",para:"Lâmina curta de emergência.",pr:"Vidro ou garrafa quebrada + 1 amarração + fita adesiva",sk:"Manutenção 1",ap:"Revista Cheapskate's John Spiral: Prison Defense; automática em Manutenção 3 + Lâmina Curta 3",slug:"glass-shiv"},
+ {n:"Coquetel Molotov",cat:"Armas",dif:1,pri:"Semana 1",para:"Queima um grupo de zumbis. Cuidado: incêndio se espalha.",pr:"Garrafa de vidro de bebida + gasolina, álcool ou destilado + trapo ou tira de jeans",sk:"Nenhuma",ap:"Já vem sabendo",slug:"molotov-cocktail"},
+ {n:"Bomba de Cano",cat:"Armas",dif:3,pri:"Mês 1",para:"A bomba que limpa cidade (a arma do Engenheiro do Laughter).",pr:"3 sucatas eletrônicas + tubo de ferro + 20 de pólvora + barbante + arco de serra + arco de serra pequeno",sk:"Nenhuma (dá XP de Elétrica)",ap:"Revista Cheapskate's John Spiral: Homemade Explosives",slug:"pipe-bomb"},
+ {n:"Corda de Lençol",cat:"Sobrevivência",dif:1,pri:"Dia 1",para:"Rota de fuga: desce pela janela do segundo andar.",pr:"1 lençol",sk:"Nenhuma",ap:"Já vem sabendo",slug:"sheet-rope"},
+ {n:"Bolsa de Lençol a Tiracolo",cat:"Sobrevivência",dif:1,pri:"Dia 1",para:"Primeira bolsa, antes de achar mochila.",pr:"1 lençol (cortina removida também vira lençol)",sk:"Nenhuma",ap:"Já vem sabendo",slug:"sheet-sling-bag"},
+ {n:"Bolsa de Lona a Tiracolo",cat:"Sobrevivência",dif:1,pri:"Semana 1",para:"Bolsa melhor que a de lençol.",pr:"Lona + 2 fitas adesivas reforçadas",sk:"Nenhuma",ap:"Já vem sabendo",slug:"tarp-sling-bag"},
+ {n:"Kit de Barraca Improvisada",cat:"Sobrevivência",dif:1,pri:"Semana 1",para:"Dormir no mato longe da cidade.",pr:"Lona + 4 estacas + 2 hastes ou galhos + vara longa",sk:"Nenhuma",ap:"Já vem sabendo",slug:"improvised-tent-kit"},
+ {n:"Barbante",cat:"Sobrevivência",dif:2,pri:"Semana 2",para:"Amarração para armas, armadilhas e rede.",pr:"Cânhamo, linho ou 25 fios de tendão + vara + faca + tesoura",sk:"Nenhuma",ap:"Já vem sabendo",slug:"twine"},
+ {n:"Corda",cat:"Sobrevivência",dif:2,pri:"Semana 2",para:"Corda forte para construção e animais.",pr:"2 cânhamos + vara + faca + tesoura",sk:"Nenhuma",ap:"Já vem sabendo",slug:"rope"},
+ {n:"Vara de Pesca Improvisada",cat:"Comida",dif:1,pri:"Semana 1",para:"Comida infinita em rio e lago.",pr:"Haste de madeira + 2 linhas de pesca ou 2 barbantes + clipe, prego ou anzol + faca",sk:"Nenhuma",ap:"Revista Angler USA (June 1993) ou pesquisando uma vara; automática em Pesca 4 + Entalhamento 4",slug:"makeshift-fishing-rod"},
+ {n:"Rede de Pesca",cat:"Comida",dif:2,pri:"Mês 1",para:"Pesca sozinha enquanto você faz outra coisa.",pr:"10 barbantes + 5 arames",sk:"Nenhuma",ap:"Revista Angler USA (May 1993); automática em Pesca 6",slug:"fishing-net"},
+ {n:"Armadilha de Gravetos",cat:"Comida",dif:1,pri:"Semana 1",para:"Caça pássaro e bicho pequeno sem esforço.",pr:"4 hastes de madeira + barbante",sk:"Nenhuma",ap:"Revista The Hunter; automática em Armadilhas 2",slug:"stick-trap"},
+ {n:"Armadilha de Laço",cat:"Comida",dif:1,pri:"Semana 1",para:"Coelho e esquilo.",pr:"Tábua + 2 barbantes + serra",sk:"Armadilhas 1",ap:"Revista Small Game Hunting; automática em Armadilhas 6",slug:"snare-trap"},
+ {n:"Armadilha de Caixa",cat:"Comida",dif:2,pri:"Semana 2",para:"Bichos médios.",pr:"4 tábuas + 7 pregos + serra + martelo",sk:"Carpintaria 1 · Armadilhas 2",ap:"Revista Wildlife Preserve; automática em Armadilhas 8",slug:"box-trap"},
+ {n:"Armadilha de Gaiola",cat:"Comida",dif:2,pri:"Semana 2",para:"Pega bicho vivo.",pr:"5 arames + alicate",sk:"Armadilhas 3",ap:"Revista Wildlife Preserve; automática em Armadilhas 5",slug:"cage-trap"},
+ {n:"Trapo (rasgar roupa)",cat:"Medicina",dif:1,pri:"Dia 1",para:"Curativo do começo: rasgue a roupa que sobrar.",pr:"Qualquer roupa de pano",sk:"Nenhuma",ap:"Já vem sabendo",slug:"rag"},
+ {n:"Bandagem Esterilizada",cat:"Medicina",dif:1,pri:"Dia 1",para:"Curativo que não infecciona.",pr:"Trapo ou bandagem + 0,5 de água bem quente, ou 0,1 de álcool, vodca ou uísque",sk:"Nenhuma",ap:"Já vem sabendo",slug:"bandage-sterilized"},
+ {n:"Tala",cat:"Medicina",dif:1,pri:"Semana 1",para:"Fratura (queda, carro).",pr:"Trapo ou tira + tábua, galho ou haste",sk:"Nenhuma",ap:"Já vem sabendo",slug:"splint"},
+ {n:"Cataplasmas (confrei, tanchagem, alho-silvestre)",cat:"Medicina",dif:2,pri:"Semana 2",para:"Remédio do mato quando acabar o da farmácia.",pr:"Almofariz e pilão + 5 da erva",sk:"Nenhuma",ap:"Revista Wilderness Survival; automática em Primeiros Socorros 5 + Coleta 5",slug:"comfrey-poultice"},
+ {n:"Armadura de Revistas (membros)",cat:"Proteção",dif:1,pri:"Dia 1",para:"Proteção barata contra arranhão nos braços e pernas.",pr:"Revistas",sk:"Nenhuma",ap:"Já vem sabendo",slug:"magazine-limb-armor"},
+ {n:"Armadura Corporal de Revistas",cat:"Proteção",dif:2,pri:"Semana 1",para:"Protege o tronco.",pr:"8 revistas",sk:"Nenhuma",ap:"Revista Cheapskate's John Spiral: Prison Defense",slug:"magazine-body-armor"},
+ {n:"Máscara de Gás Improvisada",cat:"Proteção",dif:2,pri:"Mês 1",para:"Cheiro de cadáver e fumaça.",pr:"Tesoura + faca + 2 fitas reforçadas + trapo + garrafa",sk:"Nenhuma",ap:"Revista Cheapskate's John Spiral: Chemical Warfare",slug:"improvised-gas-mask"},
+ {n:"Barricada de Tábua",cat:"Construção",dif:1,pri:"Dia 2",para:"Fecha janela e porta da base.",pr:"Martelo + tábua + 2 pregos",sk:"Nenhuma",ap:"Já vem sabendo",wiki:"Barricade"},
+ {n:"Parede de Toras",cat:"Construção",dif:1,pri:"Semana 2",para:"Muro forte sem nível de Carpintaria e jeito de upar Carpintaria cedo. Gasta muita tora.",pr:"Toras + amarração (corda ou corda de lençol)",sk:"Nenhuma",ap:"Já vem sabendo",wiki:"Log_Wall"},
+ {n:"Parede de Madeira",cat:"Construção",dif:2,pri:"Mês 1",para:"Fecha a base; resiste mais conforme o nível.",pr:"Martelo + tábuas + pregos",sk:"Carpintaria 2 · 4 · 6",ap:"Já vem sabendo",wiki:"Wooden_Wall"},
+ {n:"Caixote de Madeira",cat:"Construção",dif:2,pri:"Semana 2",para:"Guardar loot: 40 de espaço (60 no nível 7), empilha até 3.",pr:"Martelo + tábuas + pregos",sk:"Carpintaria 3 (ou 7)",ap:"Já vem sabendo",wiki:"Wooden_Crate"},
+ {n:"Coletor de Chuva (barril)",cat:"Construção",dif:3,pri:"Semana 3",para:"Água depois que a encanada cair. Ferva antes de beber.",pr:"Martelo + tábuas + pregos + lona ou sacos de lixo",sk:"Carpintaria 5",ap:"Já vem sabendo",wiki:"Rain_Collector_Barrel_(Tarp)"},
+ {n:"Composteira",cat:"Construção",dif:2,pri:"Mês 1",para:"Transforma comida podre em adubo para a horta.",pr:"Martelo + tábuas + pregos",sk:"Carpintaria 3 (ou 6)",ap:"Já vem sabendo",wiki:"Composter"},
+ {n:"Escada de Madeira",cat:"Construção",dif:3,pri:"Longo prazo",para:"Acesso a uma base em andar alto. Muita gente tira a escada e sobe por corda de lençol.",pr:"Martelo + tábuas + pregos",sk:"Carpintaria 6",ap:"Já vem sabendo",wiki:"Wooden_Stairs"}
+];
+const DIFL={1:"Fácil",2:"Médio",3:"Difícil"}, PRIO=["Dia 1","Dia 2","Semana 1","Semana 2","Semana 3","Mês 1","Longo prazo"];
+
+// ---------- MAPA DE ROSEWOOD (ruas e prédios do pzmap.org, versão 42.20) ----------
+const RW={"B":[7600,11120],"st":[["Quiet St",[289,259,288,335,292,343,302,353,309,356,722,357]],["Doctors Lane",[426,360,426,455]],["Frederick Lane",[336,654,336,609,365,552,384,533,395,510,395,471,398,465,400,462,405,459,900,459]],["Sunset Meadows Dr",[-71,345,55,345,66,350,100,383,133,417,147,423,275,423,288,429,332,473,391,473]],["Mortimer St",[546,463,546,533]],["Buck St",[510,536,662,536]],["Cartwheel St",[665,463,665,603,663,609,659,612,655,614,622,614,617,617,613,621,611,625,611,654]],["Schoolhouse St",[900,459,903,459,907,462,912,467,914,472,914,548,912,553,908,557,903,559,668,559]],["South Main St",[332,657,676,657]],["North Main St",[506,92,506,654]],["St Martin's Road",[769,562,769,657,676,657]],["Justice Road",[236,767,314,767,325,767,330,765,334,761,336,757,336,745,336,660]],["Rosewood Road",[673,660,673,862,730,862,737,865,742,870,747,880,747,1196]],["Angel Road",[743,1205,331,1205,330,1127,334,1121,416,1040,418,1033,418,879,420,875,433,862,669,862]],["Heartbreak Road",[420,1024,516,1024,541,1049,541,1106,558,1123,558,1200]],["Hamshank Road",[-302,1205,327,1205]],["Fiddler's Trail",[743,1204,2985,1205]],["Flaherty Road",[500,-626,500,-2,506,5,506,77]],["Stamp Road",[-26,1209,-26,1246,-67,1246]],["Soretoe Road",[452,859,452,792]],["Pigeon Road",[93,77,93,-8,80,-20]],["Broken Spear Road",[91,17,-110,17,-110,-17]],["Crowcall Road",[330,1209,330,1229,333,1237,348,1253,356,1257,500,1257,505,1255,549,1212,549,1210]],["Jacks Lane",[506,660,506,858]],["Denton St",[510,155,733,155]],["Toadhop Road",[288,259,288,162,284,153,276,146,269,142,151,142,141,138,133,129,128,120,128,92]],["JC Carroll Road",[510,262,718,262,727,259,734,252,737,246,737,92]],["Butterfly St",[665,266,665,455]],["Father Murphy Lane",[261,420,261,349,265,340,281,325,284,322]],["Snake St",[293,262,502,262]],["Shelf St",[426,214,426,352]],["Cross St",[293,310,423,310]],["Prison Access Road",[427,862,412,862,400,856,325,781,317,771]],["Catkin St",[772,657,781,657,786,660,789,663,791,667,791,940,787,951,779,958,770,962,751,962]]],"bl":[1,581,93,164,604,473,8,13,597,478,4,7,633,480,6,9,617,475,14,10,633,426,13,13,609,426,7,14,593,427,9,13,640,507,13,7,635,518,8,4,643,568,10,9,701,431,9,14,675,408,23,18,725,431,9,8,731,402,9,8,749,427,14,12,746,407,4,6,607,507,15,13,593,506,9,15,597,552,11,10,613,555,10,15,641,547,10,8,635,557,7,4,676,570,12,7,776,433,20,8,677,473,9,8,685,483,7,4,678,496,12,8,695,494,4,7,676,518,10,6,684,537,10,12,701,568,6,11,728,573,17,6,784,424,5,4,721,475,48,38,810,427,9,16,804,410,7,6,828,434,10,7,846,430,12,11,829,415,6,7,632,572,7,13,637,595,12,8,642,588,7,4,614,587,15,15,688,581,3,4,726,590,18,12,705,601,9,13,738,625,7,10,675,600,11,7,693,593,7,4,649,632,7,13,788,606,12,5,732,617,4,3,841,604,18,20,94,757,4,4,168,793,13,13,111,829,30,10,219,765,6,4,371,1020,11,7,352,950,6,10,379,951,7,8,479,1104,6,10,512,1101,9,13,535,917,9,13,553,929,11,11,74,1148,11,8,472,811,11,13,457,774,15,22,408,776,12,9,531,778,8,13,555,778,5,5,786,1104,3,4,786,1129,3,4,676,1034,36,21,677,1078,22,11,683,1101,22,20,677,1159,54,18,837,1059,7,6,827,1014,13,4,217,165,13,4,335,332,10,11,314,333,11,11,303,324,8,5,309,284,8,10,295,280,7,8,286,372,16,15,286,394,8,22,867,428,14,13,892,429,9,12,906,419,4,7,211,121,13,4,400,276,9,11,375,278,8,9,355,277,9,10,338,271,5,8,457,270,8,6,465,216,16,20,358,154,5,8,465,185,15,16,376,216,36,15,547,228,18,13,574,164,8,17,522,168,21,14,545,196,20,29,474,366,22,31,356,331,10,12,336,319,6,4,377,333,8,10,390,292,11,7,401,339,18,9,431,339,24,9,437,300,16,7,437,280,12,8,451,291,7,4,433,316,11,6,467,283,19,7,463,294,15,19,458,328,22,20,396,317,11,10,431,369,14,9,398,382,17,26,343,372,8,18,363,368,3,4,519,385,36,20,579,368,65,16,516,316,29,30,516,291,36,21,563,322,4,13,571,296,8,11,862,1116,6,8,440,17,11,27,372,27,8,3,371,7,9,15,378,110,39,71,624,178,36,43,598,163,20,38,766,263,5,9,705,161,13,27,702,194,8,3,706,199,8,3,726,170,3,8,675,169,11,16,688,181,11,9,867,767,13,12,853,817,15,10,874,860,15,10,848,681,12,16,900,890,10,15,77,1,7,4,720,128,10,20,634,113,14,26,652,113,38,28,622,112,4,13,472,402,24,47,448,469,17,17,465,483,31,18,470,469,25,12,412,468,6,13,421,469,14,20,452,523,35,40,401,519,10,21,409,435,10,17,388,430,7,7,446,429,14,20,343,400,12,19,365,409,3,4,435,409,10,7,438,401,7,4,434,434,7,10,538,494,3,5,516,469,27,57,516,542,23,36,516,422,17,27,550,428,31,21,562,470,10,9,577,473,16,20,586,427,4,6,576,511,9,10,576,502,7,4,552,556,6,9,575,553,10,12,566,572,4,5,590,570,6,7,348,621,8,11,448,602,32,33,387,627,6,12,385,612,6,6,399,621,13,4,526,607,31,24,753,677,9,6,720,678,6,9,680,668,25,13,700,679,4,4,646,740,8,3,644,745,8,3,649,750,8,3,644,757,8,3,638,705,9,4,627,698,13,4,608,683,4,13,823,775,15,12,844,866,15,12,801,836,4,9,801,849,9,4,830,699,9,7,802,908,15,10,90,1145,8,6,319,1028,9,13,318,1021,5,4]};
+// Pontos de Rosewood (coordenadas do jogo). k = tipo do ícone
+const POI=[
+ ["Corpo de Bombeiros",8137,11736,"fogo"],["Delegacia",8063,11734,"pol"],["Loja de VHS",8120,11450,"vhs"],["Loja de Armas",8037,11438,"arma"],["Ótica",8047,11565,"med"],
+ ["Livraria",8092,11510,"livro"],["Livraria",8118,11591,"livro"],["Rosewood Medical",8092,11523,"med"],["Consultórios",8152,11559,"med"],["Supermercado",8092,11555,"comida"],
+ ["Loja de Ferramentas",8120,11425,"ferr"],["Loja de Ferramentas (Bolt Claim)",8003,11290,"ferr"],["GigaMart",8003,11255,"comida"],["Posto (4 bombas)",8045,11144,"gas"],["Posto Fossoil",8287,12232,"gas"],
+ ["Escola",8341,11612,"livro"],["Depósito",8308,11726,"ferr"],["Armazém",8206,11299,"ferr"],["Armazém",8260,11239,"ferr"],["Auto Peças",8118,11637,"carro"],["Oficina",8154,11325,"carro"],["Oficina",8166,11559,"carro"],
+ ["Condomínio Fechado",7920,11512,"casa"],["Presídio Estadual",7666,11793,"perigo"],["Loja de Roupas",8092,11490,"roupa"],["Loja de Roupas",8120,11461,"roupa"],["Alfaiataria",7983,11344,"roupa"],
+ ["Açougue",8120,11413,"comida"],["Padaria",8055,11565,"comida"],["Conveniência",8118,11605,"comida"],["Oficina de Solda",8023,11591,"ferr"],["Cerâmica",8118,11627,"ferr"],["Motel",8073,11418,"casa"],["Fórum",8076,11657,"pol"],
+ ["Galpão de Ferramentas",7951,11745,"ferr"],["Acampamento",8487,11740,"casa"],["Cinema Drive-in",8426,12240,"casa"]
+];
+// Rota dia a dia para quem começa em Rosewood (Knine e OVERCHARGED EGG começam lá)
+const ROTA=[
+ {d:"Dia 1 · manhã",t:"Casa inicial",s:[["Sua casa (exemplo)",7960,11400]],
+  faz:["Mundo novo: a casa inicial não tem zumbi. Ande agachado (C) para não chamar os de fora.","Saqueie tudo. Lençol vira bolsa e corda; rasgue roupa velha para virar curativo.","Ligue a TV no canal Life and Living às 6h, 12h e 18h, com o volume baixo.","Beba da pia enquanto tem água e feche as cortinas."],
+  pega:"Lençol, faca de cozinha, comida fresca, garrafa, lanterna e pilhas.",perigo:"Nenhum dentro de casa. Personagem novo no mesmo mundo pode nascer com zumbi."},
+ {d:"Dia 1 · tarde",t:"Casas da mesma rua",s:[["Vizinho 1",7978,11396],["Vizinho 2",7998,11420],["Vizinho 3",7950,11450]],
+  faz:["Antes de entrar, bata na porta ou aperte Q e dê um passo para trás.","Um zumbi por vez: empurre (espaço) e pise na cabeça.","Marque um X no mapa (M) em cada casa saqueada."],
+  pega:"Martelo, chave de fenda, pregos, mochila, remédios do banheiro.",perigo:"Alarme tocou? Corra e não fique na casa."},
+ {d:"Dia 2",t:"Centro: ótica, livraria e farmácia",s:[["Ótica",8047,11565],["Supermercado",8092,11555],["Rosewood Medical",8092,11523],["Livraria",8092,11510]],
+  faz:["Míope? Pegue óculos de grau na Ótica (Anzony lembra que Rosewood tem uma).","Livros de perícia volume 1 na livraria: multiplicam XP nos níveis 1 e 2.","Saia do centro antes de escurecer: a noite da B42 é muito escura."],
+  pega:"Óculos, livros, enlatados, remédios, bandagens.",perigo:"O centro tem mais zumbi. Entre agachado e por trás."},
+ {d:"Dia 3",t:"Rua do comércio: ferramentas e VHS",s:[["Loja de Ferramentas",8120,11425],["Loja de VHS",8120,11450],["Loja de Armas",8037,11438]],
+  faz:["Fitas VHS dão XP: arraste para a TV. TV antiga não toca VHS, guarde a fita.","Na loja de ferramentas: serrote, martelo e pregos para a base.","Loja de armas é nova da 42.20. Só gaste munição em emergência: tiro chama horda."],
+  pega:"Serrote, martelo, pregos, fitas VHS, munição.",perigo:"Atire só se precisar: o barulho chama a rua inteira."},
+ {d:"Dias 4 e 5",t:"Bombeiros e delegacia (um de frente para o outro)",s:[["Corpo de Bombeiros",8137,11736],["Delegacia",8063,11734]],
+  faz:["Bombeiros: machados, pé de cabra, remédios e roupa resistente.","Delegacia: mate zumbis lá dentro e procure a chave no corpo deles. Sem chave, bata até a porta quebrar.","Atrás dos bombeiros há um lago: água infinita para lavar e ferver (OVERCHARGED EGG)."],
+  pega:"Machado, pé de cabra, armas, munição, colete.",perigo:"Os dois enchem de zumbi. Se quiser base nos bombeiros, não puxe a horda para lá (Knine)."},
+ {d:"Semana 2",t:"Escola, depósito e consultórios",s:[["Escola",8341,11612],["Depósito",8308,11726],["Consultórios",8152,11559]],
+  faz:["Escola: revistas que ensinam receitas e livros de perícia.","Depósito e oficinas: material de construção.","Comece a encher garrafas: água e luz caem entre a semana 3 e a 5."],
+  pega:"Revistas (gerador, armadilhas, armas), livros, ferramentas.",perigo:"Prédio grande e escuro: lanterna e porta fechada atrás de você."},
+ {d:"Semanas 2 e 3",t:"Norte: GigaMart, armazéns e posto",s:[["GigaMart",8003,11255],["Loja de Ferramentas (Bolt Claim)",8003,11290],["Armazém",8206,11299],["Posto (4 bombas)",8045,11144]],
+  faz:["Vá de carro: é longe a pé (Knine).","Encha galões no posto ANTES da energia cair.","Armazéns: ferramentas de sobra para a base."],
+  pega:"Comida em quantidade, galões de gasolina, ferramentas.",perigo:"Supermercado gigante = muitos zumbis. Limpe a porta antes de entrar."},
+ {d:"Semanas 3 e 4",t:"Montar a base",s:[["Corpo de Bombeiros (base com lago)",8137,11736],["Condomínio Fechado",7920,11512]],
+  faz:["Escolha uma base com água por perto (o lago dos bombeiros) ou o condomínio fechado.","Barricadas nas janelas, coletor de chuva (Carpintaria 5) e horta.","Leve todo o loot para caixotes (Carpintaria 3)."],
+  pega:"Tábuas, pregos, lona ou sacos de lixo, sementes.",perigo:"Não mate zumbi dentro da base: o cheiro fica. Arraste o corpo para longe."},
+ {d:"Mês 2 em diante",t:"Presídio e saída da cidade",s:[["Presídio Estadual",7666,11793],["Posto Fossoil",8287,12232],["Posto (4 bombas)",8045,11144]],
+  faz:["Presídio só em grupo e armado: tem horda interna (OVERCHARGED EGG).","Saindo pelo norte (posto de 4 bombas) você chega a Muldraugh, que tem bem mais zumbi.","Casas comuns ficam vazias perto do dia 45: hora de expandir."],
+  pega:"Livros da biblioteca do presídio, ferramentas industriais.",perigo:"Horda grande. Planeje rota de fuga e use carro."}
+];
+
 // ---------- CÁLCULO ----------
 function compute(profId,sel){
   const p=PROF[profId]||PROFS[0]; let neg=0,pos=0,str=5+(p.str||0),fit=5+(p.fit||0); const sk={};
@@ -888,6 +1351,42 @@ function fmtCost(n,side){if(n===0)return '<span class="cost zero">0</span>';if(s
 function profCost(p){return p.cost>0?fmtCost(p.cost,"spend"):p.cost<0?fmtCost(-p.cost,"gain"):fmtCost(0)}
 function skillLine(sk){return Object.entries(sk||{}).map(([k,v])=>k+" "+v).join(" · ")}
 function roleChips(r){return [...r].map(id=>`<span class="role">${esc(ROLEPT[id])}</span>`).join("")||'<span class="hint">Sem papel definido ainda</span>'}
+
+// ---------- COMPARTILHAR (link com a build e o nome de quem mandou) ----------
+const NKEY="pz-b42-nome", RKEY="pz-b42-recebidas";
+let myName=""; try{myName=localStorage.getItem(NKEY)||""}catch(e){}
+let recv=[]; try{recv=(JSON.parse(localStorage.getItem(RKEY)||"[]")||[]).filter(r=>r&&r.id&&PROF[r.prof]&&Array.isArray(r.sel))}catch(e){}
+function saveRecv(){try{localStorage.setItem(RKEY,JSON.stringify(recv.slice(0,30)))}catch(e){}}
+const b64e=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+const b64d=s=>decodeURIComponent(escape(atob(s.replace(/-/g,"+").replace(/_/g,"/"))));
+const BASE=location.href.split(/[?#]/)[0];
+function packB(o){return {n:o.who||"",p:o.prof,t:[...o.sel],b:o.nm||"",l:o.lib||""}}
+function unpackB(o){if(!o||!PROF[o.p])return null;const m={who:String(o.n||"").slice(0,24),prof:o.p,sel:(o.t||[]).filter(id=>ALL[id]),nm:String(o.b||"").slice(0,60),lib:""};if(o.l&&LIBM[o.l])m.lib=o.l;return m}
+function buildLink(o){return BASE+"?b="+b64e(JSON.stringify(packB(o)))+"#montador"}
+function teamLinkOf(ms){return BASE+"?t="+b64e(JSON.stringify({m:ms.map(packB)}))+"#esquadrao"}
+function parseAny(raw){
+  raw=String(raw||"").trim(); if(!raw)return null;
+  const tryB=x=>{try{return unpackB(JSON.parse(b64d(x)))}catch(e){return null}};
+  const tryT=x=>{try{const o=JSON.parse(b64d(x));const ms=(o.m||[]).map(unpackB).filter(Boolean);return ms.length?ms.slice(0,6):null}catch(e){return null}};
+  let q=null; try{q=new URL(raw).searchParams}catch(e){}
+  if(q){if(q.get("b")){const b=tryB(q.get("b"));return b?{kind:"build",b}:null}if(q.get("t")){const t=tryT(q.get("t"));return t?{kind:"team",m:t}:null}}
+  if(/^B42:/i.test(raw)){
+    if(raw.includes("|")){const ms=raw.split("|").map(parseCode);return ms.length&&ms.every(Boolean)?{kind:"team",m:ms.slice(0,6).map(p=>({who:"",prof:p.prof,sel:p.sel,nm:"",lib:""}))}:null}
+    const p=parseCode(raw);return p?{kind:"build",b:{who:"",prof:p.prof,sel:p.sel,nm:"",lib:""}}:null}
+  const b=tryB(raw);if(b)return{kind:"build",b};const t=tryT(raw);if(t)return{kind:"team",m:t};return null;
+}
+function addRecv(b){
+  const key=b.who+"|"+b.prof+"|"+[...b.sel].sort().join(",");
+  let r=recv.find(x=>x.who+"|"+x.prof+"|"+[...x.sel].sort().join(",")===key);
+  if(!r){r={id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),who:b.who||"",prof:b.prof,sel:[...b.sel],nm:b.nm||(b.who?"Build de "+b.who:"Build de um amigo")};recv.unshift(r);saveRecv()}
+  return r;
+}
+// ---------- BONECOS 3D ----------
+function spec3d(prof,sel,seed){const c=compute(prof,new Set(sel));return {prof,traits:[...sel],str:c.str,fit:c.fit,saldo:c.saldo,seed:seed||""}}
+const PTS={sm:[88,110],"":[144,180],lg:[192,240]};
+function ptImg(spec,cls=""){const [w,h]=PTS[cls]||PTS[""];return `<img class="pt ${cls}" alt="" width="${w}" height="${h}" data-pz="${esc(JSON.stringify(spec))}">`}
+function fillPt(){if(window.PZ3D)requestAnimationFrame(()=>window.PZ3D.fill(document))}
+let hero=null, squad3=null, lastHow=null;
 
 // ---------- MONTADOR ----------
 function renderProfs(){
@@ -959,11 +1458,12 @@ function renderSummary(){
   const posSel=[...state.sel].filter(id=>ALL[id].side==="pos").map(id=>ALL[id].pt);
   const negSel=[...state.sel].filter(id=>ALL[id].side==="neg").map(id=>ALL[id].pt);
   $("picked").innerHTML=`<b>${esc(c.p.pt)}</b><br><b>Positivos (${posSel.length}):</b> ${esc(posSel.join(", ")||"nenhum")}<br><b>Negativos (${negSel.length}):</b> ${esc(negSel.join(", ")||"nenhum")}`;
+  if(hero)hero.set(spec3d(state.prof,[...state.sel],"me"),lastHow);lastHow=null;
 }
 function renderMontador(){renderProfs();renderTraits();renderSummary();save()}
 
-$("profs").addEventListener("click",e=>{const b=e.target.closest(".prof");if(!b)return;state.prof=b.dataset.p;const p=PROF[state.prof];[...(p.gr||[]),...(p.ex||[])].forEach(id=>state.sel.delete(id));renderMontador()});
-function onTrait(e){const b=e.target.closest(".trait");if(!b||b.disabled)return;const id=b.dataset.t;state.sel.has(id)?state.sel.delete(id):state.sel.add(id);renderMontador()}
+$("profs").addEventListener("click",e=>{const b=e.target.closest(".prof");if(!b)return;if(state.prof!==b.dataset.p)lastHow="prof";state.prof=b.dataset.p;const p=PROF[state.prof];[...(p.gr||[]),...(p.ex||[])].forEach(id=>state.sel.delete(id));renderMontador()});
+function onTrait(e){const b=e.target.closest(".trait");if(!b||b.disabled)return;const id=b.dataset.t;if(state.sel.has(id)){state.sel.delete(id);lastHow="remove"}else{state.sel.add(id);lastHow="add"}renderMontador()}
 $("negList").addEventListener("click",onTrait);$("posList").addEventListener("click",onTrait);
 document.querySelectorAll("#panel-montador .chip").forEach(c=>c.addEventListener("click",()=>{filter=c.dataset.f;document.querySelectorAll("#panel-montador .chip").forEach(x=>x.setAttribute("aria-pressed",x===c));renderTraits()}));
 $("btnClear").addEventListener("click",()=>{state={prof:state.prof,sel:new Set()};renderMontador();flash("msg","Traços zerados. Profissão mantida.")});
@@ -974,9 +1474,24 @@ function parseCode(raw){const m=/^B42:([a-z_]+):([a-z_,]*)$/i.exec(raw.trim());i
 function buildText(prof,sel,title){const c=compute(prof,sel);const s=[...sel].filter(id=>!c.granted.has(id));const posSel=s.filter(id=>ALL[id].side==="pos").map(id=>ALL[id].pt);const negSel=s.filter(id=>ALL[id].side==="neg").map(id=>ALL[id].pt);
   return `${title?title+" — ":""}${c.p.pt}\nForça ${c.str} · Aptidão ${c.fit} · Saldo ${c.saldo}\nPositivos: ${posSel.join(", ")||"—"}\nNegativos: ${negSel.join(", ")||"—"}\nCódigo: ${code(prof,s)}`}
 async function copy(t,ok,msgId,fbId){try{await navigator.clipboard.writeText(t);$(fbId).hidden=true;flash(msgId,ok)}catch(e){const f=$(fbId);f.hidden=false;f.value=t;f.focus();f.select();flash(msgId,"Selecionei o texto abaixo. Use Ctrl/Cmd+C.")}}
-$("btnCopyText").addEventListener("click",()=>copy("Build PZ B42.21\n"+buildText(state.prof,state.sel),"Resumo copiado. Cole no grupo.","msg","fallback"));
-$("btnCopyCode").addEventListener("click",()=>copy(code(state.prof,state.sel),"Código copiado.","msg","fallback"));
-$("btnLoad").addEventListener("click",()=>{const r=parseCode($("codeIn").value);if(!r){flash("msg","Código inválido. Ele começa com B42: e vem do botão Copiar código.");return}state={prof:r.prof,sel:new Set(r.sel)};renderMontador();flash("msg","Build do amigo carregada.")});
+const myLink=()=>buildLink({who:myName,prof:state.prof,sel:state.sel,nm:""});
+$("btnCopyText").addEventListener("click",()=>copy("Build PZ B42.21"+(myName?" de "+myName:"")+"\n"+buildText(state.prof,state.sel)+"\nLink: "+myLink(),"Resumo copiado. Cole no grupo.","msg","fallback"));
+$("btnCopyLink").addEventListener("click",()=>{if(!myName)flash("msg","Dica: escreva seu nome acima para o grupo saber de quem é.");copy(myLink(),"Link copiado. Quem abrir vê sua build"+(myName?" com o seu nome":"")+".","msg","fallback")});
+if(navigator.share){$("btnShare").hidden=false;$("btnShare").addEventListener("click",()=>navigator.share({title:"Build PZ B42.21"+(myName?" de "+myName:""),text:"Minha build de Project Zomboid: "+PROF[state.prof].pt,url:myLink()}).catch(()=>{}))}
+$("myName").value=myName;
+$("myName").addEventListener("input",e=>{myName=e.target.value.trim().slice(0,24);try{localStorage.setItem(NKEY,myName)}catch(_){}});
+$("btnLoad").addEventListener("click",()=>{const r=parseAny($("codeIn").value);if(!r){flash("msg","Não reconheci. Cole o link que o amigo mandou ou um código B42:.");return}
+  if(r.kind==="team"){applyTeam(r.m);go("esquadrao");flash("teamMsg","Esquadrão carregado.");return}
+  const rec=addRecv(r.b);state={prof:rec.prof,sel:new Set(rec.sel)};renderMontador();$("codeIn").value="";flash("msg",(rec.who?"Build de "+rec.who:"Build do amigo")+" carregada e guardada nas recebidas.")});
+
+// Editar uma vaga do esquadrão no montador
+let editSlot=-1, savedState=null;
+function startEdit(i,fresh){const m=team.members[i];if(!m)return;savedState={prof:state.prof,sel:new Set(state.sel)};editSlot=i;state=fresh?{prof:"unemployed",sel:new Set()}:{prof:m.prof,sel:new Set(m.sel)};lastHow="prof";renderMontador();showEditBar();go("montador")}
+function showEditBar(){const el=$("slotEdit");if(editSlot<0||!team.members[editSlot]){el.hidden=true;return}const m=team.members[editSlot];el.hidden=false;
+  el.innerHTML=`<span>Editando a <b>vaga ${editSlot+1}</b> do esquadrão${m.who?" ("+esc(m.who)+")":""}. Monte a build e salve.</span><button class="btn primary sm" type="button" data-se="save">Salvar na vaga ${editSlot+1}</button><button class="btn sm" type="button" data-se="cancel">Cancelar</button>`}
+$("slotEdit").addEventListener("click",e=>{const b=e.target.closest("[data-se]");if(!b)return;const i=editSlot,m=team.members[i];
+  if(b.dataset.se==="save"&&m){team.members[i]={lib:"",prof:state.prof,sel:[...state.sel],nm:"Personalizada · "+PROF[state.prof].pt,who:m.who||"",seed:m.seed||"",src:"custom"};team.comp=-1}
+  editSlot=-1;if(savedState){state=savedState;savedState=null;renderMontador()}showEditBar();go("esquadrao");if(b.dataset.se==="save")flash("teamMsg",`Vaga ${i+1} salva.`)});
 
 // ---------- BIBLIOTECA ----------
 const STYLES=["Iniciante","Combate","Longo prazo","Extinção","Tiro","Veículos","Furtivo","Sem combate"];
@@ -994,26 +1509,32 @@ function traitLists(b){
   return `<div class="tl"><b>+</b> ${esc(posSel.join(", "))}<br><b>−</b> ${esc(negSel.join(", "))}</div>`;
 }
 function statsRow(b,c){return `<div class="minis"><span>Força <b>${c.str}</b></span><span>Aptidão <b>${c.fit}</b></span><span>Saldo <b class="${c.saldo<0?"bad-n":"ok-n"}">${c.saldo}</b></span></div>`}
+function combosOf(id){return COMBOS.filter(c=>c.m.includes(id))}
+function cmbStrip(b){const cs=combosOf(b.id);if(!cs.length)return "";
+  return `<div><div class="sublbl">Combina com</div><div class="cmbs">${cs.map(c=>`<button class="cmb" type="button" data-gocombo="${c.id}"><b>${esc(c.nm)} · ${c.m.length} jogadores</b>${ptImg(spec3d(b.prof,b.traits,b.id),"sm")}${c.m.filter(x=>x!==b.id).map(x=>'<span class="plus">+</span>'+ptImg(spec3d(LIBM[x].prof,LIBM[x].traits,x),"sm")).join("")}</button>`).join("")}</div></div>`}
 function chCard(b){
-  const sel=new Set(b.traits), c=compute(b.prof,sel), ch=CH[b.ch];
+  const sel=new Set(b.traits), c=compute(b.prof,sel), ch=CH[b.ch], v=b.v||ch;
   return `<article class="bcard">
-    <div class="hd"><h3>${esc(b.nm)}</h3><span class="chn">${esc(ch.nm)}</span></div>
-    <div class="src"><span>${esc(c.p.pt)} · ${profCost(c.p)}</span><span class="lang">${ch.lg}</span><span>gravada na ${ch.pt} · ${ch.dt}</span>${c.saldo>=0?'<span class="valid">Fecha na 42.21</span>':'<span class="valid no">Não fecha na 42.21</span>'}</div>
+    <div class="hd2">${ptImg(spec3d(b.prof,b.traits,b.id),"lg")}<div style="display:grid;gap:6px;min-width:0">
+      <div class="hd"><h3>${esc(b.nm)}</h3><span class="chn">${esc(ch.nm)}</span></div>
+      <div class="src"><span>${esc(c.p.pt)} · ${profCost(c.p)}</span><span class="lang">${ch.lg}</span><span>gravada na ${v.pt} · ${v.dt}</span>${c.saldo>=0?'<span class="valid">Fecha na 42.21</span>':'<span class="valid no">Não fecha na 42.21</span>'}</div>
+      ${statsRow(b,c)}
+    </div></div>
     <p class="idea">${esc(b.d)}</p>
     <ul class="why">${b.why.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
     <div class="care"><b>Cuidado:</b> ${esc(b.care)}</div>
     ${b.fix?`<div class="fix"><b>Ajuste da ficha:</b> ${esc(b.fix)}</div>`:""}
-    ${statsRow(b,c)}
     <div class="rolesrow">${roleChips(rolesOf(b.prof,sel,b.id))}${b.sty.map(s=>`<span class="tag v-opc">${esc(s)}</span>`).join("")}</div>
     ${traitLists(b)}
-    <div class="acts"><button class="btn primary sm" type="button" data-open="${b.id}">Abrir no montador</button><span class="src"><a href="${ch.url}" target="_blank" rel="noopener">▶ ${esc(ch.t)}</a></span></div>
+    ${cmbStrip(b)}
+    <div class="acts"><button class="btn primary sm" type="button" data-open="${b.id}">Abrir no montador</button><span class="src"><a href="${v.url}" target="_blank" rel="noopener">▶ ${esc(v.t)}</a></span></div>
   </article>`;
 }
 function teamCard(b){
   const sel=new Set(b.traits), c=compute(b.prof,sel);
   return `<article class="bcard">
-    <div class="hd"><h3>${esc(b.nm)}</h3><span class="tag v-opc">${esc(b.tag)}</span></div>
-    <div class="pf">${esc(c.p.pt)} · ${profCost(c.p)}</div>
+    <div class="hd2">${ptImg(spec3d(b.prof,b.traits,b.id),"")}<div style="display:grid;gap:4px"><div class="hd"><h3>${esc(b.nm)}</h3><span class="tag v-opc">${esc(b.tag)}</span></div>
+    <div class="pf">${esc(c.p.pt)} · ${profCost(c.p)}</div></div></div>
     <p>${esc(b.d)}</p>
     <div class="rolesrow">${roleChips(rolesOf(b.prof,sel,b.id))}</div>
     ${statsRow(b,c)}
@@ -1026,59 +1547,78 @@ function renderLib(){
   $("libCount").textContent=list.length+" de "+CHLIB.length+" builds";
   $("lib").innerHTML=list.map(chCard).join("")||'<p class="hint">Nenhuma build com esse canal e estilo. Tente outro filtro.</p>';
   $("libTeam").innerHTML=TEAMLIB.map(teamCard).join("");
+  fillPt();
 }
 function openBuild(e){const b=e.target.closest("[data-open]");if(!b)return;const L=LIBM[b.dataset.open];state={prof:L.prof,sel:new Set(L.traits)};renderMontador();go("montador");flash("msg",L.nm+(L.ch?" ("+CH[L.ch].nm+")":"")+" carregada.")}
 $("lib").addEventListener("click",openBuild);$("libTeam").addEventListener("click",openBuild);
+$("lib").addEventListener("click",e=>{const b=e.target.closest("[data-gocombo]");if(!b)return;comboSize="all";renderCombos();go("combos");const el=$("combo-"+b.dataset.gocombo);if(el){el.scrollIntoView({block:"start"});el.classList.remove("flash");void el.offsetWidth;el.classList.add("flash")}});
 
 // ---------- ESQUADRÃO ----------
-function memberFromLib(id){const L=LIBM[id];return {lib:id,prof:L.prof,sel:L.traits.slice(),nm:L.nm}}
+function memberFromLib(id){const L=LIBM[id];return {lib:id,prof:L.prof,sel:L.traits.slice(),nm:L.nm,who:"",seed:id,src:"meta"}}
+const SRCL={meta:"Meta",mine:"Minha build",recv:"Recebida",import:"Importada",custom:"Criada no montador"};
+function applyTeam(ms){team={size:Math.max(2,Math.min(6,ms.length)),comp:-1,members:ms.slice(0,6).map(m=>({lib:m.lib||"",prof:m.prof,sel:[...m.sel],nm:m.nm||(m.lib&&LIBM[m.lib]?LIBM[m.lib].nm:(m.who?"Build de "+m.who:"Build importada · "+PROF[m.prof].pt)),who:m.who||"",seed:m.who||m.lib||"",src:m.lib?"meta":"import"}))};renderTeam()}
 function renderSizes(){
-  $("sizes").innerHTML='<span class="hint" style="margin-right:4px">Jogadores:</span>'+Object.keys(COMPS).map(n=>`<button class="chip" type="button" data-size="${n}" aria-pressed="${+n===team.size}">${n}${n==="6"?"+":""}</button>`).join("");
-  $("comps").innerHTML=COMPS[team.size].map((c,i)=>`<button class="comp" type="button" data-comp="${i}" aria-pressed="${i===team.comp}">
+  $("sizes").innerHTML='<span class="hint" style="margin-right:4px">Jogadores:</span>'+Object.keys(COMPS).map(n=>`<button class="chip" type="button" data-size="${n}" aria-pressed="${+n===team.members.length}">${n}${n==="6"?"+":""}</button>`).join("");
+  const n=Math.max(2,Math.min(6,team.members.length));
+  $("comps").innerHTML=(COMPS[n]||[]).map((c,i)=>`<button class="comp" type="button" data-comp="${i}" aria-pressed="${n===team.size&&i===team.comp}">
     <strong>${esc(c.nm)}</strong><span>${esc(c.para)}. ${esc(c.why[0])}</span>
     <span class="rolesrow">${c.m.map(id=>`<span class="role">${esc(LIBM[id].nm)}</span>`).join("")}</span></button>`).join("");
 }
-$("sizes").addEventListener("click",e=>{const b=e.target.closest("[data-size]");if(!b)return;team.size=+b.dataset.size;team.comp=0;team.members=COMPS[team.size][0].m.map(memberFromLib);renderTeam()});
-$("comps").addEventListener("click",e=>{const b=e.target.closest("[data-comp]");if(!b)return;team.comp=+b.dataset.comp;team.members=COMPS[team.size][team.comp].m.map(memberFromLib);renderTeam()});
+$("sizes").addEventListener("click",e=>{const b=e.target.closest("[data-size]");if(!b)return;const n=+b.dataset.size,ms=team.members.slice(0,n);
+  while(ms.length<n)ms.push(memberFromLib(COMPS[n][0].m[ms.length]||"shivas"));team={size:n,comp:-1,members:ms};renderTeam()});
+$("comps").addEventListener("click",e=>{const b=e.target.closest("[data-comp]");if(!b)return;const n=Math.max(2,Math.min(6,team.members.length)),c=COMPS[n][+b.dataset.comp];
+  // mantém quem já tinha nome e build própria; troca só as vagas de meta
+  const ms=c.m.map((id,i)=>{const old=team.members[i];return old&&old.src!=="meta"?old:{...memberFromLib(id),who:old?old.who:""}});team={size:n,comp:+b.dataset.comp,members:ms};renderTeam()});
 
 function renderSlots(){
-  const opt=b=>`<option value="${b.id}">${esc(b.nm)} · ${esc(PROF[b.prof].pt)}${b.ch?" · "+esc(CH[b.ch].nm):""}</option>`;
-  const opts=`<optgroup label="Builds dos canais">${CHLIB.map(opt).join("")}</optgroup><optgroup label="Papéis para co-op">${TEAMLIB.map(opt).join("")}</optgroup>`;
+  const opt=b=>`<option value="L:${b.id}">${esc(b.nm)} · ${esc(PROF[b.prof].pt)}${b.ch?" · "+esc(CH[b.ch].nm):""}</option>`;
+  const ropt=r=>`<option value="R:${r.id}">${esc(r.who||"Amigo")} · ${esc(r.nm||PROF[r.prof].pt)}</option>`;
+  const base=`<optgroup label="Ações"><option value="A:mine">Minha build (do montador)</option><option value="A:new">Criar do zero no montador</option><option value="A:import">Importar link ou código…</option></optgroup>${recv.length?`<optgroup label="Recebidas">${recv.map(ropt).join("")}</optgroup>`:""}<optgroup label="Builds dos canais">${CHLIB.map(opt).join("")}</optgroup><optgroup label="Papéis para co-op">${TEAMLIB.map(opt).join("")}</optgroup>`;
   $("slots").innerHTML=team.members.map((m,i)=>{
-    const sel=new Set(m.sel), c=compute(m.prof,sel);
+    const sel=new Set(m.sel), c=compute(m.prof,sel), cur=m.lib?"L:"+m.lib:(m.rid?"R:"+m.rid:"");
+    const opts=`<option value="" ${cur?"":"selected"}>Trocar build…</option>`+(cur?base.replace(`value="${cur}"`,`value="${cur}" selected`):base);
     return `<div class="slot">
-      <span class="who">Jogador ${i+1}</span>
-      <h3>${esc(m.nm)}</h3>
+      <div class="top3">${ptImg(spec3d(m.prof,m.sel,m.seed),"")}
+        <div style="display:grid;gap:5px;min-width:0"><span class="who">Jogador ${i+1} · <span class="src-tag">${esc(SRCL[m.src]||"Meta")}</span></span>
+        <input class="pname" data-pn="${i}" value="${esc(m.who||"")}" placeholder="Nome de quem joga" maxlength="24" aria-label="Nome do jogador ${i+1}">
+        <h3>${esc(m.nm)}</h3></div></div>
       <div class="pf hint">${esc(c.p.pt)} · Força ${c.str} · Aptidão ${c.fit} · Saldo <span class="mono ${c.saldo<0?"bad-n":"ok-n"}">${c.saldo}</span></div>
       <div class="rolesrow">${roleChips(rolesOf(m.prof,sel,m.lib))}</div>
-      <label class="sublbl" for="slotSel${i}" style="margin:2px 0 0">Trocar build</label>
-      <select id="slotSel${i}" data-slot="${i}">${m.lib?"":`<option value="" selected>Personalizada</option>`}${opts.replace(`value="${m.lib}"`,`value="${m.lib}" selected`)}</select>
-      <div class="btns">
-        <button class="btn sm" type="button" data-edit="${i}">Editar no montador</button>
-        <button class="btn sm" type="button" data-take="${i}">Usar a do montador</button>
-      </div>
+      <select data-slot="${i}" aria-label="Trocar build da vaga ${i+1}">${opts}</select>
+      <div class="imp" data-imp="${i}" hidden><input type="text" placeholder="Cole o link ou código" aria-label="Link ou código da build"><button class="btn sm" type="button" data-impok="${i}">Usar</button></div>
+      <div class="btns"><button class="btn sm" type="button" data-edit="${i}">Editar no montador</button><button class="btn sm" type="button" data-share="${i}">Copiar link desta build</button></div>
     </div>`}).join("");
 }
-$("slots").addEventListener("change",e=>{const s=e.target.closest("select[data-slot]");if(!s||!s.value)return;team.members[+s.dataset.slot]=memberFromLib(s.value);team.comp=-1;renderTeam()});
+$("slots").addEventListener("change",e=>{const s=e.target.closest("select[data-slot]");if(!s||!s.value)return;const i=+s.dataset.slot,v=s.value,keep=team.members[i].who||"";
+  if(v==="A:new"){startEdit(i,true);return}
+  if(v==="A:import"){const box=document.querySelector(`[data-imp="${i}"]`);box.hidden=false;box.querySelector("input").focus();s.value="";return}
+  if(v==="A:mine")team.members[i]={lib:"",prof:state.prof,sel:[...state.sel],nm:"Build do montador · "+PROF[state.prof].pt,who:myName||keep,seed:"me",src:"mine"};
+  else if(v.startsWith("R:")){const r=recv.find(x=>x.id===v.slice(2));if(r)team.members[i]={lib:"",rid:r.id,prof:r.prof,sel:r.sel.slice(),nm:r.nm,who:r.who||keep,seed:r.who||r.id,src:"recv"}}
+  else if(v.startsWith("L:")&&LIBM[v.slice(2)])team.members[i]={...memberFromLib(v.slice(2)),who:keep};
+  team.comp=-1;renderTeam()});
+$("slots").addEventListener("input",e=>{const p=e.target.closest("[data-pn]");if(!p)return;team.members[+p.dataset.pn].who=p.value.slice(0,24);saveTeam();renderTeam3d();renderMatrix()});
 $("slots").addEventListener("click",e=>{
-  const ed=e.target.closest("[data-edit]"), tk=e.target.closest("[data-take]");
-  if(ed){const m=team.members[+ed.dataset.edit];state={prof:m.prof,sel:new Set(m.sel)};renderMontador();go("montador");flash("msg",`Editando ${m.nm}. Volte ao Esquadrão e clique “Usar a do montador” na vaga.`)}
-  if(tk){const i=+tk.dataset.take;team.members[i]={lib:"",prof:state.prof,sel:[...state.sel],nm:"Build do montador · "+PROF[state.prof].pt};team.comp=-1;renderTeam();flash("teamMsg",`Vaga ${i+1} atualizada com a build do montador.`)}
+  const ed=e.target.closest("[data-edit]"), sh=e.target.closest("[data-share]"), ok=e.target.closest("[data-impok]");
+  if(ed)startEdit(+ed.dataset.edit,false);
+  if(sh){const m=team.members[+sh.dataset.share];copy(buildLink(m),"Link da build de "+(m.who||"Jogador "+(+sh.dataset.share+1))+" copiado.","teamMsg","teamFallback")}
+  if(ok){const i=+ok.dataset.impok,inp=ok.parentElement.querySelector("input"),r=parseAny(inp.value);
+    if(!r||r.kind!=="build"){flash("teamMsg",r?"Esse é um link de esquadrão inteiro: cole no campo ao lado.":"Não reconheci esse link ou código.");return}
+    const rec=addRecv(r.b);team.members[i]={lib:"",rid:rec.id,prof:rec.prof,sel:rec.sel.slice(),nm:rec.nm,who:rec.who||team.members[i].who||"",seed:rec.who||rec.id,src:"import"};team.comp=-1;renderTeam();flash("teamMsg",`Vaga ${i+1}: ${rec.nm}.`)}
 });
 
 function renderMatrix(){
   const rs=team.members.map(m=>rolesOf(m.prof,new Set(m.sel),m.lib));
-  let h=`<thead><tr><th>Papel</th>${team.members.map((m,i)=>`<th title="${esc(m.nm)}">J${i+1}</th>`).join("")}<th>Total</th></tr></thead><tbody>`;
+  let h=`<thead><tr><th>Papel</th>${team.members.map((m,i)=>`<th title="${esc(m.nm)}">${esc((m.who||"J"+(i+1)).slice(0,10))}</th>`).join("")}<th>Total</th></tr></thead><tbody>`;
   ROLES.forEach(r=>{const n=rs.filter(s=>s.has(r.id)).length;
     h+=`<tr class="${n?"":"gap"}"><td>${esc(r.pt)} <span class="hint">· ${esc(r.hint)}</span></td>${rs.map(s=>s.has(r.id)?'<td class="y">✓</td>':'<td class="n">·</td>').join("")}<td class="cnt">${n}</td></tr>`});
   $("matrix").innerHTML=h+"</tbody>";
   return rs;
 }
 function renderTeamWarns(rs){
-  const w=[], ms=team.members, cs=ms.map(m=>compute(m.prof,new Set(m.sel)));
+  const w=[], ms=team.members, cs=ms.map(m=>compute(m.prof,new Set(m.sel))), nm=i=>ms[i].who||"J"+(i+1);
   const cover=id=>rs.some(s=>s.has(id));
-  const neg=cs.map((c,i)=>c.saldo<0?i+1:0).filter(Boolean);
-  if(neg.length)w.push(["bad",`Jogador ${neg.join(", ")} com saldo negativo. O jogo não deixa criar.`]);
+  const neg=cs.map((c,i)=>c.saldo<0?nm(i):0).filter(Boolean);
+  if(neg.length)w.push(["bad",`${neg.join(", ")} com saldo negativo. O jogo não deixa criar.`]);
   if(!cover("frente"))w.push(["bad","Ninguém na linha de frente. Alguém precisa limpar prédio e segurar porta."]);
   else if(rs.filter(s=>s.has("frente")).length===ms.length&&ms.length>2)w.push(["bad","Todo mundo é combatente. A wiki alerta: sem gerador e sem médico o time trava no 2º mês."]);
   if(!cover("medico"))w.push(["","Sem médico. Escolha quem vai upar Primeiros Socorros e guarde o kit na base."]);
@@ -1086,27 +1626,39 @@ function renderTeamWarns(rs){
   if(!cover("veiculo"))w.push(["","Sem Veículos. Carro quebrado vira sucata; procure a revista de mecânica do modelo."]);
   if(!cover("comida"))w.push(["","Sem Comida. Depois que as latas acabarem, alguém precisa pescar, plantar ou coletar."]);
   if(!cover("base"))w.push(["","Sem Construção. Barricada com Carpintaria baixa quebra rápido."]);
-  const smokers=ms.map((m,i)=>m.sel.includes("smoker")?i+1:0).filter(Boolean);
-  if(smokers.length>1)w.push(["bad",`${smokers.length} fumantes (J${smokers.join(", J")}). Na B42 cigarro é raro: mantenha só um.`]);
-  const profs={};ms.forEach((m,i)=>{(profs[m.prof]=profs[m.prof]||[]).push(i+1)});
-  Object.entries(profs).filter(([,v])=>v.length>1).forEach(([p,v])=>w.push(["",`${PROF[p].pt} repetido (J${v.join(", J")}). Perícias sobrepostas; considere trocar um.`]));
+  const smokers=ms.map((m,i)=>m.sel.includes("smoker")?nm(i):0).filter(Boolean);
+  if(smokers.length>1)w.push(["bad",`${smokers.length} fumantes (${smokers.join(", ")}). Na B42 cigarro é raro: mantenha só um.`]);
+  const profs={};ms.forEach((m,i)=>{(profs[m.prof]=profs[m.prof]||[]).push(nm(i))});
+  Object.entries(profs).filter(([,v])=>v.length>1).forEach(([p,v])=>w.push(["",`${PROF[p].pt} repetido (${v.join(", ")}). Perícias sobrepostas; considere trocar um.`]));
   const slow=ms.filter(m=>m.sel.includes("slow_reader")).length;
   if(slow===ms.length&&ms.length>1)w.push(["","Todos com Semianalfabeto. No servidor, peça leitura acelerada ou alguém deixe de pegar."]);
   if(!w.some(x=>x[0]==="bad"))w.unshift(["ok",w.length?"Time válido: todos com saldo ≥ 0 e alguém na linha de frente. Os avisos abaixo são papéis que alguém vai precisar upar.":"Time válido e com todos os papéis principais cobertos."]);
   $("teamWarns").innerHTML=w.map(([k,t])=>`<li class="${k}">${esc(t)}</li>`).join("");
 }
-function renderTeam(){renderSizes();renderSlots();renderTeamWarns(renderMatrix());saveTeam()}
+function renderRecv(){const el=$("recvList");
+  if(!recv.length){el.innerHTML='<p class="hint" style="margin:0">Quando um amigo te mandar o link de uma build, ela aparece aqui para você pôr numa vaga.</p>';return}
+  el.innerHTML=recv.map(r=>`<div class="r">${ptImg(spec3d(r.prof,r.sel,r.who||r.id),"sm")}<div style="min-width:0"><b>${esc(r.who||"Amigo")}</b>${esc(r.nm||PROF[r.prof].pt)}</div><div class="btns" style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end"><button class="btn sm" type="button" data-rput="${r.id}">Pôr no time</button><button class="btn sm" type="button" data-ropen="${r.id}">Ver</button><button class="btn sm" type="button" data-rdel="${r.id}" aria-label="Apagar build de ${esc(r.who||"amigo")}">×</button></div></div>`).join("");
+}
+function putRecv(r){const m={lib:"",rid:r.id,prof:r.prof,sel:r.sel.slice(),nm:r.nm,who:r.who,seed:r.who||r.id,src:"recv"};
+  if(team.members.length<6){team.members.push(m)}else{let k=-1;team.members.forEach((x,i)=>{if(x.src==="meta")k=i});team.members[k<0?5:k]=m}
+  team.size=Math.max(2,team.members.length);team.comp=-1;renderTeam()}
+$("recvList").addEventListener("click",e=>{const p=e.target.closest("[data-rput]"),o=e.target.closest("[data-ropen]"),d=e.target.closest("[data-rdel]");
+  if(p){const r=recv.find(x=>x.id===p.dataset.rput);if(r){putRecv(r);flash("teamMsg",(r.who||"Amigo")+" entrou no time.")}}
+  if(o){const r=recv.find(x=>x.id===o.dataset.ropen);if(r){state={prof:r.prof,sel:new Set(r.sel)};lastHow="prof";renderMontador();go("montador");flash("msg",r.nm+" aberta no montador.")}}
+  if(d){recv=recv.filter(x=>x.id!==d.dataset.rdel);saveRecv();renderTeam()}});
+function renderTeam3d(){if(squad3)squad3.set(team.members.map((m,i)=>({...spec3d(m.prof,m.sel,m.seed),who:m.who||"Jogador "+(i+1),label:m.nm})))}
+function renderTeam(){renderSizes();renderSlots();renderTeamWarns(renderMatrix());renderRecv();renderTeam3d();saveTeam();fillPt()}
 function teamText(){
-  const comp=team.comp>=0?COMPS[team.size][team.comp]:null;
-  return `Plano do time · PZ B42.21 · ${team.members.length} jogadores${comp?" · "+comp.nm:""}\n\n`+team.members.map((m,i)=>`J${i+1}: `+buildText(m.prof,new Set(m.sel),m.nm)+"\nPapel: "+([...rolesOf(m.prof,new Set(m.sel),m.lib)].map(r=>ROLEPT[r]).join(", ")||"—")).join("\n\n");
+  const comp=team.comp>=0&&COMPS[team.size]?COMPS[team.size][team.comp]:null;
+  return `Plano do time · PZ B42.21 · ${team.members.length} jogadores${comp?" · "+comp.nm:""}\n\n`+team.members.map((m,i)=>`${m.who||"J"+(i+1)}: `+buildText(m.prof,new Set(m.sel),m.nm)+"\nPapel: "+([...rolesOf(m.prof,new Set(m.sel),m.lib)].map(r=>ROLEPT[r]).join(", ")||"—")).join("\n\n")+"\n\nLink do esquadrão: "+teamLinkOf(team.members);
 }
 $("btnTeamText").addEventListener("click",()=>copy(teamText(),"Plano copiado. Cole no Discord.","teamMsg","teamFallback"));
-$("btnTeamCode").addEventListener("click",()=>copy(team.members.map(m=>code(m.prof,m.sel)).join("|"),"Código do time copiado.","teamMsg","teamFallback"));
+$("btnTeamLink").addEventListener("click",()=>copy(teamLinkOf(team.members),"Link do esquadrão copiado. Quem abrir vê todo mundo com nome e build.","teamMsg","teamFallback"));
 $("btnTeamLoad").addEventListener("click",()=>{
-  const parts=$("teamIn").value.split("|").map(parseCode);
-  if(!parts.length||parts.some(p=>!p)||parts.length>6){flash("teamMsg","Código inválido. Use o que sai de “Copiar código do time”.");return}
-  team={size:Math.max(2,Math.min(6,parts.length)),comp:-1,members:parts.map(p=>({lib:"",prof:p.prof,sel:p.sel,nm:"Build importada · "+PROF[p.prof].pt}))};
-  renderTeam();flash("teamMsg","Time carregado.");
+  const r=parseAny($("teamIn").value);
+  if(!r){flash("teamMsg","Não reconheci. Cole um link de esquadrão (?t=) ou de build (?b=).");return}
+  if(r.kind==="team"){applyTeam(r.m);flash("teamMsg","Esquadrão carregado.")}else{const rec=addRecv(r.b);putRecv(rec);flash("teamMsg",(rec.who||"Amigo")+" entrou no time.")}
+  $("teamIn").value="";
 });
 
 // ---------- COMBOS ----------
@@ -1127,39 +1679,148 @@ function renderCombos(){
   $("comboCount").textContent=list.length+" combos";
   $("comboList").innerHTML=list.map(c=>{
     const rs=coverage(c.m), has=id=>rs.some(r=>r.has(id)), miss=ROLES.filter(r=>!has(r.id)).length, w=comboWarns(c);
-    return `<article class="combo">
+    return `<article class="combo" id="combo-${c.id}">
       <div class="hd"><h3>${esc(c.nm)}</h3><span class="chn">${c.m.length} jogadores</span></div>
       <div class="hint">${esc(c.para)}</div>
       <ol class="members">${c.m.map((id,i)=>{const b=LIBM[id],k=compute(b.prof,new Set(b.traits));
-        return `<li><span class="who">J${i+1}</span><span class="mb"><b>${esc(b.nm)}</b> <span class="hint">${esc(PROF[b.prof].pt)} · F${k.str} A${k.fit}</span><br><span class="by">${b.ch?esc(CH[b.ch].nm):"papel de co-op"}</span> ${[...rs[i]].map(r=>`<span class="role">${esc(ROLEPT[r])}</span>`).join("")}</span></li>`}).join("")}</ol>
+        return `<li><span class="pwrap">${ptImg(spec3d(b.prof,b.traits,id),"sm")}<span class="who">J${i+1}</span></span><span class="mb"><b>${esc(b.nm)}</b> <span class="hint">${esc(PROF[b.prof].pt)} · F${k.str} A${k.fit}</span><br><span class="by">${b.ch?esc(CH[b.ch].nm):"papel de co-op"}</span> ${[...rs[i]].map(r=>`<span class="role">${esc(ROLEPT[r])}</span>`).join("")}</span></li>`}).join("")}</ol>
       <div><div class="sublbl">Por que combinam</div><ul class="why">${c.why.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
       <div><div class="sublbl">Papéis cobertos · ${ROLES.length-miss}/${ROLES.length}</div><div class="cover">${ROLES.map(r=>`<span class="cv ${has(r.id)?"on":"off"}" title="${esc(r.hint)}">${has(r.id)?"✓":"✗"} ${esc(r.pt)}</span>`).join("")}</div></div>
       <div class="care"><b>Atenção:</b> ${esc(c.care)}${w.length?" "+esc(w.join(" ")):""}</div>
-      <div class="acts"><button class="btn primary sm" type="button" data-combo="${c.id}">Montar no Esquadrão</button><button class="btn sm" type="button" data-combocode="${c.id}">Copiar código do time</button></div>
+      <div class="acts"><button class="btn primary sm" type="button" data-combo="${c.id}">Montar no Esquadrão</button><button class="btn sm" type="button" data-combocode="${c.id}">Copiar link do combo</button></div>
     </article>`}).join("");
+  fillPt();
 }
 $("comboSizes").addEventListener("click",e=>{const b=e.target.closest("[data-cs]");if(!b)return;comboSize=b.dataset.cs;renderCombos()});
 $("comboList").addEventListener("click",e=>{
   const b=e.target.closest("[data-combo]"), k=e.target.closest("[data-combocode]");
-  if(b){const c=COMBOM[b.dataset.combo];team={size:c.m.length,comp:COMPS[c.m.length].indexOf(c),members:c.m.map(memberFromLib)};go("esquadrao");flash("teamMsg",c.nm+" carregado.")}
-  if(k){const c=COMBOM[k.dataset.combocode];navigator.clipboard?.writeText(c.m.map(id=>code(LIBM[id].prof,LIBM[id].traits)).join("|")).then(()=>{k.textContent="Copiado!";setTimeout(()=>k.textContent="Copiar código do time",2000)},()=>{k.textContent="Não deu para copiar"})}
+  if(b){const c=COMBOM[b.dataset.combo];team={size:c.m.length,comp:COMPS[c.m.length].indexOf(c),members:c.m.map(memberFromLib)};go("esquadrao");flash("teamMsg",c.nm+" carregado. Ponha o nome de cada um nas vagas.")}
+  if(k){const c=COMBOM[k.dataset.combocode];const link=teamLinkOf(c.m.map(memberFromLib));(navigator.clipboard?navigator.clipboard.writeText(link):Promise.reject()).then(()=>{k.textContent="Link copiado!";setTimeout(()=>k.textContent="Copiar link do combo",2000)},()=>{prompt("Copie o link:",link)})}
 });
 
+// ---------- MAPA E ROTA ----------
+const NS="http://www.w3.org/2000/svg";
+const PCOL={fogo:"#e4572e",pol:"#3a6fd8",vhs:"#b05cd6",arma:"#8e1b12",med:"#2fa37a",livro:"#e0a23a",comida:"#7cb342",ferr:"#8d99ae",gas:"#f2c230",carro:"#5d7c91",casa:"#c9b28f",perigo:"#ff3b30",roupa:"#d6729a"};
+const PLEG={fogo:"Bombeiros",pol:"Polícia",med:"Saúde e ótica",livro:"Livros e escola",comida:"Comida",ferr:"Ferramentas",gas:"Posto",carro:"Carro",vhs:"VHS",arma:"Armas",roupa:"Roupas",casa:"Moradia",perigo:"Perigo"};
+let rotaI=0,mapReady=false,vb=[0,0,960,1180],vbAnim=null,playT=null;
+const rx=x=>x-RW.B[0], ry=y=>y-RW.B[1];
+const realUrl=(x,y,z=200)=>`https://projectzomboidmap.com/pt/#${x}x${y}x${z}`;
+function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+function drawMap(){
+  const svg=$("rwMap");svg.innerHTML="";
+  el("rect",{x:-400,y:-700,width:3800,height:2700,fill:"#4a6a40"},svg);
+  const roads=el("g",{fill:"none","stroke-linecap":"round","stroke-linejoin":"round"},svg);
+  RW.st.forEach(([n,p])=>{const pts=[];for(let i=0;i<p.length;i+=2)pts.push(p[i]+","+p[i+1]);el("polyline",{points:pts.join(" "),stroke:"#2f3a2d","stroke-width":14},roads)});
+  RW.st.forEach(([n,p])=>{const pts=[];for(let i=0;i<p.length;i+=2)pts.push(p[i]+","+p[i+1]);el("polyline",{points:pts.join(" "),stroke:"#8d918a","stroke-width":10},roads)});
+  const bl=el("g",{fill:"#c8bba0",stroke:"#6b6252","stroke-width":1},svg);
+  for(let i=0;i<RW.bl.length;i+=4)el("rect",{x:RW.bl[i],y:RW.bl[i+1],width:RW.bl[i+2],height:RW.bl[i+3]},bl);
+  const lab=el("g",{"font-size":15,"font-family":"Barlow,sans-serif","font-weight":700,fill:"#f2efe6",stroke:"#2f3a2d","stroke-width":3,"paint-order":"stroke"},svg);
+  [["North Main St",518,300,90],["South Main St",440,650,0],["Rosewood Road",688,760,90],["Angel Road",560,1197,0],["Schoolhouse St",780,553,0],["Quiet St",560,352,0]].forEach(([t,x,y,r])=>{const e=el("text",{x,y,transform:`rotate(${r} ${x} ${y})`},lab);e.textContent=t});
+  const pg=el("g",{},svg);
+  POI.forEach(([n,x,y,k])=>{const c=el("circle",{cx:rx(x),cy:ry(y),r:7,fill:PCOL[k]||"#999",stroke:"#1d2720","stroke-width":2,class:"poi"},pg);const t=el("title",{},c);t.textContent=n});
+  const nx=el("g",{transform:"translate(905,60)"},svg);el("circle",{r:22,fill:"rgba(29,39,32,.8)"},nx);el("path",{d:"M0,-15 L7,6 L0,1 L-7,6 Z",fill:"#e09a3a"},nx);const nt=el("text",{y:17,"text-anchor":"middle","font-size":11,"font-weight":700,fill:"#f2efe6"},nx);nt.textContent="N";
+  const mu=el("text",{x:515,y:60,"font-size":17,"font-weight":800,fill:"#f2efe6",stroke:"#2f3a2d","stroke-width":3,"paint-order":"stroke"},svg);mu.textContent="↑ para Muldraugh";
+  el("g",{id:"rwRoute"},svg);el("g",{id:"rwStops"},svg);
+  $("mapLeg").innerHTML=Object.entries(PLEG).map(([k,t])=>`<span><i style="background:${PCOL[k]}"></i>${t}</span>`).join("")+'<span style="margin-left:auto">Fonte: pzmap.org (42.20)</span>';
+  $("rotaSteps").innerHTML=ROTA.map((r,i)=>`<button class="step" role="tab" type="button" data-step="${i}" aria-selected="false"><b>${i+1}</b>${esc(r.d)}</button>`).join("");
+  mapReady=true;
+}
+function setVB(t,anim){if(vbAnim)cancelAnimationFrame(vbAnim);const from=vb.slice(),t0=performance.now(),dur=anim===false||matchMedia("(prefers-reduced-motion: reduce)").matches?0:500;
+  (function f(now){const k=dur?Math.min(1,(now-t0)/dur):1,e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;vb=from.map((v,i)=>v+(t[i]-v)*e);$("rwMap").setAttribute("viewBox",vb.join(" "));if(k<1)vbAnim=requestAnimationFrame(f)})(t0)}
+function setStep(i){
+  rotaI=Math.max(0,Math.min(ROTA.length-1,i));const r=ROTA[rotaI];
+  document.querySelectorAll("#rotaSteps .step").forEach((b,k)=>b.setAttribute("aria-selected",k===rotaI));
+  const sel=document.querySelector(`#rotaSteps [data-step="${rotaI}"]`);if(sel){const p=sel.parentElement;p.scrollLeft=sel.offsetLeft-p.offsetLeft-(p.clientWidth-sel.offsetWidth)/2}
+  const prev=rotaI>0?ROTA[rotaI-1].s[ROTA[rotaI-1].s.length-1]:null;
+  const pts=(prev?[prev]:[]).concat(r.s).map(p=>[rx(p[1]),ry(p[2])]);
+  const route=$("rwRoute"),stops=$("rwStops");route.innerHTML="";stops.innerHTML="";
+  if(pts.length>1){el("polyline",{points:pts.map(p=>p.join(",")).join(" "),fill:"none",stroke:"#1d2720","stroke-width":11,"stroke-linecap":"round","stroke-linejoin":"round",opacity:.7},route);
+    el("polyline",{points:pts.map(p=>p.join(",")).join(" "),fill:"none",stroke:"#ffb347","stroke-width":6,"stroke-dasharray":"14 14","stroke-linecap":"round","stroke-linejoin":"round",class:"route-line"},route)}
+  if(prev){el("circle",{cx:pts[0][0],cy:pts[0][1],r:9,fill:"#1d2720",stroke:"#ffb347","stroke-width":3},stops)}
+  r.s.forEach((p,k)=>{const g=el("g",{transform:`translate(${rx(p[1])},${ry(p[2])})`},stops);el("circle",{r:15,fill:"#e09a3a",stroke:"#1d2720","stroke-width":3},g);const t=el("text",{"text-anchor":"middle",y:5,"font-size":15,"font-weight":800,fill:"#1d2720"},g);t.textContent=k+1;const tt=el("title",{},g);tt.textContent=p[0]});
+  const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);let x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
+  const pad=120,w=Math.max(x1-x0+pad*2,520),h=Math.max(y1-y0+pad*2,640);const cx=(x0+x1)/2,cy=(y0+y1)/2;const asp=960/1180;let W=w,H=h;if(W/H>asp)H=W/asp;else W=H*asp;
+  setVB([cx-W/2,cy-H/2,W,H]);
+  $("rotaInfo").innerHTML=`<div class="when">Passo ${rotaI+1} de ${ROTA.length} · ${esc(r.d)}</div><h3>${esc(r.t)}</h3>
+    <div class="stops">${r.s.map((p,k)=>`<div class="stop"><span class="n">${k+1}</span><span>${esc(p[0])}</span><a href="${realUrl(p[1],p[2])}" target="_blank" rel="noopener">mapa real ↗</a></div>`).join("")}</div>
+    <div><div class="sublbl">O que fazer</div><ul>${r.faz.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+    <div class="pega"><b>Pegue:</b> ${esc(r.pega)}</div>
+    <div class="care"><b>Perigo:</b> ${esc(r.perigo)}</div>
+    <div class="nav"><button class="btn sm" type="button" data-rn="-1" ${rotaI?"":"disabled"}>← Anterior</button><button class="btn primary sm" type="button" data-rn="1" ${rotaI<ROTA.length-1?"":"disabled"}>Próximo passo →</button></div>`;
+  const rm=$("realMap");if(rm.firstChild){const p=r.s[0];rm.firstChild.src=`https://projectzomboidmap.com/pt/?passo=${rotaI}#${p[1]}x${p[2]}x150`}
+}
+$("rotaSteps").addEventListener("click",e=>{const b=e.target.closest("[data-step]");if(b){stopPlay();setStep(+b.dataset.step)}});
+$("rotaInfo").addEventListener("click",e=>{const b=e.target.closest("[data-rn]");if(b){stopPlay();setStep(rotaI+ +b.dataset.rn)}});
+$("mapAll").addEventListener("click",()=>{stopPlay();setVB([0,0,960,1180])});
+function stopPlay(){if(playT){clearInterval(playT);playT=null;$("mapPlay").textContent="▶ Animar rota"}}
+$("mapPlay").addEventListener("click",()=>{if(playT){stopPlay();return}$("mapPlay").textContent="⏸ Parar";setStep(0);playT=setInterval(()=>{if(rotaI>=ROTA.length-1){stopPlay();return}setStep(rotaI+1)},3200)});
+document.querySelector(".realmap").addEventListener("toggle",e=>{const rm=$("realMap");if(e.target.open&&!rm.firstChild){const p=ROTA[rotaI].s[0];const f=document.createElement("iframe");f.title="Mapa real de Project Zomboid";f.loading="lazy";f.referrerPolicy="no-referrer";f.src=`https://projectzomboidmap.com/pt/?passo=${rotaI}#${p[1]}x${p[2]}x150`;rm.appendChild(f)}});
+
+// ---------- FABRICAR ----------
+let fabCat="Todas",fabDif=0;
+const norm=x=>String(x).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+const FABCATS=["Todas",...new Set(FAB.map(x=>x.cat))];
+const fabLink=x=>x.slug?`https://projectzomboidmap.com/pt/items/${x.slug}/`:`https://pzwiki.net/wiki/${x.wiki}`;
+function renderFabOrder(){
+  const G=[["Dia 1",["Dia 1","Dia 2"]],["Primeira semana",["Semana 1"]],["Semanas 2 a 4",["Semana 2","Semana 3"]],["Do mês 1 em diante",["Mês 1","Longo prazo"]]];
+  $("fabOrder").innerHTML=G.map(([t,ps])=>`<div class="fo"><b>${t}</b>${FAB.filter(x=>ps.includes(x.pri)).sort((a,b)=>a.dif-b.dif).map(x=>`<button type="button" data-fq="${esc(x.n.split(" (")[0])}">${esc(x.n.split(" (")[0])}</button>`).join(" · ")}</div>`).join("");
+}
+function renderFab(){
+  const q=norm($("fabQ").value.trim());
+  $("fabCats").innerHTML='<span class="hint">Tipo</span>'+FABCATS.map(c=>chip("data-fc",c,c,c===fabCat)).join("");
+  $("fabDifs").innerHTML='<span class="hint">Dificuldade</span>'+[[0,"Todas"],[1,"Fácil"],[2,"Médio"],[3,"Difícil"]].map(([d,t])=>chip("data-fd",d,t,d===fabDif)).join("");
+  const list=FAB.filter(x=>(fabCat==="Todas"||x.cat===fabCat)&&(!fabDif||x.dif===fabDif)&&(!q||norm([x.n,x.para,x.pr,x.sk,x.ap,x.cat].join(" ")).includes(q))).sort((a,b)=>PRIO.indexOf(a.pri)-PRIO.indexOf(b.pri)||a.dif-b.dif);
+  $("fabCount").textContent=list.length+" de "+FAB.length+" receitas";
+  $("fabList").innerHTML=list.map(x=>`<article class="fcard"><div class="hd"><h3>${esc(x.n)}</h3><span class="tag d${x.dif}">${DIFL[x.dif]}</span><span class="tag pri">${esc(x.pri)}</span></div>
+    <p>${esc(x.para)}</p><dl><dt>Precisa</dt><dd>${esc(x.pr)}</dd><dt>Perícia</dt><dd>${esc(x.sk)}</dd><dt>Aprende</dt><dd>${esc(x.ap)}</dd><dt>Tipo</dt><dd>${esc(x.cat)}</dd></dl>
+    <a href="${fabLink(x)}" target="_blank" rel="noopener">Receita completa ↗</a></article>`).join("")||'<p class="hint">Nada encontrado. Tente outra palavra, como “faca” ou “Carpintaria”.</p>';
+}
+$("fabQ").addEventListener("input",renderFab);
+$("fabCats").addEventListener("click",e=>{const b=e.target.closest("[data-fc]");if(b){fabCat=b.dataset.fc;renderFab()}});
+$("fabDifs").addEventListener("click",e=>{const b=e.target.closest("[data-fd]");if(b){fabDif=+b.dataset.fd;renderFab()}});
+$("fabOrder").addEventListener("click",e=>{const b=e.target.closest("[data-fq]");if(b){$("fabQ").value=b.dataset.fq;fabCat="Todas";fabDif=0;renderFab();$("fabQ").scrollIntoView({block:"center"})}});
+
+// ---------- LINK RECEBIDO ----------
+function showInbox(r){const box=$("inbox");
+  if(r.kind==="build"){const rec=addRecv(r.b),c=compute(rec.prof,new Set(rec.sel));box.dataset.rid=rec.id;
+    box.innerHTML=`${ptImg(spec3d(rec.prof,rec.sel,rec.who||rec.id),"lg")}<div><div class="sublbl">Você recebeu uma build</div><h3>${esc(rec.who?"Build de "+rec.who:"Build de um amigo")}</h3><div class="hint">${esc(PROF[rec.prof].pt)} · Força ${c.str} · Aptidão ${c.fit} · Saldo ${c.saldo}${c.saldo<0?" (não fecha no jogo)":""}</div>
+      <div class="acts"><button class="btn primary sm" type="button" data-ib="open">Ver no montador</button><button class="btn sm" type="button" data-ib="team">Pôr no meu esquadrão</button><button class="btn sm" type="button" data-ib="close">Fechar</button></div>
+      <p class="hint" style="margin:4px 0 0">Ela ficou guardada em Esquadrão › Builds recebidas.</p></div>`}
+  else{box._team=r.m;box.innerHTML=`<div class="ppl">${r.m.map(m=>ptImg(spec3d(m.prof,m.sel,m.who||m.lib||""),"sm")).join("")}</div><div><div class="sublbl">Você recebeu um esquadrão</div><h3>${r.m.length} jogadores${r.m.some(m=>m.who)?": "+esc(r.m.map(m=>m.who||"?").join(", ")):""}</h3>
+      <div class="acts"><button class="btn primary sm" type="button" data-ib="loadteam">Abrir no Esquadrão</button><button class="btn sm" type="button" data-ib="close">Fechar</button></div></div>`}
+  box.hidden=false;fillPt();
+}
+$("inbox").addEventListener("click",e=>{const b=e.target.closest("[data-ib]");if(!b)return;const box=$("inbox"),a=b.dataset.ib,r=recv.find(x=>x.id===box.dataset.rid);
+  if(a==="open"&&r){state={prof:r.prof,sel:new Set(r.sel)};lastHow="prof";renderMontador();go("montador")}
+  if(a==="team"&&r){putRecv(r);go("esquadrao")}
+  if(a==="loadteam"&&box._team){applyTeam(box._team);go("esquadrao")}
+  box.hidden=true});
+
 // ---------- ABAS ----------
-const TABS=["montador","builds","combos","esquadrao","guia"];
+const TABS=["montador","builds","combos","esquadrao","guia","fab"];
 function go(t){
   if(!TABS.includes(t))t="montador";
   TABS.forEach(x=>{$("panel-"+x).hidden=x!==t;$("tab-"+x).setAttribute("aria-selected",x===t)});
   document.querySelector(".intro").hidden=t!=="montador";
   if(t==="esquadrao")renderTeam();
+  if(t==="guia"&&!mapReady){drawMap();setStep(0)}
   const tb=$("tab-"+t), nav=tb.parentElement; if(nav.scrollWidth>nav.clientWidth)nav.scrollLeft=tb.offsetLeft-nav.offsetLeft-(nav.clientWidth-tb.offsetWidth)/2;
   try{history.replaceState(null,"","#"+t)}catch(e){}
   window.scrollTo({top:0});
 }
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>go(b.dataset.tab)));
 
-renderMontador();renderLibFilters();renderLib();renderCombos();renderTeam();
+renderMontador();renderLibFilters();renderLib();renderCombos();renderTeam();renderFabOrder();renderFab();
 go((location.hash||"").replace("#",""));
+// link de build (?b=) ou de esquadrão (?t=)
+if(/[?&][bt]=/.test(location.search)){const r=parseAny(location.href);if(r)showInbox(r);try{history.replaceState(null,"",location.pathname+location.hash)}catch(e){}}
+// bonecos 3D (carregam do CDN; se não vier, a ficha segue sem eles)
+function init3d(){const P=window.PZ3D;if(!P)return;
+  if(!hero){try{hero=P.hero($("hero3d"));lastHow=null;renderSummary()}catch(e){$("hero3d").classList.add("nogl")}}
+  if(!squad3){try{squad3=P.squad($("squad3d"));renderTeam3d()}catch(e){$("squad3d").classList.add("nogl")}}
+  P.fill(document)}
+addEventListener("pz3d",init3d);if(window.PZ3D)init3d();
+setTimeout(()=>{if(!window.PZ3D){$("hero3d").classList.add("nogl");$("squad3d").classList.add("nogl")}},12000);
 })();
 </script>
 
