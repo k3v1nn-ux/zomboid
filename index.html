@@ -238,6 +238,8 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
 .sq-labels{position:absolute;inset:0;pointer-events:none}
 .sq-lb{position:absolute;left:0;top:0;display:grid;justify-items:center;background:var(--ink);color:var(--bg);border-radius:4px;padding:3px 7px;font-size:12px;line-height:1.2;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.25)}
 .sq-lb span{font-size:10.5px;opacity:.75}
+.sq-labels.crowded .sq-lb span{display:none}
+.sq-labels.crowded .sq-lb{font-size:11px;padding:2px 6px}
 img.pt{display:block;width:72px;height:90px;object-fit:cover;border-radius:4px;background:var(--surface2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 50'%3E%3Cg fill='%2398a28f' opacity='.5'%3E%3Crect x='14' y='6' width='12' height='12' rx='2'/%3E%3Crect x='11' y='19' width='18' height='16' rx='2'/%3E%3Crect x='13' y='35' width='6' height='12'/%3E%3Crect x='21' y='35' width='6' height='12'/%3E%3C/g%3E%3C/svg%3E") center/60% no-repeat;border:1px solid var(--line)}
 img.pt.sm{width:44px;height:55px}
 img.pt.lg{width:96px;height:120px}
@@ -255,7 +257,9 @@ img.pt.lg{width:96px;height:120px}
 .recv .r{display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:center;font-size:12.5px;border:1px solid var(--line);border-radius:4px;padding:5px;background:var(--surface2)}
 .recv .r b{display:block;font-size:13px}
 /* Builds: retrato e combos */
-.bcard .hd2{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.bcard .hd2{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start}
+.bcard .hd,.combo .hd,.fcard .hd{flex-wrap:wrap}
+@media (max-width:480px){img.pt.lg{width:72px;height:90px}.bcard h3{font-size:16.5px}}
 .cmbs{display:grid;gap:6px}
 .cmb{display:flex;align-items:center;gap:6px;flex-wrap:wrap;text-align:left;border:1px dashed var(--line);background:var(--surface2);border-radius:4px;padding:6px;cursor:pointer;font-size:12.5px;color:var(--ink)}
 .cmb:hover{border-color:var(--accent)}
@@ -869,12 +873,12 @@ function squad(el){
   const floor=new THREE.Mesh(new THREE.CircleGeometry(5,48),new THREE.MeshStandardMaterial({color:0x2a3a2c,roughness:1,transparent:true,opacity:.45}));floor.rotation.x=-Math.PI/2;floor.receiveShadow=true;scene.add(floor);
   const holder=new THREE.Group();scene.add(holder);let chars=[],rot=0,specs=[];
   const isDown=dragRotate(canvas,()=>rot,v=>rot=Math.max(-.9,Math.min(.9,v)));
-  function size(){const w=el.clientWidth||300,h=el.clientHeight||260;R.setSize(w,h,false);cam.aspect=w/h;const n=Math.max(2,chars.length);const dist=Math.max(6.4,n*1.9/Math.min(1.6,cam.aspect)+2.4);cam.position.set(0,2.3,dist);cam.lookAt(0,1.05,0);cam.updateProjectionMatrix()}
+  function size(){const w=el.clientWidth||300,h=el.clientHeight||260;R.setSize(w,h,false);cam.aspect=w/h;const n=Math.max(2,chars.length);labels.classList.toggle("crowded",w/Math.max(1,chars.length)<130);const dist=Math.max(6.4,n*1.9/Math.min(1.6,cam.aspect)+2.4);cam.position.set(0,2.3,dist);cam.lookAt(0,1.05,0);cam.updateProjectionMatrix()}
   new ResizeObserver(size).observe(el);
   let t0=performance.now();const v=new THREE.Vector3();
   (function loop(now){requestAnimationFrame(loop);if(!visible(el))return;const t=(now-t0)/1000;if(!isDown())rot*=.97;holder.rotation.y=rot+Math.sin(t*.3)*.08;
     chars.forEach(c=>c.userData.tick(t));R.render(scene,cam);
-    const w=el.clientWidth,h=el.clientHeight;[...labels.children].forEach((lb,i)=>{const c=chars[i];if(!c)return;v.set(0,-.02,.25);c.localToWorld(v);v.project(cam);lb.style.transform=`translate(${(v.x*.5+.5)*w}px,${(-v.y*.5+.5)*h}px) translate(-50%,6px)`})})(t0);
+    const w=el.clientWidth,h=el.clientHeight;[...labels.children].forEach((lb,i)=>{const c=chars[i];if(!c)return;v.set(0,-.02,.25);c.localToWorld(v);v.project(cam);const tight=labels.classList.contains("crowded");lb.style.transform=`translate(${(v.x*.5+.5)*w}px,${(-v.y*.5+.5)*h}px) translate(-50%,${tight&&i%2?30:6}px)`})})(t0);
   return{set(list){specs=list;holder.clear();chars=list.map((s,i)=>{const c=buildChar(s);const n=list.length;c.position.x=(i-(n-1)/2)*1.45;c.position.z=-Math.abs(i-(n-1)/2)*.35;c.rotation.y=-c.position.x*.08;holder.add(c);return c});
       labels.innerHTML=list.map((s,i)=>`<div class="sq-lb"><b>${String(s.who||"Jogador "+(i+1)).replace(/[&<>]/g,"")}</b><span>${String(s.label||"").replace(/[&<>]/g,"")}</span></div>`).join("");size()}};
 }
@@ -1725,6 +1729,32 @@ function drawMap(){
   $("rotaSteps").innerHTML=ROTA.map((r,i)=>`<button class="step" role="tab" type="button" data-step="${i}" aria-selected="false"><b>${i+1}</b>${esc(r.d)}</button>`).join("");
   mapReady=true;
 }
+// grafo das ruas para a rota seguir a rua (menor caminho)
+let RG=null;
+function roadGraph(){
+  const N=[],E=[],near=(x,y)=>{for(let i=0;i<N.length;i++)if(Math.hypot(N[i][0]-x,N[i][1]-y)<6)return i;N.push([x,y]);E.push([]);return N.length-1};
+  const lines=RW.st.map(([,p])=>{const a=[];for(let i=0;i<p.length;i+=2)a.push([p[i],p[i+1]]);return a});
+  const verts=lines.flat();
+  const segs=[];
+  lines.forEach(L=>{for(let i=0;i<L.length-1;i++){const [ax,ay]=L[i],[bx,by]=L[i+1],dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy||1;
+    const cut=[[0,ax,ay],[1,bx,by]];verts.forEach(([vx,vy])=>{const t=((vx-ax)*dx+(vy-ay)*dy)/l2;if(t>.001&&t<.999){const px=ax+t*dx,py=ay+t*dy;if(Math.hypot(px-vx,py-vy)<6)cut.push([t,px,py])}});
+    cut.sort((p,q)=>p[0]-q[0]);for(let k=0;k<cut.length-1;k++){const u=near(cut[k][1],cut[k][2]),v=near(cut[k+1][1],cut[k+1][2]);if(u!==v){const d=Math.hypot(N[u][0]-N[v][0],N[u][1]-N[v][1]);E[u].push([v,d]);E[v].push([u,d]);segs.push([u,v])}}}});
+  return {N,E,segs};
+}
+function snap(x,y){let best=null;RG.segs.forEach(([u,v])=>{const [ax,ay]=RG.N[u],[bx,by]=RG.N[v],dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy||1;let t=((x-ax)*dx+(y-ay)*dy)/l2;t=Math.max(0,Math.min(1,t));const px=ax+t*dx,py=ay+t*dy,d=Math.hypot(px-x,py-y);if(!best||d<best.d)best={d,px,py,u,v}});return best}
+function roadPath(a,b){
+  if(!RG)RG=roadGraph();const A=snap(a[0],a[1]),B=snap(b[0],b[1]);if(!A||!B)return [a,b];
+  if(A.u===B.u&&A.v===B.v||A.u===B.v&&A.v===B.u)return [a,[A.px,A.py],[B.px,B.py],b];
+  const n=RG.N.length,dist=new Array(n).fill(1/0),prev=new Array(n).fill(-1),done=new Array(n).fill(false);
+  const seed=(i,d)=>{if(d<dist[i]){dist[i]=d;prev[i]=-2}};
+  seed(A.u,Math.hypot(RG.N[A.u][0]-A.px,RG.N[A.u][1]-A.py));seed(A.v,Math.hypot(RG.N[A.v][0]-A.px,RG.N[A.v][1]-A.py));
+  for(;;){let u=-1;for(let i=0;i<n;i++)if(!done[i]&&dist[i]<1/0&&(u<0||dist[i]<dist[u]))u=i;if(u<0)break;done[u]=true;if(u===B.u&&done[B.v]||u===B.v&&done[B.u])break;
+    for(const [v,d] of RG.E[u])if(dist[u]+d<dist[v]){dist[v]=dist[u]+d;prev[v]=u}}
+  const endA=dist[B.u]+Math.hypot(RG.N[B.u][0]-B.px,RG.N[B.u][1]-B.py),endB=dist[B.v]+Math.hypot(RG.N[B.v][0]-B.px,RG.N[B.v][1]-B.py);
+  let k=endA<=endB?B.u:B.v;if(!(Math.min(endA,endB)<1/0))return [a,b];
+  const chain=[];while(k>=0){chain.unshift(RG.N[k]);k=prev[k]}
+  return [a,[A.px,A.py],...chain,[B.px,B.py],b];
+}
 function setVB(t,anim){if(vbAnim)cancelAnimationFrame(vbAnim);const from=vb.slice(),t0=performance.now(),dur=anim===false||matchMedia("(prefers-reduced-motion: reduce)").matches?0:500;
   (function f(now){const k=dur?Math.min(1,(now-t0)/dur):1,e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;vb=from.map((v,i)=>v+(t[i]-v)*e);$("rwMap").setAttribute("viewBox",vb.join(" "));if(k<1)vbAnim=requestAnimationFrame(f)})(t0)}
 function setStep(i){
@@ -1734,8 +1764,9 @@ function setStep(i){
   const prev=rotaI>0?ROTA[rotaI-1].s[ROTA[rotaI-1].s.length-1]:null;
   const pts=(prev?[prev]:[]).concat(r.s).map(p=>[rx(p[1]),ry(p[2])]);
   const route=$("rwRoute"),stops=$("rwStops");route.innerHTML="";stops.innerHTML="";
-  if(pts.length>1){el("polyline",{points:pts.map(p=>p.join(",")).join(" "),fill:"none",stroke:"#1d2720","stroke-width":11,"stroke-linecap":"round","stroke-linejoin":"round",opacity:.7},route);
-    el("polyline",{points:pts.map(p=>p.join(",")).join(" "),fill:"none",stroke:"#ffb347","stroke-width":6,"stroke-dasharray":"14 14","stroke-linecap":"round","stroke-linejoin":"round",class:"route-line"},route)}
+  if(pts.length>1){let path=[pts[0]];for(let k=1;k<pts.length;k++)path=path.concat(roadPath(pts[k-1],pts[k]).slice(1));const P=path.map(p=>p[0].toFixed(1)+","+p[1].toFixed(1)).join(" ");
+    el("polyline",{points:P,fill:"none",stroke:"#1d2720","stroke-width":11,"stroke-linecap":"round","stroke-linejoin":"round",opacity:.7},route);
+    el("polyline",{points:P,fill:"none",stroke:"#ffb347","stroke-width":6,"stroke-dasharray":"14 14","stroke-linecap":"round","stroke-linejoin":"round",class:"route-line"},route)}
   if(prev){el("circle",{cx:pts[0][0],cy:pts[0][1],r:9,fill:"#1d2720",stroke:"#ffb347","stroke-width":3},stops)}
   r.s.forEach((p,k)=>{const g=el("g",{transform:`translate(${rx(p[1])},${ry(p[2])})`},stops);el("circle",{r:15,fill:"#e09a3a",stroke:"#1d2720","stroke-width":3},g);const t=el("text",{"text-anchor":"middle",y:5,"font-size":15,"font-weight":800,fill:"#1d2720"},g);t.textContent=k+1;const tt=el("title",{},g);tt.textContent=p[0]});
   const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);let x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
