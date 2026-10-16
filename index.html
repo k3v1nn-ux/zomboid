@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
 <title>Ficha de Sobrevivente B42</title>
-<meta name="description" content="Project Zomboid B42.21: montador de build com boneco 3D, 16 builds de canais explicadas, combos de esquadrão, rotas de Rosewood, Riverside e Muldraugh no mapa e guia de fabricação.">
+<meta name="description" content="Ficha do grupo Evangeliteens para Project Zomboid B42.21: montador de build com boneco 3D, 16 builds de canais explicadas, combos de esquadrão, rotas de Rosewood, Riverside e Muldraugh no mapa e guia de fabricação.">
 <meta property="og:title" content="Ficha de Sobrevivente B42 · Project Zomboid 42.21">
-<meta property="og:description" content="Builds dos canais explicadas, combos de esquadrão e montador de traços. Tudo conferido na 42.21.">
+<meta property="og:description" content="Ficha do grupo Evangeliteens. Builds dos canais explicadas, combos de esquadrão e montador de traços. Tudo conferido na 42.21.">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#1d2720">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231d2720'/%3E%3Ctext x='16' y='23' font-family='Impact,Arial' font-size='18' font-weight='700' text-anchor='middle' fill='%23e09a3a'%3EPZ%3C/text%3E%3C/svg%3E">
@@ -58,9 +58,29 @@ button,select,input{font:inherit;color:inherit}
 .btn.sm{padding:4px 8px;font-size:12px}
 
 /* Intro */
-.intro{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:end;padding-block:20px 8px}
-.intro p{margin:0;max-width:72ch;color:var(--muted)}
+.intro{display:grid;gap:10px;padding-block:18px 6px}
 .intro a{color:var(--accent);font-weight:600}
+.hero-card{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:18px 28px;padding:24px;border:1px solid var(--line);border-radius:14px;
+  background:radial-gradient(120% 150% at 0% 0%,var(--accent-soft) 0%,transparent 55%),linear-gradient(135deg,var(--surface) 0%,var(--surface2) 100%)}
+.hero-card::after{content:"";position:absolute;right:-70px;bottom:-70px;width:240px;height:240px;border-radius:50%;pointer-events:none;
+  background:repeating-radial-gradient(circle,color-mix(in srgb,var(--accent) 22%,transparent) 0 2px,transparent 2px 15px);opacity:.55}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);background:color-mix(in srgb,var(--accent) 13%,transparent);padding:5px 11px;border-radius:999px}
+.kicker i{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 3px color-mix(in srgb,var(--good) 28%,transparent)}
+.hero-card h2{font-size:clamp(25px,3.6vw,36px);line-height:1.06;margin:12px 0 10px}
+.hero-card h2 em{font-style:normal;color:var(--accent)}
+.hero-card p{margin:0;color:var(--muted);max-width:54ch;font-size:15.5px}
+.how{list-style:none;margin:0;padding:0;display:grid;gap:8px;align-content:start;position:relative;z-index:1}
+.how li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;background:color-mix(in srgb,var(--surface) 82%,transparent);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--muted)}
+.how .n{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-family:var(--f-mono);font-weight:700;font-size:13px}
+.how b{display:block;font-size:14px;color:var(--ink)}
+.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.qcard{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1px 10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:10px;padding:10px 12px;cursor:pointer;font:inherit;transition:transform .15s,border-color .15s,box-shadow .15s}
+.qcard svg{grid-row:span 2;width:22px;height:22px;color:var(--accent)}
+.qcard b{font-size:14px}
+.qcard small{color:var(--muted);font-size:12px;line-height:1.3}
+.qcard:hover,.qcard:focus-visible{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 18px -12px color-mix(in srgb,var(--ink) 60%,transparent)}
+@media (prefers-reduced-motion:reduce){.qcard{transition:none}.qcard:hover,.qcard:focus-visible{transform:none}}
+.intro-foot{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:12.5px;color:var(--muted)}
 .legend{display:flex;flex-wrap:wrap;gap:6px}
 .patch{border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--surface);padding:8px 14px;border-radius:0 4px 4px 0;font-size:13.5px;margin-bottom:8px}
 .patch summary{cursor:pointer;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;list-style:none}
@@ -352,7 +372,8 @@ img.pt.lg{width:96px;height:120px}
   .summary{top:0}
   .sec-head h2{font-size:18px}
   .traits-cols{grid-template-columns:minmax(0,1fr)}
-  .intro{grid-template-columns:1fr}
+  .hero-card{grid-template-columns:minmax(0,1fr);padding:16px}
+  .qcard{grid-template-columns:minmax(0,1fr);padding:9px 10px}.qcard svg{grid-row:auto;width:20px;height:20px;margin-bottom:2px}
   .saldo .num{font-size:24px}
 }
 @media (prefers-reduced-motion:no-preference){.saldo .num{transition:background-color .2s}}
@@ -362,7 +383,7 @@ img.pt.lg{width:96px;height:120px}
 
 <header class="bar">
   <div class="wrap">
-    <h1>Ficha de Sobrevivente B42<small>Project Zomboid · Build 42.21 · montador de build e esquadrão</small></h1>
+    <h1>Ficha de Sobrevivente B42<small>Evangeliteens · Project Zomboid · Build 42.21</small></h1>
     <div class="saldo" id="saldo" aria-live="polite">
       <span class="lbl">Saldo<br>do montador</span><span class="num" id="saldoNum">0</span>
     </div>
@@ -378,10 +399,31 @@ img.pt.lg{width:96px;height:120px}
 </header>
 
 <div class="wrap">
-  <section class="intro">
-    <p>Monte a build marcando profissão e traços. O saldo precisa terminar em 0 ou mais para o jogo aceitar. A aba <b>Builds dos canais</b> reúne 16 builds de 7 canais (ShivasBR, GabrielKnine, Gambarine, Laughter, OVERCHARGED EGG, Orbanjo Gaming e Anzony Kaiser), todas gravadas depois do lançamento da B42 e recalculadas com os custos da 42.21. As etiquetas de cada traço (Obrigatório, Meta…) vêm do <a href="https://www.youtube.com/watch?v=C_mnw8MkdEY" target="_blank" rel="noopener">vídeo do ShivasBR</a>; o contador “x/16” mostra em quantas builds dos canais o traço aparece. A aba <b>Combos</b> junta essas builds em esquadrões de 2 a 6 jogadores que se completam, e a aba <b>Fabricar</b> mostra como fazer cada coisa. A aba Sobrevivência tem a rota de Rosewood no mapa e as dicas do <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">GabrielKnine</a>.</p>
-    <div class="legend" aria-label="Legenda">
-      <span class="tag v-obr">Obrigatório</span><span class="tag v-meta">Meta</span><span class="tag v-opc">Opcional</span><span class="tag v-dis">Dispensável</span><span class="tag v-evi">Evitar</span><span class="tag v-nun">Nunca</span>
+  <section class="intro" aria-labelledby="introTitle">
+    <div class="hero-card">
+      <div>
+        <span class="kicker"><i></i>Grupo Evangeliteens</span>
+        <h2 id="introTitle">O QG do <em>Evangeliteens</em> em Knox Country</h2>
+        <p>Este espaço é do grupo Evangeliteens, que se junta para jogar Project Zomboid. Aqui cada um monta a sua build, o grupo fecha o esquadrão e todo mundo sabe o que fazer do primeiro dia em diante. Tudo conferido na Build 42.21.</p>
+      </div>
+      <ol class="how" aria-label="Como usar o montador">
+        <li><span class="n">1</span><div><b>Escolha a profissão</b>Ela define pontos, perícias e o que você já sabe fazer.</div></li>
+        <li><span class="n">2</span><div><b>Marque os traços</b>As etiquetas vêm do <a href="https://www.youtube.com/watch?v=C_mnw8MkdEY" target="_blank" rel="noopener">vídeo do ShivasBR</a>; o “x/16” mostra em quantas builds dos canais o traço aparece.</div></li>
+        <li><span class="n">3</span><div><b>Feche o saldo em 0 ou mais</b>Senão o jogo não aceita. Depois mande o link da build para o grupo.</div></li>
+      </ol>
+    </div>
+    <nav class="quick" aria-label="Atalhos para as abas">
+      <button class="qcard" type="button" data-go="builds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg><b>Builds dos canais</b><small>16 builds de 7 canais, recalculadas na 42.21</small></button>
+      <button class="qcard" type="button" data-go="combos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg><b>Combos</b><small>Esquadrões de 2 a 6 que se completam</small></button>
+      <button class="qcard" type="button" data-go="esquadrao"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M6.5 19a5.5 5.5 0 0 1 11 0M1.5 18a3.6 3.6 0 0 1 5-3.2M22.5 18a3.6 3.6 0 0 0-5-3.2"/></svg><b>Esquadrão</b><small>Monte o time do grupo e mande o link</small></button>
+      <button class="qcard" type="button" data-go="guia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg><b>Sobrevivência</b><small>Rotas de Rosewood, Riverside e Muldraugh</small></button>
+      <button class="qcard" type="button" data-go="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4.5l5 5-2.5 2.5-5-5z"/><path d="M12 7l-8.5 8.5a1.8 1.8 0 0 0 2.5 2.5L14.5 9.5"/></svg><b>Fabricar</b><small>O que fazer primeiro e como</small></button>
+    </nav>
+    <div class="intro-foot">
+      <div class="legend" aria-label="Legenda das etiquetas">
+        <span class="tag v-obr">Obrigatório</span><span class="tag v-meta">Meta</span><span class="tag v-opc">Opcional</span><span class="tag v-dis">Dispensável</span><span class="tag v-evi">Evitar</span><span class="tag v-nun">Nunca</span>
+      </div>
+      <span>Canais: ShivasBR, GabrielKnine, Gambarine, Laughter, OVERCHARGED EGG, Orbanjo Gaming e Anzony Kaiser.</span>
     </div>
   </section>
   <details class="patch" id="patch">
@@ -1947,6 +1989,7 @@ function go(t){
   window.scrollTo({top:0});
 }
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>go(b.dataset.tab)));
+document.querySelector(".quick").addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)});
 
 renderMontador();renderLibFilters();renderLib();renderCombos();renderTeam();renderFabOrder();renderFab();
 go((location.hash||"").replace("#",""));
