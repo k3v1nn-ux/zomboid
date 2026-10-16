@@ -2207,10 +2207,10 @@ function renderMundo(){
 }
 function renderMundoRes(){
   const d=mDiff(),base=presetVals(mundo.p),v=mVals();
-  $("mResN").textContent=`Preset ${MPRE[mundo.p].n}`+(d.length?` com ${d.length} mudança${d.length>1?"s":""}:`:", sem mudanças.");
+  const nm=modsComDeps().length;
+  $("mResN").textContent=`Preset ${MPRE[mundo.p].n}`+(d.length?` com ${d.length} mudança${d.length>1?"s":""}`:", sem mudanças")+(nm?` e ${nm} mods (aba Mods)`:", sem mods")+(d.length?":":".");
   $("mResL").innerHTML=d.map(k=>`<li><b>${esc(MOPT[k][1])}:</b> ${esc(mShow(k,v[k]))} <span class="hint">(era ${esc(mShow(k,base[k]))})</span></li>`).join("");
   $("mResL").hidden=!d.length;
-  const ms=modsComDeps();$("mResN").textContent+=ms.length?` Mods: ${ms.length} (veja a aba Mods).`:" Sem mods.";
 }
 function mundoTxt(){const v=mVals(),d=mDiff(),ms=modsComDeps();return `${mundo.n||"Mundo Evangeliteens"} · Project Zomboid 42.21\nPreset: ${MPRE[mundo.p].n}\n`+(d.length?d.map(k=>`- ${MOPT[k][1]}: ${mShow(k,v[k])}`).join("\n"):"Sem mudanças no preset.")+(ms.length?`\nMods (${ms.length}): ${ms.map(x=>x[1]).join(", ")}`:"")+`\n${mundoLink()}`}
 function mundoLink(){return BASE+"?w="+b64e(JSON.stringify(mundo))+"#mundo"}
