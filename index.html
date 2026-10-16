@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
 <title>Ficha de Sobrevivente B42</title>
-<meta name="description" content="Project Zomboid B42.21: montador de build com boneco 3D, 16 builds de canais explicadas, combos de esquadrão, rota de Rosewood no mapa e guia de fabricação.">
+<meta name="description" content="Project Zomboid B42.21: montador de build com boneco 3D, 16 builds de canais explicadas, combos de esquadrão, rotas de Rosewood, Riverside e Muldraugh no mapa e guia de fabricação.">
 <meta property="og:title" content="Ficha de Sobrevivente B42 · Project Zomboid 42.21">
 <meta property="og:description" content="Builds dos canais explicadas, combos de esquadrão e montador de traços. Tudo conferido na 42.21.">
 <meta property="og:type" content="website">
@@ -271,6 +271,9 @@ img.pt.lg{width:96px;height:120px}
 .combo.flash{animation:flash 1.4s ease 2}
 @keyframes flash{50%{box-shadow:0 0 0 3px var(--accent)}}
 /* Mapa */
+.cidades{display:flex;flex-wrap:wrap;gap:2px;width:max-content;max-width:100%;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+.cid{border:0;background:none;color:inherit;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer}
+.cid[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
 .steps{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
 .step{flex:0 0 auto;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer;white-space:nowrap}
 .step b{font-family:var(--f-mono);color:var(--accent);margin-right:4px}
@@ -577,16 +580,18 @@ img.pt.lg{width:96px;height:120px}
   <div id="panel-guia" role="tabpanel" aria-labelledby="tab-guia" hidden>
     <div class="panel">
       <section class="section" aria-labelledby="hRota">
-        <div class="sec-head"><h2 id="hRota">Rota de Rosewood, dia a dia</h2><span class="hint">Cidade que Knine e OVERCHARGED EGG indicam para começar</span></div>
-        <p class="hint" style="margin:0;max-width:80ch">Toque em um passo: o mapa aproxima, desenha a rota e mostra o que fazer. Ruas, prédios e lugares vêm do mapa da versão 42.20 (pzmap.org). O mapa é visto de cima, com o norte para cima, igual ao mapa do jogo (tecla M). Cada parada tem link para o mapa real.</p>
+        <div class="sec-head"><h2 id="hRota">Rota de Rosewood, dia a dia</h2><span class="hint" id="rotaHint">Cidade que Knine e OVERCHARGED EGG indicam para começar</span></div>
+        <div class="cidades" id="cidades" role="group" aria-label="Cidade inicial"><button class="cid" type="button" data-cid="rosewood" aria-pressed="true">Rosewood</button><button class="cid" type="button" data-cid="riverside" aria-pressed="false">Riverside</button><button class="cid" type="button" data-cid="muldraugh" aria-pressed="false">Muldraugh</button></div>
+        <p class="hint" style="margin:0;max-width:80ch">Escolha a cidade onde você nasceu e toque em um passo: o mapa aproxima, desenha a rota e mostra o que fazer. Ruas e prédios vêm do mapa da versão 42.20 (pzmap.org). O mapa é visto de cima, com o norte para cima, igual ao mapa do jogo (tecla M). Cada parada tem link para o mapa real.</p>
         <div class="steps" id="rotaSteps" role="tablist" aria-label="Passos da rota"></div>
         <div class="rota">
-          <div class="mapbox"><svg id="rwMap" viewBox="0 0 960 1180" role="img" aria-label="Mapa de Rosewood com a rota do passo escolhido"></svg>
+          <div class="mapbox"><svg id="rwMap" viewBox="0 0 960 1180" role="img" aria-label="Mapa da cidade com a rota do passo escolhido"></svg>
             <div class="map-ctl"><button class="btn sm" type="button" id="mapAll">Cidade toda</button><button class="btn sm" type="button" id="mapPlay">▶ Animar rota</button></div>
             <div class="map-leg" id="mapLeg"></div>
           </div>
           <div class="rota-info" id="rotaInfo"></div>
         </div>
+        <p class="hint" id="rotaFonte" style="margin:0"></p>
         <details class="realmap"><summary>Abrir o mapa real aqui (projectzomboidmap.com)</summary><div class="realmap-box" id="realMap"></div></details>
       </section>
 
@@ -1274,6 +1279,9 @@ const DIFL={1:"Fácil",2:"Médio",3:"Difícil"}, PRIO=["Dia 1","Dia 2","Semana 1
 
 // ---------- MAPA DE ROSEWOOD (ruas e prédios do pzmap.org, versão 42.20) ----------
 const RW={"B":[7600,11120],"st":[["Quiet St",[289,259,288,335,292,343,302,353,309,356,722,357]],["Doctors Lane",[426,360,426,455]],["Frederick Lane",[336,654,336,609,365,552,384,533,395,510,395,471,398,465,400,462,405,459,900,459]],["Sunset Meadows Dr",[-71,345,55,345,66,350,100,383,133,417,147,423,275,423,288,429,332,473,391,473]],["Mortimer St",[546,463,546,533]],["Buck St",[510,536,662,536]],["Cartwheel St",[665,463,665,603,663,609,659,612,655,614,622,614,617,617,613,621,611,625,611,654]],["Schoolhouse St",[900,459,903,459,907,462,912,467,914,472,914,548,912,553,908,557,903,559,668,559]],["South Main St",[332,657,676,657]],["North Main St",[506,92,506,654]],["St Martin's Road",[769,562,769,657,676,657]],["Justice Road",[236,767,314,767,325,767,330,765,334,761,336,757,336,745,336,660]],["Rosewood Road",[673,660,673,862,730,862,737,865,742,870,747,880,747,1196]],["Angel Road",[743,1205,331,1205,330,1127,334,1121,416,1040,418,1033,418,879,420,875,433,862,669,862]],["Heartbreak Road",[420,1024,516,1024,541,1049,541,1106,558,1123,558,1200]],["Hamshank Road",[-302,1205,327,1205]],["Fiddler's Trail",[743,1204,2985,1205]],["Flaherty Road",[500,-626,500,-2,506,5,506,77]],["Stamp Road",[-26,1209,-26,1246,-67,1246]],["Soretoe Road",[452,859,452,792]],["Pigeon Road",[93,77,93,-8,80,-20]],["Broken Spear Road",[91,17,-110,17,-110,-17]],["Crowcall Road",[330,1209,330,1229,333,1237,348,1253,356,1257,500,1257,505,1255,549,1212,549,1210]],["Jacks Lane",[506,660,506,858]],["Denton St",[510,155,733,155]],["Toadhop Road",[288,259,288,162,284,153,276,146,269,142,151,142,141,138,133,129,128,120,128,92]],["JC Carroll Road",[510,262,718,262,727,259,734,252,737,246,737,92]],["Butterfly St",[665,266,665,455]],["Father Murphy Lane",[261,420,261,349,265,340,281,325,284,322]],["Snake St",[293,262,502,262]],["Shelf St",[426,214,426,352]],["Cross St",[293,310,423,310]],["Prison Access Road",[427,862,412,862,400,856,325,781,317,771]],["Catkin St",[772,657,781,657,786,660,789,663,791,667,791,940,787,951,779,958,770,962,751,962]]],"bl":[1,581,93,164,604,473,8,13,597,478,4,7,633,480,6,9,617,475,14,10,633,426,13,13,609,426,7,14,593,427,9,13,640,507,13,7,635,518,8,4,643,568,10,9,701,431,9,14,675,408,23,18,725,431,9,8,731,402,9,8,749,427,14,12,746,407,4,6,607,507,15,13,593,506,9,15,597,552,11,10,613,555,10,15,641,547,10,8,635,557,7,4,676,570,12,7,776,433,20,8,677,473,9,8,685,483,7,4,678,496,12,8,695,494,4,7,676,518,10,6,684,537,10,12,701,568,6,11,728,573,17,6,784,424,5,4,721,475,48,38,810,427,9,16,804,410,7,6,828,434,10,7,846,430,12,11,829,415,6,7,632,572,7,13,637,595,12,8,642,588,7,4,614,587,15,15,688,581,3,4,726,590,18,12,705,601,9,13,738,625,7,10,675,600,11,7,693,593,7,4,649,632,7,13,788,606,12,5,732,617,4,3,841,604,18,20,94,757,4,4,168,793,13,13,111,829,30,10,219,765,6,4,371,1020,11,7,352,950,6,10,379,951,7,8,479,1104,6,10,512,1101,9,13,535,917,9,13,553,929,11,11,74,1148,11,8,472,811,11,13,457,774,15,22,408,776,12,9,531,778,8,13,555,778,5,5,786,1104,3,4,786,1129,3,4,676,1034,36,21,677,1078,22,11,683,1101,22,20,677,1159,54,18,837,1059,7,6,827,1014,13,4,217,165,13,4,335,332,10,11,314,333,11,11,303,324,8,5,309,284,8,10,295,280,7,8,286,372,16,15,286,394,8,22,867,428,14,13,892,429,9,12,906,419,4,7,211,121,13,4,400,276,9,11,375,278,8,9,355,277,9,10,338,271,5,8,457,270,8,6,465,216,16,20,358,154,5,8,465,185,15,16,376,216,36,15,547,228,18,13,574,164,8,17,522,168,21,14,545,196,20,29,474,366,22,31,356,331,10,12,336,319,6,4,377,333,8,10,390,292,11,7,401,339,18,9,431,339,24,9,437,300,16,7,437,280,12,8,451,291,7,4,433,316,11,6,467,283,19,7,463,294,15,19,458,328,22,20,396,317,11,10,431,369,14,9,398,382,17,26,343,372,8,18,363,368,3,4,519,385,36,20,579,368,65,16,516,316,29,30,516,291,36,21,563,322,4,13,571,296,8,11,862,1116,6,8,440,17,11,27,372,27,8,3,371,7,9,15,378,110,39,71,624,178,36,43,598,163,20,38,766,263,5,9,705,161,13,27,702,194,8,3,706,199,8,3,726,170,3,8,675,169,11,16,688,181,11,9,867,767,13,12,853,817,15,10,874,860,15,10,848,681,12,16,900,890,10,15,77,1,7,4,720,128,10,20,634,113,14,26,652,113,38,28,622,112,4,13,472,402,24,47,448,469,17,17,465,483,31,18,470,469,25,12,412,468,6,13,421,469,14,20,452,523,35,40,401,519,10,21,409,435,10,17,388,430,7,7,446,429,14,20,343,400,12,19,365,409,3,4,435,409,10,7,438,401,7,4,434,434,7,10,538,494,3,5,516,469,27,57,516,542,23,36,516,422,17,27,550,428,31,21,562,470,10,9,577,473,16,20,586,427,4,6,576,511,9,10,576,502,7,4,552,556,6,9,575,553,10,12,566,572,4,5,590,570,6,7,348,621,8,11,448,602,32,33,387,627,6,12,385,612,6,6,399,621,13,4,526,607,31,24,753,677,9,6,720,678,6,9,680,668,25,13,700,679,4,4,646,740,8,3,644,745,8,3,649,750,8,3,644,757,8,3,638,705,9,4,627,698,13,4,608,683,4,13,823,775,15,12,844,866,15,12,801,836,4,9,801,849,9,4,830,699,9,7,802,908,15,10,90,1145,8,6,319,1028,9,13,318,1021,5,4]};
+// Riverside e Muldraugh: mesmo formato (pzmap.org 42.20, prédios = cômodos da camada 0 agrupados)
+const RV={"B":[5650,5050],"st":[["Rock Ridge Road",[231,782,231,265,239,248,246,241,262,233,350,233]],["W Main St",[350,233,665,233]],["E Main St",[665,233,1167,233,1178,238,1184,244,1186,249,1186,389,1193,403,1201,411,1216,419,1225,419]],["Rock Ridge Road",[1225,419,1620,419,1636,428,1642,433,1650,450,1650,649,1659,666,1672,679,1686,686,1761,686,1766,689,1770,693,1772,697,1772,950]],["Easter Lane",[108,199,278,199]],["Fern Road",[105,169,105,346]],["Granite St",[310,237,310,346]],["Lincoln St",[235,350,679,350]],["Pitts St",[741,350,951,350]],["Harbor St",[593,238,593,346]],["Pine Ct",[394,313,473,313]],["Marvin Pl",[593,354,593,462,599,474,607,482,619,487,653,487]],["Kennedy St",[653,487,877,487]],["Maria Pl",[877,173,674,173]],["Mary Ct",[881,135,881,175,881,228]],["Station St",[881,238,881,346]],["Nixon Lane",[656,404,656,483]],["Mousetrap St",[885,390,913,390,918,395,918,483]],["Cushion Lane",[885,487,951,487]],["Ohio St",[955,237,955,491]],["Summer Ct",[959,397,1041,397]],["Alan Road",[881,354,881,577]],["Olin Road",[-188,786,357,786,452,738,577,613,640,581,1130,581,1284,659,1446,820]],["Rag Road",[61,350,227,350]],["Long Branch Road",[61,350,44,350,24,360,-6,390,-15,395,-166,395,-208,437,-212,441,-217,446,-228,453,-392,453,-425,487,-426,560,-458,593,-708,593,-727,612,-748,612,-766,630,-807,630,-841,664,-855,664,-894,703,-917,703,-938,724,-987,724,-1019,757,-1088,757,-1097,766,-1139,766,-1145,773,-1206,773,-1221,788,-1264,788,-1304,749,-1351,749,-1359,756,-1359,783,-1479,783,-1496,767,-1617,768,-1686,699,-1829,700,-1836,697,-1843,691,-1847,686,-1848,682,-1848,668,-1883,668,-1914,699,-1932,699,-1940,703,-1945,709,-1949,716,-1949,842,-1973,889,-1980,896,-1980,926,-1975,935,-1970,940,-1963,943]],["Sandy Road",[281,182,281,229]],["Tim Cain Road",[129,782,129,663]],["Sawyer Lane",[37,695,126,695]],["Seasons Lane",[1133,307,1133,483]],["Sycamore Lane",[446,354,446,440]],["Fall Way",[959,487,1204,487,1216,482,1224,474,1229,463,1229,423]],["Ivan Road",[1363,423,1363,555]],["Rogers Av",[737,238,737,483]],["Ark Lane",[390,238,390,346]],["Walnut St",[235,313,261,313,263,313,266,311,267,308,267,292,267,281,268,280,269,279,270,278,306,278]],["Johannes Jr St",[518,238,518,346]],["Spring Dr",[959,303,1141,303]],["Winter Lane",[1045,307,1045,483]],["Riverbreeze Lane",[1143,151,1143,228]],["Millstone Road",[1355,415,1355,305,1356,303,1358,299,1360,297,1365,294,1522,294]],["Rosewood St",[741,317,811,317]],["Blossom Lane",[787,320,787,346]],["Idrone Lane",[741,430,877,430]]],"bl":[1146,328,14,16,1106,386,12,20,1105,420,13,18,1064,396,12,16,1064,430,12,17,1082,421,3,2,1064,455,16,19,1106,455,12,16,1105,350,13,20,1015,366,16,14,1017,414,16,14,1017,457,16,13,1146,353,13,17,1146,377,15,16,1132,476,2,3,244,324,19,20,293,189,8,14,324,307,9,12,346,304,3,3,324,287,7,12,334,284,5,3,324,267,10,12,344,264,5,3,324,247,10,12,346,257,3,5,282,258,14,12,276,253,6,7,296,250,5,3,273,314,5,4,282,305,10,8,280,289,11,10,346,324,3,3,302,169,3,8,308,169,3,8,266,160,10,12,250,293,8,6,480,315,13,9,406,292,9,9,400,286,3,3,425,293,12,8,422,286,3,3,449,293,11,10,468,290,7,7,401,323,9,9,423,323,8,8,441,323,8,10,460,323,9,10,483,299,14,9,472,249,21,18,369,266,9,11,358,264,3,2,367,287,11,10,352,298,3,3,370,309,8,9,352,305,5,3,368,325,8,12,352,325,3,3,367,249,9,10,351,244,7,5,424,169,22,10,459,153,5,3,427,153,3,6,428,183,12,32,465,196,26,20,424,249,12,19,631,327,19,14,666,327,11,14,624,504,22,16,622,527,3,3,607,457,16,10,605,402,10,16,621,417,3,3,605,425,13,19,621,446,3,2,605,385,9,9,568,365,10,13,557,374,5,7,568,389,10,16,556,391,5,6,569,415,11,11,557,428,5,3,634,401,8,11,605,361,13,16,621,356,3,2,627,359,10,10,633,421,12,13,626,433,2,3,634,443,9,12,626,458,3,3,633,459,10,18,572,436,8,15,516,360,14,10,513,376,3,5,538,359,14,11,711,503,12,10,736,506,10,12,731,524,4,10,742,533,4,3,747,463,9,10,656,502,10,12,651,528,2,3,667,465,10,12,713,446,15,13,707,473,3,6,715,464,11,15,717,426,11,15,714,414,14,10,716,392,11,17,665,357,16,14,667,405,7,16,668,425,11,16,666,445,11,12,708,523,3,5,748,442,13,10,651,360,9,9,639,367,11,12,200,315,9,12,176,323,22,12,89,174,6,12,79,190,3,2,88,206,7,10,87,196,6,4,115,214,8,10,120,205,7,4,86,228,9,12,89,242,6,4,78,221,3,3,156,178,11,9,168,167,4,6,137,179,11,11,128,172,5,10,110,182,12,7,179,178,9,9,195,178,11,9,210,167,3,3,152,213,14,9,170,211,18,13,189,224,2,3,115,238,9,13,120,229,6,4,92,279,3,3,136,212,10,12,130,205,3,5,111,269,8,6,532,290,48,40,553,269,6,6,621,241,23,20,506,188,18,28,508,169,3,2,557,151,68,41,632,219,2,3,600,288,23,14,613,310,7,6,606,322,7,16,622,266,9,4,622,279,9,4,638,266,5,4,637,280,7,5,494,224,4,2,559,240,4,2,557,247,4,6,746,204,10,17,746,245,18,24,747,280,7,11,714,259,14,23,700,243,28,14,683,203,8,20,693,203,15,20,710,204,18,19,699,145,25,19,741,128,10,10,736,92,4,2,746,183,9,14,710,317,15,14,679,156,12,5,658,319,8,6,694,291,11,8,707,284,21,15,81,326,17,9,133,326,3,2,164,357,24,12,111,421,9,8,134,619,8,12,765,326,12,11,750,326,8,10,797,327,8,10,965,346,3,3,830,362,36,49,750,506,15,12,774,507,8,10,788,505,8,11,810,507,9,9,806,534,3,2,826,504,7,14,834,529,4,7,823,533,2,3,848,506,12,9,769,464,8,9,784,465,18,10,799,460,5,2,810,464,14,11,827,460,5,7,847,462,16,13,897,401,11,8,897,366,9,10,898,421,10,9,896,445,12,11,897,463,10,14,891,434,3,3,928,409,7,11,928,435,9,12,929,461,8,11,918,362,10,10,936,364,10,8,943,425,3,3,943,454,3,3,931,378,3,3,787,530,2,3,769,527,3,4,838,453,2,3,836,459,3,3,902,504,9,12,912,524,4,9,924,507,12,11,941,529,3,3,773,441,11,12,796,440,10,13,816,440,11,11,969,364,15,14,991,366,17,12,968,414,16,14,994,416,14,13,970,456,14,15,996,455,14,13,990,442,3,4,832,281,40,28,806,199,19,22,890,243,37,15,850,203,22,18,827,204,21,17,850,245,20,24,893,302,42,35,888,154,44,30,936,225,4,2,776,184,17,13,758,204,16,17,776,205,18,16,929,278,6,4,773,146,16,13,856,180,16,17,815,245,25,24,831,180,10,16,887,135,3,5,751,150,18,13,808,158,2,3,807,152,4,4,807,146,4,4,815,149,4,4,821,149,4,4,821,158,4,4,827,158,4,4,864,154,7,9,848,180,6,10,796,245,17,24,768,247,17,18,757,184,12,13,760,297,9,11,784,297,8,11,802,296,8,10,778,290,2,3,797,288,3,2,750,297,2,3,976,273,14,13,965,247,3,3,997,272,15,15,970,323,16,12,993,323,16,15,995,192,28,23,1000,239,4,2,984,215,3,5,1060,318,6,6,1029,272,15,13,1051,273,15,12,1064,247,4,3,1082,273,15,12,1091,249,6,6,1103,271,15,14,1017,322,16,12,1018,247,3,3,1144,317,8,3,1119,154,12,8,1101,163,7,4,1119,172,12,7,1101,181,2,3,1116,193,15,8,1101,199,4,3,1114,210,14,9,1101,215,3,5,1157,153,12,10,1153,172,12,9,1155,189,13,9,1159,208,12,8,1175,205,3,2,1091,206,4,9,1144,278,8,12,1132,311,2,3,1105,317,13,18,267,336,22,8,324,327,7,12,411,336,4,6,418,336,5,6,426,338,3,3,436,336,4,6,469,336,4,6,328,365,13,4,247,358,12,20,427,373,10,11,419,386,4,5,412,399,12,12,395,416,3,3,415,423,9,10,400,435,8,6,400,422,3,3,462,422,13,12,463,402,9,10,456,363,10,10,452,387,6,5,472,367,11,11,493,362,15,10]};
+const MD={"B":[10500,9250],"st":[["Dixie Highway (31W)",[92,-392,92,1947]],["Carpenter Test Road",[25,24,25,1947]],["Boone Road",[-436,543,-436,743,-421,773,-409,785,-377,801,21,801]],["Old Mill Road",[-592,539,-168,539,-64,487,21,487]],["McCoy Road",[-470,535,-470,302,-464,289,-457,282,-444,276,-267,276,-255,281,-246,291,-240,302,-240,459,-232,475,-226,481,-167,511,-115,511]],["Old Bank Road",[99,-50,125,-50,132,-47,140,-39,143,-31,143,71,149,83]],["N Main St",[99,87,153,87,164,92,169,97,175,109,175,180,171,186,147,210,144,213,142,218,142,373]],["Walker Road",[174,189,261,189,272,194,285,207,298,214,438,214]],["Harris Court",[171,314,224,314,229,311,233,306,233,262]],["Harris St",[145,260,391,260]],["S Main St",[99,377,205,377,225,387,239,400,251,426,251,509,257,521,263,527,275,533,298,533,310,539,314,543,319,553,319,700,325,713,331,719,344,726,411,726,423,732,429,738,435,750,435,788,431,796,425,802,418,805,346,805,338,809,329,818,323,830,323,939,290,1005,290,1369]],["W Garnettsville Road",[99,487,247,487]],["Sunstar Way",[164,541,212,541]],["Mabel St",[215,491,215,606]],["Franklin St",[99,610,315,610]],["Wendell St",[99,694,315,694]],["Hill St",[166,614,166,690]],["Popar St",[239,614,239,690]],["Irma Dr",[604,68,810,68]],["Irma Dr",[426,350,426,291,441,261,441,165,445,156,447,154,456,150,529,150,537,146,541,141,544,135,544,91,549,80,555,74,566,69,601,69,604,68]],["Irma Dr",[323,620,425,620,425,350]],["Sandy Lane",[443,259,516,259]],["Old Station Road",[428,318,530,318]],["Stump Road",[374,481,374,379,423,379]],["Red Arrow St",[398,381,398,481]],["Circular St",[482,410,482,381,515,381,515,410,483,410]],["1st St",[427,522,489,522,489,496]],["2nd St",[427,494,502,494,502,468]],["3rd St",[427,466,509,466,509,440]],["4th St",[427,438,509,438,509,412]],["Matthew St",[370,622,370,722]],["Hazelnut St",[428,620,487,620,500,626,502,628,506,637,506,717,502,724,495,728,436,728,428,732]],["Elm Court",[274,801,274,756,316,756,321,758,324,760,328,764,332,767,355,767]],["Lime St",[260,803,341,803]],["Diesel St",[357,730,357,801]],["Pattern St",[395,730,395,801]],["Farmer's Lane",[206,383,206,423,244,423]],["Bank Road",[163,381,163,446,167,446,169,448,169,483]],["Perrine St",[256,698,256,807,237,844,237,1361]],["Chenault St",[99,1424,176,1424,184,1420,187,1417,192,1408,192,1385,197,1375,202,1370,213,1365,286,1365]],["Wilson St",[141,698,141,909,124,943,124,1197,145,1239,144,1320,147,1327,152,1331,158,1334,177,1334,185,1339,188,1342,191,1348,191,1360,194,1366,197,1369]],["Balsam St",[144,819,246,819]],["E Maple St",[395,809,395,883,393,886,391,888,388,890,357,890,357,974]],["Dewey St",[357,809,357,887]],["Old Loop Road",[313,968,317,970,319,972,327,976,376,976,383,980,388,985,392,992,392,1044,389,1050,384,1054,379,1057,358,1057,358,1168,355,1173,353,1176,346,1180,341,1181,294,1181]],["Barn Way",[318,1053,354,1053,356,1056]],["Wood St",[157,976,298,976]],["Twig St",[206,909,206,974]],["Branch Dr",[144,906,233,906]],["W Maple St",[144,847,169,847,169,876,144,876]],["Perrine St",[241,1208,286,1208]],["Sleeper Road",[-205,-452,-205,-400,-202,-394,-196,-388,-189,-384,-159,-384,-153,-388,-146,-401,-143,-404,-136,-408,-108,-408,-89,-399,-80,-390,-74,-384,-66,-380,-16,-380,-6,-375,6,-363,13,-349,13,-1,25,23,25,24]],["Station Road",[545,-154,545,66,547,71,551,75]],["Magazine Road",[1045,496,788,496,762,483,745,466,731,439,731,167,739,150,746,143,762,135,789,135,800,130,807,123,812,112,812,63,819,49,825,43,833,39,1034,39,1040,36,1045,31,1048,25,1048,15,1051,9,1055,5,1062,1,1290,1,1322,17,1344,39,1376,55,1763,55]],["Lizard Road",[290,1369,290,1642,284,1654,274,1665,268,1674,268,1684,274,1697,282,1705,293,1711,600,1711,611,1717,615,1720,619,1725,622,1733,622,1768,627,1777,630,1781,643,1788,762,1788,774,1794,780,1800,784,1809,784,1947]],["W Maple St",[99,847,138,847]],["Woodhaul Road",[-270,273,-270,257,-267,251,-260,247,-164,247,-62,247,-46,239,-40,224,-39,161,-35,151,-31,148,-22,144,21,144]],["Axhead Road",[-97,250,-97,375,-94,382,-89,387,-53,387,21,387]],["Old Muldraugh Station Branch Line",[1399,1390,1375,1366,1375,1231,1316,1172,891,1172,523,804,523,498,536,485,536,337,554,319,598,319,603,314,603,7,603,-127,647,-171,1047,-171,1075,-199,1562,-199,1605,-242]],["Hop Lane",[311,536,322,525,327,522,423,522]]],"bl":[130,1303,4,3,210,1345,2,3,110,1303,18,11,135,1293,3,3,107,1269,23,18,247,1322,22,24,247,1292,24,13,217,1309,8,10,214,1287,8,9,218,1253,8,9,275,161,11,15,315,161,9,14,344,142,10,9,339,142,3,2,317,185,9,9,382,184,11,10,422,191,7,11,383,167,9,9,411,142,9,13,467,192,11,12,451,120,8,9,302,156,4,3,375,161,5,4,415,172,8,8,427,181,3,3,489,201,6,6,258,506,3,3,286,506,3,2,292,638,3,4,279,624,8,13,279,579,12,10,282,553,10,8,272,556,4,6,274,511,9,9,270,481,9,10,263,636,5,4,319,486,3,3,392,577,3,3,396,548,4,3,465,488,2,3,344,645,3,4,380,630,12,9,351,639,10,6,348,625,11,7,346,596,9,12,338,600,5,6,378,594,7,10,330,542,10,10,315,501,11,9,384,493,30,23,444,531,4,13,472,531,4,10,475,502,4,13,435,503,6,13,402,543,2,4,402,528,18,20,345,487,22,13,403,562,6,23,344,535,4,5,360,577,12,8,272,656,3,3,280,653,5,2,291,722,3,2,259,653,7,5,282,664,7,11,279,707,15,7,265,712,4,5,267,724,13,9,288,729,8,11,381,699,12,7,350,692,11,9,381,674,12,8,349,675,11,12,378,650,10,11,392,650,5,3,306,729,10,10,318,723,4,5,381,711,5,4,268,277,3,3,257,232,13,8,277,273,11,8,264,267,5,4,303,272,3,2,450,236,4,13,334,276,7,16,315,270,9,12,331,242,13,4,357,242,9,4,378,243,13,4,379,224,13,4,331,226,13,4,306,242,13,4,391,268,4,13,362,267,13,16,407,269,13,4,458,266,7,13,268,462,11,10,265,429,9,14,268,414,6,9,283,379,10,11,274,359,7,4,280,456,5,4,362,445,3,4,379,365,3,4,464,418,4,13,414,407,4,3,476,472,4,13,494,446,7,12,464,446,4,13,437,446,4,13,479,419,4,13,450,418,4,13,436,420,4,10,405,460,13,7,407,436,4,13,406,411,4,13,406,388,4,13,385,387,4,13,379,408,13,7,384,429,4,12,384,448,4,13,383,466,4,12,443,475,4,13,263,1061,9,4,266,1185,13,4,266,1170,13,4,266,1155,13,4,266,1139,13,4,274,1042,9,9,266,1017,8,10,264,1010,5,4,324,1012,3,3,302,1149,19,22,341,1167,3,4,319,1062,16,9,325,1033,10,9,347,1031,9,8,363,996,9,11,330,992,10,15,370,1027,4,3,316,1040,3,3,180,226,2,3,178,296,14,8,203,296,14,8,156,297,14,9,209,326,14,8,158,325,14,8,181,324,14,9,245,275,9,14,243,300,10,14,213,272,7,14,157,267,11,12,171,270,8,10,193,270,9,11,157,232,9,11,189,230,10,10,233,233,9,11,114,251,19,20,113,306,14,20,171,234,4,5,243,226,5,5,128,242,3,6,152,342,4,3,205,344,3,3,152,281,4,5,207,233,11,9,49,446,4,3,110,477,2,4,249,362,13,7,190,354,11,10,173,354,7,8,226,468,10,5,210,456,3,3,223,433,12,10,191,443,8,12,184,408,9,12,183,388,9,9,213,403,12,10,144,393,8,12,142,411,11,8,143,438,12,8,143,454,4,3,142,469,10,9,123,435,10,21,152,461,5,5,103,384,16,19,180,433,5,4,227,404,4,5,180,440,3,3,102,350,20,21,246,383,4,4,514,163,9,10,524,181,4,5,275,935,8,10,275,877,11,9,289,855,11,9,258,828,14,9,283,814,13,9,287,780,9,10,288,762,7,10,263,747,4,3,277,831,12,11,263,882,2,3,329,850,3,3,339,770,14,13,438,864,3,3,345,736,4,3,409,764,8,9,374,747,12,10,302,782,12,11,370,860,12,20,367,931,11,18,410,836,9,12,412,819,5,9,428,813,8,4,416,876,11,15,369,822,10,12,371,840,5,4,336,858,10,15,372,901,16,13,336,891,9,16,331,923,16,18,329,884,2,3,302,817,9,10,360,782,12,16,372,767,18,12,304,763,10,11,406,780,9,11,405,747,12,8,366,741,5,4,363,914,5,7,295,966,3,3,265,991,13,10,266,958,9,8,278,955,5,6,332,958,3,3,228,160,3,3,142,112,2,3,208,142,3,3,136,92,3,3,244,157,10,10,240,201,7,14,182,203,8,11,218,203,11,7,191,166,9,13,192,141,8,15,192,129,8,8,190,102,13,11,152,163,8,10,149,137,11,8,148,116,10,15,109,55,18,18,126,111,3,4,103,110,21,25,124,125,12,12,101,152,12,12,109,185,24,14,105,211,8,18,209,115,5,4,150,156,5,4,195,158,5,4,203,158,8,4,140,155,4,3,198,214,4,5,183,751,19,7,103,882,9,21,102,855,10,18,251,911,22,9,218,937,8,10,214,920,12,9,188,921,9,9,172,935,13,11,144,927,12,9,143,940,4,7,117,878,18,33,154,885,9,8,149,854,10,8,145,864,5,5,148,829,7,11,161,828,12,10,183,828,10,10,197,882,14,19,192,846,9,19,175,852,11,8,201,831,13,7,221,829,6,10,232,801,11,8,207,799,12,10,187,802,8,8,153,786,10,7,114,786,18,28,129,774,3,8,188,771,9,11,205,770,10,10,232,770,9,11,246,875,7,13,246,849,10,9,239,743,8,10,213,736,9,9,152,798,16,13,190,794,5,4,188,912,5,5,249,957,11,10,217,957,10,11,180,989,10,11,134,979,13,10,149,953,9,12,164,954,14,9,191,954,9,10,131,954,3,3,261,1278,6,4,276,1316,7,12,222,619,3,3,106,619,16,28,78,502,3,3,250,625,10,9,217,628,12,9,176,619,6,9,189,619,6,9,202,619,6,8,173,640,8,9,190,639,8,8,247,583,13,10,112,567,42,19,117,545,37,16,130,505,9,14,152,502,11,11,169,520,9,9,183,512,3,3,194,525,8,10,193,545,9,10,182,549,5,6,227,551,9,12,226,528,9,11,238,541,4,3,229,503,7,13,172,564,8,3,172,570,5,34,186,570,5,34,199,574,5,25,133,732,3,6,104,702,29,67,106,652,49,10,146,666,9,22,185,657,8,7,183,673,9,7,217,658,9,8,250,666,13,7,213,726,2,3,214,709,11,8,187,703,13,14,189,727,9,12,176,665,5,4,171,675,3,3,103,1196,15,14,130,1182,3,5,130,1148,36,23,225,1123,3,4,160,1201,5,4,243,1133,5,3,248,1185,4,10,248,1165,4,13,248,1145,4,13,210,1226,10,9,178,1226,11,9,161,1211,10,9,162,1186,9,9,188,1180,10,9,188,1202,10,9,200,1230,4,5,187,1146,12,8,215,1146,8,12,207,1158,4,5,218,1168,11,13,203,1171,12,4,204,1184,13,18,194,1172,6,4,174,1105,31,21,170,1060,35,35,172,1122,9,7,150,1122,8,12,133,1107,10,9,152,1106,11,8,151,1084,12,8,154,1059,8,10,155,1042,8,11,177,1044,11,7,196,1041,10,10,211,1042,8,11,215,1014,10,13,190,1016,11,10,176,1016,10,10,154,1017,11,10,133,1014,7,9,143,1009,4,5,248,1084,18,37,242,1044,10,10,248,1015,10,11,247,993,11,10,104,1094,14,41,104,1052,13,29,103,994,16,21,158,996,11,8,174,1003,3,3]};
 // Pontos de Rosewood (coordenadas do jogo). k = tipo do ícone
 const POI=[
  ["Corpo de Bombeiros",8137,11736,"fogo"],["Delegacia",8063,11734,"pol"],["Loja de VHS",8120,11450,"vhs"],["Loja de Armas",8037,11438,"arma"],["Ótica",8047,11565,"med"],
@@ -1314,6 +1322,95 @@ const ROTA=[
   faz:["Presídio só em grupo e armado: tem horda interna (OVERCHARGED EGG).","Saindo pelo norte (posto de 4 bombas) você chega a Muldraugh, que tem bem mais zumbi.","Casas comuns ficam vazias perto do dia 45: hora de expandir."],
   pega:"Livros da biblioteca do presídio, ferramentas industriais.",perigo:"Horda grande. Planeje rota de fuga e use carro."}
 ];
+// Riverside: lugares e coordenadas da PZwiki (página de Riverside, 42.20.4), conferidos com os cômodos do pzmap 42.20
+const RV_POI=[
+ ["Delegacia",6084,5249,"pol"],["Patrulha do Rio",6095,5214,"pol"],["Corpo de Bombeiros",6126,5254,"fogo"],["Gas-2-Go",5855,5369,"gas"],["Fossoil",6065,5303,"gas"],
+ ["Conven-U-Mart",5931,5390,"comida"],["Loja Geral",5897,5383,"comida"],["Oficina Baurzhan's",5836,5377,"carro"],["Ferro-velho Riverside Scrap",5824,5411,"carro"],["Morris' Bait Shop (pesca)",5923,5215,"ferr"],
+ ["Milk 'N' More",6136,5368,"comida"],["Hit Vids! (VHS)",6205,5347,"vhs"],["Spiffo's",6129,5304,"comida"],["Riverside Suites (hotel)",6234,5226,"casa"],["Mercado",6355,5295,"comida"],
+ ["Nourish Food Mart",6368,5260,"comida"],["Nails & Nuts (ferragens)",6370,5323,"ferr"],["Time 4 Sport (esportes)",6350,5264,"arma"],["J.D. Clean & Tailor",6420,5303,"roupa"],["Enigma Books",6427,5261,"livro"],
+ ["Pharmahug",6478,5261,"med"],["Lola Limon (roupas)",6518,5263,"roupa"],["GigaMart",6504,5342,"comida"],["Escola",6498,5436,"livro"],["Children's Medical Center",6660,5255,"med"],
+ ["Condomínio fechado",6760,5430,"casa"],["Farol",6334,5207,"casa"]
+];
+const RV_ROTA=[
+ {d:"Dia 1 · manhã",t:"Casa inicial no subúrbio",s:[["Sua casa (exemplo)",6261,5484]],
+  faz:["Quase todo ponto de nascimento de Riverside fica nos subúrbios, a parte mais calma da cidade (wiki).","Mundo novo: a casa inicial não tem zumbi. Ande agachado (C) para não chamar os de fora.","Saqueie tudo. Lençol vira bolsa e corda; rasgue roupa velha para virar curativo.","Ligue a TV no canal Life and Living às 6h, 12h e 18h, com o volume baixo."],
+  pega:"Lençol, faca de cozinha, comida fresca, garrafa, lanterna e pilhas.",perigo:"Nenhum dentro de casa. Personagem novo no mesmo mundo pode nascer com zumbi."},
+ {d:"Dia 1 · tarde",t:"Casas da mesma rua",s:[["Vizinho 1",6264,5440],["Vizinho 2",6289,5478],["Vizinho 3",6265,5512]],
+  faz:["Antes de entrar, bata na porta ou aperte Q e dê um passo para trás.","Um zumbi por vez: empurre (espaço) e pise na cabeça.","Marque um X no mapa (M) em cada casa saqueada."],
+  pega:"Martelo, chave de fenda, pregos, mochila, remédios do banheiro.",perigo:"A wiki diz que o maior perigo de Riverside é relaxar: um zumbi que chega por trás mata mais que uma horda."},
+ {d:"Dia 2",t:"Escola e GigaMart",s:[["Escola",6498,5436],["GigaMart",6504,5342]],
+  faz:["O GigaMart fica na divisa entre o subúrbio e o centro e tem comida em quantidade (wiki).","Escola: revistas que ensinam receitas e livros de perícia.","Saia antes de escurecer: a noite da B42 é muito escura."],
+  pega:"Enlatados, comida em quantidade, revistas e livros.",perigo:"O GigaMart encosta no centro. Limpe a porta antes de entrar."},
+ {d:"Dia 3",t:"Oeste: VHS, mercado e posto",s:[["Hit Vids! (VHS)",6205,5347],["Milk 'N' More",6136,5368],["Fossoil",6065,5303]],
+  faz:["Fitas VHS dão XP: arraste para a TV. TV antiga não toca VHS, guarde a fita.","Segundo a wiki, GigaMart, Fossoil, Gas-2-Go e Hit Vids! juntos sustentam um ou mais jogadores por meses.","Lembre do posto: você volta com galão antes de a energia cair."],
+  pega:"Fitas VHS, comida, galão vazio.",perigo:"Ainda é perto do centro. Entre agachado e por trás."},
+ {d:"Dias 4 e 5",t:"Centro: arma branca, livros e farmácia",s:[["Nails & Nuts (ferragens)",6370,5323],["Time 4 Sport (esportes)",6350,5264],["Enigma Books",6427,5261],["Pharmahug",6478,5261]],
+  faz:["Nails & Nuts e Time 4 Sport são os melhores lugares da cidade para arma branca (wiki).","Enigma Books tem muitos livros de perícia. O volume 1 multiplica XP nos níveis 1 e 2.","Pharmahug: remédios e curativos em quantidade (wiki)."],
+  pega:"Taco, martelo, ferramentas, livros, remédios, bandagens.",perigo:"O centro, na beira do rio, junta cerca de 2/3 dos ~1.500 zumbis da cidade (wiki)."},
+ {d:"Semana 2",t:"Delegacia e bombeiros",s:[["Delegacia",6084,5249],["Corpo de Bombeiros",6126,5254]],
+  faz:["Bombeiros: machados, pé de cabra, remédios e roupa resistente.","Delegacia: mate zumbis lá dentro e procure a chave no corpo deles. Sem chave, bata até a porta quebrar.","Não conte com arma de fogo: Riverside não tem spawn confiável de armas (wiki)."],
+  pega:"Machado, pé de cabra, colete, munição se tiver sorte.",perigo:"Os dois enchem de zumbi e ficam colados ao centro."},
+ {d:"Semanas 2 e 3",t:"Saída oeste: posto, oficina e ferro-velho",s:[["Gas-2-Go",5855,5369],["Oficina Baurzhan's",5836,5377],["Ferro-velho Riverside Scrap",5824,5411]],
+  faz:["Encha galões no posto ANTES de a energia cair.","Oficina e ferro-velho: peças e ferramentas de carro.","Comece a encher garrafas: água e luz caem entre a semana 3 e a 5."],
+  pega:"Galões de gasolina, peças, ferramentas.",perigo:"É o outro lado da cidade: vá de carro se puder."},
+ {d:"Semanas 3 e 4",t:"Base no oeste, perto do rio",s:[["Morris' Bait Shop (pesca)",5923,5215],["Casa no oeste (exemplo)",5809,5267]],
+  faz:["O rio Ohio dá água e peixe: a wiki diz que a pesca fácil faz de Riverside uma das melhores cidades para o longo prazo.","Loja de isca: material de pesca.","Barricadas nas janelas, coletor de chuva (Carpintaria 5) e horta.","Leve todo o loot para caixotes (Carpintaria 3)."],
+  pega:"Vara e linha de pesca, tábuas, pregos, sementes.",perigo:"Não mate zumbi dentro da base: o cheiro fica. Arraste o corpo para longe."},
+ {d:"Mês 2 em diante",t:"Condomínio fechado e saída da cidade",s:[["Condomínio fechado",6760,5430],["Children's Medical Center",6660,5255]],
+  faz:["Condomínio do leste: toda casa tem garagem, então sobra ferramenta, arma e material. Também aparecem carros raros (wiki).","Centro médico infantil: mais remédios (wiki).","Seguindo a margem do rio você chega a West Point (leste) ou Brandenburg (oeste)."],
+  pega:"Ferramentas, carro melhor, remédios.",perigo:"O condomínio fechado é, junto com o centro, onde fica a maior parte dos zumbis (wiki). Vá em grupo."}
+];
+// Muldraugh: lugares e coordenadas da PZwiki (página de Muldraugh), conferidos com os cômodos do pzmap 42.20
+const MD_POI=[
+ ["Delegacia",10638,10407,"pol"],["Hit Vids! (VHS)",10608,10451,"vhs"],["Livraria",10610,10370,"livro"],["Conveniência",10608,10353,"comida"],["Loja de Ferragens",10609,10318,"ferr"],
+ ["Biblioteca",10690,10312,"livro"],["Greene's (mercado)",10608,10255,"comida"],["Stor-A-Max (depósitos)",10755,10348,"ferr"],["L&B Warehousing",10718,10440,"ferr"],["Oficina de Solda",10812,10414,"ferr"],
+ ["Ferro-velho",10759,10489,"carro"],["Pizza Whirled",10606,10112,"comida"],["Cortman Medical",10874,10032,"med"],["Conveniência",10844,10025,"comida"],["Escola Primária",10615,9968,"livro"],
+ ["Acorn Plaza",10635,9906,"comida"],["Sunstar Motel",10629,9816,"casa"],["U-Store It",10689,9835,"ferr"],["Fossoil",10632,9760,"gas"],["Food Market",10854,9744,"comida"],
+ ["Waites Motel",10905,9755,"casa"],["Spiffo's",10608,9642,"comida"],["Zippee Market",10608,9612,"comida"],["Loja Geral",10838,9533,"comida"],["Alfaiataria",10866,9523,"roupa"],
+ ["Family Fashion",10611,9439,"roupa"],["Bert's Garage",10605,9407,"carro"],["Secure Storage",10618,9373,"ferr"],["Mass-Genfac Co. (armazém)",10616,9312,"ferr"],
+ ["Condomínio fechado (norte)",10692,9567,"casa"],["Condomínio fechado (sul)",10676,10228,"casa"]
+];
+const MD_ROTA=[
+ {d:"Dia 1 · manhã",t:"Casa inicial",s:[["Sua casa (exemplo, S Main St)",10776,9764]],
+  faz:["Mundo novo: a casa inicial não tem zumbi. Ande agachado (C) para não chamar os de fora.","Saqueie tudo. Lençol vira bolsa e corda; rasgue roupa velha para virar curativo.","Ligue a TV no canal Life and Living às 6h, 12h e 18h, com o volume baixo.","Beba da pia enquanto tem água e feche as cortinas."],
+  pega:"Lençol, faca de cozinha, comida fresca, garrafa, lanterna e pilhas.",perigo:"Nenhum dentro de casa. Personagem novo no mesmo mundo pode nascer com zumbi."},
+ {d:"Dia 1 · tarde",t:"Casas da mesma rua",s:[["Vizinho 1",10775,9736],["Vizinho 2",10787,9807],["Vizinho 3",10785,9834]],
+  faz:["Antes de entrar, bata na porta ou aperte Q e dê um passo para trás.","Um zumbi por vez: empurre (espaço) e pise na cabeça.","Fora dos condomínios fechados, as casas de Muldraugh são pequenas e têm pouco loot (wiki). Não perca tempo."],
+  pega:"Martelo, chave de fenda, pregos, mochila, remédios do banheiro.",perigo:"Muldraugh tem muito zumbi e o maior perigo é o cansaço (wiki). Descanse entre uma briga e outra."},
+ {d:"Dia 2",t:"Mercado e posto do centro",s:[["Food Market",10854,9744],["Fossoil",10632,9760]],
+  faz:["Comida fresca primeiro: lata dura, fresca estraga.","Lembre do Fossoil: você volta com galão antes de a energia cair.","Saia antes de escurecer: a noite da B42 é muito escura."],
+  pega:"Comida, garrafas, galão vazio.",perigo:"O posto fica na Dixie Highway, a avenida do comércio, que tem bastante zumbi (wiki)."},
+ {d:"Dia 3",t:"Escola e Acorn Plaza",s:[["Escola Primária",10615,9968],["Acorn Plaza",10635,9906]],
+  faz:["Escola: revistas que ensinam receitas e livros de perícia.","A Acorn Plaza junta loja de bebidas, Conven-U-Mart, brechó, café e um centro de educação de adultos (wiki)."],
+  pega:"Revistas, livros, comida, roupa.",perigo:"Prédio grande e escuro: lanterna e porta fechada atrás de você."},
+ {d:"Dias 4 e 5",t:"Cortman Medical",s:[["Cortman Medical",10874,10032],["Conveniência",10844,10025]],
+  faz:["A wiki põe a Cortman Medical entre os melhores lugares para saquear em Muldraugh.","Míope? O mapa 42.20 mostra uma ótica no mesmo prédio."],
+  pega:"Remédios, bandagens, antibiótico, comida da conveniência.",perigo:"Ponto de loot bom junta zumbi em volta (wiki). Atraia alguns para longe antes de entrar."},
+ {d:"Semana 2",t:"Comércio do sul: mercado, ferragens, livros e VHS",s:[["Greene's (mercado)",10608,10255],["Loja de Ferragens",10609,10318],["Livraria",10610,10370],["Hit Vids! (VHS)",10608,10451]],
+  faz:["Ferragens: serrote, martelo e pregos para a base.","Livros de perícia volume 1 multiplicam XP nos níveis 1 e 2.","Fitas VHS dão XP: arraste para a TV. TV antiga não toca VHS, guarde a fita."],
+  pega:"Serrote, martelo, pregos, livros, fitas VHS, comida.",perigo:"Muita loja de Muldraugh já estava fechada ou vazia antes do surto (wiki). Não conte com estoque cheio."},
+ {d:"Semanas 2 e 3",t:"Delegacia e depósitos",s:[["Delegacia",10638,10407],["Stor-A-Max (depósitos)",10755,10348]],
+  faz:["Delegacia: mate zumbis lá dentro e procure a chave no corpo deles. Sem chave, bata até a porta quebrar.","Depósitos de aluguel estão entre os melhores lugares da cidade para loot (wiki).","Atraia os zumbis aos poucos para longe em vez de entrar atirando (wiki)."],
+  pega:"Armas, munição, colete, ferramentas.",perigo:"A wiki avisa que a delegacia fica lotada de zumbi. Vá em grupo."},
+ {d:"Semanas 3 e 4",t:"Norte: armazéns, depósito e oficina",s:[["Bert's Garage",10605,9407],["Secure Storage",10618,9373],["Mass-Genfac Co. (armazém)",10616,9312]],
+  faz:["Os armazéns e depósitos do norte são ótima fonte de arma (wiki).","Vá de carro: a cidade é espalhada e cansativa a pé (wiki).","Encha galões no posto ANTES de a energia cair."],
+  pega:"Armas, ferramentas, peças de carro, galões.",perigo:"Longe da casa inicial. Planeje a volta antes de escurecer."},
+ {d:"Mês 2 em diante",t:"Base no condomínio e saída da cidade",s:[["Condomínio fechado (norte)",10692,9567],["Condomínio fechado (sul)",10676,10228]],
+  faz:["Os condomínios fechados têm casas maiores e mais loot que o resto da cidade (wiki).","Barricadas nas janelas, coletor de chuva (Carpintaria 5) e horta.","Muldraugh não tem corpo de bombeiros: machado vem de casa, garagem ou depósito.","Pela Dixie Highway (31W) para o sul você chega à KY-60, que leva a Rosewood."],
+  pega:"Tábuas, pregos, lona ou sacos de lixo, sementes.",perigo:"Cidade com muito zumbi: planeje rota de fuga e use carro."}
+];
+// Cidades da rota. V = enquadramento "cidade toda" (coordenadas do recorte)
+const CIDADES={
+ rosewood:{n:"Rosewood",M:RW,POI,ROTA,V:[0,0,960,1180],hint:"Cidade que Knine e OVERCHARGED EGG indicam para começar",
+  fonte:'Lugares e ruas: pzmap.org (42.20). Dicas: <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">GabrielKnine</a>, OVERCHARGED EGG e Anzony Kaiser.',
+  lab:[["North Main St",518,300,90],["South Main St",440,650,0],["Rosewood Road",688,760,90],["Angel Road",560,1197,0],["Schoolhouse St",780,553,0],["Quiet St",560,352,0]],out:[["↑ para Muldraugh",515,60]]},
+ riverside:{n:"Riverside",M:RV,POI:RV_POI,ROTA:RV_ROTA,V:[40,60,1220,820],hint:"Subúrbio calmo, centro cheio e rio para pescar",
+  fonte:'Ruas e prédios: pzmap.org (42.20). Lugares e dicas da cidade: <a href="https://pzwiki.net/wiki/Riverside" target="_blank" rel="noopener">PZwiki</a>; dicas gerais do <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">GabrielKnine</a>.',
+  lab:[["E Main St",900,226,0],["W Main St",420,226,0],["Lincoln St",250,343,0],["Olin Road",760,574,0],["Rock Ridge Road",1380,412,0],["Alan Road",893,540,90]],out:[["Rio Ohio ↑",600,96],["← Brandenburg",60,430],["West Point →",1110,640]]},
+ muldraugh:{n:"Muldraugh",M:MD,POI:MD_POI,ROTA:MD_ROTA,V:[-30,-20,640,1420],hint:"Mais zumbi, loot espalhado: cidade para ir de carro",
+  fonte:'Ruas e prédios: pzmap.org (42.20). Lugares e dicas da cidade: <a href="https://pzwiki.net/wiki/Muldraugh" target="_blank" rel="noopener">PZwiki</a> (página feita na 42.0, conferida com o mapa 42.20); dicas gerais do <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener">GabrielKnine</a>.',
+  lab:[["Dixie Highway (31W)",80,760,90],["S Main St",331,610,90],["Wilson St",112,1060,90],["Harris St",280,253,0],["Irma Dr",437,420,90],["Magazine Road",743,300,90]],out:[["↑ 31W para o norte",104,10],["↓ 31W até a KY-60 (Rosewood)",104,1380]]}
+};
 
 // ---------- CÁLCULO ----------
 function compute(profId,sel){
@@ -1706,59 +1803,68 @@ $("comboList").addEventListener("click",e=>{
 const NS="http://www.w3.org/2000/svg";
 const PCOL={fogo:"#e4572e",pol:"#3a6fd8",vhs:"#b05cd6",arma:"#8e1b12",med:"#2fa37a",livro:"#e0a23a",comida:"#7cb342",ferr:"#8d99ae",gas:"#f2c230",carro:"#5d7c91",casa:"#c9b28f",perigo:"#ff3b30",roupa:"#d6729a"};
 const PLEG={fogo:"Bombeiros",pol:"Polícia",med:"Saúde e ótica",livro:"Livros e escola",comida:"Comida",ferr:"Ferramentas",gas:"Posto",carro:"Carro",vhs:"VHS",arma:"Armas",roupa:"Roupas",casa:"Moradia",perigo:"Perigo"};
-let rotaI=0,mapReady=false,vb=[0,0,960,1180],vbAnim=null,playT=null;
-const rx=x=>x-RW.B[0], ry=y=>y-RW.B[1];
+let rotaI=0,mapReady=false,vb=[0,0,960,1180],vbAnim=null,playT=null,cid="rosewood",C=CIDADES.rosewood;
+const rx=x=>x-C.M.B[0], ry=y=>y-C.M.B[1];
 const realUrl=(x,y,z=200)=>`https://projectzomboidmap.com/pt/#${x}x${y}x${z}`;
 function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
 function drawMap(){
-  const svg=$("rwMap");svg.innerHTML="";
-  el("rect",{x:-400,y:-700,width:3800,height:2700,fill:"#4a6a40"},svg);
+  const svg=$("rwMap"),V=C.V,M=C.M;svg.innerHTML="";vb=V.slice();svg.setAttribute("viewBox",V.join(" "));
+  el("rect",{x:V[0]-2500,y:V[1]-2500,width:V[2]+5000,height:V[3]+5000,fill:"#4a6a40"},svg);
   const roads=el("g",{fill:"none","stroke-linecap":"round","stroke-linejoin":"round"},svg);
-  RW.st.forEach(([n,p])=>{const pts=[];for(let i=0;i<p.length;i+=2)pts.push(p[i]+","+p[i+1]);el("polyline",{points:pts.join(" "),stroke:"#2f3a2d","stroke-width":14},roads)});
-  RW.st.forEach(([n,p])=>{const pts=[];for(let i=0;i<p.length;i+=2)pts.push(p[i]+","+p[i+1]);el("polyline",{points:pts.join(" "),stroke:"#8d918a","stroke-width":10},roads)});
+  M.st.forEach(([n,p])=>{const pts=[];for(let i=0;i<p.length;i+=2)pts.push(p[i]+","+p[i+1]);el("polyline",{points:pts.join(" "),stroke:"#2f3a2d","stroke-width":14},roads)});
+  M.st.forEach(([n,p])=>{const pts=[];for(let i=0;i<p.length;i+=2)pts.push(p[i]+","+p[i+1]);el("polyline",{points:pts.join(" "),stroke:"#8d918a","stroke-width":10},roads)});
   const bl=el("g",{fill:"#c8bba0",stroke:"#6b6252","stroke-width":1},svg);
-  for(let i=0;i<RW.bl.length;i+=4)el("rect",{x:RW.bl[i],y:RW.bl[i+1],width:RW.bl[i+2],height:RW.bl[i+3]},bl);
+  for(let i=0;i<M.bl.length;i+=4)el("rect",{x:M.bl[i],y:M.bl[i+1],width:M.bl[i+2],height:M.bl[i+3]},bl);
   const lab=el("g",{"font-size":15,"font-family":"Barlow,sans-serif","font-weight":700,fill:"#f2efe6",stroke:"#2f3a2d","stroke-width":3,"paint-order":"stroke"},svg);
-  [["North Main St",518,300,90],["South Main St",440,650,0],["Rosewood Road",688,760,90],["Angel Road",560,1197,0],["Schoolhouse St",780,553,0],["Quiet St",560,352,0]].forEach(([t,x,y,r])=>{const e=el("text",{x,y,transform:`rotate(${r} ${x} ${y})`},lab);e.textContent=t});
+  C.lab.forEach(([t,x,y,r])=>{const e=el("text",{x,y,transform:`rotate(${r} ${x} ${y})`},lab);e.textContent=t});
   const pg=el("g",{},svg);
-  POI.forEach(([n,x,y,k])=>{const c=el("circle",{cx:rx(x),cy:ry(y),r:7,fill:PCOL[k]||"#999",stroke:"#1d2720","stroke-width":2,class:"poi"},pg);const t=el("title",{},c);t.textContent=n});
-  const nx=el("g",{transform:"translate(905,60)"},svg);el("circle",{r:22,fill:"rgba(29,39,32,.8)"},nx);el("path",{d:"M0,-15 L7,6 L0,1 L-7,6 Z",fill:"#e09a3a"},nx);const nt=el("text",{y:17,"text-anchor":"middle","font-size":11,"font-weight":700,fill:"#f2efe6"},nx);nt.textContent="N";
-  const mu=el("text",{x:515,y:60,"font-size":17,"font-weight":800,fill:"#f2efe6",stroke:"#2f3a2d","stroke-width":3,"paint-order":"stroke"},svg);mu.textContent="↑ para Muldraugh";
+  C.POI.forEach(([n,x,y,k])=>{const c=el("circle",{cx:rx(x),cy:ry(y),r:7,fill:PCOL[k]||"#999",stroke:"#1d2720","stroke-width":2,class:"poi"},pg);const t=el("title",{},c);t.textContent=n});
+  const nx=el("g",{transform:`translate(${V[0]+V[2]-55},${V[1]+60})`},svg);el("circle",{r:22,fill:"rgba(29,39,32,.8)"},nx);el("path",{d:"M0,-15 L7,6 L0,1 L-7,6 Z",fill:"#e09a3a"},nx);const nt=el("text",{y:17,"text-anchor":"middle","font-size":11,"font-weight":700,fill:"#f2efe6"},nx);nt.textContent="N";
+  C.out.forEach(([t,x,y])=>{const e=el("text",{x,y,"font-size":17,"font-weight":800,fill:"#f2efe6",stroke:"#2f3a2d","stroke-width":3,"paint-order":"stroke"},svg);e.textContent=t});
   el("g",{id:"rwRoute"},svg);el("g",{id:"rwStops"},svg);
-  $("mapLeg").innerHTML=Object.entries(PLEG).map(([k,t])=>`<span><i style="background:${PCOL[k]}"></i>${t}</span>`).join("")+'<span style="margin-left:auto">Fonte: pzmap.org (42.20)</span>';
-  $("rotaSteps").innerHTML=ROTA.map((r,i)=>`<button class="step" role="tab" type="button" data-step="${i}" aria-selected="false"><b>${i+1}</b>${esc(r.d)}</button>`).join("");
-  mapReady=true;
+  $("mapLeg").innerHTML=Object.entries(PLEG).map(([k,t])=>`<span><i style="background:${PCOL[k]}"></i>${t}</span>`).join("")+'<span style="margin-left:auto">Mapa: pzmap.org (42.20)</span>';
+  $("rotaSteps").innerHTML=C.ROTA.map((r,i)=>`<button class="step" role="tab" type="button" data-step="${i}" aria-selected="false"><b>${i+1}</b>${esc(r.d)}</button>`).join("");
+  $("hRota").textContent=`Rota de ${C.n}, dia a dia`;$("rotaHint").textContent=C.hint;$("rotaFonte").innerHTML=C.fonte;
+  document.querySelectorAll("#cidades .cid").forEach(b=>b.setAttribute("aria-pressed",b.dataset.cid===cid));
+  RG=null;mapReady=true;
 }
+function setCity(k){if(!CIDADES[k])return;stopPlay();cid=k;C=CIDADES[k];try{localStorage.setItem("pzCidade",k)}catch(e){}drawMap();setStep(0,false)}
 // grafo das ruas para a rota seguir a rua (menor caminho)
 let RG=null;
 function roadGraph(){
-  const N=[],E=[],near=(x,y)=>{for(let i=0;i<N.length;i++)if(Math.hypot(N[i][0]-x,N[i][1]-y)<6)return i;N.push([x,y]);E.push([]);return N.length-1};
-  const lines=RW.st.map(([,p])=>{const a=[];for(let i=0;i<p.length;i+=2)a.push([p[i],p[i+1]]);return a});
+  // tolerância 8: ruas que terminam na beira de uma avenida larga (ex.: Dixie Highway) também se ligam
+  const T=8,N=[],E=[],near=(x,y)=>{for(let i=0;i<N.length;i++)if(Math.hypot(N[i][0]-x,N[i][1]-y)<T)return i;N.push([x,y]);E.push([]);return N.length-1};
+  const lines=C.M.st.map(([,p])=>{const a=[];for(let i=0;i<p.length;i+=2)a.push([p[i],p[i+1]]);return a});
   const verts=lines.flat();
   const segs=[];
   lines.forEach(L=>{for(let i=0;i<L.length-1;i++){const [ax,ay]=L[i],[bx,by]=L[i+1],dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy||1;
-    const cut=[[0,ax,ay],[1,bx,by]];verts.forEach(([vx,vy])=>{const t=((vx-ax)*dx+(vy-ay)*dy)/l2;if(t>.001&&t<.999){const px=ax+t*dx,py=ay+t*dy;if(Math.hypot(px-vx,py-vy)<6)cut.push([t,px,py])}});
+    const cut=[[0,ax,ay],[1,bx,by]];verts.forEach(([vx,vy])=>{const t=((vx-ax)*dx+(vy-ay)*dy)/l2;if(t>.001&&t<.999){const px=ax+t*dx,py=ay+t*dy;if(Math.hypot(px-vx,py-vy)<T)cut.push([t,px,py])}});
     cut.sort((p,q)=>p[0]-q[0]);for(let k=0;k<cut.length-1;k++){const u=near(cut[k][1],cut[k][2]),v=near(cut[k+1][1],cut[k+1][2]);if(u!==v){const d=Math.hypot(N[u][0]-N[v][0],N[u][1]-N[v][1]);E[u].push([v,d]);E[v].push([u,d]);segs.push([u,v])}}}});
   return {N,E,segs};
 }
-function snap(x,y){let best=null;RG.segs.forEach(([u,v])=>{const [ax,ay]=RG.N[u],[bx,by]=RG.N[v],dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy||1;let t=((x-ax)*dx+(y-ay)*dy)/l2;t=Math.max(0,Math.min(1,t));const px=ax+t*dx,py=ay+t*dy,d=Math.hypot(px-x,py-y);if(!best||d<best.d)best={d,px,py,u,v}});return best}
-function roadPath(a,b){
-  if(!RG)RG=roadGraph();const A=snap(a[0],a[1]),B=snap(b[0],b[1]);if(!A||!B)return [a,b];
-  if(A.u===B.u&&A.v===B.v||A.u===B.v&&A.v===B.u)return [a,[A.px,A.py],[B.px,B.py],b];
+// cada parada testa as ruas mais próximas (até 12 tiles a mais que a mais perto) e fica com o caminho mais curto
+function snaps(x,y){const c=[];RG.segs.forEach(([u,v])=>{const [ax,ay]=RG.N[u],[bx,by]=RG.N[v],dx=bx-ax,dy=by-ay,l2=dx*dx+dy*dy||1;let t=((x-ax)*dx+(y-ay)*dy)/l2;t=Math.max(0,Math.min(1,t));const px=ax+t*dx,py=ay+t*dy;c.push({d:Math.hypot(px-x,py-y),px,py,u,v})});
+  c.sort((p,q)=>p.d-q.d);return c.filter(s=>s.d<=c[0].d+12).slice(0,4)}
+function dijkstra(A){
   const n=RG.N.length,dist=new Array(n).fill(1/0),prev=new Array(n).fill(-1),done=new Array(n).fill(false);
-  const seed=(i,d)=>{if(d<dist[i]){dist[i]=d;prev[i]=-2}};
-  seed(A.u,Math.hypot(RG.N[A.u][0]-A.px,RG.N[A.u][1]-A.py));seed(A.v,Math.hypot(RG.N[A.v][0]-A.px,RG.N[A.v][1]-A.py));
-  for(;;){let u=-1;for(let i=0;i<n;i++)if(!done[i]&&dist[i]<1/0&&(u<0||dist[i]<dist[u]))u=i;if(u<0)break;done[u]=true;if(u===B.u&&done[B.v]||u===B.v&&done[B.u])break;
+  [A.u,A.v].forEach(i=>{const d=Math.hypot(RG.N[i][0]-A.px,RG.N[i][1]-A.py);if(d<dist[i]){dist[i]=d;prev[i]=-2}});
+  for(;;){let u=-1;for(let i=0;i<n;i++)if(!done[i]&&dist[i]<1/0&&(u<0||dist[i]<dist[u]))u=i;if(u<0)break;done[u]=true;
     for(const [v,d] of RG.E[u])if(dist[u]+d<dist[v]){dist[v]=dist[u]+d;prev[v]=u}}
-  const endA=dist[B.u]+Math.hypot(RG.N[B.u][0]-B.px,RG.N[B.u][1]-B.py),endB=dist[B.v]+Math.hypot(RG.N[B.v][0]-B.px,RG.N[B.v][1]-B.py);
-  let k=endA<=endB?B.u:B.v;if(!(Math.min(endA,endB)<1/0))return [a,b];
-  const chain=[];while(k>=0){chain.unshift(RG.N[k]);k=prev[k]}
-  return [a,[A.px,A.py],...chain,[B.px,B.py],b];
+  return {dist,prev};
+}
+function roadPath(a,b){
+  if(!RG)RG=roadGraph();const As=snaps(a[0],a[1]),Bs=snaps(b[0],b[1]);if(!As.length||!Bs.length)return [a,b];
+  let best=null;
+  As.forEach(A=>{const D=dijkstra(A);Bs.forEach(B=>{
+    if(A.u===B.u&&A.v===B.v||A.u===B.v&&A.v===B.u){const c=A.d+Math.hypot(A.px-B.px,A.py-B.py)+B.d;if(!best||c<best.c)best={c,A,B,chain:[]};return}
+    [B.u,B.v].forEach(k=>{const c=A.d+D.dist[k]+Math.hypot(RG.N[k][0]-B.px,RG.N[k][1]-B.py)+B.d;if(c<1/0&&(!best||c<best.c)){const chain=[];let q=k;while(q>=0){chain.unshift(RG.N[q]);q=D.prev[q]}best={c,A,B,chain}}})})});
+  if(!best)return [a,b];
+  return [a,[best.A.px,best.A.py],...best.chain,[best.B.px,best.B.py],b];
 }
 function setVB(t,anim){if(vbAnim)cancelAnimationFrame(vbAnim);const from=vb.slice(),t0=performance.now(),dur=anim===false||matchMedia("(prefers-reduced-motion: reduce)").matches?0:500;
   (function f(now){const k=dur?Math.min(1,(now-t0)/dur):1,e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;vb=from.map((v,i)=>v+(t[i]-v)*e);$("rwMap").setAttribute("viewBox",vb.join(" "));if(k<1)vbAnim=requestAnimationFrame(f)})(t0)}
-function setStep(i){
-  rotaI=Math.max(0,Math.min(ROTA.length-1,i));const r=ROTA[rotaI];
+function setStep(i,anim){
+  const ROTA=C.ROTA;rotaI=Math.max(0,Math.min(ROTA.length-1,i));const r=ROTA[rotaI];
   document.querySelectorAll("#rotaSteps .step").forEach((b,k)=>b.setAttribute("aria-selected",k===rotaI));
   const sel=document.querySelector(`#rotaSteps [data-step="${rotaI}"]`);if(sel){const p=sel.parentElement;p.scrollLeft=sel.offsetLeft-p.offsetLeft-(p.clientWidth-sel.offsetWidth)/2}
   const prev=rotaI>0?ROTA[rotaI-1].s[ROTA[rotaI-1].s.length-1]:null;
@@ -1770,8 +1876,8 @@ function setStep(i){
   if(prev){el("circle",{cx:pts[0][0],cy:pts[0][1],r:9,fill:"#1d2720",stroke:"#ffb347","stroke-width":3},stops)}
   r.s.forEach((p,k)=>{const g=el("g",{transform:`translate(${rx(p[1])},${ry(p[2])})`},stops);el("circle",{r:15,fill:"#e09a3a",stroke:"#1d2720","stroke-width":3},g);const t=el("text",{"text-anchor":"middle",y:5,"font-size":15,"font-weight":800,fill:"#1d2720"},g);t.textContent=k+1;const tt=el("title",{},g);tt.textContent=p[0]});
   const xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]);let x0=Math.min(...xs),x1=Math.max(...xs),y0=Math.min(...ys),y1=Math.max(...ys);
-  const pad=120,w=Math.max(x1-x0+pad*2,520),h=Math.max(y1-y0+pad*2,640);const cx=(x0+x1)/2,cy=(y0+y1)/2;const asp=960/1180;let W=w,H=h;if(W/H>asp)H=W/asp;else W=H*asp;
-  setVB([cx-W/2,cy-H/2,W,H]);
+  const V=C.V,pad=120,w=Math.max(x1-x0+pad*2,V[2]*.54),h=Math.max(y1-y0+pad*2,V[3]*.54);const cx=(x0+x1)/2,cy=(y0+y1)/2;const asp=V[2]/V[3];let W=w,H=h;if(W/H>asp)H=W/asp;else W=H*asp;
+  setVB([cx-W/2,cy-H/2,W,H],anim);
   $("rotaInfo").innerHTML=`<div class="when">Passo ${rotaI+1} de ${ROTA.length} · ${esc(r.d)}</div><h3>${esc(r.t)}</h3>
     <div class="stops">${r.s.map((p,k)=>`<div class="stop"><span class="n">${k+1}</span><span>${esc(p[0])}</span><a href="${realUrl(p[1],p[2])}" target="_blank" rel="noopener">mapa real ↗</a></div>`).join("")}</div>
     <div><div class="sublbl">O que fazer</div><ul>${r.faz.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
@@ -1782,10 +1888,11 @@ function setStep(i){
 }
 $("rotaSteps").addEventListener("click",e=>{const b=e.target.closest("[data-step]");if(b){stopPlay();setStep(+b.dataset.step)}});
 $("rotaInfo").addEventListener("click",e=>{const b=e.target.closest("[data-rn]");if(b){stopPlay();setStep(rotaI+ +b.dataset.rn)}});
-$("mapAll").addEventListener("click",()=>{stopPlay();setVB([0,0,960,1180])});
+$("mapAll").addEventListener("click",()=>{stopPlay();setVB(C.V)});
+$("cidades").addEventListener("click",e=>{const b=e.target.closest("[data-cid]");if(b&&b.dataset.cid!==cid)setCity(b.dataset.cid)});
 function stopPlay(){if(playT){clearInterval(playT);playT=null;$("mapPlay").textContent="▶ Animar rota"}}
-$("mapPlay").addEventListener("click",()=>{if(playT){stopPlay();return}$("mapPlay").textContent="⏸ Parar";setStep(0);playT=setInterval(()=>{if(rotaI>=ROTA.length-1){stopPlay();return}setStep(rotaI+1)},3200)});
-document.querySelector(".realmap").addEventListener("toggle",e=>{const rm=$("realMap");if(e.target.open&&!rm.firstChild){const p=ROTA[rotaI].s[0];const f=document.createElement("iframe");f.title="Mapa real de Project Zomboid";f.loading="lazy";f.referrerPolicy="no-referrer";f.src=`https://projectzomboidmap.com/pt/?passo=${rotaI}#${p[1]}x${p[2]}x150`;rm.appendChild(f)}});
+$("mapPlay").addEventListener("click",()=>{if(playT){stopPlay();return}$("mapPlay").textContent="⏸ Parar";setStep(0);playT=setInterval(()=>{if(rotaI>=C.ROTA.length-1){stopPlay();return}setStep(rotaI+1)},3200)});
+document.querySelector(".realmap").addEventListener("toggle",e=>{const rm=$("realMap");if(e.target.open&&!rm.firstChild){const p=C.ROTA[rotaI].s[0];const f=document.createElement("iframe");f.title="Mapa real de Project Zomboid";f.loading="lazy";f.referrerPolicy="no-referrer";f.src=`https://projectzomboidmap.com/pt/?passo=${rotaI}#${p[1]}x${p[2]}x150`;rm.appendChild(f)}});
 
 // ---------- FABRICAR ----------
 let fabCat="Todas",fabDif=0;
@@ -1834,7 +1941,7 @@ function go(t){
   TABS.forEach(x=>{$("panel-"+x).hidden=x!==t;$("tab-"+x).setAttribute("aria-selected",x===t)});
   document.querySelector(".intro").hidden=t!=="montador";
   if(t==="esquadrao")renderTeam();
-  if(t==="guia"&&!mapReady){drawMap();setStep(0)}
+  if(t==="guia"&&!mapReady){let k=null;try{k=localStorage.getItem("pzCidade")}catch(e){}if(k&&CIDADES[k]){cid=k;C=CIDADES[k]}drawMap();setStep(0,false)}
   const tb=$("tab-"+t), nav=tb.parentElement; if(nav.scrollWidth>nav.clientWidth)nav.scrollLeft=tb.offsetLeft-nav.offsetLeft-(nav.clientWidth-tb.offsetWidth)/2;
   try{history.replaceState(null,"","#"+t)}catch(e){}
   window.scrollTo({top:0});
