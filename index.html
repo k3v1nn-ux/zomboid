@@ -291,6 +291,38 @@ img.pt.lg{width:96px;height:120px}
 .combo.flash{animation:flash 1.4s ease 2}
 @keyframes flash{50%{box-shadow:0 0 0 3px var(--accent)}}
 /* Mapa */
+/* Mundo */
+.mnome{display:grid;gap:4px;max-width:420px;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.mnome input{font:inherit;font-size:15px;font-weight:600;letter-spacing:0;text-transform:none;color:var(--ink);padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+.mpre{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+.mpre button{display:grid;gap:3px;align-content:start;text-align:left;border:1px solid var(--line);background:var(--surface);color:inherit;font:inherit;border-radius:10px;padding:10px 12px;cursor:pointer}
+.mpre button:hover{border-color:var(--accent)}
+.mpre button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.mpre b{font-family:var(--f-display);font-size:17px;letter-spacing:.02em}
+.mpre small{font-size:12px;line-height:1.35;color:var(--muted)}
+.mundo{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px;align-items:start}
+.mgrs{display:grid;gap:8px}
+.mgr{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.mgr summary{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 12px;cursor:pointer;font-family:var(--f-display);font-size:16px;letter-spacing:.02em}
+.mgr summary .hint{font-family:var(--f-body);letter-spacing:0}
+.mrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,200px);gap:2px 12px;align-items:center;padding:8px 12px;border-top:1px solid var(--line)}
+.mrow label{font-size:13.5px;font-weight:600}
+.mrow .tip2{display:block;font-size:11.5px;font-weight:400;color:var(--muted);margin-top:1px}
+.mrow select,.mrow input[type="number"]{width:100%;min-width:0;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);font:inherit;font-size:13px}
+.mrow input[type="checkbox"]{width:20px;height:20px;accent-color:var(--accent);justify-self:start}
+.mrow.mud{background:color-mix(in srgb,var(--accent) 9%,transparent)}
+.mtag{font-style:normal;margin-left:6px;font-family:var(--f-mono);font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+.mres{position:sticky;top:120px;display:grid;gap:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:14px}
+.mres h3{font-size:19px}
+.mres-n{font-size:13px;color:var(--muted)}
+.mres-l{margin:0;padding-left:18px;display:grid;gap:3px;font-size:13px;max-height:40vh;overflow:auto}
+.mres-l b{font-weight:600}
+.mres-acts{display:flex;flex-wrap:wrap;gap:6px}
+.mcomo summary{cursor:pointer;font-weight:700;font-size:13px;color:var(--accent)}
+.mcomo ol{margin:6px 0 0;padding-left:18px;display:grid;gap:4px;font-size:13px}
+.mono{overflow-wrap:anywhere}
+.mundo-msg{border:1px solid var(--accent);background:var(--accent-soft);border-radius:8px;padding:8px 12px;font-size:13.5px}
+@media (max-width:760px){.mundo{grid-template-columns:minmax(0,1fr)}.mres{position:static}.mrow{grid-template-columns:minmax(0,1fr)}}
 .cidades{display:flex;flex-wrap:wrap;gap:2px;width:max-content;max-width:100%;padding:3px;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
 .cid{border:0;background:none;color:inherit;border-radius:999px;padding:6px 14px;font-size:13px;font-weight:700;cursor:pointer}
 .cid[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
@@ -394,6 +426,7 @@ img.pt.lg{width:96px;height:120px}
       <button class="tab" role="tab" id="tab-esquadrao" data-tab="esquadrao" type="button">Esquadrão</button>
       <button class="tab" role="tab" id="tab-guia" data-tab="guia" type="button">Sobrevivência</button>
       <button class="tab" role="tab" id="tab-fab" data-tab="fab" type="button">Fabricar</button>
+      <button class="tab" role="tab" id="tab-mundo" data-tab="mundo" type="button">Mundo</button>
     </nav>
   </div>
 </header>
@@ -418,6 +451,7 @@ img.pt.lg{width:96px;height:120px}
       <button class="qcard" type="button" data-go="esquadrao"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M6.5 19a5.5 5.5 0 0 1 11 0M1.5 18a3.6 3.6 0 0 1 5-3.2M22.5 18a3.6 3.6 0 0 0-5-3.2"/></svg><b>Esquadrão</b><small>Monte o time do grupo e mande o link</small></button>
       <button class="qcard" type="button" data-go="guia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg><b>Sobrevivência</b><small>Rotas de Rosewood, Riverside e Muldraugh</small></button>
       <button class="qcard" type="button" data-go="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4.5l5 5-2.5 2.5-5-5z"/><path d="M12 7l-8.5 8.5a1.8 1.8 0 0 0 2.5 2.5L14.5 9.5"/></svg><b>Fabricar</b><small>O que fazer primeiro e como</small></button>
+      <button class="qcard" type="button" data-go="mundo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><b>Mundo</b><small>Regras do servidor para mandar ao grupo</small></button>
     </nav>
     <div class="intro-foot">
       <div class="legend" aria-label="Legenda das etiquetas">
@@ -614,6 +648,41 @@ img.pt.lg{width:96px;height:120px}
         <div class="frow" role="group" aria-label="Categoria" id="fabCats"></div>
         <div class="frow" role="group" aria-label="Dificuldade" id="fabDifs"></div>
         <div class="fab-list" id="fabList"></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- MUNDO -->
+  <div id="panel-mundo" role="tabpanel" aria-labelledby="tab-mundo" hidden>
+    <div class="panel">
+      <section class="section" aria-labelledby="hMundo">
+        <div class="sec-head"><h2 id="hMundo">Mundo do grupo</h2><span class="hint">Regras do servidor, prontas para mandar aos amigos</span></div>
+        <p class="hint" style="margin:0;max-width:80ch">Escolha um preset, mude o que o grupo combinou e mande o link. Quem for hospedar baixa o arquivo do servidor ou segue o resumo. Presets, opções e nomes saíram dos arquivos do próprio jogo (Build 42.21). Aqui estão as opções mais usadas; o resto fica igual ao preset.</p>
+        <div class="mundo-msg" id="mundoMsg" hidden></div>
+        <label class="mnome"><span>Nome do mundo</span><input id="mNome" type="text" maxlength="40" autocomplete="off" placeholder="Mundo Evangeliteens"></label>
+        <div class="mpre" id="mPre" role="group" aria-label="Preset do jogo"></div>
+        <div class="mundo">
+          <div class="mgrs" id="mGrupos"></div>
+          <aside class="mres" aria-labelledby="hRes">
+            <h3 id="hRes">Resumo</h3>
+            <div class="mres-n" id="mResN"></div>
+            <ul class="mres-l" id="mResL"></ul>
+            <div class="mres-acts">
+              <button class="btn primary" type="button" id="mLink">Copiar link do mundo</button>
+              <button class="btn" type="button" id="mTxt">Copiar resumo em texto</button>
+              <button class="btn" type="button" id="mLua">Baixar arquivo do servidor</button>
+              <button class="btn sm" type="button" id="mReset">Voltar ao preset</button>
+            </div>
+            <span class="hint" id="mFlash" aria-live="polite"></span>
+            <details class="mcomo"><summary>Como usar no jogo</summary>
+              <ol>
+                <li><b>Hospedar pelo menu:</b> crie as configurações do servidor, escolha o mesmo preset e mude só o que está no resumo.</li>
+                <li><b>Servidor dedicado:</b> baixe o arquivo e coloque em <span class="mono">Zomboid/Server/</span> com o nome do servidor na frente, por exemplo <span class="mono">servertest_SandboxVars.lua</span>. Faça isso com o servidor desligado.</li>
+                <li>Quem só vai entrar no servidor não precisa fazer nada: as regras vêm do host.</li>
+              </ol>
+            </details>
+          </aside>
+        </div>
       </section>
     </div>
   </div>
@@ -1454,6 +1523,77 @@ const CIDADES={
   lab:[["Dixie Highway (31W)",80,760,90],["S Main St",331,610,90],["Wilson St",112,1060,90],["Harris St",280,253,0],["Irma Dr",437,420,90],["Magazine Road",743,300,90]],out:[["↑ 31W para o norte",104,10],["↓ 31W até a KY-60 (Rosewood)",104,1380]]}
 };
 
+// ---------- MUNDO (presets e nomes tirados dos arquivos do jogo 42.21: media/lua/shared/Sandbox e Translate/PTBR/Sandbox.json) ----------
+// A = preset Apocalipse completo, na ordem do arquivo; P = o que muda em cada outro preset; fl = opções decimais
+const SB={"A":[["Version",6],["Zombies",4],["Distribution",1],["ZombieVoronoiNoise",true],["ZombieRespawn",4],["ZombieMigrate",true],["DayLength",4],["StartYear",1],["StartMonth",7],["StartDay",9],["StartTime",2],["DayNightCycle",1],["ClimateCycle",1],["FogCycle",1],["WaterShut",2],["ElecShut",2],["AlarmDecay",2],["WaterShutModifier",14],["ElecShutModifier",14],["AlarmDecayModifier",14],["FoodLootNew",0.8],["LiteratureLootNew",0.6],["SkillBookLoot",0.6],["RecipeResourceLoot",0.6],["MedicalLootNew",0.6],["SurvivalGearsLootNew",0.6],["CannedFoodLootNew",0.6],["WeaponLootNew",0.6],["RangedWeaponLootNew",1.2],["AmmoLootNew",0.6],["MechanicsLootNew",0.6],["OtherLootNew",0.8],["ClothingLootNew",0.6],["ContainerLootNew",0.6],["KeyLootNew",0.4],["MediaLootNew",0.6],["MementoLootNew",0.6],["CookwareLootNew",0.6],["MaterialLootNew",0.6],["FarmingLootNew",0.6],["ToolLootNew",0.6],["RollsMultiplier",1.0],["RemoveStoryLoot",false],["RemoveZombieLoot",false],["ZombiePopLootEffect",0],["InsaneLootFactor",0.05],["ExtremeLootFactor",0.2],["RareLootFactor",0.6],["NormalLootFactor",1.0],["CommonLootFactor",2.0],["AbundantLootFactor",3.0],["Temperature",3],["Rain",3],["ErosionSpeed",4],["ErosionDays",0],["Farming",3],["CompostTime",2],["StatsDecrease",3],["NatureAbundance",3],["Alarm",4],["LockedHouses",6],["StarterKit",false],["Nutrition",true],["FoodRotSpeed",3],["FridgeFactor",3],["SeenHoursPreventLootRespawn",0],["HoursForLootRespawn",0],["MaxItemsForLootRespawn",5],["ConstructionPreventsLootRespawn",true],["WorldItemRemovalList","Base.Hat, Base.Glasses, Base.Maggots, Base.Slug, Base.Slug2, Base.Snail, Base.Worm, Base.Dung_Mouse, Base.Dung_Rat"],["HoursForWorldItemRemoval",24.0],["ItemRemovalListBlacklistToggle",false],["TimeSinceApo",1],["PlantResilience",3],["PlantAbundance",3],["EndRegen",3],["Helicopter",2],["MetaEvent",2],["SleepingEvent",1],["GeneratorFuelConsumption",0.1],["GeneratorSpawning",4],["AnnotatedMapChance",4],["CharacterFreePoints",0],["ConstructionBonusPoints",3],["NightDarkness",3],["NightLength",3],["BoneFracture",true],["InjurySeverity",2],["HoursForCorpseRemoval",216.0],["DecayingCorpseHealthImpact",3],["ZombieHealthImpact",false],["BloodLevel",3],["ClothingDegradation",3],["FireSpread",true],["DaysForRottenFoodRemoval",-1],["AllowExteriorGenerator",true],["MaxFogIntensity",1],["MaxRainFxIntensity",1],["EnableSnowOnGround",true],["AttackBlockMovements",true],["SurvivorHouseChance",3],["VehicleStoryChance",3],["ZoneStoryChance",3],["AllClothesUnlocked",false],["EnableTaintedWaterText",true],["EnableVehicles",true],["CarSpawnRate",3],["ZombieAttractionMultiplier",1.0],["VehicleEasyUse",false],["InitialGas",2],["FuelStationGasInfinite",false],["FuelStationGasMin",0.0],["FuelStationGasMax",0.8],["FuelStationGasEmptyChance",20],["LockedCar",4],["CarGasConsumption",1.0],["CarGeneralCondition",3],["CarDamageOnImpact",3],["DamageToPlayerFromHitByACar",1],["TrafficJam",true],["CarAlarm",3],["PlayerDamageFromCrash",true],["SirenShutoffHours",0.0],["ChanceHasGas",2],["RecentlySurvivorVehicles",2],["MultiHitZombies",false],["RearVulnerability",3],["SirenEffectsZombies",true],["AnimalStatsModifier",4],["AnimalMetaStatsModifier",4],["AnimalPregnancyTime",4],["AnimalAgeModifier",4],["AnimalMilkIncModifier",4],["AnimalWoolIncModifier",4],["AnimalRanchChance",5],["AnimalGrassRegrowTime",240],["AnimalMetaPredator",false],["AnimalMatingSeason",true],["AnimalEggHatch",4],["AnimalSoundAttractZombies",true],["AnimalTrackChance",4],["AnimalPathChance",4],["MaximumRatIndex",25],["DaysUntilMaximumRatIndex",90],["MetaKnowledge",3],["SeeNotLearntRecipe",true],["MaximumLootedBuildingRooms",50],["EnablePoisoning",1],["MaggotSpawn",1],["LightBulbLifespan",2.0],["FishAbundance",2],["LevelForMediaXPCutoff",3],["LevelForDismantleXPCutoff",0],["BloodSplatLifespanDays",0],["LiteratureCooldown",45],["NegativeTraitsPenalty",1],["MinutesPerPage",2.0],["KillInsideCrops",true],["PlantGrowingSeasons",true],["PlaceDirtAboveground",false],["FarmingSpeedNew",1.0],["FarmingAmountNew",1.0],["MaximumLooted",25],["DaysUntilMaximumLooted",90],["RuralLooted",0.5],["MaximumDiminishedLoot",20],["DaysUntilMaximumDiminishedLoot",3650],["MuscleStrainFactor",0.7],["DiscomfortFactor",0.8],["WoundInfectionFactor",1.0],["NoBlackClothes",true],["EasyClimbing",false],["MaximumFireFuelHours",8],["FirearmUseDamageChance",2],["FirearmNoiseMultiplier",1.0],["FirearmJamMultiplier",1.0],["FirearmMoodleMultiplier",1.0],["FirearmWeatherMultiplier",1.0],["FirearmHeadGearEffect",true],["ClayLakeChance",0.05],["ClayRiverChance",0.05],["GeneratorTileRange",20],["GeneratorVerticalPowerRange",3],["Basement",[["SpawnFrequency",4]]],["Map",[["AllowMiniMap",false],["AllowWorldMap",true],["MapAllKnown",false],["MapNeedsLight",true]]],["ZombieLore",[["Speed",4],["SprinterPercentage",0],["Strength",2],["Toughness",4],["Transmission",1],["Mortality",5],["Reanimate",3],["Cognition",3],["DoorOpeningPercentage",0],["CrawlUnderVehicle",5],["Memory",2],["Sight",5],["Hearing",5],["SpottedLogic",true],["ThumpNoChasing",false],["ThumpOnConstruction",true],["ActiveOnly",1],["TriggerHouseAlarm",true],["ZombiesDragDown",true],["ZombiesCrawlersDragDown",false],["ZombiesFenceLunge",true],["ZombiesArmorFactor",2.0],["ZombiesMaxDefense",85],["ChanceOfAttachedWeapon",6],["ZombiesFallDamage",1.0],["DisableFakeDead",1],["PlayerSpawnZombieRemoval",1],["FenceThumpersRequired",25],["FenceDamageMultiplier",1.0]]],["ZombieConfig",[["PopulationMultiplier",0.65],["PopulationStartMultiplier",1.0],["PopulationPeakMultiplier",1.5],["PopulationPeakDay",28],["RespawnHours",0.0],["RespawnUnseenHours",0.0],["RespawnMultiplier",0.0],["RedistributeHours",12.0],["FollowSoundDistance",100],["RallyGroupSize",20],["RallyGroupSizeVariance",50],["RallyTravelDistance",20],["RallyGroupSeparation",15],["RallyGroupRadius",3],["ZombiesCountBeforeDelete",300]]],["MultiplierConfig",[["Global",1.0],["GlobalToggle",true],["Fitness",1.0],["Strength",1.0],["Sprinting",1.0],["Lightfoot",1.0],["Nimble",1.0],["Sneak",1.0],["Axe",1.0],["Blunt",1.0],["SmallBlunt",1.0],["LongBlade",1.0],["SmallBlade",1.0],["Spear",1.0],["Maintenance",1.0],["Woodwork",1.0],["Cooking",1.0],["Farming",1.0],["Doctor",1.0],["Electricity",1.0],["MetalWelding",1.0],["Mechanics",1.0],["Tailoring",1.0],["Aiming",1.0],["Reloading",1.0],["Fishing",1.0],["Trapping",1.0],["PlantScavenging",1.0],["FlintKnapping",1.0],["Masonry",1.0],["Pottery",1.0],["Carving",1.0],["Husbandry",1.0],["Tracking",1.0],["Blacksmith",1.0],["Butchering",1.0],["Glassmaking",1.0]]]],"P":{"Outbreak":{"WaterShut":3,"ElecShut":3,"LiteratureLootNew":0.8,"SkillBookLoot":1.0,"WeaponLootNew":0.8,"KeyLootNew":0.6,"MediaLootNew":1.2,"CookwareLootNew":2.0,"ToolLootNew":1.0,"CompostTime":1,"FridgeFactor":4,"PlantResilience":2,"EndRegen":2,"GeneratorSpawning":5,"AnnotatedMapChance":5,"ConstructionBonusPoints":4,"InjurySeverity":1,"SurvivorHouseChance":4,"CarSpawnRate":4,"InitialGas":3,"FuelStationGasMin":0.5,"FuelStationGasMax":0.9,"LockedCar":3,"RecentlySurvivorVehicles":3,"MultiHitZombies":true,"AnimalPregnancyTime":3,"AnimalAgeModifier":3,"AnimalMilkIncModifier":3,"AnimalWoolIncModifier":3,"AnimalRanchChance":6,"AnimalMatingSeason":false,"AnimalEggHatch":3,"AnimalTrackChance":5,"FishAbundance":3,"LiteratureCooldown":30,"PlantGrowingSeasons":false,"FarmingSpeedNew":1.5,"FarmingAmountNew":1.5,"MuscleStrainFactor":0.6,"DiscomfortFactor":0.7,"MaximumFireFuelHours":12,"Map.AllowMiniMap":true,"ZombieConfig.PopulationPeakDay":20,"MultiplierConfig.GlobalToggle":false,"MultiplierConfig.Fitness":1.2,"MultiplierConfig.Strength":1.2,"MultiplierConfig.Sprinting":1.2,"MultiplierConfig.Lightfoot":1.2,"MultiplierConfig.Maintenance":1.2,"MultiplierConfig.Woodwork":1.2,"MultiplierConfig.Cooking":1.2,"MultiplierConfig.Farming":1.2,"MultiplierConfig.Doctor":1.5,"MultiplierConfig.Electricity":1.2,"MultiplierConfig.MetalWelding":1.4,"MultiplierConfig.Mechanics":1.4,"MultiplierConfig.Tailoring":1.4,"MultiplierConfig.Fishing":1.2,"MultiplierConfig.Trapping":1.2,"MultiplierConfig.PlantScavenging":1.2,"MultiplierConfig.FlintKnapping":1.2,"MultiplierConfig.Masonry":1.2,"MultiplierConfig.Pottery":1.2,"MultiplierConfig.Carving":1.2,"MultiplierConfig.Husbandry":1.2,"MultiplierConfig.Tracking":1.2,"MultiplierConfig.Blacksmith":1.2,"MultiplierConfig.Butchering":1.2,"MultiplierConfig.Glassmaking":1.2},"Extinction":{"Zombies":3,"ZombieRespawn":2,"FoodLootNew":0.4,"SkillBookLoot":0.4,"RecipeResourceLoot":0.4,"MedicalLootNew":0.4,"SurvivalGearsLootNew":0.4,"CannedFoodLootNew":0.4,"WeaponLootNew":0.4,"RangedWeaponLootNew":0.6,"AmmoLootNew":0.2,"OtherLootNew":0.4,"ContainerLootNew":0.4,"MediaLootNew":0.4,"ToolLootNew":0.4,"ZombiePopLootEffect":10,"ErosionSpeed":3,"NatureAbundance":2,"Alarm":5,"PlantResilience":4,"Helicopter":3,"MetaEvent":3,"GeneratorSpawning":2,"AnnotatedMapChance":2,"NightDarkness":1,"InjurySeverity":3,"DecayingCorpseHealthImpact":4,"ZombieHealthImpact":true,"ClothingDegradation":4,"SurvivorHouseChance":2,"EnableTaintedWaterText":false,"FuelStationGasMax":0.7,"FuelStationGasEmptyChance":25,"LockedCar":6,"CarGeneralCondition":2,"CarAlarm":4,"ChanceHasGas":1,"AnimalRanchChance":4,"AnimalMetaPredator":true,"LightBulbLifespan":1.0,"LiteratureCooldown":90,"MaximumLooted":50,"DaysUntilMaximumLooted":60,"RuralLooted":1.0,"MaximumDiminishedLoot":0,"DaysUntilMaximumDiminishedLoot":1825,"MuscleStrainFactor":1.0,"DiscomfortFactor":1.0,"WoundInfectionFactor":2.0,"FirearmNoiseMultiplier":1.25,"FirearmJamMultiplier":1.25,"FirearmMoodleMultiplier":1.25,"FirearmWeatherMultiplier":1.25,"ZombieLore.SprinterPercentage":6,"ZombieLore.Strength":1,"ZombieLore.Toughness":1,"ZombieLore.Cognition":4,"ZombieLore.DoorOpeningPercentage":10,"ZombieLore.CrawlUnderVehicle":6,"ZombieLore.Memory":1,"ZombieLore.Sight":2,"ZombieLore.Hearing":2,"ZombieLore.ThumpNoChasing":true,"ZombieLore.ZombiesCrawlersDragDown":true,"ZombieLore.ZombiesMaxDefense":90,"ZombieLore.DisableFakeDead":2,"ZombieLore.PlayerSpawnZombieRemoval":2,"ZombieLore.FenceThumpersRequired":20,"ZombieLore.FenceDamageMultiplier":1.5,"ZombieConfig.PopulationMultiplier":1.2,"ZombieConfig.PopulationStartMultiplier":1.5,"ZombieConfig.PopulationPeakMultiplier":2.0,"ZombieConfig.RespawnHours":72.0,"ZombieConfig.RespawnUnseenHours":16.0,"ZombieConfig.RespawnMultiplier":0.1,"ZombieConfig.FollowSoundDistance":200,"ZombieConfig.RallyGroupSize":10},"Rising":{"Zombies":5,"ZombieRespawn":3,"WaterShut":3,"ElecShut":3,"FoodLootNew":0.6,"SkillBookLoot":0.4,"RecipeResourceLoot":0.8,"SurvivalGearsLootNew":2.0,"WeaponLootNew":0.4,"RangedWeaponLootNew":0.4,"AmmoLootNew":0.4,"OtherLootNew":1.0,"KeyLootNew":0.6,"MediaLootNew":2.0,"CookwareLootNew":2.0,"MaterialLootNew":3.0,"FarmingLootNew":2.0,"ToolLootNew":2.0,"Alarm":2,"LockedHouses":5,"StarterKit":true,"Helicopter":1,"ConstructionBonusPoints":4,"BoneFracture":false,"InjurySeverity":1,"CarSpawnRate":4,"InitialGas":3,"FuelStationGasMin":0.7,"FuelStationGasMax":1.0,"FuelStationGasEmptyChance":10,"LockedCar":3,"CarGasConsumption":0.6,"RecentlySurvivorVehicles":3,"MultiHitZombies":true,"RearVulnerability":2,"AnimalPregnancyTime":3,"AnimalRanchChance":6,"AnimalSoundAttractZombies":false,"LightBulbLifespan":3.0,"FishAbundance":3,"LiteratureCooldown":90,"MaximumLooted":0,"EasyClimbing":true,"Map.AllowMiniMap":true,"ZombieLore.Speed":3,"ZombieLore.Strength":3,"ZombieLore.Toughness":3,"ZombieLore.Memory":3,"ZombieLore.Sight":2,"ZombieLore.Hearing":3,"ZombieLore.TriggerHouseAlarm":false,"ZombieLore.ZombiesFenceLunge":false,"ZombieLore.ZombiesArmorFactor":1.0,"ZombieLore.ZombiesMaxDefense":60,"ZombieLore.DisableFakeDead":3,"ZombieConfig.PopulationMultiplier":0.15,"ZombieConfig.PopulationPeakMultiplier":1.0,"ZombieConfig.RespawnHours":72.0,"ZombieConfig.RespawnUnseenHours":16.0,"ZombieConfig.RespawnMultiplier":0.1,"ZombieConfig.RedistributeHours":18.0,"ZombieConfig.RallyTravelDistance":30,"ZombieConfig.RallyGroupRadius":4}},"fl":["FoodLootNew","LiteratureLootNew","SkillBookLoot","RecipeResourceLoot","MedicalLootNew","SurvivalGearsLootNew","CannedFoodLootNew","WeaponLootNew","RangedWeaponLootNew","AmmoLootNew","MechanicsLootNew","OtherLootNew","ClothingLootNew","ContainerLootNew","KeyLootNew","MediaLootNew","MementoLootNew","CookwareLootNew","MaterialLootNew","FarmingLootNew","ToolLootNew","RollsMultiplier","InsaneLootFactor","ExtremeLootFactor","RareLootFactor","NormalLootFactor","CommonLootFactor","AbundantLootFactor","HoursForWorldItemRemoval","GeneratorFuelConsumption","HoursForCorpseRemoval","ZombieAttractionMultiplier","FuelStationGasMin","FuelStationGasMax","CarGasConsumption","SirenShutoffHours","LightBulbLifespan","MinutesPerPage","FarmingSpeedNew","FarmingAmountNew","RuralLooted","MuscleStrainFactor","DiscomfortFactor","WoundInfectionFactor","FirearmNoiseMultiplier","FirearmJamMultiplier","FirearmMoodleMultiplier","FirearmWeatherMultiplier","ClayLakeChance","ClayRiverChance","ZombieLore.ZombiesArmorFactor","ZombieLore.ZombiesFallDamage","ZombieLore.FenceDamageMultiplier","ZombieConfig.PopulationMultiplier","ZombieConfig.PopulationStartMultiplier","ZombieConfig.PopulationPeakMultiplier","ZombieConfig.RespawnHours","ZombieConfig.RespawnUnseenHours","ZombieConfig.RespawnMultiplier","ZombieConfig.RedistributeHours","MultiplierConfig.Global","MultiplierConfig.Fitness","MultiplierConfig.Strength","MultiplierConfig.Sprinting","MultiplierConfig.Lightfoot","MultiplierConfig.Nimble","MultiplierConfig.Sneak","MultiplierConfig.Axe","MultiplierConfig.Blunt","MultiplierConfig.SmallBlunt","MultiplierConfig.LongBlade","MultiplierConfig.SmallBlade","MultiplierConfig.Spear","MultiplierConfig.Maintenance","MultiplierConfig.Woodwork","MultiplierConfig.Cooking","MultiplierConfig.Farming","MultiplierConfig.Doctor","MultiplierConfig.Electricity","MultiplierConfig.MetalWelding","MultiplierConfig.Mechanics","MultiplierConfig.Tailoring","MultiplierConfig.Aiming","MultiplierConfig.Reloading","MultiplierConfig.Fishing","MultiplierConfig.Trapping","MultiplierConfig.PlantScavenging","MultiplierConfig.FlintKnapping","MultiplierConfig.Masonry","MultiplierConfig.Pottery","MultiplierConfig.Carving","MultiplierConfig.Husbandry","MultiplierConfig.Tracking","MultiplierConfig.Blacksmith","MultiplierConfig.Butchering","MultiplierConfig.Glassmaking"]};
+const MPRE={Apocalypse:{n:"Apocalipse",d:"A experiência clássica de Zomboid. Vá com calma, tenha cuidado e não baixe a guarda."},
+ Outbreak:{n:"Surto",d:"Para quem tem menos tempo para jogar. Menos tarefas repetitivas, mais saque, mesma letalidade."},
+ Extinction:{n:"Extinção",d:"Um mundo brutal. Tudo quer você morto. Alguns zumbis correm. Não recomendado para iniciantes."},
+ Rising:{n:"Reconstrução",d:"Para quem sonha com a base perfeita. Menos estresse, zumbis mais mansos."}};
+const LOOT=[0,4,0.05],SHUT=["Instantâneo","0 a 30 Dias","0 a 2 Meses","0 a 6 Meses","0 a 1 Ano","0 a 5 Anos","2 a 6 Meses","6 a 12 Meses","Desativado"],FREQ6=["Nunca","Extremamente Rara","Rara","Às vezes","Frequente","Muito Frequente"];
+// [chave, nome no jogo, tipo (e=lista, i=inteiro, d=decimal, b=liga/desliga), opções ou [mín,máx,passo], dica]
+const MGR=[
+ ["População",[
+  ["Zombies","Quantidade de Zumbis","e",["Insana","Muito Alta","Alta","Normal","Baixa","Nenhuma"],"Também ajusta o Multiplicador da População, igual ao jogo."],
+  ["ZombieConfig.PopulationMultiplier","Multiplicador da População","d",[0,4,0.05]],
+  ["ZombieConfig.PopulationPeakDay","Dia do Pico da População","i",[1,365]],
+  ["Distribution","Distribuição de Zumbis","e",["Foco Urbano","Uniforme"]],
+  ["ZombieRespawn","Respawn de Zumbis","e",["Alto","Normal","Baixo","Nenhum"],"Com que frequência novos zumbis são adicionados ao mundo."]]],
+ ["Zumbis",[
+  ["ZombieLore.Speed","Velocidade","e",["Corredores","Cambaleantes Rápidos","Cambaleantes","Aleatória"]],
+  ["ZombieLore.SprinterPercentage","Quantidade Aleatória de Corredores (%)","i",[0,100],"Só vale com Velocidade Aleatória."],
+  ["ZombieLore.Strength","Força","e",["Super-humana","Normal","Fraca","Aleatória"]],
+  ["ZombieLore.Toughness","Resistência","e",["Resistente","Normal","Frágil","Aleatória"]],
+  ["ZombieLore.Transmission","Transmissão","e",["Sangue e Saliva","Apenas Saliva","Todos Estão Infectados","Nenhuma"]],
+  ["ZombieLore.Mortality","Mortalidade da Infecção","e",["Instantânea","0 a 30 Segundos","0 a 1 Minuto","0 a 12 Horas","2 a 3 Dias","1 a 2 Semanas","Nunca"]],
+  ["ZombieLore.Reanimate","Tempo de Reanimação","e",["Instantâneo","0 a 30 Segundos","0 a 1 Minuto","0 a 12 Horas","2 a 3 Dias","1 a 2 Semanas"]],
+  ["ZombieLore.Cognition","Cognição","e",["Navegam e Usam Portas","Navegam","Navegação Básica","Aleatória"]],
+  ["ZombieLore.Memory","Memória","e",["Longa","Normal","Curta","Nenhuma","Aleatória","Aleatória entre Normal e Nenhuma"]],
+  ["ZombieLore.Sight","Visão","e",["Olhos de Águia","Normal","Ruim","Aleatória","Aleatória entre Normal e Ruim"]],
+  ["ZombieLore.Hearing","Audição","e",["Precisa","Normal","Ruim","Aleatória","Aleatória entre Normal e Ruim"]]]],
+ ["Tempo",[
+  ["DayLength","Duração do Dia (em tempo real)","e",["15 Minutos","30 Minutos","1 Hora","1 Hora e 30 Minutos","2 Horas","3 Horas","4 Horas","5 Horas","6 Horas","7 Horas","8 Horas","9 Horas","10 Horas","11 Horas","12 Horas","13 Horas","14 Horas","15 Horas","16 Horas","17 Horas","18 Horas","19 Horas","20 Horas","21 Horas","22 Horas","23 Horas","Tempo real"]],
+  ["StartMonth","Mês de Início","e",["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"]],
+  ["StartTime","Hora de Início","e",["07:00","09:00","12:00","14:00","17:00","21:00","00:00","02:00","05:00"]],
+  ["TimeSinceApo","Meses desde o Apocalipse","e",["0","1","2","3","4","5","6","7","8","9","10","11","12"],"Afeta a erosão inicial e a comida estragada. Não muda a data de início."]]],
+ ["Mundo e eventos",[
+  ["WaterShut","Corte de Água","e",SHUT],
+  ["ElecShut","Corte de Energia","e",["Instantâneo","14 a 30 Dias","14 Dias a 2 Meses","14 Dias a 6 Meses","14 Dias a 1 Ano","14 Dias a 5 Anos","2 a 6 Meses","6 a 12 Meses","Desativado"]],
+  ["Alarm","Frequência de Alarmes Residenciais","e",FREQ6],
+  ["LockedHouses","Frequência de Casas Trancadas","e",FREQ6],
+  ["Helicopter","Helicóptero","e",["Nunca","Uma vez","Às vezes","Frequentemente"]],
+  ["MetaEvent","Metaevento","e",["Nunca","Às vezes","Frequentemente"],"Eventos que atraem zumbis, como tiros ao longe."],
+  ["NightDarkness","Escuridão durante a noite","e",["Breu Total","Escura","Normal","Clara"]],
+  ["Temperature","Temperatura","e",["Muito Fria","Fria","Normal","Quente","Muito Quente"]],
+  ["Rain","Chuva","e",["Muito Seca","Seca","Normal","Chuvosa","Muito Chuvosa"]],
+  ["FoodRotSpeed","Deterioração dos Alimentos","e",["Muito Rápida","Rápida","Normal","Lenta","Muito Lenta"]]]],
+ ["Loot",[
+  ["FoodLootNew","Alimentos Perecíveis","d",LOOT,"Multiplicador: 1 é normal, 0 é nenhum."],
+  ["CannedFoodLootNew","Alimentos Não Perecíveis","d",LOOT],
+  ["WeaponLootNew","Armas Corpo a Corpo","d",LOOT],
+  ["RangedWeaponLootNew","Armas de Longo Alcance","d",LOOT],
+  ["AmmoLootNew","Munição","d",LOOT],
+  ["SkillBookLoot","Livros de Habilidade","d",LOOT],
+  ["MedicalLootNew","Itens Médicos","d",LOOT],
+  ["ToolLootNew","Ferramentas","d",LOOT]]],
+ ["Personagem",[
+  ["StarterKit","Kit Inicial","b",0,"Salgadinhos, garrafa de água, mochila pequena, taco de beisebol e martelo."],
+  ["CharacterFreePoints","Pontos Extras de Traços","i",[-100,100],"Pontos a mais na criação do personagem."],
+  ["NegativeTraitsPenalty","Penalidade de Traços Negativos","e",["Nenhuma","1 ponto a cada 3 traços negativos","1 ponto a cada 2 traços negativos","1 ponto por traço negativo depois do primeiro"]],
+  ["MultiplierConfig.Global","Multiplicador Global de XP","d",[0.1,100,0.1]],
+  ["InjurySeverity","Gravidade dos Ferimentos","e",["Baixa","Normal","Alta"]],
+  ["BoneFracture","Fraturas Ósseas","b"],
+  ["EasyClimbing","Escalada Fácil","b",0,"Sem chance de falhar na corda de lençol ou no muro."],
+  ["Nutrition","Sistema de Nutrição","b"],
+  ["Map.AllowMiniMap","Permitir Minimapa","b"]]],
+ ["Veículos",[
+  ["EnableVehicles","Veículos","b"],
+  ["CarSpawnRate","Taxa de Geração de Veículos","e",["Nenhuma","Muito Baixa","Baixa","Normal","Alta"]],
+  ["InitialGas","Nível Inicial de Combustível","e",["Muito Baixo","Baixo","Normal","Alto","Muito Alto","Cheio"]],
+  ["LockedCar","Frequência de Veículos Trancados","e",["Nunca","Muito Raramente","Raramente","Às vezes","Frequentemente","Muito Frequentemente"]],
+  ["CarGasConsumption","Consumo de Combustível","d",[0,100,0.1]]]]
+];
+
 // ---------- CÁLCULO ----------
 function compute(profId,sel){
   const p=PROF[profId]||PROFS[0]; let neg=0,pos=0,str=5+(p.str||0),fit=5+(p.fit||0); const sk={};
@@ -1960,6 +2100,59 @@ $("fabCats").addEventListener("click",e=>{const b=e.target.closest("[data-fc]");
 $("fabDifs").addEventListener("click",e=>{const b=e.target.closest("[data-fd]");if(b){fabDif=+b.dataset.fd;renderFab()}});
 $("fabOrder").addEventListener("click",e=>{const b=e.target.closest("[data-fq]");if(b){$("fabQ").value=b.dataset.fq;fabCat="Todas";fabDif=0;renderFab();$("fabQ").scrollIntoView({block:"center"})}});
 
+// ---------- MUNDO ----------
+const SBD={};SB.A.forEach(([k,v])=>{if(Array.isArray(v))v.forEach(([k2,v2])=>SBD[k+"."+k2]=v2);else SBD[k]=v});
+const MOPT={};MGR.forEach(([,L])=>L.forEach(o=>MOPT[o[0]]=o));
+const presetVals=p=>Object.assign({},SBD,SB.P[p]||{});
+let mundo={n:"",p:"Apocalypse",c:{}};
+try{const o=JSON.parse(localStorage.getItem("pzMundo")||"null");if(o)mundo=cleanMundo(o)||mundo}catch(e){}
+function cleanMundo(o){if(!o||!MPRE[o.p])return null;const c={};Object.entries(o.c||{}).forEach(([k,v])=>{if(k in SBD&&typeof v===typeof SBD[k])c[k]=v});return {n:String(o.n||"").slice(0,40),p:o.p,c}}
+function mVals(){return Object.assign(presetVals(mundo.p),mundo.c)}
+function saveMundo(){try{localStorage.setItem("pzMundo",JSON.stringify(mundo))}catch(e){}}
+function mSet(k,v){const base=presetVals(mundo.p);if(v===base[k])delete mundo.c[k];else mundo.c[k]=v}
+function mShow(k,v){const o=MOPT[k];if(!o)return String(v);if(o[2]==="e")return o[3][v-1]||String(v);if(o[2]==="b")return v?"Sim":"Não";return String(v).replace(".",",")}
+function mDiff(){const base=presetVals(mundo.p);return Object.keys(mundo.c).filter(k=>MOPT[k]&&mundo.c[k]!==base[k])}
+function renderMundo(){
+  $("mNome").value=mundo.n;
+  $("mPre").innerHTML=Object.entries(MPRE).map(([k,p])=>`<button type="button" data-mp="${k}" aria-pressed="${k===mundo.p}"><b>${esc(p.n)}</b><small>${esc(p.d)}</small></button>`).join("");
+  const v=mVals(),base=presetVals(mundo.p);
+  $("mGrupos").innerHTML=MGR.map(([g,L],gi)=>{const n=L.filter(o=>v[o[0]]!==base[o[0]]).length;
+    return `<details class="mgr"${gi<2?" open":""}><summary>${esc(g)}<span class="hint">${n?n+" mudança"+(n>1?"s":""):L.length+" opções"}</span></summary>${L.map(([k,lab,t,o,tip])=>{const id="mo_"+k.replace(/\W/g,"_"),val=v[k];let ctl;
+      if(t==="e")ctl=`<select id="${id}" data-mk="${k}">${o.map((x,i)=>`<option value="${i+1}"${val===i+1?" selected":""}>${esc(x)}</option>`).join("")}</select>`;
+      else if(t==="b")ctl=`<input id="${id}" type="checkbox" data-mk="${k}"${val?" checked":""}>`;
+      else ctl=`<input id="${id}" type="number" inputmode="decimal" data-mk="${k}" min="${o[0]}" max="${o[1]}" step="${o[2]||1}" value="${val}">`;
+      const mud=val!==base[k];return `<div class="mrow${mud?" mud":""}"><label for="${id}">${esc(lab)}${mud?'<i class="mtag">mudou</i>':""}${tip?`<span class="tip2">${esc(tip)}</span>`:""}</label>${ctl}</div>`}).join("")}</details>`}).join("");
+  renderMundoRes();
+}
+function renderMundoRes(){
+  const d=mDiff(),base=presetVals(mundo.p),v=mVals();
+  $("mResN").textContent=`Preset ${MPRE[mundo.p].n}`+(d.length?` com ${d.length} mudança${d.length>1?"s":""}:`:", sem mudanças.");
+  $("mResL").innerHTML=d.map(k=>`<li><b>${esc(MOPT[k][1])}:</b> ${esc(mShow(k,v[k]))} <span class="hint">(era ${esc(mShow(k,base[k]))})</span></li>`).join("");
+  $("mResL").hidden=!d.length;
+}
+function mundoTxt(){const v=mVals(),d=mDiff();return `${mundo.n||"Mundo Evangeliteens"} · Project Zomboid 42.21\nPreset: ${MPRE[mundo.p].n}\n`+(d.length?d.map(k=>`- ${MOPT[k][1]}: ${mShow(k,v[k])}`).join("\n"):"Sem mudanças no preset.")+`\n${mundoLink()}`}
+function mundoLink(){return BASE+"?w="+b64e(JSON.stringify(mundo))+"#mundo"}
+function sbNum(k,x){return SB.fl.includes(k)?(Number.isInteger(x)?x.toFixed(1):String(x)):String(Math.round(x))}
+function sbFmt(k,x){return typeof x==="boolean"?String(x):typeof x==="string"?JSON.stringify(x):sbNum(k,x)}
+function sandboxLua(){const v=mVals(),L=["SandboxVars = {","    VERSION = 6,"];
+  SB.A.forEach(([k,x])=>{if(k==="Version")return;if(Array.isArray(x)){L.push(`    ${k} = {`);x.forEach(([k2])=>L.push(`        ${k2} = ${sbFmt(k+"."+k2,v[k+"."+k2])},`));L.push("    },")}else L.push(`    ${k} = ${sbFmt(k,v[k])},`)});
+  L.push("}");return L.join("\n")+"\n"}
+function mCopy(txt,btn,ok){(navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>flash("mFlash",ok),()=>{prompt("Copie:",txt)})}
+$("mNome").addEventListener("input",e=>{mundo.n=e.target.value.slice(0,40);saveMundo()});
+$("mPre").addEventListener("click",e=>{const b=e.target.closest("[data-mp]");if(!b||b.dataset.mp===mundo.p)return;const n=Object.keys(mundo.c).length;mundo.p=b.dataset.mp;mundo.c={};saveMundo();renderMundo();flash("mFlash",`Preset ${MPRE[mundo.p].n}`+(n?". As mudanças anteriores foram descartadas.":"."))});
+$("mGrupos").addEventListener("change",e=>{const el=e.target,k=el.dataset.mk;if(!k)return;const o=MOPT[k];let v;
+  if(o[2]==="b")v=el.checked;else if(o[2]==="e")v=+el.value;else{v=parseFloat(String(el.value).replace(",","."));if(!isFinite(v))v=presetVals(mundo.p)[k];v=Math.min(o[3][1],Math.max(o[3][0],v));if(o[2]==="i")v=Math.round(v);else v=Math.round(v*100)/100}
+  mSet(k,v);
+  // igual ao jogo: Quantidade de Zumbis ajusta o multiplicador; Respawn ajusta horas e multiplicador de respawn
+  if(k==="Zombies")mSet("ZombieConfig.PopulationMultiplier",[2.5,1.6,1.2,0.65,0.15,0][v-1]);
+  if(k==="ZombieRespawn"){mSet("ZombieConfig.RespawnHours",[16,72,216,0][v-1]);mSet("ZombieConfig.RespawnUnseenHours",[6,16,48,0][v-1]);mSet("ZombieConfig.RespawnMultiplier",[0.5,0.1,0.05,0][v-1])}
+  saveMundo();const open=[...document.querySelectorAll("#mGrupos details")].map(d=>d.open);renderMundo();document.querySelectorAll("#mGrupos details").forEach((d,i)=>d.open=open[i]);
+  const again=document.getElementById(el.id);if(again)again.focus()});
+$("mLink").addEventListener("click",e=>mCopy(mundoLink(),e.target,"Link copiado. Mande no grupo."));
+$("mTxt").addEventListener("click",e=>mCopy(mundoTxt(),e.target,"Resumo copiado."));
+$("mLua").addEventListener("click",()=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([sandboxLua()],{type:"text/plain"}));a.download="servertest_SandboxVars.lua";document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500);flash("mFlash","Arquivo baixado. Troque “servertest” pelo nome do seu servidor.")});
+$("mReset").addEventListener("click",()=>{mundo.c={};saveMundo();renderMundo();flash("mFlash","Voltou ao preset.")});
+
 // ---------- LINK RECEBIDO ----------
 function showInbox(r){const box=$("inbox");
   if(r.kind==="build"){const rec=addRecv(r.b),c=compute(rec.prof,new Set(rec.sel));box.dataset.rid=rec.id;
@@ -1977,7 +2170,7 @@ $("inbox").addEventListener("click",e=>{const b=e.target.closest("[data-ib]");if
   box.hidden=true});
 
 // ---------- ABAS ----------
-const TABS=["montador","builds","combos","esquadrao","guia","fab"];
+const TABS=["montador","builds","combos","esquadrao","guia","fab","mundo"];
 function go(t){
   if(!TABS.includes(t))t="montador";
   TABS.forEach(x=>{$("panel-"+x).hidden=x!==t;$("tab-"+x).setAttribute("aria-selected",x===t)});
@@ -1992,6 +2185,10 @@ document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>go(b
 document.querySelector(".quick").addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)});
 
 renderMontador();renderLibFilters();renderLib();renderCombos();renderTeam();renderFabOrder();renderFab();
+// link de mundo (?w=)
+{let w=null;try{w=new URL(location.href).searchParams.get("w")}catch(e){}if(w){let o=null;try{o=cleanMundo(JSON.parse(b64d(w)))}catch(e){}
+  if(o){mundo=o;saveMundo();$("mundoMsg").textContent=`Você abriu o mundo “${o.n||"sem nome"}” que mandaram para você. Ele ficou salvo aqui.`;$("mundoMsg").hidden=false;try{history.replaceState(null,"",location.pathname+"#mundo")}catch(e){}}}}
+renderMundo();
 go((location.hash||"").replace("#",""));
 // link de build (?b=) ou de esquadrão (?t=)
 if(/[?&][bt]=/.test(location.search)){const r=parseAny(location.href);if(r)showInbox(r);try{history.replaceState(null,"",location.pathname+location.hash)}catch(e){}}
