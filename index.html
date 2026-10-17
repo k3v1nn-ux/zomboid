@@ -59,6 +59,17 @@ button,select,input{font:inherit;color:inherit}
 .tabs{display:flex;gap:4px;flex-wrap:wrap}
 .tab{border:1px solid color-mix(in srgb,var(--bg) 35%,transparent);background:transparent;color:var(--bg);padding:7px 12px;border-radius:4px;cursor:pointer;font-weight:700;font-size:13px;letter-spacing:.03em}
 .tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.tgrp{display:none}
+/* Computador (1100px ou mais): as abas viram uma barra lateral fixa, separada por grupos */
+@media (min-width:1100px){
+  .tabs{position:fixed;left:0;top:var(--barh,72px);bottom:0;width:210px;z-index:8;flex-direction:column;flex-wrap:nowrap;gap:2px;padding:14px 12px 20px;overflow-y:auto;
+    background:var(--ink);border-top:1px solid color-mix(in srgb,var(--bg) 18%,transparent);scrollbar-width:thin}
+  .tgrp{display:block;margin:12px 6px 4px;font-family:var(--f-mono);font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--bg);opacity:.55}
+  .tgrp:first-child{margin-top:0}
+  .tab{border-color:transparent;text-align:left;padding:8px 12px;border-radius:6px;font-size:13.5px}
+  .tab:hover{background:color-mix(in srgb,var(--bg) 10%,transparent)}
+  body>.wrap,.foot{margin-left:210px}
+}
 .btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:4px;cursor:pointer;font-weight:600;font-size:13px}
 .btn:hover{border-color:var(--accent)}
 .btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
@@ -80,13 +91,6 @@ button,select,input{font:inherit;color:inherit}
 .how li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;background:color-mix(in srgb,var(--surface) 82%,transparent);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13px;color:var(--muted)}
 .how .n{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-family:var(--f-mono);font-weight:700;font-size:13px}
 .how b{display:block;font-size:14px;color:var(--ink)}
-.quick{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
-.qcard{display:grid;grid-template-columns:auto minmax(0,1fr);gap:1px 10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);color:inherit;border-radius:10px;padding:10px 12px;cursor:pointer;font:inherit;transition:transform .15s,border-color .15s,box-shadow .15s}
-.qcard svg{grid-row:span 2;width:22px;height:22px;color:var(--accent)}
-.qcard b{font-size:14px}
-.qcard small{color:var(--muted);font-size:12px;line-height:1.3}
-.qcard:hover,.qcard:focus-visible{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 18px -12px color-mix(in srgb,var(--ink) 60%,transparent)}
-@media (prefers-reduced-motion:reduce){.qcard{transition:none}.qcard:hover,.qcard:focus-visible{transform:none}}
 .intro-foot{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;font-size:12.5px;color:var(--muted)}
 .legend{display:flex;flex-wrap:wrap;gap:6px}
 .patch{border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--surface);padding:8px 14px;border-radius:0 4px 4px 0;font-size:13.5px;margin-bottom:8px}
@@ -521,7 +525,6 @@ img.pt.lg{width:96px;height:120px}
   .sec-head h2{font-size:18px}
   .traits-cols{grid-template-columns:minmax(0,1fr)}
   .hero-card{grid-template-columns:minmax(0,1fr);padding:16px}
-  .qcard{grid-template-columns:minmax(0,1fr);padding:9px 10px}.qcard svg{grid-row:auto;width:20px;height:20px;margin-bottom:2px}
   .saldo .num{font-size:24px}
 }
 @media (prefers-reduced-motion:no-preference){.saldo .num{transition:background-color .2s}}
@@ -537,15 +540,19 @@ img.pt.lg{width:96px;height:120px}
       <span class="lbl">Saldo<br>do montador</span><span class="num" id="saldoNum">0</span>
     </div>
     <nav class="tabs" role="tablist" aria-label="Seções">
+      <span class="tgrp" aria-hidden="true">Personagem</span>
       <button class="tab" role="tab" id="tab-montador" data-tab="montador" type="button">Montador</button>
       <button class="tab" role="tab" id="tab-builds" data-tab="builds" type="button">Builds dos canais</button>
       <button class="tab" role="tab" id="tab-combos" data-tab="combos" type="button">Combos</button>
       <button class="tab" role="tab" id="tab-esquadrao" data-tab="esquadrao" type="button">Esquadrão</button>
+      <span class="tgrp" aria-hidden="true">Jogo</span>
       <button class="tab" role="tab" id="tab-guia" data-tab="guia" type="button">Sobrevivência</button>
       <button class="tab" role="tab" id="tab-fab" data-tab="fab" type="button">Fabricar</button>
+      <span class="tgrp" aria-hidden="true">Servidor</span>
       <button class="tab" role="tab" id="tab-mundo" data-tab="mundo" type="button">Mundo</button>
       <button class="tab" role="tab" id="tab-mods" data-tab="mods" type="button">Mods</button>
       <button class="tab" role="tab" id="tab-grupo" data-tab="grupo" type="button">Grupo</button>
+      <span class="tgrp" aria-hidden="true">Sobre</span>
       <button class="tab" role="tab" id="tab-refs" data-tab="refs" type="button">Referências</button>
     </nav>
   </div>
@@ -565,16 +572,6 @@ img.pt.lg{width:96px;height:120px}
         <li><span class="n">3</span><div><b>Feche o saldo em 0 ou mais</b>Senão o jogo não aceita. Depois mande o link da build para o grupo.</div></li>
       </ol>
     </div>
-    <nav class="quick" aria-label="Atalhos para as abas">
-      <button class="qcard" type="button" data-go="builds"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg><b>Builds dos canais</b><small>16 builds de 7 canais, recalculadas na 42.21</small></button>
-      <button class="qcard" type="button" data-go="combos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg><b>Combos</b><small>Esquadrões de 2 a 6 que se completam</small></button>
-      <button class="qcard" type="button" data-go="esquadrao"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M6.5 19a5.5 5.5 0 0 1 11 0M1.5 18a3.6 3.6 0 0 1 5-3.2M22.5 18a3.6 3.6 0 0 0-5-3.2"/></svg><b>Esquadrão</b><small>Monte o time do grupo e mande o link</small></button>
-      <button class="qcard" type="button" data-go="guia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg><b>Sobrevivência</b><small>Rotas de 6 cidades, com mapa 3D</small></button>
-      <button class="qcard" type="button" data-go="fab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4.5l5 5-2.5 2.5-5-5z"/><path d="M12 7l-8.5 8.5a1.8 1.8 0 0 0 2.5 2.5L14.5 9.5"/></svg><b>Fabricar</b><small>O que fazer primeiro e como</small></button>
-      <button class="qcard" type="button" data-go="mundo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><b>Mundo</b><small>Regras do servidor para mandar ao grupo</small></button>
-      <button class="qcard" type="button" data-go="mods"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h4V5a2 2 0 1 1 4 0v2h4v4h-2a2 2 0 1 0 0 4h2v4H4v-4h2a2 2 0 1 0 0-4H4z"/></svg><b>Mods</b><small>Os mais baixados da Oficina que rodam na B42</small></button>
-      <button class="qcard" type="button" data-go="grupo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg><b>Grupo</b><small>Regras, mods e esquadrão num link só</small></button>
-    </nav>
     <div class="intro-foot">
       <div class="legend" aria-label="Legenda das etiquetas">
         <span class="tag v-obr">Obrigatório</span><span class="tag v-meta">Meta</span><span class="tag v-opc">Opcional</span><span class="tag v-dis">Dispensável</span><span class="tag v-evi">Evitar</span><span class="tag v-nun">Nunca</span>
@@ -2916,7 +2913,6 @@ function go(t){
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>go(b.dataset.tab)));
 // altura da barra do topo, para as colunas "grudadas" não ficarem atrás dela nem passarem do fim da tela
 {const bar=document.querySelector(".bar"),setH=()=>document.documentElement.style.setProperty("--barh",bar.offsetHeight+"px");setH();if(window.ResizeObserver)new ResizeObserver(setH).observe(bar)}
-document.querySelector(".quick").addEventListener("click",e=>{const b=e.target.closest("[data-go]");if(b)go(b.dataset.go)});
 
 renderMontador();renderLibFilters();renderLib();renderCombos();renderTeam();renderFabOrder();renderFab();
 // link de mundo (?w=)
