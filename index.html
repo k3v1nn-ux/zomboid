@@ -311,6 +311,8 @@ table.matrix{border-collapse:collapse;width:100%;font-size:13px;min-width:520px}
 .hero-cues{margin:-4px 0 0;display:grid;gap:6px;font-size:12px;color:var(--muted);line-height:1.4}
 .hero-cues b{color:var(--ink);font-weight:600}
 .cue-l{display:flex;flex-wrap:wrap;gap:4px}
+.cue-n{display:flex;gap:6px;align-items:baseline;font-size:12.5px;color:var(--muted)}
+.cue-n b{font-family:var(--f-mono);font-size:15px}.cue-n b.p{color:var(--good)}.cue-n b.n{color:var(--bad);margin-left:6px}
 .cue{display:inline-flex;align-items:center;gap:4px;flex-wrap:wrap;border:1px solid;border-radius:999px;padding:2px 9px 2px 4px;font-size:12px;font-weight:600;color:var(--ink);background:var(--surface)}
 .cue i{font-style:normal;font-size:14px;line-height:1;display:inline-flex}
 .cue i img,.sq-ic img{width:16px;height:16px;display:block}
@@ -612,6 +614,19 @@ img.pt.lg{width:96px;height:120px}
 .summary{border-radius:14px;padding:16px;box-shadow:0 14px 40px -28px rgba(0,0,0,.6)}
 .hero3d{border-radius:12px}
 .warns li{border-radius:0 8px 8px 0}
+.intro-mini{display:none}
+.intro.mini .hero-card,.intro.mini .intro-foot{display:none}
+.intro.mini .intro-mini{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:13.5px;color:var(--muted);padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.intro.mini{padding-block:12px 4px}
+.hero-card{position:relative}
+.intro-x{position:absolute;top:12px;right:12px;z-index:2;border:1px solid var(--line);background:color-mix(in srgb,var(--surface) 80%,transparent);color:var(--muted);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:600;cursor:pointer}
+.intro-x:hover{color:var(--ink);border-color:var(--accent)}
+img.pt:not([src]){background:linear-gradient(180deg,var(--surface2),transparent);border-radius:8px}
+.mkey{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+.mkey div{display:grid;gap:1px;padding:7px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface2)}
+.mkey span{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.mkey b{font-size:14px}
+.mkey .chg{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
 /* filtros dos traços ficam à mão enquanto a lista desce */
 section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--barh,64px));z-index:4;background:var(--bg);padding-top:8px}
 @media (min-width:1100px){
@@ -653,7 +668,9 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
 
 <div class="wrap">
   <section class="intro" aria-labelledby="introTitle">
+    <div class="intro-mini"><span class="kicker"><i></i>Grupo Evangeliteens</span><span>Escolha a profissão, marque os traços, feche o saldo em 0 ou mais e mande o link para o grupo.</span><button type="button" class="linkbtn" id="introShow">Ver apresentação</button></div>
     <div class="hero-card">
+      <button type="button" class="intro-x" id="introHide" title="Esconder a apresentação (volta pelas configurações ou por “Ver apresentação”)">Esconder</button>
       <div>
         <span class="kicker"><i></i>Grupo Evangeliteens</span>
         <h2 id="introTitle">O QG do <em>Evangeliteens</em> em Knox Country</h2>
@@ -756,7 +773,6 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
         <div class="sublbl">Alertas</div>
         <ul class="warns" id="warns"></ul>
       </div>
-      <div class="picked" id="picked"></div>
       <div class="code-row">
         <div class="sublbl">Compartilhar com o grupo</div>
         <div class="row">
@@ -949,6 +965,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
           <div class="mgrs" id="mGrupos"></div>
           <aside class="mres" aria-labelledby="hRes">
             <h3 id="hRes">Resumo</h3>
+            <div class="mkey" id="mKey"></div>
             <div class="mres-n" id="mResN"></div>
             <ul class="mres-l" id="mResL"></ul>
             <div class="mres-acts">
@@ -1100,6 +1117,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
 <div class="cfg" id="cfg" hidden role="dialog" aria-label="Configurações da página"><div class="cfg-box">
   <div class="cfg-hd"><h2>Configurações</h2><button class="tbtn ico" type="button" id="cfgClose" aria-label="Fechar">✕</button></div>
   <div class="cfg-row"><b>Tema</b><div class="seg" data-cfg="tema"><button type="button" data-v="auto">Automático</button><button type="button" data-v="light">Claro</button><button type="button" data-v="dark">Escuro</button></div></div>
+  <div class="cfg-row"><b>Apresentação no Montador</b><div class="seg" data-cfg="intro"><button type="button" data-v="on">Mostrar</button><button type="button" data-v="off">Só uma linha</button></div></div>
   <div class="cfg-row"><b>Tamanho do texto</b><div class="seg" data-cfg="fonte"><button type="button" data-v="n">Normal</button><button type="button" data-v="g">Grande</button></div></div>
   <div class="cfg-row"><b>Animações</b><div class="seg" data-cfg="anim"><button type="button" data-v="on">Ligadas</button><button type="button" data-v="off">Reduzidas</button></div></div>
   <div class="cfg-row"><b>Bonecos 3D</b><div class="seg" data-cfg="q3d"><button type="button" data-v="alta">Qualidade alta</button><button type="button" data-v="eco">Econômico</button></div><span class="hint">O econômico desenha menos quadros por segundo e gasta menos bateria.</span></div>
@@ -1458,9 +1476,14 @@ function portrait(spec,w=180,h=220){
   const ch=buildChar(spec);ch.rotation.y=.25;ch.userData.tick(1.2);PS.add(ch);PR.render(PS,PC);const url=PR.domElement.toDataURL("image/png");PS.remove(ch);
   ch.traverse(o=>{if(o.geometry)o.geometry.dispose()});pcache.set(key,url);return url;
 }
+// retratos só são desenhados quando chegam perto da tela (abas escondidas e cartões lá embaixo esperam), um por quadro
+const pq=[];let pqBusy=false,pio=null;
+function pqRun(){if(pqBusy)return;pqBusy=true;(function step(){const im=pq.shift();if(!im){pqBusy=false;return}
+  if(!im.dataset.done&&im.isConnected){try{const s=JSON.parse(im.dataset.pz);im.src=portrait(s,+im.width||180,+im.height||220);im.dataset.done="1"}catch(e){im.dataset.done="err"}}
+  (window.requestIdleCallback?f=>requestIdleCallback(f,{timeout:120}):requestAnimationFrame)(step)})()}
 function fill(root=document){
-  const imgs=[...root.querySelectorAll("img[data-pz]:not([data-done])")].sort((x,y)=>(y.offsetParent?1:0)-(x.offsetParent?1:0));let i=0;
-  (function step(){const end=performance.now()+14;while(i<imgs.length&&performance.now()<end){const im=imgs[i++];if(im.dataset.done)continue;try{const s=JSON.parse(im.dataset.pz);im.src=portrait(s,+im.width||180,+im.height||220);im.dataset.done="1"}catch(e){im.dataset.done="err"}}if(i<imgs.length)requestAnimationFrame(step)})();
+  if(!pio&&"IntersectionObserver"in window)pio=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){pio.unobserve(e.target);pq.push(e.target)}});pqRun()},{rootMargin:"400px 0px"});
+  root.querySelectorAll("img[data-pz]:not([data-done]):not([data-q])").forEach(im=>{im.dataset.q="1";if(pio)pio.observe(im);else pq.push(im)});if(!pio)pqRun();
 }
 
 window.PZ3D={hero,squad,portrait,fill,twUrl};dispatchEvent(new Event("pz3d"));
@@ -2366,15 +2389,12 @@ function renderSummary(){
   if(state.sel.has("short_sighted"))w.push(["","Miopia: escolha óculos na roupa inicial."]);
   if(state.prof==="construction"&&!state.sel.has("whittler"))w.push(["","Sem Entalhamento vai demorar mais para chegar no Carving 9–10 e fabricar as armas."]);
   $("warns").innerHTML=w.map(([k,t])=>`<li class="${k}">${esc(t)}</li>`).join("");
-  const posSel=[...state.sel].filter(id=>ALL[id].side==="pos").map(id=>ALL[id].pt);
-  const negSel=[...state.sel].filter(id=>ALL[id].side==="neg").map(id=>ALL[id].pt);
-  $("picked").innerHTML=`<b>${esc(c.p.pt)}</b><br><b>Positivos (${posSel.length}):</b> ${esc(posSel.join(", ")||"nenhum")}<br><b>Negativos (${negSel.length}):</b> ${esc(negSel.join(", ")||"nenhum")}`;
   if(hero)hero.set(spec3d(state.prof,[...state.sel],"me",myLook),lastHow);lastHow=null;renderLook();
   const body=[];if(c.str>=7)body.push(`ombros e braços largos (Força ${c.str})`);else if(c.str<=3)body.push(`braços finos (Força ${c.str})`);
   if(c.fit<=3)body.push(`barriga e corpo curvado (Aptidão ${c.fit})`);else if(c.fit>=8)body.push(`corpo enxuto (Aptidão ${c.fit})`);
   const ord=[...state.sel].filter(id=>ALL[id]).sort((a,b)=>(ALL[a].side==="pos"?0:1)-(ALL[b].side==="pos"?0:1));
-  $("heroCues").innerHTML=(ord.length?`<span class="cue-l">${ord.map(id=>`<span class="cue ${ALL[id].side==="pos"?"p":"n"}" title="${esc(VIS[id]?"No boneco: "+VIS[id]:"Selo ao lado do boneco")}"><i>${TICON[id]?`<img src="${twUrl(TICON[id])}" alt="${TICON[id]}" width="16" height="16" loading="lazy">`:"•"}</i>${esc(ALL[id].pt)}${VIS[id]?`<small>${esc(VIS[id])}</small>`:""}</span>`).join("")}</span>`:"")+
-    `<span class="cue-b">${body.length?"<b>Corpo:</b> "+esc(body.join(", "))+".":"Força e Aptidão mudam o corpo; cada traço ganha um selo (verde à direita, vermelho à esquerda)."}</span>`;
+  const np=ord.filter(id=>ALL[id].side==="pos").length,nn=ord.length-np;
+  $("heroCues").innerHTML=`<span class="cue-n"><b class="p">${np}</b> positivos <b class="n">${nn}</b> negativos</span><span class="cue-b">${body.length?"<b>Corpo:</b> "+esc(body.join(", "))+".":"Força e Aptidão mudam o corpo. Cada traço vira um selo: verde à direita, vermelho à esquerda."}</span>`;
 }
 // o que cada traço muda no boneco 3D: ícone do selo e, quando há, a mudança no corpo
 function twUrl(e){let cps=[...e].map(c=>c.codePointAt(0));if(!cps.includes(0x200d))cps=cps.filter(c=>c!==0xfe0f);return "https://cdn.jsdelivr.net/npm/@twemoji/svg@15.0.0/"+cps.map(c=>c.toString(16)).join("-")+".svg"}
@@ -2929,6 +2949,9 @@ function renderMundoRes(){
   $("mResN").textContent=`Preset ${MPRE[mundo.p].n}`+(d.length?` com ${d.length} mudança${d.length>1?"s":""}`:", sem mudanças")+(nm?` e ${nm} mods (aba Mods)`:", sem mods")+(d.length?":":".");
   $("mResL").innerHTML=d.map(k=>`<li><b>${esc(MOPT[k][1])}:</b> ${esc(mShow(k,v[k]))} <span class="hint">(era ${esc(mShow(k,base[k]))})</span></li>`).join("");
   $("mResL").hidden=!d.length;
+  const KEY=[["Zombies","Zumbis"],["ZombieLore.Speed","Velocidade"],["ZombieRespawn","Respawn"],["MultiplierConfig.Global","XP"],["CharacterFreePoints","Pontos extras"],["DayLength","Dia dura"],["WaterShutModifier","Água corta"],["EnableVehicles","Veículos"]];
+  $("mKey").innerHTML=KEY.filter(([k])=>MOPT[k]).map(([k,l])=>{let x=mShow(k,v[k]);if(k==="MultiplierConfig.Global")x="×"+x;if(k==="WaterShutModifier"||k==="ElecShutModifier")x=v[k]<0?"nunca":v[k]===0?"já cortada":`até ${v[k]} dias`;
+    return `<div class="${d.includes(k)?"chg":""}"><span>${l}</span><b>${esc(x)}</b></div>`}).join("");
   if(typeof renderSummary==="function"&&mapReady!==undefined)try{renderSummary()}catch(e){}
   const av=mundoAvisos();$("mWarn").innerHTML=av.map(t=>`<li>${esc(t)}</li>`).join("");$("mWarn").hidden=!av.length;renderIni();
 }
@@ -2996,15 +3019,17 @@ $("modCopy").addEventListener("click",()=>mCopy($("modMods").value+"\n"+$("modWs
 $("modShare").addEventListener("click",()=>mCopy(mundoLink(),null,"Link copiado. Ele leva as regras do mundo e os mods.","modFlash"));
 
 // ---------- CONFIGURAÇÕES DA PÁGINA (tema, texto, animações, 3D, mapa) ----------
-const CFG={tema:"auto",fonte:"n",anim:"on",q3d:"alta",mapa:"3d"};
+const CFG={tema:"auto",fonte:"n",anim:"on",q3d:"alta",mapa:"3d",intro:"on"};
 try{Object.assign(CFG,JSON.parse(localStorage.getItem("pzConfig")||"{}"));const t=localStorage.getItem("pzTema");if(t&&!localStorage.getItem("pzConfig"))CFG.tema=t;const m=localStorage.getItem("pzMapa3d");if(m&&!localStorage.getItem("pzConfig"))CFG.mapa=m==="0"?"2d":"3d"}catch(e){}
 function saveCfg(){try{localStorage.setItem("pzConfig",JSON.stringify(CFG))}catch(e){}}
 function applyCfg(){const h=document.documentElement;if(CFG.tema==="auto")h.removeAttribute("data-theme");else h.setAttribute("data-theme",CFG.tema);
-  h.classList.toggle("big",CFG.fonte==="g");h.classList.toggle("noanim",CFG.anim==="off");h.classList.toggle("eco3d",CFG.q3d==="eco");
+  h.classList.toggle("big",CFG.fonte==="g");document.querySelector(".intro").classList.toggle("mini",CFG.intro==="off");h.classList.toggle("noanim",CFG.anim==="off");h.classList.toggle("eco3d",CFG.q3d==="eco");
   document.querySelectorAll("#cfg .seg").forEach(g=>g.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",CFG[g.dataset.cfg]===b.dataset.v)));
   const dark=CFG.tema==="dark"||(CFG.tema==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);$("btnTheme").title=dark?"Mudar para o tema claro":"Mudar para o tema escuro"}
 applyCfg();
 $("btnTheme").addEventListener("click",()=>{const dark=CFG.tema==="dark"||(CFG.tema==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);CFG.tema=dark?"light":"dark";saveCfg();applyCfg()});
+$("introHide").addEventListener("click",()=>{CFG.intro="off";saveCfg();applyCfg()});
+$("introShow").addEventListener("click",()=>{CFG.intro="on";saveCfg();applyCfg()});
 $("btnCfg").addEventListener("click",()=>{$("cfg").hidden=false;$("btnCfg").setAttribute("aria-expanded","true");$("cfgClose").focus()});
 const closeCfg=()=>{$("cfg").hidden=true;$("btnCfg").setAttribute("aria-expanded","false")};
 $("cfgClose").addEventListener("click",closeCfg);$("cfg").addEventListener("click",e=>{if(e.target===$("cfg"))closeCfg()});
@@ -3078,10 +3103,11 @@ $("inbox").addEventListener("click",e=>{const b=e.target.closest("[data-ib]");if
 
 // ---------- ABAS ----------
 const TABS=["montador","builds","combos","esquadrao","guia","fab","mundo","mods","grupo","refs"];
-function go(t){
-  if(!TABS.includes(t))t="montador";
+let curTab=null;const tabY={};
+function go(t,how){
+  if(!TABS.includes(t))t="montador";if(curTab)tabY[curTab]=scrollY;const prev=curTab;curTab=t;
   TABS.forEach(x=>{$("panel-"+x).hidden=x!==t;$("tab-"+x).setAttribute("aria-selected",x===t)});
-  document.querySelector(".intro").hidden=t!=="montador";
+  document.querySelector(".intro").hidden=t!=="montador";$("patch").hidden=t!=="montador";
   if(t==="esquadrao")renderTeam();
   if(t==="grupo")renderGrupo();
   if(t==="fab")renderFab();
@@ -3093,9 +3119,10 @@ function go(t){
   if(t==="refs"&&!$("refsList").children.length)renderRefs();
   if(t==="guia"&&!mapReady){let k=null;try{k=localStorage.getItem("pzCidade")}catch(e){}if(k&&CIDADES[k]){cid=k;C=CIDADES[k]}drawMap();setStep(0,false)}
   const tb=$("tab-"+t), nav=tb.parentElement; if(nav.scrollWidth>nav.clientWidth)nav.scrollLeft=tb.offsetLeft-nav.offsetLeft-(nav.clientWidth-tb.offsetWidth)/2;
-  try{history.replaceState(null,"","#"+t)}catch(e){}
-  window.scrollTo({top:0});
+  try{if(prev&&prev!==t&&how!=="pop")history.pushState(null,"","#"+t);else history.replaceState(null,"","#"+t)}catch(e){}
+  window.scrollTo({top:prev===t?scrollY:(tabY[t]||0)});
 }
+addEventListener("popstate",()=>{const t=(location.hash||"").slice(1);if(TABS.includes(t)&&t!==curTab)go(t,"pop")});
 document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>go(b.dataset.tab)));
 // altura da barra do topo, para as colunas "grudadas" não ficarem atrás dela nem passarem do fim da tela
 {const bar=document.querySelector(".bar"),setH=()=>document.documentElement.style.setProperty("--barh",bar.offsetHeight+"px");setH();if(window.ResizeObserver)new ResizeObserver(setH).observe(bar)}
