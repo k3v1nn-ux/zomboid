@@ -39,15 +39,29 @@
 
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.45}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--shell)}
 .wrap{max-width:1240px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 h1,h2,h3{font-family:var(--f-display);font-weight:700;letter-spacing:.02em;text-wrap:balance;margin:0}
 button,select,input{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 
-/* Barra */
-.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--ink);color:var(--bg)}
+/* Barra (cores próprias, iguais nos dois temas) */
+:root{--shell:#131a15;--shell2:#1b241d;--shell-ink:#e9ecdf;--shell-mut:#97a291;--shell-line:#2b362c;--side:236px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:linear-gradient(180deg,var(--shell2),var(--shell));color:var(--shell-ink);border-bottom:1px solid var(--shell-line)}
+.brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;flex:1 1 220px;min-width:0}
+.brand .logo{width:38px;height:38px;flex:0 0 auto;filter:drop-shadow(0 3px 8px rgba(224,154,58,.25))}
+.brand .bt{display:grid;line-height:1.1}
+.brand b{font-family:var(--f-display);font-size:21px;letter-spacing:.02em}
+.brand small{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--shell-mut);margin-top:3px}
+.ptitle{display:none}
+.tbtn svg{width:17px;height:17px}
+.tbtn kbd{font-family:var(--f-mono);font-size:10px;padding:0 5px;border:1px solid var(--shell-line);border-radius:4px;color:var(--shell-mut)}
+.tbtn.ico{padding:6px;border-radius:50%}
+.tbtn .moon{display:none}
+:root[data-theme="dark"] .tbtn .sun{display:none}:root[data-theme="dark"] .tbtn .moon{display:block}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tbtn .sun{display:none}:root:not([data-theme="light"]) .tbtn .moon{display:block}}
+.ti{display:none;width:18px;height:18px;flex:0 0 auto}
 .bar .wrap{display:flex;align-items:center;gap:10px 20px;flex-wrap:wrap;padding-block:10px}
 .bar h1{font-size:22px;line-height:1;flex:1 1 220px;min-width:0}
 .bar h1 small{display:block;font-family:var(--f-body);font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;opacity:.7;margin-top:4px}
@@ -57,19 +71,43 @@ button,select,input{font:inherit;color:inherit}
 .saldo.neg .num{background:var(--bad)}
 .saldo.pos .num{background:var(--accent);color:var(--accent-ink)}
 .tabs{display:flex;gap:4px;flex-wrap:wrap}
-.tab{border:1px solid color-mix(in srgb,var(--bg) 35%,transparent);background:transparent;color:var(--bg);padding:7px 12px;border-radius:4px;cursor:pointer;font-weight:700;font-size:13px;letter-spacing:.03em}
+.tab{border:1px solid var(--shell-line);background:transparent;color:var(--shell-ink);padding:7px 12px;border-radius:4px;cursor:pointer;font-weight:700;font-size:13px;letter-spacing:.03em}
 .tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
 .tgrp{display:none}
-/* Computador (1100px ou mais): as abas viram uma barra lateral fixa, separada por grupos */
+/* Computador (1100px ou mais): lateral fixa com a marca do grupo e as abas por grupo; topo mostra a aba atual */
 @media (min-width:1100px){
-  .tabs{position:fixed;left:0;top:var(--barh,72px);bottom:0;width:210px;z-index:8;flex-direction:column;flex-wrap:nowrap;gap:2px;padding:14px 12px 20px;overflow-y:auto;
-    background:var(--ink);border-top:1px solid color-mix(in srgb,var(--bg) 18%,transparent);scrollbar-width:thin}
-  .tgrp{display:block;margin:12px 6px 4px;font-family:var(--f-mono);font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--bg);opacity:.55}
-  .tgrp:first-child{margin-top:0}
-  .tab{border-color:transparent;text-align:left;padding:8px 12px;border-radius:6px;font-size:13.5px}
-  .tab:hover{background:color-mix(in srgb,var(--bg) 10%,transparent)}
-  body>.wrap,.foot{margin-left:210px}
+  .bar{margin-left:var(--side)}
+  .bar .wrap{max-width:none;padding:12px 28px;min-height:64px}
+  .brand{position:fixed;left:0;top:0;width:var(--side);height:76px;padding:0 18px;z-index:10;background:var(--shell);border-right:1px solid var(--shell-line);border-bottom:1px solid var(--shell-line)}
+  .ptitle{display:grid;flex:1 1 auto;min-width:0;line-height:1.15}
+  .ptitle h1{font-size:24px}
+  .ptitle span{font-size:12.5px;color:var(--shell-mut)}
+  .tabs{position:fixed;left:0;top:76px;bottom:0;width:var(--side);z-index:8;flex-direction:column;flex-wrap:nowrap;gap:2px;padding:12px 12px 20px;overflow-y:auto;
+    background:linear-gradient(180deg,var(--shell),#0f1511);border-right:1px solid var(--shell-line);scrollbar-width:thin}
+  .tgrp{display:block;margin:16px 10px 6px;font-family:var(--f-mono);font-size:10.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--shell-mut)}
+  .tgrp:first-child{margin-top:4px}
+  .tab{display:flex;align-items:center;gap:11px;border:0;text-align:left;padding:9px 12px;border-radius:8px;font-size:14px;font-weight:600;color:#cdd4c6;position:relative}
+  .tab .ti{display:block;opacity:.8}
+  .tab:hover{background:color-mix(in srgb,var(--shell-ink) 7%,transparent);color:#fff}
+  .tab[aria-selected="true"]{background:linear-gradient(90deg,color-mix(in srgb,var(--accent) 26%,transparent),color-mix(in srgb,var(--accent) 6%,transparent));color:#fff}
+  .tab[aria-selected="true"]::before{content:"";position:absolute;left:-12px;top:7px;bottom:7px;width:4px;border-radius:0 4px 4px 0;background:var(--accent)}
+  .tab[aria-selected="true"] .ti{color:var(--accent);opacity:1}
+  body>.wrap,.foot{margin-left:var(--side)}
+  body>.wrap{max-width:1680px;padding-left:28px;padding-right:28px}
+  .foot .wrap{max-width:1680px;padding-left:28px}
 }
+:root.big{font-size:17px}:root.big body{font-size:17px}
+:root.noanim *{animation:none!important;transition:none!important}
+/* Configurações */
+.cfg{position:fixed;inset:0;z-index:60;background:rgba(8,12,9,.55);display:grid;justify-items:end}
+.cfg-box{width:min(380px,100%);height:100%;overflow:auto;background:var(--surface);border-left:1px solid var(--line);padding:18px;display:grid;gap:16px;align-content:start;box-shadow:-20px 0 50px -20px rgba(0,0,0,.6)}
+.cfg-hd{display:flex;justify-content:space-between;align-items:center}
+.cfg-hd .tbtn{color:var(--ink);border-color:var(--line)}
+.cfg-row{display:grid;gap:6px}
+.cfg-row b{font-size:13px}
+.seg{display:flex;flex-wrap:wrap;gap:2px;padding:3px;border:1px solid var(--line);border-radius:10px;background:var(--bg)}
+.seg button{flex:1 1 auto;border:0;background:none;padding:7px 10px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .btn{border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:7px 12px;border-radius:4px;cursor:pointer;font-weight:600;font-size:13px}
 .btn:hover{border-color:var(--accent)}
 .btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
@@ -177,6 +215,16 @@ button,select,input{font:inherit;color:inherit}
 .picked{font-size:12.5px;line-height:1.5;color:var(--muted)}
 .picked b{color:var(--ink)}
 .rolesrow{display:flex;flex-wrap:wrap;gap:4px}
+.mtools{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;justify-content:flex-end;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.mtools .hint{margin-right:auto}
+.ptags{display:flex;flex-wrap:wrap;gap:4px}
+.ctx{display:flex;flex-wrap:wrap;gap:6px}
+.ctx:empty{display:none}
+.summary .ctx{display:grid}.summary .ctx-i{border-radius:10px;display:block}
+.ctx-i{display:inline-flex;flex-wrap:wrap;gap:4px;align-items:baseline;font-size:12.5px;padding:5px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--accent) 40%,var(--line));background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+.fcard.can{border-color:color-mix(in srgb,var(--good) 55%,var(--line))}
+.canm{font-size:12px;font-weight:600;color:var(--muted)}
+.canm.ok{color:var(--good)}
 .code-row{display:grid;gap:6px}
 .code-row input{width:100%;font-family:var(--f-mono);font-size:12px;padding:7px 8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--ink)}
 .code-row .row{display:flex;gap:6px;flex-wrap:wrap}
@@ -327,12 +375,19 @@ img.pt.lg{width:96px;height:120px}
 @keyframes flash{50%{box-shadow:0 0 0 3px var(--accent)}}
 /* Mapa */
 /* Textos longos justificados (com hifenização em português para não abrir buracos) */
-.hero-card p,.section>p.hint,.tip,.fcard>p,.mod p,.patch li,.rota-info li,.warns li,.how li,.why li,.mcomo li{text-align:justify;hyphens:auto;-webkit-hyphens:auto;text-wrap:pretty}
+/* justificado só em blocos largos; textos estreitos ficam alinhados à esquerda */
+.hero-card p,.howto p,.patch li{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.tip,.fcard>p,.mod p,.rota-info li,.warns li,.how li,.why li,.mcomo li,.section>p.hint{text-wrap:pretty;hyphens:auto;-webkit-hyphens:auto}
+.howto{max-width:90ch}
+.howto summary{cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent);list-style:none}
+.howto summary::-webkit-details-marker{display:none}
+.howto summary::before{content:"i";display:inline-grid;place-items:center;width:18px;height:18px;border-radius:50%;border:1.5px solid currentColor;font-family:var(--f-display);font-size:12px;font-style:italic}
+.howto p{margin:6px 0 0;font-size:13.5px;color:var(--muted);line-height:1.55}
 /* Ferramentas do topo, rodapé, busca */
 .tools{display:flex;gap:6px;align-items:center}
-.tbtn{display:inline-flex;gap:5px;align-items:center;border:1px solid color-mix(in srgb,var(--bg) 35%,transparent);background:transparent;color:var(--bg);border-radius:999px;padding:5px 10px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
+.tbtn{display:inline-flex;gap:6px;align-items:center;border:1px solid var(--shell-line);background:color-mix(in srgb,var(--shell-ink) 6%,transparent);color:var(--shell-ink);border-radius:999px;padding:5px 10px;font:inherit;font-size:12.5px;font-weight:700;cursor:pointer}
 .tbtn:hover,.tbtn:focus-visible{border-color:var(--accent)}
-@media (max-width:680px){.tbtn span{display:none}}
+@media (max-width:680px){.tbtn span,.tbtn kbd{display:none}.tbtn.wide{padding:6px;border-radius:50%}}
 .foot{border-top:1px solid var(--line);margin-top:24px;padding:16px 0 28px;font-size:12.5px;color:var(--muted)}
 .foot a,.linkbtn{color:var(--accent);font-weight:600}
 .linkbtn{background:none;border:0;padding:0;font:inherit;cursor:pointer;text-decoration:underline}
@@ -440,6 +495,10 @@ img.pt.lg{width:96px;height:120px}
 .mapbox{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#3f5a3a}
 #rwMap{display:block;width:100%;height:auto;max-height:78vh;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
 #rwMap.iso{aspect-ratio:1/1;height:auto}
+@media (min-width:861px){
+  .rota{grid-template-columns:minmax(0,2.1fr) minmax(300px,1fr)}
+  #rwMap.iso{aspect-ratio:auto;height:clamp(480px,calc(100vh - var(--barh,70px) - 190px),1000px);max-height:none}
+}
 #rwTiles image{transition:opacity .25s}
 #rwMap.dragging{cursor:grabbing}
 #rwMap.marking{cursor:crosshair}
@@ -457,6 +516,9 @@ img.pt.lg{width:96px;height:120px}
 .map-zoom .btn{width:34px;height:34px;padding:0;font-size:18px;line-height:1}
 .map-ctl{position:absolute;top:8px;right:8px;display:flex;gap:6px}
 .map-leg{display:flex;flex-wrap:wrap;gap:4px 10px;padding:6px 8px;font-size:11px;background:color-mix(in srgb,var(--surface) 92%,transparent);border-top:1px solid var(--line)}
+.map-leg .lg{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:2px 8px;font:inherit;font-size:11px;cursor:pointer}
+.map-leg .lg[aria-pressed="false"]{opacity:.45;text-decoration:line-through}
+.map-leg .leg-t{font-weight:700;color:var(--muted)}
 .map-leg i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:4px;vertical-align:-1px}
 .rota-info{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px}
 .rota-info h3{font-size:20px}
@@ -535,26 +597,29 @@ img.pt.lg{width:96px;height:120px}
 
 <header class="bar">
   <div class="wrap">
-    <h1>Ficha de Sobrevivente B42<small>Evangeliteens · Project Zomboid · Build 42.21</small></h1>
-    <div class="tools"><button class="tbtn" type="button" id="btnSearch" aria-label="Buscar na ficha" title="Buscar na ficha (/)">🔍<span>Buscar</span></button><button class="tbtn" type="button" id="btnTheme" aria-label="Trocar tema" title="Tema">◐<span id="themeLbl">Auto</span></button></div>
+    <a class="brand" href="#montador" aria-label="Evangeliteens · Ficha de Sobrevivente B42"><svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="9" fill="#e09a3a"/><path d="M20 7v26M7 20h26" stroke="#1b1408" stroke-width="5" stroke-linecap="round"/><circle cx="20" cy="20" r="6.5" fill="#1b1408"/><circle cx="20" cy="20" r="2.6" fill="#e09a3a"/></svg><span class="bt"><b>Evangeliteens</b><small>Ficha B42.21</small></span></a>
+    <div class="ptitle" aria-live="polite"><h1 id="pageTitle">Montador</h1><span id="pageSub"></span></div>
+    <div class="tools"><button class="tbtn wide" type="button" id="btnSearch" aria-label="Buscar na ficha" title="Buscar na ficha (/)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><span>Buscar</span><kbd>/</kbd></button>
+      <button class="tbtn ico" type="button" id="btnTheme" aria-label="Trocar tema claro e escuro"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
+      <button class="tbtn ico" type="button" id="btnCfg" aria-label="Configurações da página" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
     <div class="saldo" id="saldo" aria-live="polite">
       <span class="lbl">Saldo<br>do montador</span><span class="num" id="saldoNum">0</span>
     </div>
     <nav class="tabs" role="tablist" aria-label="Seções">
       <span class="tgrp" aria-hidden="true">Personagem</span>
-      <button class="tab" role="tab" id="tab-montador" data-tab="montador" type="button">Montador</button>
-      <button class="tab" role="tab" id="tab-builds" data-tab="builds" type="button">Builds dos canais</button>
-      <button class="tab" role="tab" id="tab-combos" data-tab="combos" type="button">Combos</button>
-      <button class="tab" role="tab" id="tab-esquadrao" data-tab="esquadrao" type="button">Esquadrão</button>
+      <button class="tab" role="tab" id="tab-montador" data-tab="montador" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3.5"/><path d="M5 21a7 7 0 0 1 14 0"/></svg><span>Montador</span></button>
+      <button class="tab" role="tab" id="tab-builds" data-tab="builds" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg><span>Builds dos canais</span></button>
+      <button class="tab" role="tab" id="tab-combos" data-tab="combos" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg><span>Combos</span></button>
+      <button class="tab" role="tab" id="tab-esquadrao" data-tab="esquadrao" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M6.5 19a5.5 5.5 0 0 1 11 0M1.5 18a3.6 3.6 0 0 1 5-3.2M22.5 18a3.6 3.6 0 0 0-5-3.2"/></svg><span>Esquadrão</span></button>
       <span class="tgrp" aria-hidden="true">Jogo</span>
-      <button class="tab" role="tab" id="tab-guia" data-tab="guia" type="button">Sobrevivência</button>
-      <button class="tab" role="tab" id="tab-fab" data-tab="fab" type="button">Fabricar</button>
+      <button class="tab" role="tab" id="tab-guia" data-tab="guia" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Sobrevivência</span></button>
+      <button class="tab" role="tab" id="tab-fab" data-tab="fab" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4.5l5 5-2.5 2.5-5-5z"/><path d="M12 7l-8.5 8.5a1.8 1.8 0 0 0 2.5 2.5L14.5 9.5"/></svg><span>Fabricar</span></button>
       <span class="tgrp" aria-hidden="true">Servidor</span>
-      <button class="tab" role="tab" id="tab-mundo" data-tab="mundo" type="button">Mundo</button>
-      <button class="tab" role="tab" id="tab-mods" data-tab="mods" type="button">Mods</button>
-      <button class="tab" role="tab" id="tab-grupo" data-tab="grupo" type="button">Grupo</button>
+      <button class="tab" role="tab" id="tab-mundo" data-tab="mundo" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span>Mundo</span></button>
+      <button class="tab" role="tab" id="tab-mods" data-tab="mods" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h4V5a2 2 0 1 1 4 0v2h4v4h-2a2 2 0 1 0 0 4h2v4H4v-4h2a2 2 0 1 0 0-4H4z"/></svg><span>Mods</span></button>
+      <button class="tab" role="tab" id="tab-grupo" data-tab="grupo" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg><span>Grupo</span></button>
       <span class="tgrp" aria-hidden="true">Sobre</span>
-      <button class="tab" role="tab" id="tab-refs" data-tab="refs" type="button">Referências</button>
+      <button class="tab" role="tab" id="tab-refs" data-tab="refs" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span>Referências</span></button>
     </nav>
   </div>
 </header>
@@ -598,7 +663,8 @@ img.pt.lg{width:96px;height:120px}
     <div class="col-left">
       <div class="slot-edit" id="slotEdit" hidden></div>
       <section class="section" aria-labelledby="hProf">
-        <div class="sec-head"><h2 id="hProf">1 · Profissão</h2><span class="hint">Custo em pontos. Desempregado devolve 8.</span></div>
+        <div class="mtools"><span class="hint">Montando do zero ou ajustando uma build dos canais?</span><button class="btn sm" type="button" id="btnClear">Zerar traços</button><button class="btn sm" type="button" id="btnRestart">Começar do zero</button><span class="hint" id="mtMsg" role="status"></span></div>
+        <div class="sec-head"><h2 id="hProf">1 · Profissão</h2><span class="hint">Custo em pontos · <b>Meta do vídeo</b> = indicada pelo ShivasBR · “x/16” = quantas builds dos canais usam a profissão</span></div>
         <div class="profs" id="profs"></div>
       </section>
 
@@ -628,13 +694,13 @@ img.pt.lg{width:96px;height:120px}
       <section class="section" aria-labelledby="hTips">
         <div class="sec-head"><h2 id="hTips">3 · Dicas do vídeo para a build fechar</h2></div>
         <div class="tips">
-          <div class="tip"><b>Arma vem do Entalhamento</b>Na B42 o caminho é fabricar a arma. O Bastão Curto pede Entalhamento 7 com a revista Medieval Armory (sem revista, 9) e o Taco Artesanal pede 9 com a revista The Louisville Bruiser (sem revista, 10). Por isso o Entalhador entra mesmo custando 2.</div>
-          <div class="tip"><b>Construtor Civil é o único com duas armas</b>Começa com bônus em Contundente Curto e Longo, além de Carpintaria, Alvenaria e Manutenção. Para treinar desde o dia 1, o Martelo de Pedra (contundente curta) sai com galho, pedra e amarração.</div>
+          <div class="tip"><b>Arma vem do Entalhamento</b>Na B42 o caminho é fabricar a arma. O Bastão Curto pede Entalhamento 7 com a revista Medieval Armory (sem revista, 9) e o Taco Artesanal pede 9 com a revista The Louisville Bruiser (sem revista, 10). Por isso o Entalhamento entra mesmo custando 2.</div>
+          <div class="tip"><b>Pedreiro é o único com duas armas</b>Começa com bônus em Contundente Curto e Longo, além de Carpintaria, Alvenaria e Manutenção. Para treinar desde o dia 1, o Martelo de Pedra (contundente curta) sai com galho, pedra e amarração.</div>
           <div class="tip"><b>Claustrofóbico se controla com álcool</b>Mande beber ¼ da bebida e cancele logo depois do primeiro gole: o pânico passa. Depois de 3 a 5 meses vivo o pânico praticamente para de aparecer.</div>
-          <div class="tip"><b>Míope se resolve na criação</b>Escolha óculos na roupa inicial do personagem e a penalidade some.</div>
+          <div class="tip"><b>Miopia se resolve na criação</b>Escolha óculos na roupa inicial do personagem e a penalidade some.</div>
           <div class="tip"><b>Herbalista acaba com a fome</b>Ligue a coleta (lupa na tela) e você sempre acha fruta ou cogumelo. Sem o traço, procure a revista que ensina a separar o que é venenoso.</div>
           <div class="tip"><b>Andarilho só em clima frio</b>Resfriado e pneumonia não matam. O que mata é ficar com frio por muito tempo. No clima padrão ele é dispensável.</div>
-          <div class="tip"><b>Fracote + Sedentário = 20 pontos</b>O Shivas usa porque upa Força e Aptidão até 5 rápido e perde os dois traços. Ele mesmo não recomenda para quem está começando.</div>
+          <div class="tip"><b>Franzino + Sedentário = 20 pontos</b>O Shivas usa porque upa Força e Aptidão até 5 rápido e perde os dois traços. Ele mesmo não recomenda para quem está começando.</div>
           <div class="tip"><b>Salve a build no jogo</b>Na tela de criação, salve com um nome (ex.: “construtor civil”) para não refazer a cada morte.</div>
         </div>
       </section>
@@ -642,6 +708,7 @@ img.pt.lg{width:96px;height:120px}
 
     <aside class="summary" aria-labelledby="hSum">
       <h2 id="hSum">Seu sobrevivente</h2>
+      <div class="ctx" id="myCtx"></div>
       <div class="hero3d" id="hero3d" aria-label="Boneco 3D do personagem. Arraste para girar."><span class="hero-hint">Arraste para girar · aponte um selo para ver o traço</span></div>
       <p class="hero-cues" id="heroCues"></p>
       <details class="look" id="lookBox"><summary>Aparência do boneco</summary><div id="lookOpts"></div></details>
@@ -669,7 +736,6 @@ img.pt.lg{width:96px;height:120px}
           <button class="btn primary" type="button" id="btnCopyLink">Copiar link da build</button>
           <button class="btn" type="button" id="btnShare" hidden>Enviar…</button>
           <button class="btn" type="button" id="btnCopyText">Copiar resumo</button>
-          <button class="btn" type="button" id="btnClear">Zerar traços</button>
         </div>
         <p class="hint" style="margin:0">Quem abrir o link vê a build com o seu nome e pode pôr no esquadrão.</p>
         <label for="codeIn" class="sublbl" style="margin:4px 0 0">Colar link ou código de um amigo</label>
@@ -689,14 +755,14 @@ img.pt.lg{width:96px;height:120px}
     <div class="panel">
       <section class="section">
         <div class="sec-head"><h2>Builds dos canais</h2><span class="hint" id="libCount"></span></div>
-        <p class="hint" style="margin:0;max-width:80ch">Só entram builds de vídeos gravados com a B42 (42.19 em diante) cujo saldo fecha com os custos da 42.21. Os traços foram tirados da transcrição de cada vídeo. Quando a conta do vídeo não fecha ou o vídeo não mostra tudo, a ficha diz o que ajustou. “Abrir no montador” carrega a build para você mexer.</p>
+        <details class="howto"><summary>Como funciona</summary><p>Só entram builds de vídeos gravados com a B42 (42.19 em diante) cujo saldo fecha com os custos da 42.21. Os traços foram tirados da transcrição de cada vídeo. Quando a conta do vídeo não fecha ou o vídeo não mostra tudo, a ficha diz o que ajustou. “Abrir no montador” carrega a build para você mexer.</p></details>
         <div class="frow" role="group" aria-label="Filtrar por canal" id="chFilters"></div>
         <div class="frow" role="group" aria-label="Filtrar por estilo" id="styFilters"></div>
         <div class="lib ch" id="lib"></div>
       </section>
       <section class="section">
         <div class="sec-head"><h2>Papéis para co-op</h2><span class="hint">Montadas pela ficha, não vêm de vídeo</span></div>
-        <p class="hint" style="margin:0;max-width:80ch">Suporte para o Esquadrão: médico, gerador, carro, base e comida. Usam o núcleo que mais se repete nas builds dos canais (Aprendiz Rápido, Mãos Ágeis, Audição Aguçada, Olhos de Gato, Madrugador) pago com os negativos baratos que quase todos pegam.</p>
+        <details class="howto"><summary>Como funciona</summary><p>Suporte para o Esquadrão: médico, gerador, carro, base e comida. Usam o núcleo que mais se repete nas builds dos canais (Aprendiz Rápido, Mãos Ágeis, Audição Aguçada, Olhos de Gato, Madrugador) pago com os negativos baratos que quase todos pegam.</p></details>
         <div class="lib" id="libTeam"></div>
       </section>
     </div>
@@ -707,7 +773,7 @@ img.pt.lg{width:96px;height:120px}
     <div class="panel">
       <section class="section">
         <div class="sec-head"><h2>Combos de esquadrão</h2><span class="hint" id="comboCount"></span></div>
-        <p class="hint" style="margin:0;max-width:80ch">Grupos de builds que se completam: um cobre o ponto fraco do outro e, juntos, dão conta dos papéis que um time precisa. Cada combo diz por que as builds combinam, quais papéis ficam cobertos e o que ainda falta. “Montar no Esquadrão” carrega o grupo para você trocar quem quiser.</p>
+        <details class="howto"><summary>Como funciona</summary><p>Grupos de builds que se completam: um cobre o ponto fraco do outro e, juntos, dão conta dos papéis que um time precisa. Cada combo diz por que as builds combinam, quais papéis ficam cobertos e o que ainda falta. “Montar no Esquadrão” carrega o grupo para você trocar quem quiser.</p></details>
         <div class="frow" role="group" aria-label="Filtrar por tamanho" id="comboSizes"></div>
         <div class="combos" id="comboList"></div>
       </section>
@@ -718,12 +784,14 @@ img.pt.lg{width:96px;height:120px}
   <div id="panel-esquadrao" role="tabpanel" aria-labelledby="tab-esquadrao" hidden>
     <div class="panel">
       <section class="section">
-        <div class="sec-head"><h2>1 · Tamanho do grupo</h2><span class="hint">Escolha quantos vão jogar e uma composição pronta</span></div>
+        <div class="sec-head"><h2>1 · Tamanho do grupo</h2><span class="hint">Quantos vão jogar</span></div>
         <div class="sizes" id="sizes"></div>
+        <div class="sec-head"><h3 id="compsT">Composições prontas</h3><span class="hint">Opcional: preenche as vagas com builds dos canais que se completam. Clique de novo para desmarcar e montar do seu jeito.</span></div>
         <div class="comps" id="comps"></div>
       </section>
       <section class="section">
         <div class="sec-head"><h2>Seu esquadrão</h2><span class="hint">Arraste para girar · o nome em cima é de quem joga</span></div>
+        <div class="ctx" id="teamCtx"></div>
         <div class="squad3d" id="squad3d"></div>
       </section>
       <div class="split">
@@ -764,11 +832,12 @@ img.pt.lg{width:96px;height:120px}
     <div class="panel">
       <section class="section">
         <div class="sec-head"><h2>Como fabricar</h2><span class="hint" id="fabCount"></span></div>
-        <p class="hint" style="margin:0;max-width:80ch">As receitas mais úteis para sobreviver, com o que precisa, a perícia exigida, como aprender e quando vale fazer. Receitas tiradas do banco de itens do projectzomboidmap.com (versão 42.20.4); construção pela PZwiki. “Receita completa” abre a página com todas as variações.</p>
+        <details class="howto"><summary>Como funciona</summary><p>As receitas mais úteis para sobreviver, com o que precisa, a perícia exigida, como aprender e quando vale fazer. Receitas tiradas do banco de itens do projectzomboidmap.com (versão 42.20.4); construção pela PZwiki. “Receita completa” abre a página com todas as variações.</p></details>
         <div class="fab-order" id="fabOrder"></div>
         <div class="fab-search"><input id="fabQ" type="search" placeholder="Buscar: lança, martelo, armadilha, bandagem, Carpintaria…" autocomplete="off" aria-label="Buscar receita"></div>
         <div class="frow" role="group" aria-label="Categoria" id="fabCats"></div>
         <div class="frow" role="group" aria-label="Dificuldade" id="fabDifs"></div>
+        <div class="frow" id="fabMine"></div>
         <div class="fab-list" id="fabList"></div>
       </section>
     </div>
@@ -779,7 +848,7 @@ img.pt.lg{width:96px;height:120px}
     <div class="panel">
       <section class="section" aria-labelledby="hGrupo">
         <div class="sec-head"><h2 id="hGrupo">Página do grupo</h2><span class="hint">Regras, mods, esquadrão e mapa num link só</span></div>
-        <p class="hint" style="margin:0;max-width:80ch">Junta o que vocês combinaram nas outras abas: as regras do Mundo, os Mods, o Esquadrão e as marcações do mapa. Mande o link no grupo: quem abrir carrega tudo de uma vez. A ficha não tem servidor próprio, então cada pessoa guarda a cópia no próprio navegador; quando algo mudar, mande o link de novo.</p>
+        <details class="howto"><summary>Como funciona</summary><p>Junta o que vocês combinaram nas outras abas: as regras do Mundo, os Mods, o Esquadrão e as marcações do mapa. Mande o link no grupo: quem abrir carrega tudo de uma vez. A ficha não tem servidor próprio, então cada pessoa guarda a cópia no próprio navegador; quando algo mudar, mande o link de novo.</p></details>
         <div class="grupo-msg mundo-msg" id="grupoMsg" hidden></div>
         <div class="grupo" id="grupoView"></div>
         <div class="mres-acts"><button class="btn primary" type="button" id="grupoLink">Copiar link do grupo</button><button class="btn" type="button" id="grupoTxt">Copiar resumo em texto</button><span class="hint" id="grupoFlash" aria-live="polite"></span></div>
@@ -792,7 +861,7 @@ img.pt.lg{width:96px;height:120px}
     <div class="panel">
       <section class="section" aria-labelledby="hRefs">
         <div class="sec-head"><h2 id="hRefs">Referências e créditos</h2><span class="hint">Quem fez o conteúdo que usamos</span></div>
-        <p class="hint" style="margin:0;max-width:80ch">Esta ficha só existe por causa do trabalho destes criadores. As builds, etiquetas e dicas vêm dos vídeos abaixo; vale assistir e apoiar os canais. Os dados do jogo são da The Indie Stone.</p>
+        <details class="howto"><summary>Como funciona</summary><p>Esta ficha só existe por causa do trabalho destes criadores. As builds, etiquetas e dicas vêm dos vídeos abaixo; vale assistir e apoiar os canais. Os dados do jogo são da The Indie Stone.</p></details>
         <div class="refs" id="refsList"></div>
       </section>
     </div>
@@ -803,7 +872,7 @@ img.pt.lg{width:96px;height:120px}
     <div class="panel">
       <section class="section" aria-labelledby="hMods">
         <div class="sec-head"><h2 id="hMods">Mods do grupo</h2><span class="hint">Os mais baixados da Oficina Steam que funcionam na B42</span></div>
-        <p class="hint" style="margin:0;max-width:85ch">Levantamento de 16/10/2026: itens da Oficina com a etiqueta Build 42, em ordem de total de inscritos. Entraram só os que dizem na própria página que funcionam na B42 estável; ficaram de fora os marcados como descontinuados, legado ou só B41. Marque os que o grupo vai usar: as dependências entram sozinhas e a escolha vai junto no link da aba Mundo.</p>
+        <details class="howto"><summary>Como funciona</summary><p>Levantamento de 16/10/2026: itens da Oficina com a etiqueta Build 42, em ordem de total de inscritos. Entraram só os que dizem na própria página que funcionam na B42 estável; ficaram de fora os marcados como descontinuados, legado ou só B41. Marque os que o grupo vai usar: as dependências entram sozinhas e a escolha vai junto no link da aba Mundo.</p></details>
         <div class="frow" role="group" aria-label="Tipo de mod" id="modCats"></div>
         <label class="modq"><input id="modQ" type="search" placeholder="Buscar mod pelo nome ou pelo que faz" autocomplete="off"><a id="modWsSearch" href="https://steamcommunity.com/workshop/browse/?appid=108600&requiredtags%5B%5D=Build+42" target="_blank" rel="noopener">Buscar na Oficina ↗</a></label>
         <div class="mods">
@@ -843,7 +912,7 @@ img.pt.lg{width:96px;height:120px}
     <div class="panel">
       <section class="section" aria-labelledby="hMundo">
         <div class="sec-head"><h2 id="hMundo">Mundo do grupo</h2><span class="hint">Regras do servidor, prontas para mandar aos amigos</span></div>
-        <p class="hint" style="margin:0;max-width:80ch">Escolha um preset, mude o que o grupo combinou e mande o link. Quem for hospedar baixa o arquivo do servidor ou segue o resumo. Presets, opções e nomes saíram dos arquivos do próprio jogo (Build 42.21). Aqui estão as opções mais usadas; o resto fica igual ao preset.</p>
+        <details class="howto"><summary>Como funciona</summary><p>Escolha um preset, mude o que o grupo combinou e mande o link. Quem for hospedar baixa o arquivo do servidor ou segue o resumo. Presets, opções e nomes saíram dos arquivos do próprio jogo (Build 42.21). Aqui estão as opções mais usadas; o resto fica igual ao preset.</p></details>
         <div class="mundo-msg" id="mundoMsg" hidden></div>
         <label class="mnome"><span>Nome do mundo</span><input id="mNome" type="text" maxlength="40" autocomplete="off" placeholder="Mundo Evangeliteens"></label>
         <div class="mpre" id="mPre" role="group" aria-label="Preset do jogo"></div>
@@ -895,13 +964,14 @@ img.pt.lg{width:96px;height:120px}
   <div id="panel-guia" role="tabpanel" aria-labelledby="tab-guia" hidden>
     <div class="panel">
       <section class="section" aria-labelledby="hRota">
+        <div class="ctx" id="rotaCtx"></div>
         <div class="sec-head"><h2 id="hRota">Rota de Rosewood, dia a dia</h2><span class="hint" id="rotaHint">Cidade que Knine e OVERCHARGED EGG indicam para começar</span></div>
         <div class="cidades" id="cidades" role="group" aria-label="Cidade inicial"></div>
-        <p class="hint" style="margin:0;max-width:80ch">Escolha a cidade onde você nasceu e toque em um passo: o mapa aproxima, desenha a rota e mostra o que fazer. Ruas, prédios, rios e lagos vêm dos arquivos do jogo 42.21. A vista 3D gira o mapa como a câmera do jogo; a vista 2D mostra de cima, com o norte para cima, igual ao mapa do jogo (tecla M). Arraste para mover, use a rodinha ou os botões para aproximar e toque num lugar para ver o nome. Cada parada tem link para o mapa real.</p>
+        <details class="howto"><summary>Como funciona</summary><p>Escolha a cidade onde você nasceu e toque em um passo: o mapa aproxima, desenha a rota e mostra o que fazer. Ruas, prédios, rios e lagos vêm dos arquivos do jogo 42.21. A vista 3D gira o mapa como a câmera do jogo; a vista 2D mostra de cima, com o norte para cima, igual ao mapa do jogo (tecla M). Arraste para mover, use a rodinha ou os botões para aproximar e toque num lugar para ver o nome. Cada parada tem link para o mapa real.</p></details>
         <div class="steps" id="rotaSteps" role="tablist" aria-label="Passos da rota"></div>
         <div class="rota">
           <div class="mapbox"><svg id="rwMap" viewBox="0 0 960 1180" role="img" aria-label="Mapa da cidade com a rota do passo escolhido"></svg>
-            <div class="map-ctl"><button class="btn sm" type="button" id="mapAll">Cidade toda</button><button class="btn sm" type="button" id="mapPlay">▶ Animar rota</button><button class="btn sm" type="button" id="map3d" aria-pressed="true">Vista 2D</button></div>
+            <div class="map-ctl"><button class="btn sm" type="button" id="mapAll">Cidade toda</button><button class="btn sm" type="button" id="mapPlay" title="Mostra o caminho deste passo sendo traçado">▶ Ver percurso</button><button class="btn sm" type="button" id="map3d" aria-pressed="true">Vista 2D</button></div>
             <div class="map-pop" id="mapPop" hidden></div>
             <div class="map-zoom"><button class="btn" type="button" id="mapZin" aria-label="Aproximar o mapa">+</button><button class="btn" type="button" id="mapZout" aria-label="Afastar o mapa">−</button></div>
             <div class="map-leg" id="mapLeg"></div>
@@ -914,7 +984,7 @@ img.pt.lg{width:96px;height:120px}
         <details class="realmap"><summary>Abrir o mapa real aqui (projectzomboidmap.com)</summary><div class="realmap-box" id="realMap"></div></details>
       </section>
 
-      <p class="hint" style="margin:0;max-width:75ch">Dicas do GabrielKnine no vídeo <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Como sobreviver no Project Zomboid em 2026</a> (B42.20, ago/2026). A ideia central dele: não tenha pressa nas duas primeiras semanas.</p>
+      <details class="howto"><summary>Como funciona</summary><p>Dicas do GabrielKnine no vídeo <a href="https://www.youtube.com/watch?v=gDiWSBv_W0g" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">Como sobreviver no Project Zomboid em 2026</a> (B42.20, ago/2026). A ideia central dele: não tenha pressa nas duas primeiras semanas.</p></details>
 
       <section class="section">
         <div class="sec-head"><h2>Rotina da TV</h2><span class="hint">Canal Life and Living, nas duas primeiras semanas</span></div>
@@ -962,7 +1032,7 @@ img.pt.lg{width:96px;height:120px}
           <div class="tip"><b>Alarme tocou?</b>Corra para qualquer lado e não fique na casa.</div>
           <div class="tip"><b>Garagem</b>Costuma ter coisa boa. No vídeo saiu respirador, que filtra o cheiro de zumbi morto e ainda deixa usar óculos.</div>
           <div class="tip"><b>Luz é obrigatória</b>A noite ficou escura. Pegue lanterna, ou ao menos a caneta-lanterna, e pilhas.</div>
-          <div class="tip"><b>Míope piorou</b>Na B42 tudo embaça a 2–3 m. Use óculos de grau desde a criação.</div>
+          <div class="tip"><b>Miopia piorou</b>Na B42 tudo embaça a 2–3 m. Use óculos de grau desde a criação.</div>
           <div class="tip"><b>Banheiro</b>Pinça para tirar vidro e bala, remédios, antibiótico e lenço com álcool.</div>
           <div class="tip"><b>Ferramenta no cinto</b>Martelo e chave de fenda presos no cinto pesam menos. Largue tranqueira: peso cansa e deixa lento.</div>
         </div>
@@ -1000,6 +1070,15 @@ img.pt.lg{width:96px;height:120px}
 </div>
 
 <footer class="foot"><div class="wrap">Feito por <a href="https://github.com/k3v1nn-ux" target="_blank" rel="noopener">k3v1nn-ux</a> para o grupo Evangeliteens · conteúdo dos canais e da comunidade, veja <button type="button" class="linkbtn" data-go="refs">Referências</button> · Project Zomboid é da The Indie Stone; esta é uma ficha de fã, sem ligação oficial.</div></footer>
+<div class="cfg" id="cfg" hidden role="dialog" aria-label="Configurações da página"><div class="cfg-box">
+  <div class="cfg-hd"><h2>Configurações</h2><button class="tbtn ico" type="button" id="cfgClose" aria-label="Fechar">✕</button></div>
+  <div class="cfg-row"><b>Tema</b><div class="seg" data-cfg="tema"><button type="button" data-v="auto">Automático</button><button type="button" data-v="light">Claro</button><button type="button" data-v="dark">Escuro</button></div></div>
+  <div class="cfg-row"><b>Tamanho do texto</b><div class="seg" data-cfg="fonte"><button type="button" data-v="n">Normal</button><button type="button" data-v="g">Grande</button></div></div>
+  <div class="cfg-row"><b>Animações</b><div class="seg" data-cfg="anim"><button type="button" data-v="on">Ligadas</button><button type="button" data-v="off">Reduzidas</button></div></div>
+  <div class="cfg-row"><b>Bonecos 3D</b><div class="seg" data-cfg="q3d"><button type="button" data-v="alta">Qualidade alta</button><button type="button" data-v="eco">Econômico</button></div><span class="hint">O econômico desenha menos quadros por segundo e gasta menos bateria.</span></div>
+  <div class="cfg-row"><b>Mapa ao abrir</b><div class="seg" data-cfg="mapa"><button type="button" data-v="3d">3D (imagens do jogo)</button><button type="button" data-v="2d">2D (desenho)</button></div></div>
+  <div class="cfg-row"><b>Seus dados</b><span class="hint">Builds, mundo, marcações e preferências ficam só neste navegador.</span><button class="btn sm" type="button" id="cfgReset">Apagar tudo deste navegador</button></div>
+</div></div>
 <div class="search" id="search" hidden><div class="search-box" role="dialog" aria-modal="true" aria-label="Buscar na ficha"><input id="searchQ" type="search" placeholder="Traço, receita, lugar, mod ou build…" autocomplete="off"><ul id="searchRes" role="listbox"></ul><p class="hint" style="margin:0">Enter abre o primeiro resultado · Esc fecha</p></div></div>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <script type="module">
@@ -1163,7 +1242,7 @@ function buildChar(spec){
   if(style===0){const f=put(ball(.12,hairM),head,.12,.3,.26);f.scale.set(1.4,.5,.8);f.rotation.z=-.3}
   if(style===2){for(const s of[-1,1]){const sd=put(ball(.12,hairM),head,s*.33,-.02,-.08);sd.scale.set(.5,1.3,.9)}}
   if(style===3){put(ball(.1,hairM),head,0,.05,-.44);const pt=put(caps(.06,.14,hairM),head,0,-.12,-.47);pt.rotation.x=.2}
-  // máscara (Ladrão), capuz caído (Desempregado)
+  // máscara (Ladrão), capuz caído (Profissão Personalizada)
   if(L.mask){const m=put(new THREE.Mesh(new THREE.SphereGeometry(HR+.012,24,12,0,Math.PI*2,Math.PI*.55,Math.PI*.45),mat(0x141414)),head,0,0,0);m.rotation.x=.12}
   if(L.hood&&!L.hat){const hd=put(new THREE.Mesh(new THREE.TorusGeometry(.17,.06,8,20),shirtM),torso,0,.62,-.04);hd.rotation.x=Math.PI/2}
   // acessórios do rosto
@@ -1204,7 +1283,7 @@ function buildChar(spec){
   if(T.has("slow_healer"))put(cyl(armR+.012,armR+.012,.1,white),arms[1],0,-.22,0);
   if(T.has("clumsy")||T.has("all_thumbs")){const p=put(new THREE.Mesh(new THREE.BoxGeometry(.11,.035,.04),mat(0xe8c39a)),hands[0],0,-.36,armR+.01);p.rotation.z=.4}
   if(T.has("asthmatic"))put(new THREE.Mesh(new THREE.BoxGeometry(.05,.08,.035),mat(0x3a7ac0)),hands[0],0,-.44,.05);
-  // ferramenta na mão direita (Pacifista fica sem arma)
+  // ferramenta na mão direita (Combatente Relutante fica sem arma)
   const tk=L.tool&&!(T.has("pacifist")&&WEAPON_TOOLS.has(L.tool))?L.tool:null;
   if(tk){const tl=tool(tk);tl.scale.setScalar(1.05);tl.position.set(0,-.42,.05);tl.rotation.x=tk==="rifle"?0:.25;hands[1].add(tl)}
   else if(T.has("pacifist")){const fl=new THREE.Group();fl.add(cyl(.008,.008,.2,mat(0x3f9a3a),6));const pt=ball(.04,mat(0xff7ab0));pt.position.y=.11;fl.add(pt);fl.position.set(0,-.38,.06);hands[1].add(fl)}
@@ -1262,7 +1341,7 @@ function stage(scene){
   scene.add(new THREE.HemisphereLight(0xdfe8d8,0x3a3226,1.1));
   const d=new THREE.DirectionalLight(0xffffff,1.6);d.position.set(2.5,4,3);d.castShadow=true;d.shadow.mapSize.set(512,512);d.shadow.camera.left=-4;d.shadow.camera.right=4;d.shadow.camera.top=4;d.shadow.camera.bottom=-1;scene.add(d);
 }
-function makeRenderer(canvas){const r=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true,preserveDrawingBuffer:!!canvas&&canvas.dataset.keep==="1"});r.setPixelRatio(Math.min(2,window.devicePixelRatio||1));r.outputColorSpace=THREE.SRGBColorSpace;r.shadowMap.enabled=true;return r}
+function makeRenderer(canvas){const eco=document.documentElement.classList.contains("eco3d");const r=new THREE.WebGLRenderer({canvas,antialias:!eco,alpha:true,preserveDrawingBuffer:!!canvas&&canvas.dataset.keep==="1"});r.setPixelRatio(eco?1:Math.min(2,window.devicePixelRatio||1));r.outputColorSpace=THREE.SRGBColorSpace;r.shadowMap.enabled=true;return r}
 function dragRotate(el,get,set){
   let down=false,x0=0,r0=0,last=0;el.style.touchAction="pan-y";
   el.addEventListener("pointerdown",e=>{down=true;x0=e.clientX;r0=get();last=performance.now();el.setPointerCapture(e.pointerId)});
@@ -1270,7 +1349,9 @@ function dragRotate(el,get,set){
   const up=()=>{down=false};el.addEventListener("pointerup",up);el.addEventListener("pointercancel",up);
   return()=>down;
 }
-const visible=el=>el.offsetParent!==null&&!document.hidden;
+// só desenha o que está na tela; no modo econômico, no máximo ~18 quadros por segundo
+const visible=el=>{if(!el._io&&window.IntersectionObserver){el._io=new IntersectionObserver(es=>{el._on=es[es.length-1].isIntersecting});el._io.observe(el)}return el._on!==false&&el.offsetParent!==null&&!document.hidden};
+const skipFrame=(el,now)=>{if(!document.documentElement.classList.contains("eco3d"))return false;if(now-(el._last||0)<55)return true;el._last=now;return false};
 
 // ---------- Montador: um boneco grande ----------
 function hero(el){
@@ -1301,7 +1382,7 @@ function hero(el){
   function size(){const w=el.clientWidth||300,h=el.clientHeight||300;R.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();if(spec)setBadges(spec.badges)}
   new ResizeObserver(size).observe(el);size();
   let t0=performance.now(),prev=t0;
-  (function loop(now){requestAnimationFrame(loop);if(!visible(el))return;const dt=Math.min(.05,(now-prev)/1000);prev=now;const t=(now-t0)/1000;
+  (function loop(now){requestAnimationFrame(loop);if(!visible(el)||skipFrame(el,now))return;const dt=Math.min(.05,(now-prev)/1000);prev=now;const t=(now-t0)/1000;
     if(!isDown())rot+=dt*.25;holder.rotation.y=rot;if(ch)ch.userData.tick(t);if(badges)badges.userData.tick(t);
     if(shake>0){shake-=dt;holder.position.x=Math.sin(t*60)*.04*shake/.5}else holder.position.x=0;
     const pulse=state<0?1+Math.sin(t*6)*.08:1;ring.scale.setScalar(pulse);
@@ -1334,7 +1415,7 @@ function squad(el){
   function size(){const w=el.clientWidth||300,h=el.clientHeight||260;R.setSize(w,h,false);cam.aspect=w/h;const n=Math.max(2,chars.length);labels.classList.toggle("crowded",w/Math.max(1,chars.length)<130);const dist=Math.max(6.4,n*1.9/Math.min(1.6,cam.aspect)+2.4);cam.position.set(0,2.3,dist);cam.lookAt(0,1.05,0);cam.updateProjectionMatrix()}
   new ResizeObserver(size).observe(el);
   let t0=performance.now();const v=new THREE.Vector3();
-  (function loop(now){requestAnimationFrame(loop);if(!visible(el))return;const t=(now-t0)/1000;if(!isDown())rot*=.97;holder.rotation.y=rot+Math.sin(t*.3)*.08;
+  (function loop(now){requestAnimationFrame(loop);if(!visible(el)||skipFrame(el,now))return;const t=(now-t0)/1000;if(!isDown())rot*=.97;holder.rotation.y=rot+Math.sin(t*.3)*.08;
     chars.forEach(c=>c.userData.tick(t));R.render(scene,cam);
     const w=el.clientWidth,h=el.clientHeight;[...labels.children].forEach((lb,i)=>{const c=chars[i];if(!c)return;v.set(0,-.02,.25);c.localToWorld(v);v.project(cam);const tight=labels.classList.contains("crowded");lb.style.transform=`translate(${(v.x*.5+.5)*w}px,${(-v.y*.5+.5)*h}px) translate(-50%,${tight&&i%2?30:6}px)`})})(t0);
   return{set(list){specs=list;holder.clear();chars=list.map((s,i)=>{const c=buildChar(s);const n=list.length;c.position.x=(i-(n-1)/2)*1.45;c.position.z=-Math.abs(i-(n-1)/2)*.35;c.rotation.y=-c.position.x*.08;holder.add(c);return c});
@@ -1362,30 +1443,30 @@ window.PZ3D={hero,squad,portrait,fill,twUrl};dispatchEvent(new Event("pz3d"));
 // ---------- DADOS ----------
 // cost > 0 gasta pontos; cost < 0 devolve. gr = traços grátis (ids da lista); grn = nomes de traços grátis sem custo próprio.
 const PROFS=[
- {id:"construction",pt:"Construtor Civil",en:"Construction Worker",cost:2,sk:{"Contundente Curto":2,"Contundente Longo":1,"Alvenaria":2,"Carpintaria":1,"Manutenção":1},meta:true},
+ {id:"construction",pt:"Pedreiro",en:"Construction Worker",cost:2,sk:{"Contundente Curto":2,"Contundente Longo":1,"Alvenaria":2,"Carpintaria":1,"Manutenção":1},meta:true},
  {id:"carpenter",pt:"Carpinteiro",en:"Carpenter",cost:2,sk:{"Carpintaria":4,"Entalhamento":1,"Contundente Curto":1,"Alvenaria":1,"Manutenção":1}},
  {id:"firefighter",pt:"Bombeiro",en:"Fire Officer",cost:0,sk:{"Corrida":1,"Machado":1,"Agilidade":1,"Passos Leves":1},str:1,fit:1,note:"já começa com roupa de bombeiro"},
- {id:"unemployed",pt:"Desempregado",en:"Custom Occupation",cost:-8,sk:{}},
- {id:"diy",pt:"Faz-Tudo",en:"DIY Expert",cost:2,sk:{"Carpintaria":1,"Manutenção":2,"Contundente Curto":1,"Alvenaria":1}},
+ {id:"unemployed",pt:"Profissão Personalizada",en:"Custom Occupation",cost:-8,sk:{}},
+ {id:"diy",pt:"Técnico",en:"DIY Expert",cost:2,sk:{"Carpintaria":1,"Manutenção":2,"Contundente Curto":1,"Alvenaria":1}},
  {id:"lumberjack",pt:"Lenhador",en:"Lumberjack",cost:0,sk:{"Machado":2,"Manutenção":1},str:1,grn:["Ax-pert"]},
  {id:"security",pt:"Segurança",en:"Security Guard",cost:2,sk:{"Corrida":2,"Passos Leves":1,"Contundente Curto":1}},
  {id:"nurse",pt:"Enfermeiro",en:"Nurse",cost:0,sk:{"Primeiros Socorros":3,"Passos Leves":1},fit:1,grn:["Night Owl"]},
  {id:"doctor",pt:"Médico",en:"Doctor",cost:0,sk:{"Primeiros Socorros":6,"Lâmina Curta":1}},
  {id:"farmer",pt:"Fazendeiro",en:"Farmer",cost:0,sk:{"Agricultura":4,"Cuidado Animal":1},str:1},
- {id:"rancher",pt:"Rancheiro",en:"Rancher",cost:0,sk:{"Cuidado Animal":4,"Açougue":3},fit:1},
- {id:"burger",pt:"Chapeiro",en:"Burger Flipper",cost:-2,sk:{"Culinária":2,"Manutenção":1,"Lâmina Curta":1},gr:["keen_cook"]},
+ {id:"rancher",pt:"Pecuarista",en:"Rancher",cost:0,sk:{"Cuidado Animal":4,"Açougue":3},fit:1},
+ {id:"burger",pt:"Chapista",en:"Burger Flipper",cost:-2,sk:{"Culinária":2,"Manutenção":1,"Lâmina Curta":1},gr:["keen_cook"]},
  {id:"tailor",pt:"Alfaiate",en:"Tailor",cost:-2,sk:{"Costura":4}},
  {id:"chef",pt:"Chef",en:"Chef",cost:2,sk:{"Culinária":4,"Manutenção":1,"Lâmina Curta":1,"Açougue":2}},
  {id:"electrician",pt:"Eletricista",en:"Electrician",cost:2,sk:{"Elétrica":5}},
  {id:"fishing",pt:"Guia de Pesca",en:"Fishing Guide",cost:2,sk:{"Pesca":3,"Coleta":1,"Açougue":1}},
  {id:"engineer",pt:"Engenheiro",en:"Engineer",cost:4,sk:{"Elétrica":1,"Carpintaria":1,"Alvenaria":1}},
  {id:"mechanic",pt:"Mecânico",en:"Mechanic",cost:4,sk:{"Mecânica":4,"Soldagem":1}},
- {id:"ranger",pt:"Guarda-Parque",en:"Park Ranger",cost:4,sk:{"Armadilhas":1,"Primeiros Socorros":1,"Coleta":1,"Lascamento":1,"Entalhamento":1},gr:["herbalist"]},
+ {id:"ranger",pt:"Guarda Florestal",en:"Park Ranger",cost:4,sk:{"Armadilhas":1,"Primeiros Socorros":1,"Coleta":1,"Lascamento":1,"Entalhamento":1},gr:["herbalist"]},
  {id:"police",pt:"Policial",en:"Police Officer",cost:4,sk:{"Mira":4,"Recarga":1,"Agilidade":1}},
  {id:"welder",pt:"Soldador",en:"Welder",cost:4,sk:{"Soldagem":4},note:"42.21: começa com receitas de Soldagem"},
  {id:"blacksmith",pt:"Ferreiro",en:"Blacksmith",cost:6,sk:{"Ferraria":4,"Manutenção":1,"Contundente Curto":1},gr:["blacksmith_k"]},
  {id:"burglar",pt:"Ladrão",en:"Burglar",cost:6,sk:{"Agilidade":2,"Furtividade":2,"Passos Leves":2},grn:["Ligação direta"]},
- {id:"fitness",pt:"Instrutor Fitness",en:"Fitness Instructor",cost:6,sk:{"Corrida":2},fit:3,str:1},
+ {id:"fitness",pt:"Personal Trainer",en:"Fitness Instructor",cost:6,sk:{"Corrida":2},fit:3,str:1},
  {id:"veteran",pt:"Veterano",en:"Veteran",cost:8,sk:{"Mira":2,"Recarga":2},grn:["Desensitized"],ex:["claustrophobic","agoraphobic","hemophobic","cowardly","adrenaline"]}
 ];
 
@@ -1396,7 +1477,7 @@ const POS=[
  {id:"cats_eyes",pt:"Olhos de Gato",en:"Cat's Eyes",cost:3,v:"obr",note:"Na B42 a noite ficou bem mais escura. Sem ele você não enxerga nada."},
  {id:"wakeful",pt:"Madrugador",en:"Wakeful",cost:3,v:"obr",note:"Dorme menos e recupera fadiga mais rápido. “Tem que ter em toda build.”",ex:["sleepyhead"]},
  {id:"dextrous",pt:"Mãos Ágeis",en:"Dextrous",cost:2,v:"obr",note:"Transfere itens bem mais rápido.",ex:["all_thumbs"]},
- {id:"whittler",pt:"Entalhador",en:"Whittler",cost:2,v:"obr",note:"+2 Entalhamento. Obrigatório na build do Shivas para fabricar Short Bat e taco (nível 9–10).",sk:{"Entalhamento":2}},
+ {id:"whittler",pt:"Entalhamento",en:"Whittler",cost:2,v:"obr",note:"+2 Entalhamento. Obrigatório na build do Shivas para fabricar Short Bat e taco (nível 9–10).",sk:{"Entalhamento":2}},
  {id:"fit",pt:"Em Forma",en:"Fit",cost:6,v:"meta",note:"+2 Aptidão. Entrou no fim, no lugar do Herbalista, com o Desastrado pagando a diferença.",fit:2,ex:["athletic","out_of_shape","unfit"]},
  {id:"herbalist",pt:"Herbalista",en:"Herbalist",cost:4,v:"opc",note:"+1 Coleta e identifica comida venenosa. Com a coleta ligada você não passa fome.",sk:{"Coleta":1}},
  {id:"organized",pt:"Organizado",en:"Organized",cost:4,v:"opc",note:"+30% de espaço em mochilas e contêineres. Ele não joga sem, mas não coube aqui.",ex:["disorganized"]},
@@ -1405,50 +1486,50 @@ const POS=[
  {id:"brave",pt:"Corajoso",en:"Brave",cost:4,v:"opc",note:"Menos pânico no começo. Depois de alguns meses vivo faz pouca diferença.",ex:["cowardly"]},
  {id:"graceful",pt:"Gracioso",en:"Graceful",cost:4,v:"opc",note:"Passos mais silenciosos e menos tropeço. Tanto faz.",ex:["clumsy"]},
  {id:"outdoorsy",pt:"Andarilho",en:"Outdoorsman",cost:2,v:"opc",note:"Só obrigatório se o servidor tiver clima muito frio."},
- {id:"target_shooter",pt:"Atirador",en:"Target Shooter",cost:5,v:"opc",note:"Traço novo da B42, +1 Mira. Só se a build for de tiro.",sk:{"Mira":1}},
+ {id:"target_shooter",pt:"Atirador de Tiro ao Alvo",en:"Target Shooter",cost:5,v:"opc",note:"Traço novo da B42, +1 Mira. Só se a build for de tiro.",sk:{"Mira":1}},
  {id:"athletic",pt:"Atlético",en:"Athletic",cost:10,v:"dis",note:"+4 Aptidão. Ótimo, mas não cabe nos pontos da build do Shivas.",fit:4,ex:["fit","out_of_shape","unfit","smoker"]},
- {id:"strong",pt:"Forte",en:"Strong",cost:10,v:"dis",note:"+4 Força. Não cabe na build do Shivas.",str:4,ex:["stout","weak","puny"]},
- {id:"stout",pt:"Robusto",en:"Stout",cost:6,v:"neu",note:"+2 Força.",str:2,ex:["strong","weak","puny"]},
- {id:"handy",pt:"Habilidoso",en:"Handy",cost:8,v:"dis",note:"O Construtor Civil já dá Carpintaria e Manutenção. Bom para o construtor de um time.",sk:{"Entalhamento":1,"Manutenção":1,"Alvenaria":1,"Carpintaria":1}},
+ {id:"strong",pt:"Musculoso",en:"Strong",cost:10,v:"dis",note:"+4 Força. Não cabe na build do Shivas.",str:4,ex:["stout","weak","puny"]},
+ {id:"stout",pt:"Forte",en:"Stout",cost:6,v:"neu",note:"+2 Força.",str:2,ex:["strong","weak","puny"]},
+ {id:"handy",pt:"Habilidoso",en:"Handy",cost:8,v:"dis",note:"O Pedreiro já dá Carpintaria e Manutenção. Bom para o construtor de um time.",sk:{"Entalhamento":1,"Manutenção":1,"Alvenaria":1,"Carpintaria":1}},
  {id:"hunter",pt:"Caçador",en:"Hunter",cost:8,v:"dis",note:"Não precisa na build solo. No time, vai bem no batedor que caça.",sk:{"Mira":1,"Rastreamento":1,"Furtividade":1,"Lâmina Curta":1,"Açougue":1}},
- {id:"bushcrafter",pt:"Bushcraft",en:"Bushcrafter",cost:8,v:"dis",note:"Caro demais para a build solo.",sk:{"Coleta":1,"Lascamento":1,"Manutenção":1,"Entalhamento":1}},
- {id:"blacksmith_k",pt:"Ferreiro (traço)",en:"Blacksmith Knowledge",cost:6,v:"dis",note:"Não precisa na build solo.",sk:{"Ferraria":2,"Manutenção":1}},
- {id:"hiker",pt:"Sobrevivencialista",en:"Hiker",cost:5,v:"dis",note:"+1 Coleta e +1 Armadilhas. Ficou de fora.",sk:{"Coleta":1,"Armadilhas":1}},
- {id:"former_scout",pt:"Escoteiro",en:"Former Scout",cost:6,v:"dis",note:"Ficou de fora.",sk:{"Primeiros Socorros":1,"Coleta":1,"Pesca":1}},
+ {id:"bushcrafter",pt:"Sobrevivencialista",en:"Bushcrafter",cost:8,v:"dis",note:"Caro demais para a build solo.",sk:{"Coleta":1,"Lascamento":1,"Manutenção":1,"Entalhamento":1}},
+ {id:"blacksmith_k",pt:"Conhecimento em Ferraria",en:"Blacksmith Knowledge",cost:6,v:"dis",note:"Não precisa na build solo.",sk:{"Ferraria":2,"Manutenção":1}},
+ {id:"hiker",pt:"Trilheiro",en:"Hiker",cost:5,v:"dis",note:"+1 Coleta e +1 Armadilhas. Ficou de fora.",sk:{"Coleta":1,"Armadilhas":1}},
+ {id:"former_scout",pt:"Ex-Escoteiro",en:"Former Scout",cost:6,v:"dis",note:"Ficou de fora.",sk:{"Primeiros Socorros":1,"Coleta":1,"Pesca":1}},
  {id:"brawler",pt:"Brigão",en:"Brawler",cost:6,v:"dis",note:"+1 Contundente Longo e +1 Machado.",sk:{"Machado":1,"Contundente Longo":1}},
- {id:"baseball",pt:"Jogador de Beisebol",en:"Baseball Player",cost:4,v:"dis",note:"O Construtor já começa com Contundente Longo.",sk:{"Contundente Longo":1}},
- {id:"tinkerer",pt:"Mexedor",en:"Tinkerer",cost:4,v:"dis",note:"+1 Manutenção.",sk:{"Manutenção":1}},
+ {id:"baseball",pt:"Jogador de Beisebol",en:"Baseball Player",cost:4,v:"dis",note:"O Pedreiro já começa com Contundente Longo.",sk:{"Contundente Longo":1}},
+ {id:"tinkerer",pt:"Faz-tudo",en:"Tinkerer",cost:4,v:"dis",note:"+1 Manutenção.",sk:{"Manutenção":1}},
  {id:"angler",pt:"Pescador",en:"Angler",cost:4,v:"dis",note:"Pescar é fácil, ainda mais vendo os programas de TV no início.",sk:{"Pesca":1}},
  {id:"sewer",pt:"Costureiro",en:"Sewer",cost:4,v:"dis",note:"Não precisa na build solo.",sk:{"Costura":1}},
  {id:"runner",pt:"Corredor",en:"Runner",cost:4,v:"dis",note:"Não precisa na build solo.",sk:{"Corrida":1}},
  {id:"vehicle_k",pt:"Mecânico Amador",en:"Vehicle Knowledge",cost:3,v:"dis",note:"+1 Mecânica.",sk:{"Mecânica":1}},
  {id:"nutritionist",pt:"Nutricionista",en:"Nutritionist",cost:2,v:"dis",note:"Mostra valores nutricionais. Não precisa."},
- {id:"fast_reader",pt:"Leitor Rápido",en:"Fast Reader",cost:2,v:"neu",note:"Lê 30% mais rápido.",ex:["slow_reader","illiterate"]},
+ {id:"fast_reader",pt:"Leitura Dinâmica",en:"Fast Reader",cost:2,v:"neu",note:"Lê 30% mais rápido.",ex:["slow_reader","illiterate"]},
  {id:"eagle_eyed",pt:"Olhos de Águia",en:"Eagle Eyed",cost:4,v:"neu",note:"Campo de visão maior.",ex:["short_sighted"]},
  {id:"inconspicuous",pt:"Discreto",en:"Inconspicuous",cost:4,v:"neu",note:"Zumbis te notam menos.",ex:["conspicuous"]},
- {id:"resilient",pt:"Resistente",en:"Resilient",cost:4,v:"neu",note:"Adoece menos.",ex:["prone_illness"]},
- {id:"fast_healer",pt:"Cura Rápida",en:"Fast Healer",cost:6,v:"neu",note:"Ferimentos mais leves.",ex:["slow_healer"]},
- {id:"thick_skinned",pt:"Pele Grossa",en:"Thick-skinned",cost:8,v:"neu",note:"Menos chance de ferimento.",ex:["thin_skinned"]},
+ {id:"resilient",pt:"Resiliente",en:"Resilient",cost:4,v:"neu",note:"Adoece menos.",ex:["prone_illness"]},
+ {id:"fast_healer",pt:"Cicatrização Rápida",en:"Fast Healer",cost:6,v:"neu",note:"Ferimentos mais leves.",ex:["slow_healer"]},
+ {id:"thick_skinned",pt:"Casca Grossa",en:"Thick-skinned",cost:8,v:"neu",note:"Menos chance de ferimento.",ex:["thin_skinned"]},
  {id:"iron_gut",pt:"Estômago de Ferro",en:"Iron Gut",cost:2,v:"neu",note:"Menos intoxicação alimentar.",ex:["weak_stomach"]},
- {id:"light_eater",pt:"Come Pouco",en:"Light Eater",cost:2,v:"neu",note:"Menos fome.",ex:["hearty_appetite"]},
- {id:"low_thirst",pt:"Pouca Sede",en:"Low Thirst",cost:2,v:"neu",note:"Menos sede.",ex:["high_thirst"]},
+ {id:"light_eater",pt:"Estômago Pequeno",en:"Light Eater",cost:2,v:"neu",note:"Menos fome.",ex:["hearty_appetite"]},
+ {id:"low_thirst",pt:"Hidratado",en:"Low Thirst",cost:2,v:"neu",note:"Menos sede.",ex:["high_thirst"]},
  {id:"crafty",pt:"Engenhoso",en:"Crafty",cost:3,v:"neu",note:"+30% de XP de fabricação."},
- {id:"mason",pt:"Pedreiro",en:"Mason",cost:2,v:"neu",note:"+2 Alvenaria.",sk:{"Alvenaria":2}},
- {id:"first_aider",pt:"Socorrista",en:"First Aider",cost:2,v:"neu",note:"+1 Primeiros Socorros.",sk:{"Primeiros Socorros":1}},
+ {id:"mason",pt:"Alvenaria",en:"Mason",cost:2,v:"neu",note:"+2 Alvenaria.",sk:{"Alvenaria":2}},
+ {id:"first_aider",pt:"Primeiros Socorros",en:"First Aider",cost:2,v:"neu",note:"+1 Primeiros Socorros.",sk:{"Primeiros Socorros":1}},
  {id:"gardener",pt:"Jardineiro",en:"Gardener",cost:2,v:"neu",note:"+1 Agricultura.",sk:{"Agricultura":1}},
  {id:"keen_cook",pt:"Cozinheiro",en:"Keen Cook",cost:3,v:"neu",note:"+2 Culinária, +1 Açougue.",sk:{"Culinária":2,"Açougue":1}},
- {id:"artisan",pt:"Artesão",en:"Artisan",cost:2,v:"neu",note:"+1 Vidraria, +1 Cerâmica.",sk:{"Vidraria":1,"Cerâmica":1}},
+ {id:"artisan",pt:"Artesanato",en:"Artisan",cost:2,v:"neu",note:"+1 Vidraria, +1 Cerâmica.",sk:{"Vidraria":1,"Cerâmica":1}},
  {id:"inventive",pt:"Inventor",en:"Inventive",cost:2,v:"neu",note:"Aprende receitas pesquisando itens com menos exigência de perícia. O Knine usa na build dele."}
 ];
 
 const NEG=[
  {id:"thin_skinned",pt:"Pele Frágil",en:"Thin-skinned",cost:8,v:"meta",note:"Mais chance de ferir nos arbustos e da mordida passar a roupa. Solução: não seja mordido.",ex:["thick_skinned"]},
- {id:"conspicuous",pt:"Estabanado",en:"Conspicuous",cost:4,v:"meta",note:"Zumbis te percebem mais. “Todo mundo pega.” Evite só em gameplay furtiva.",ex:["inconspicuous"]},
+ {id:"conspicuous",pt:"Chamativo",en:"Conspicuous",cost:4,v:"meta",note:"Zumbis te percebem mais. “Todo mundo pega.” Evite só em gameplay furtiva.",ex:["inconspicuous"]},
  {id:"prone_illness",pt:"Baixa Imunidade",en:"Prone to Illness",cost:4,v:"meta",note:"Zumbifica mais rápido, mas mordido já está morto de qualquer jeito.",ex:["resilient"]},
- {id:"slow_healer",pt:"Saúde Fraca",en:"Slow Healer",cost:3,v:"meta",note:"Recupera mais devagar. Ele sempre pega.",ex:["fast_healer"]},
+ {id:"slow_healer",pt:"Cicatrização Lenta",en:"Slow Healer",cost:3,v:"meta",note:"Recupera mais devagar. Ele sempre pega.",ex:["fast_healer"]},
  {id:"weak_stomach",pt:"Estômago Fraco",en:"Weak Stomach",cost:2,v:"meta",note:"Só não coma nada podre, cru ou queimado.",ex:["iron_gut"]},
- {id:"short_sighted",pt:"Míope",en:"Short Sighted",cost:2,v:"meta",note:"Pegue óculos na roupa inicial e a penalidade some.",ex:["eagle_eyed"]},
- {id:"slow_reader",pt:"Semianalfabeto",en:"Slow Reader",cost:2,v:"meta",note:"No multiplayer a leitura costuma ser acelerada. No offline, acelere o tempo.",ex:["fast_reader","illiterate"]},
+ {id:"short_sighted",pt:"Miopia",en:"Short Sighted",cost:2,v:"meta",note:"Pegue óculos na roupa inicial e a penalidade some.",ex:["eagle_eyed"]},
+ {id:"slow_reader",pt:"Leitura Lenta",en:"Slow Reader",cost:2,v:"meta",note:"No multiplayer a leitura costuma ser acelerada. No offline, acelere o tempo.",ex:["fast_reader","illiterate"]},
  {id:"high_thirst",pt:"Sedento",en:"High Thirst",cost:2,v:"meta",note:"Dobro de sede. Ande com 2 ou 3 garrafas d'água.",ex:["low_thirst"]},
  {id:"claustrophobic",pt:"Claustrofóbico",en:"Claustrophobic",cost:4,v:"opc",note:"Pânico em lugar fechado. Um gole de álcool resolve. Para de incomodar depois de 3–5 meses."},
  {id:"smoker",pt:"Fumante",en:"Smoker",cost:3,v:"opc",note:"Na B42 é mais difícil achar cigarro. No time, no máximo um fumante.",ex:["athletic"]},
@@ -1457,10 +1538,10 @@ const NEG=[
  {id:"weak",pt:"Fraco",en:"Weak",cost:6,v:"opc",note:"Força 5→3. Alternativa ao Desastrado para fechar a build.",str:-2,ex:["puny","stout","strong"]},
  {id:"out_of_shape",pt:"Fora de Forma",en:"Out of Shape",cost:6,v:"opc",note:"Aptidão −2. Aptidão é mais difícil de upar que Força.",fit:-2,ex:["fit","athletic","unfit"]},
  {id:"sunday_driver",pt:"Ruim de Volante",en:"Sunday Driver",cost:1,v:"evi",note:"Dirige muito devagar. Só se você quase não dirige.",ex:["speed_demon"]},
- {id:"puny",pt:"Fracote",en:"Puny",cost:10,v:"evi",note:"Força 0. O Shivas usa e upa para 5 rápido, mas não recomenda para a maioria.",str:-5,ex:["weak","stout","strong"]},
- {id:"unfit",pt:"Sedentário",en:"Unfit",cost:10,v:"evi",note:"Aptidão 1. Mesma lógica do Fracote: só para quem upa rápido.",fit:-4,ex:["fit","athletic","out_of_shape"]},
- {id:"pacifist",pt:"Pacifista",en:"Reluctant Fighter",cost:5,v:"evi",note:"−25% XP em armas. Ele pegaria, mas não recomenda para o público geral."},
- {id:"fast_metabolism",pt:"Metabolismo Rápido",en:"Fast Metabolism",cost:2,v:"evi",note:"O meta é o lento: perder peso é fácil, ganhar é difícil.",fit:-1,ex:["slow_metabolism"]},
+ {id:"puny",pt:"Franzino",en:"Puny",cost:10,v:"evi",note:"Força 0. O Shivas usa e upa para 5 rápido, mas não recomenda para a maioria.",str:-5,ex:["weak","stout","strong"]},
+ {id:"unfit",pt:"Sedentário",en:"Unfit",cost:10,v:"evi",note:"Aptidão 1. Mesma lógica do Franzino: só para quem upa rápido.",fit:-4,ex:["fit","athletic","out_of_shape"]},
+ {id:"pacifist",pt:"Combatente Relutante",en:"Reluctant Fighter",cost:5,v:"evi",note:"−25% XP em armas. Ele pegaria, mas não recomenda para o público geral."},
+ {id:"fast_metabolism",pt:"Metabolismo Acelerado",en:"Fast Metabolism",cost:2,v:"evi",note:"O meta é o lento: perder peso é fácil, ganhar é difícil.",fit:-1,ex:["slow_metabolism"]},
  {id:"hearty_appetite",pt:"Comilão",en:"Hearty Appetite",cost:4,v:"evi",note:"+50% de fome. Só em último caso para fechar pontos.",ex:["light_eater"]},
  {id:"agoraphobic",pt:"Agorafóbico",en:"Agoraphobic",cost:4,v:"evi",note:"Pânico em qualquer lugar aberto."},
  {id:"disorganized",pt:"Desorganizado",en:"Disorganized",cost:6,v:"evi",note:"−30% de espaço em tudo.",ex:["organized"]},
@@ -1471,8 +1552,8 @@ const NEG=[
  {id:"restless",pt:"Sono Leve",en:"Restless Sleeper",cost:6,v:"nun",note:"Nunca escolha."},
  {id:"sleepyhead",pt:"Dorminhoco",en:"Sleepyhead",cost:4,v:"nun",note:"Precisa dormir mais. Nunca escolha.",ex:["wakeful"]},
  {id:"slow_learner",pt:"Aprendiz Lento",en:"Slow Learner",cost:6,v:"nun",note:"−30% de XP em tudo.",ex:["fast_learner"]},
- {id:"hemophobic",pt:"Fobia de Sangue",en:"Fear of Blood",cost:5,v:"nun",note:"Em jogo de zumbi você vive sujo de sangue: estresse e −30% de dano."},
- {id:"asthmatic",pt:"Asmático",en:"Short of Breath",cost:5,v:"nun",note:"Permanente. +40% de perda de fôlego correndo, +20% batendo."},
+ {id:"hemophobic",pt:"Hemofóbico",en:"Fear of Blood",cost:5,v:"nun",note:"Em jogo de zumbi você vive sujo de sangue: estresse e −30% de dano."},
+ {id:"asthmatic",pt:"Ofegante",en:"Short of Breath",cost:5,v:"nun",note:"Permanente. +40% de perda de fôlego correndo, +20% batendo."},
  {id:"illiterate",pt:"Analfabeto",en:"Illiterate",cost:10,v:"neu",note:"Não lê livros nem aprende receitas por leitura.",ex:["slow_reader","fast_reader"]}
 ];
 
@@ -1511,30 +1592,30 @@ const CORE=["keen_hearing","fast_learner","cats_eyes","wakeful","dextrous"]; // 
 
 // ch = canal; sty = estilos; why = por que funciona; care = ponto fraco; fix = ajuste feito pela ficha
 const LIB=[
- {id:"shivas",ch:"shivas",nm:"Construtor do Taco",sty:["Combate","Longo prazo"],prof:"construction",
+ {id:"shivas",ch:"shivas",nm:"Pedreiro do Taco",sty:["Combate","Longo prazo"],prof:"construction",
   d:"A build que o Shivas usa no save de quase 10 anos: começa batendo com duas contundentes e sobe Entalhamento para fabricar a própria arma.",
-  why:["Construtor Civil é a única profissão com Contundente Curto e Longo, além de Alvenaria e Manutenção.","Entalhador +2 acelera o Entalhamento: o Bastão Curto sai no 7 (com revista) e o taco artesanal no 9.","Audição Aguçada, Olhos de Gato, Madrugador e Mãos Ágeis são o que ele chama de obrigatório em toda build.","Paga tudo com negativos que só pesam se você errar: não ser mordido, não comer podre, usar óculos."],
+  why:["Pedreiro é a única profissão com Contundente Curto e Longo, além de Alvenaria e Manutenção.","O traço Entalhamento (+2) acelera a perícia Entalhamento: o Bastão Curto sai no 7 (com revista) e o taco artesanal no 9.","Audição Aguçada, Olhos de Gato, Madrugador e Mãos Ágeis são o que ele chama de obrigatório em toda build.","Paga tudo com negativos que só pesam se você errar: não ser mordido, não comer podre, usar óculos."],
   care:"Fumante e Claustrofóbico exigem cigarro e álcool por perto. Pele Frágil não perdoa descuido.",
   traits:["thin_skinned","prone_illness","claustrophobic","conspicuous","smoker","slow_healer","clumsy","weak_stomach","short_sighted","high_thirst","slow_reader","speed_demon","dextrous","whittler","wakeful","cats_eyes","gymnast","fast_learner","keen_hearing","fit"]},
- {id:"shivas_herb",ch:"shivas",nm:"Construtor Herbalista",sty:["Combate","Longo prazo"],prof:"construction",
+ {id:"shivas_herb",ch:"shivas",nm:"Pedreiro Herbalista",sty:["Combate","Longo prazo"],prof:"construction",
   d:"Variante do mesmo vídeo: troca Em Forma + Desastrado pelo Herbalista.",
   why:["Com a coleta ligada você sempre acha fruta e cogumelo e nunca passa fome.","Herbalista identifica o que é venenoso sem precisar achar a revista.","O resto da build é igual à principal."],
   care:"Aptidão fica em 5: cansa mais rápido nas primeiras brigas.",
   traits:["thin_skinned","prone_illness","claustrophobic","conspicuous","smoker","slow_healer","weak_stomach","short_sighted","high_thirst","slow_reader","speed_demon","dextrous","whittler","wakeful","cats_eyes","gymnast","fast_learner","keen_hearing","herbalist"]},
  {id:"knine",ch:"knine",nm:"Bombeiro 8/8",sty:["Iniciante","Combate"],prof:"firefighter",
   d:"A build que o Knine diz usar “bastante” na versão nova: Bombeiro com Força e Aptidão 8, pago com 12 negativos.",
-  why:["Bombeiro custa 0, nasce com roupa de bombeiro e machado, e já soma +1 Força e +1 Aptidão.","Em Forma + Robusto levam os dois atributos a 8: menos cansaço e mais dano desde o dia 1.","Organizado e Mãos Ágeis aceleram o loot; Inventor ajuda a aprender receitas.","Audição Aguçada e Olhos de Gato cobrem as costas e a noite escura da B42."],
-  care:"São 12 negativos. Fumante sem cigarro acorda em pânico, e Pacifista corta 25% do XP de arma.",
+  why:["Bombeiro custa 0, nasce com roupa de bombeiro e machado, e já soma +1 Força e +1 Aptidão.","Em Forma + Forte levam os dois atributos a 8: menos cansaço e mais dano desde o dia 1.","Organizado e Mãos Ágeis aceleram o loot; Inventor ajuda a aprender receitas.","Audição Aguçada e Olhos de Gato cobrem as costas e a noite escura da B42."],
+  care:"São 12 negativos. Fumante sem cigarro acorda em pânico, e Combatente Relutante corta 25% do XP de arma.",
   traits:["thin_skinned","pacifist","prone_illness","conspicuous","hearty_appetite","slow_healer","smoker","clumsy","weak_stomach","slow_reader","short_sighted","high_thirst","speed_demon","inventive","dextrous","cats_eyes","organized","gymnast","fast_learner","keen_hearing","fit","stout"]},
- {id:"gambarine",ch:"gambarine",nm:"Construtor Sem Cansaço",sty:["Iniciante","Combate"],prof:"construction",
+ {id:"gambarine",ch:"gambarine",nm:"Pedreiro Sem Cansaço",sty:["Iniciante","Combate"],prof:"construction",
   d:"A primeira build que o Gambarine sugere para quem chega na B42: aprender a lidar com o cansaço muscular.",
   why:["O maior choque da B42 é o cansaço muscular, e ele cai conforme o nível da arma que você usa.","Brigão + Jogador de Beisebol levam Contundente Longo a 3. Segundo ele, assim você “praticamente não sente” o cansaço.","Habilidoso dá Manutenção 2 para a arma durar, e Em Forma deixa Aptidão em 7."],
   care:"Ele mesmo diz que não é a melhor build, é uma build de treino. Depois de pegar o jeito, troque por outra.",
-  fix:"O short só mostra os positivos. Os negativos aqui são os 6 padrão + Míope + Sedento, completados pela ficha.",
+  fix:"O short só mostra os positivos. Os negativos aqui são os 6 padrão + Miopia + Sedento, completados pela ficha.",
   traits:STD6.concat(["short_sighted","high_thirst","brawler","baseball","handy","fit"])},
- {id:"laughter_constr",ch:"laughter",nm:"Construtor de Saque",sty:["Iniciante","Combate"],prof:"construction",
+ {id:"laughter_constr",ch:"laughter",nm:"Pedreiro de Saque",sty:["Iniciante","Combate"],prof:"construction",
   d:"A “build de luta mais simples do jogo”: mata tudo na área e depois entra com as bolsas para saquear.",
-  why:["Construtor já começa com Contundente Curto, Longo e Manutenção.","Atlético dá Aptidão 9 e muito fôlego; Ginasta dá +1 Agilidade.","Aprendiz Rápido + Mãos Ágeis, que ele considera obrigatórios em qualquer build.","Só usa os 6 negativos padrão + Sedento: nada que atrapalhe a luta."],
+  why:["Pedreiro já começa com Contundente Curto, Longo e Manutenção.","Atlético dá Aptidão 9 e muito fôlego; Ginasta dá +1 Agilidade.","Aprendiz Rápido + Mãos Ágeis, que ele considera obrigatórios em qualquer build.","Só usa os 6 negativos padrão + Sedento: nada que atrapalhe a luta."],
   care:"Sem Audição Aguçada e sem Olhos de Gato. Cuidado com a noite e com zumbi nas costas.",
   traits:STD6.concat(["high_thirst","athletic","gymnast","fast_learner","dextrous"])},
  {id:"laughter_fire",ch:"laughter",nm:"Bombeiro da Extinção",sty:["Extinção","Combate"],prof:"firefighter",
@@ -1544,55 +1625,55 @@ const LIB=[
   traits:STD6.concat(["high_thirst","claustrophobic","dextrous","fast_learner","gymnast","athletic","brawler"])},
  {id:"laughter_cop",ch:"laughter",nm:"Policial Mira 6",sty:["Tiro"],prof:"police",
   d:"Build especializada em uma coisa só: matar zumbi com arma de fogo.",
-  why:["Atirador + Caçador somam +2 Mira: começa com Mira 6, nível em que o pânico não atrapalha mais o tiro.","Robusto e Organizado aumentam a carga para levar munição.","Fobia de Sangue, Asmático e Fora de Forma quase não pesam porque você mantém distância.","Come Pouco entrou por falta de outro traço de 2, mas significa menos pausa para comer."],
+  why:["Atirador de Tiro ao Alvo + Caçador somam +2 Mira: começa com Mira 6, nível em que o pânico não atrapalha mais o tiro.","Forte e Organizado aumentam a carga para levar munição.","Hemofóbico, Ofegante e Fora de Forma quase não pesam porque você mantém distância.","Estômago Pequeno entrou por falta de outro traço de 2, mas significa menos pausa para comer."],
   care:"Tiro faz barulho e chama horda. Sem munição a build fica fraca no corpo a corpo.",
   traits:STD6.concat(["cowardly","claustrophobic","hemophobic","asthmatic","out_of_shape","target_shooter","hunter","stout","organized","speed_demon","inventive","dextrous","fast_learner","gymnast","light_eater"])},
  {id:"laughter_burglar",ch:"laughter",nm:"Atropelador",sty:["Iniciante","Veículos"],prof:"burglar",
   d:"Combate pelo para-brisa: o Ladrão faz ligação direta desde o início, então tem carro sobrando para gastar limpando horda.",
-  why:["Ligação direta de saída: não precisa de Mecânica nem Elétrica para pegar carro.","Bom de Volante deixa o carro uma arma viável.","Atlético e Forte deixam a build fácil para iniciante. Dá para trocar por traços de sobrevivência.","Sobrevivencialista (+1 Coleta, +1 Armadilhas) garante comida a longo prazo."],
-  care:"Pacifista, Fobia de Sangue, Asmático e Covarde: fora do carro você é ruim de briga. Pensado para o Apocalipse, não para o Extinção.",
+  why:["Ligação direta de saída: não precisa de Mecânica nem Elétrica para pegar carro.","Bom de Volante deixa o carro uma arma viável.","Atlético e Musculoso deixam a build fácil para iniciante. Dá para trocar por traços de sobrevivência.","Trilheiro (+1 Coleta, +1 Armadilhas) garante comida a longo prazo."],
+  care:"Combatente Relutante, Hemofóbico, Ofegante e Covarde: fora do carro você é ruim de briga. Pensado para o Apocalipse, não para o Extinção.",
   traits:STD6.concat(["cowardly","pacifist","asthmatic","hemophobic","athletic","strong","fast_learner","dextrous","speed_demon","hiker"])},
  {id:"laughter_smith",ch:"laughter",nm:"Ferreiro de Longo Prazo",sty:["Longo prazo"],prof:"blacksmith",r:["base"],
   d:"Para quem vai jogar meses no mesmo save: fica mais forte com o tempo sem ser fraco no começo.",
-  why:["Ferreiro é a profissão mais “endgame”: faz as próprias ferramentas e armas depois.","Fraco e Fora de Forma dão 12 pontos; Força e Aptidão sobem com exercício a longo prazo.","Covarde e Claustrofóbico perdem efeito com o tempo, porque o pânico zera segundos depois que a ameaça some.","Muitos traços de +1 (Escoteiro, Ginasta, Atirador, Mecânico Amador) e utilidade (Olhos de Gato, Madrugador, Inventor)."],
-  care:"Começa com Força 3 e Aptidão 3. Para saves de mais de um ano, ele sugere trocar por Fracote e Sedentário.",
+  why:["Ferreiro é a profissão mais “endgame”: faz as próprias ferramentas e armas depois.","Fraco e Fora de Forma dão 12 pontos; Força e Aptidão sobem com exercício a longo prazo.","Covarde e Claustrofóbico perdem efeito com o tempo, porque o pânico zera segundos depois que a ameaça some.","Muitos traços de +1 (Ex-Escoteiro, Ginasta, Atirador de Tiro ao Alvo, Mecânico Amador) e utilidade (Olhos de Gato, Madrugador, Inventor)."],
+  care:"Começa com Força 3 e Aptidão 3. Para saves de mais de um ano, ele sugere trocar por Franzino e Sedentário.",
   traits:STD6.concat(["cowardly","claustrophobic","out_of_shape","weak","dextrous","fast_learner","former_scout","gymnast","target_shooter","cats_eyes","wakeful","inventive","vehicle_k"])},
- {id:"laughter_burger",ch:"laughter",nm:"Chapeiro da Faca",sty:["Extinção","Furtivo"],prof:"burger",
+ {id:"laughter_burger",ch:"laughter",nm:"Chapista da Faca",sty:["Extinção","Furtivo"],prof:"burger",
   d:"Alternativa ao Bombeiro no Extinção: furtiva e focada em Lâmina Curta.",
-  why:["No Extinção os zumbis têm mais vida, e a morte instantânea da faca passa a valer muito.","Chapeiro devolve 2 pontos e já dá Lâmina Curta e Manutenção.","Ginasta e Gracioso para furtividade e Agilidade; Robusto e Em Forma para Força e Aptidão 7."],
+  why:["No Extinção os zumbis têm mais vida, e a morte instantânea da faca passa a valer muito.","Chapista devolve 2 pontos e já dá Lâmina Curta e Manutenção.","Ginasta e Gracioso para furtividade e Agilidade; Forte e Em Forma para Força e Aptidão 7."],
   care:"No Apocalipse a faca rende menos, porque machado e contundente longo já matam rápido.",
   traits:STD6.concat(["claustrophobic","dextrous","fast_learner","gymnast","graceful","stout","fit"])},
  {id:"laughter_eng",ch:"laughter",nm:"Engenheiro Cientista Maluco",sty:["Longo prazo"],prof:"engineer",r:["energia"],
   d:"A build “mais eficiente para matar zumbi” da lista dele: bônus em quase toda perícia e bomba de cano para limpar cidade.",
-  why:["Engenheiro faz bombas de cano que limpam uma cidade com poucas unidades.","Começa com Elétrica 1 e, com Mecânico Amador, faz ligação direta cedo. Também sabe operar gerador.","Habilidoso, Caçador, Escoteiro e Sobrevivencialista dão nível em quase tudo."],
-  care:"Muito ruim no corpo a corpo e propenso a pânico (7 negativos extras). Se quiser lutar normal, ele sugere tirar Pacifista, Habilidoso e Inventor e pôr Atirador.",
+  why:["Engenheiro faz bombas de cano que limpam uma cidade com poucas unidades.","Começa com Elétrica 1 e, com Mecânico Amador, faz ligação direta cedo. Também sabe operar gerador.","Habilidoso, Caçador, Ex-Escoteiro e Trilheiro dão nível em quase tudo."],
+  care:"Muito ruim no corpo a corpo e propenso a pânico (7 negativos extras). Se quiser lutar normal, ele sugere tirar Combatente Relutante, Habilidoso e Inventor e pôr Atirador de Tiro ao Alvo.",
   traits:STD6.concat(["hemophobic","disorganized","pacifist","asthmatic","claustrophobic","smoker","cowardly","speed_demon","dextrous","inventive","cats_eyes","vehicle_k","gymnast","hiker","fast_learner","former_scout","handy","hunter"])},
- {id:"laughter_cozy",ch:"laughter",nm:"Rancheiro Tranquilo",sty:["Sem combate"],prof:"rancher",
+ {id:"laughter_cozy",ch:"laughter",nm:"Pecuarista Tranquilo",sty:["Sem combate"],prof:"rancher",
   d:"Para quem quer fazenda e bicho, não briga: todos os negativos são de combate.",
-  why:["Rancheiro dá Cuidado Animal 4 (mais leite e ovos) e Açougue 3.","Fobia de Sangue, Pacifista, Asmático, Covarde e Desastrado não pesam se você não luta.","Forte para carregar tora e tábua; Habilidoso, Sobrevivencialista, Escoteiro e Ferreiro (traço) cobrem construção e sobrevivência."],
-  care:"Péssimo em briga. No multiplayer ele sugere tirar Semianalfabeto, porque não dá para acelerar o tempo.",
+  why:["Pecuarista dá Cuidado Animal 4 (mais leite e ovos) e Açougue 3.","Hemofóbico, Combatente Relutante, Ofegante, Covarde e Desastrado não pesam se você não luta.","Musculoso para carregar tora e tábua; Habilidoso, Trilheiro, Ex-Escoteiro e Conhecimento em Ferraria cobrem construção e sobrevivência."],
+  care:"Péssimo em briga. No multiplayer ele sugere tirar Leitura Lenta, porque não dá para acelerar o tempo.",
   traits:STD6.concat(["short_sighted","out_of_shape","hemophobic","pacifist","asthmatic","cowardly","clumsy","strong","handy","hiker","former_scout","blacksmith_k","speed_demon","wakeful","cats_eyes","dextrous","fast_learner"])},
- {id:"egg",ch:"egg",nm:"Desempregado Forte e Atlético",sty:["Iniciante","Combate"],prof:"unemployed",r:["frente"],
+ {id:"egg",ch:"egg",nm:"Personalizada Musculoso e Atlético",sty:["Iniciante","Combate"],prof:"unemployed",r:["frente"],
   d:"A build da série de iniciante do canal: sem profissão para ter o máximo de pontos e gastar em atributo.",
-  why:["Desempregado devolve 8 pontos, e os 8 negativos baratos fecham 35 pontos para gastar.","Atlético e Forte: Aptidão 9, Força 9. Ele considera os dois os mais chatos de upar, então compra logo.","Olhos de Gato porque a noite da B42 ficou muito escura; Organizado e Mãos Ágeis para o loot."],
+  why:["Profissão Personalizada devolve 8 pontos, e os 8 negativos baratos fecham 35 pontos para gastar.","Atlético e Musculoso: Aptidão 9, Força 9. Ele considera os dois os mais chatos de upar, então compra logo.","Olhos de Gato porque a noite da B42 ficou muito escura; Organizado e Mãos Ágeis para o loot."],
   care:"Começa sem nenhuma perícia de arma. Os livros e revistas que achar decidem a arma.",
   traits:["clumsy","high_thirst","slow_reader","weak_stomach","slow_healer","conspicuous","prone_illness","thin_skinned","athletic","strong","fast_learner","cats_eyes","organized","dextrous"]},
- {id:"orbanjo",ch:"orbanjo",nm:"Construtor Equilibrado",sty:["Combate"],prof:"construction",
+ {id:"orbanjo",ch:"orbanjo",nm:"Pedreiro Equilibrado",sty:["Combate"],prof:"construction",
   d:"A build que ele usa sempre: corpo a corpo forte no começo e pontos espalhados em outras coisas.",
-  why:["Construtor é a profissão padrão dele por causa do bônus nas duas contundentes.","Robusto dá Força 7 sem pagar os 10 pontos do Forte.","Ginasta pelo +1 Agilidade, a perícia mais difícil de upar, e +1 Passos Leves para compensar o Estabanado.","Corajoso e Organizado (que também aumenta o porta-malas)."],
-  care:"Pacifista corta XP de arma; o Aprendiz Rápido está lá para compensar. Míope exige óculos de grau na criação.",
+  why:["Pedreiro é a profissão padrão dele por causa do bônus nas duas contundentes.","Forte dá Força 7 sem pagar os 10 pontos do Musculoso.","Ginasta pelo +1 Agilidade, a perícia mais difícil de upar, e +1 Passos Leves para compensar o Chamativo.","Corajoso e Organizado (que também aumenta o porta-malas)."],
+  care:"Combatente Relutante corta XP de arma; o Aprendiz Rápido está lá para compensar. Miopia exige óculos de grau na criação.",
   traits:["thin_skinned","conspicuous","slow_healer","weak_stomach","slow_reader","short_sighted","high_thirst","pacifist","stout","fast_learner","organized","brave","gymnast","speed_demon"]},
  {id:"anzony",ch:"anzony",nm:"Obrero Perfeito",sty:["Iniciante","Combate"],prof:"construction",
-  d:"A build que ele chama de “personagem perfeito” na 42.20, com o Construtor (obrero) de base.",
-  why:["Para ele, contundente curta e longa são as melhores armas do começo, e o Construtor é o único com as duas.","Atlético é essencial: na B42, quatro ou cinco zumbis já cansam o personagem.","Audição Aguçada vê corredor vindo por trás; Aprendiz Rápido acelera martelo, taco, Carpintaria e Manutenção.","Andarilho anula boa parte do Pele Frágil, Saúde Fraca e Baixa Imunidade no mato e na chuva."],
+  d:"A build que ele chama de “personagem perfeito” na 42.20, com o Pedreiro (obrero) de base.",
+  why:["Para ele, contundente curta e longa são as melhores armas do começo, e o Pedreiro é o único com as duas.","Atlético é essencial: na B42, quatro ou cinco zumbis já cansam o personagem.","Audição Aguçada vê corredor vindo por trás; Aprendiz Rápido acelera martelo, taco, Carpintaria e Manutenção.","Andarilho anula boa parte do Pele Frágil, Cicatrização Lenta e Baixa Imunidade no mato e na chuva."],
   care:"Comilão entrou só para fechar a conta, e ele não gosta do traço. Se não quiser Olhos de Gato, ele sugere trocar por outro traço barato.",
   traits:["weak_stomach","high_thirst","slow_healer","prone_illness","conspicuous","thin_skinned","slow_reader","short_sighted","hearty_appetite","athletic","keen_hearing","fast_learner","cats_eyes","dextrous","outdoorsy"]},
  {id:"anzony2",ch:"anzony",nm:"Obrero Perfeito 2 (avançado)",sty:["Combate","Longo prazo"],prof:"construction",
   v:{url:"https://www.youtube.com/watch?v=9x4oIhfHltM",t:"El Obrero PERFECTO | Project Zomboid Build 42.20",dt:"30/09/2026",pt:"42.20"},
   d:"A segunda versão do obrero, para quem já tem algumas centenas de horas de jogo.",
-  why:["Atlético dá Aptidão 9 e Madrugador (o “insomne”) dorme menos e cansa 30% menos: juntos, quase não cansam.","Pacifista corta XP de arma, mas o Construtor já começa com as duas contundentes e o Aprendiz Rápido compensa.","Mecânico Amador: com Elétrica 1 e Mecânica 2 você já faz ligação direta.","Ginasta pelo +1 Agilidade, que deixa você recuar mais rápido no meio da briga."],
-  care:"Sem Audição Aguçada: ele acha o som da 42.20 bugado e só volta a pegar com zumbi corredor. Comilão e Míope entram para fechar a conta.",
-  fix:"No vídeo ele usa o traço Sentimental do mod More Traits. Sem mods, a ficha troca por Míope, que ele mesmo sugere, e a conta fecha em 0.",
+  why:["Atlético dá Aptidão 9 e Madrugador (o “insomne”) dorme menos e cansa 30% menos: juntos, quase não cansam.","Combatente Relutante corta XP de arma, mas o Pedreiro já começa com as duas contundentes e o Aprendiz Rápido compensa.","Mecânico Amador: com Elétrica 1 e Mecânica 2 você já faz ligação direta.","Ginasta pelo +1 Agilidade, que deixa você recuar mais rápido no meio da briga."],
+  care:"Sem Audição Aguçada: ele acha o som da 42.20 bugado e só volta a pegar com zumbi corredor. Comilão e Miopia entram para fechar a conta.",
+  fix:"No vídeo ele usa o traço Sentimental do mod More Traits. Sem mods, a ficha troca por Miopia, que ele mesmo sugere, e a conta fecha em 0.",
   traits:["thin_skinned","pacifist","conspicuous","prone_illness","slow_healer","slow_reader","weak_stomach","hearty_appetite","short_sighted","athletic","fast_learner","gymnast","wakeful","vehicle_k","cats_eyes","dextrous"]},
 
  // Papéis para co-op (montados pela ficha)
@@ -1602,17 +1683,17 @@ const LIB=[
   traits:NEG_TIME.concat(CORE,["whittler"])},
  {id:"mecanico",team:true,nm:"Mecânico Motorista",tag:"Suporte",prof:"mechanic",d:"Mecânica 4 e Soldagem 1. Dirige nas runs, conserta e mantém o combustível do grupo.",
   traits:NEG_TIME.concat(CORE)},
- {id:"carpinteiro",team:true,nm:"Carpinteiro da Base",tag:"Base",prof:"carpenter",d:"Carpintaria 4 com Organizado e Pedreiro. Levanta muro e móvel enquanto o resto do time faz loot.",
+ {id:"carpinteiro",team:true,nm:"Carpinteiro da Base",tag:"Base",prof:"carpenter",d:"Carpintaria 4 com Organizado e Alvenaria. Levanta muro e móvel enquanto o resto do time faz loot.",
   traits:NEG_TIME.concat(["keen_hearing","fast_learner","organized","dextrous","wakeful","mason"])},
  {id:"soldador",team:true,nm:"Soldador de Muralha",tag:"Base",prof:"welder",d:"Soldagem 4. Na 42.21 ele voltou a nascer com as receitas certas: barricada de metal e conserto de lataria cedo.",
   traits:NEG_TIME.concat(CORE)},
- {id:"batedor",team:true,nm:"Batedor Guarda-Parque",tag:"Comida",prof:"ranger",d:"Herbalista grátis e Caçador. Marca poço, traz carne e erva medicinal, conhece o mato.",
+ {id:"batedor",team:true,nm:"Batedor Guarda Florestal",tag:"Comida",prof:"ranger",d:"Herbalista grátis e Caçador. Marca poço, traz carne e erva medicinal, conhece o mato.",
   traits:NEG_TIME.concat(["keen_hearing","cats_eyes","hunter","wakeful"])},
  {id:"agricultor",team:true,nm:"Agricultor",tag:"Comida",prof:"farmer",d:"Agricultura 4. Com plantação andando o time para de depender de lata.",
   traits:NEG_TIME.concat(CORE,["herbalist"])},
  {id:"chef",team:true,nm:"Chef da Base",tag:"Comida",prof:"chef",d:"Culinária 4 e Açougue 2. Comida boa segura o humor do grupo nos meses longos.",
   traits:NEG_TIME.concat(CORE,["outdoorsy"])},
- {id:"fantasma",team:true,nm:"Fantasma Ladrão",tag:"Loot",prof:"burglar",d:"Liga carro sem chave e entra calado. Sem Estabanado, que vai contra a proposta.",
+ {id:"fantasma",team:true,nm:"Fantasma Ladrão",tag:"Loot",prof:"burglar",d:"Liga carro sem chave e entra calado. Sem Chamativo, que vai contra a proposta.",
   traits:["prone_illness","slow_healer","weak_stomach","short_sighted","high_thirst","slow_reader","claustrophobic","hearty_appetite","inconspicuous","keen_hearing","cats_eyes","dextrous"]}
 ];
 const LIBM=Object.fromEntries(LIB.map(b=>[b.id,b]));
@@ -1624,50 +1705,50 @@ const TOPN=Math.ceil(CHLIB.length/3);
 // Combos: builds que se completam. why = por que combinam; care = o que ainda falta ou exige atenção.
 const COMBOS=[
  {id:"escudo",nm:"Escudo e Enxada",para:"Dupla tranquila · base no mato",m:["shivas","laughter_cozy"],
-  why:["O Rancheiro não luta (todos os negativos dele são de combate), e o Construtor do Shivas é quem segura a porta.","O Rancheiro tem Força 9 e Habilidoso: carrega tora e tábua enquanto o Construtor levanta a base.","Bicho dá leite, ovo e carne: o Construtor não precisa sair para caçar comida."],
+  why:["O Pecuarista não luta (todos os negativos dele são de combate), e o Pedreiro do Shivas é quem segura a porta.","O Pecuarista tem Força 9 e Habilidoso: carrega tora e tábua enquanto o Pedreiro levanta a base.","Bicho dá leite, ovo e carne: o Pedreiro não precisa sair para caçar comida."],
   care:"Ninguém é médico. O Shivas é fumante: guarde cigarro para ele."},
  {id:"rodas",nm:"Rodas e Machado",para:"Dupla urbana · vive de run na cidade",m:["laughter_burglar","knine"],
   why:["O Atropelador faz ligação direta em qualquer carro e limpa horda com o para-choque.","O Bombeiro 8/8 entra a pé onde o carro não chega: prédio, loja, delegacia.","Os dois têm Força alta e o Bombeiro tem Organizado: o loot volta inteiro no porta-malas."],
   care:"Sem médico e sem base fixa. Combinem quem vai upar Primeiros Socorros e Carpintaria."},
  {id:"mira",nm:"Mira e Muralha",para:"Dupla de tiro · cidade grande",m:["laughter_cop","egg"],
-  why:["O Policial começa com Mira 6 e atira de longe sem tremer no pânico.","Tiro chama horda. O Desempregado do OVERCHARGED EGG, com Força e Aptidão 9, segura no corpo a corpo o que chega perto.","O Policial é fraco de perto (Fora de Forma, Asmático). O parceiro cobre exatamente isso."],
+  why:["O Policial começa com Mira 6 e atira de longe sem tremer no pânico.","Tiro chama horda. O Profissão Personalizada do OVERCHARGED EGG, com Força e Aptidão 9, segura no corpo a corpo o que chega perto.","O Policial é fraco de perto (Fora de Forma, Ofegante). O parceiro cobre exatamente isso."],
   care:"Munição acaba. Alternem: arma de fogo para emergência, corpo a corpo no dia a dia."},
  {id:"medico",nm:"Frente + Médico",para:"Dupla para quem morre muito no começo",m:["shivas","enfermeiro"],
-  why:["O Construtor apanha e o Enfermeiro trata: Primeiros Socorros 3 desde o dia 1.","O Enfermeiro já nasce com Night Owl e cuida da base à noite."],
-  care:"Só um luta. Se o Construtor cair, o Enfermeiro não aguenta sozinho."},
+  why:["O Pedreiro apanha e o Enfermeiro trata: Primeiros Socorros 3 desde o dia 1.","O Enfermeiro já nasce com Night Owl e cuida da base à noite."],
+  care:"Só um luta. Se o Pedreiro cair, o Enfermeiro não aguenta sozinho."},
 
  {id:"longo",nm:"Trio do Longo Prazo",para:"Trio · save de meses",m:["orbanjo","laughter_smith","laughter_eng"],
-  why:["O Construtor do Orbanjo segura o começo, quando o Ferreiro e o Engenheiro ainda são fracos.","O Ferreiro faz ferramenta e arma de metal. O Engenheiro faz bomba de cano, liga gerador e faz ligação direta cedo.","Juntos cobrem frente, base, energia e comida, e ficam mais fortes a cada mês."],
+  why:["O Pedreiro do Orbanjo segura o começo, quando o Ferreiro e o Engenheiro ainda são fracos.","O Ferreiro faz ferramenta e arma de metal. O Engenheiro faz bomba de cano, liga gerador e faz ligação direta cedo.","Juntos cobrem frente, base, energia e comida, e ficam mais fortes a cada mês."],
   care:"Sem médico. O Engenheiro é fumante e entra em pânico fácil: deixe-o longe da linha de frente."},
  {id:"extincao",nm:"Pacote Extinção",para:"Trio · modo Extinção",m:["laughter_fire","laughter_burger","enfermeiro"],
-  why:["O Bombeiro da Extinção começa com Machado 2 e Aptidão 10: aguenta o começo mais difícil do jogo.","O Chapeiro da Faca é furtivo e mata na hora com faca, o que vale muito com zumbi de mais vida.","O Enfermeiro trata o que os dois levam, porque no Extinção todo erro custa caro."],
+  why:["O Bombeiro da Extinção começa com Machado 2 e Aptidão 10: aguenta o começo mais difícil do jogo.","O Chapista da Faca é furtivo e mata na hora com faca, o que vale muito com zumbi de mais vida.","O Enfermeiro trata o que os dois levam, porque no Extinção todo erro custa caro."],
   care:"Sem veículo e sem energia. No Extinção, gerador e carro viram prioridade do segundo mês."},
  {id:"novatos",nm:"Trio de Quem Está Começando",para:"Trio · primeira vez na B42",m:["knine","gambarine","enfermeiro"],
-  why:["Bombeiro 8/8 e Construtor Sem Cansaço são as duas builds mais fáceis da lista: aguentam o cansaço muscular da B42.","O Construtor do Gambarine começa com Contundente Longo 3 e Manutenção 2: arma dura mais e ele quase não cansa.","O Enfermeiro segura o time vivo enquanto todo mundo aprende."],
+  why:["Bombeiro 8/8 e Pedreiro Sem Cansaço são as duas builds mais fáceis da lista: aguentam o cansaço muscular da B42.","O Pedreiro do Gambarine começa com Contundente Longo 3 e Manutenção 2: arma dura mais e ele quase não cansa.","O Enfermeiro segura o time vivo enquanto todo mundo aprende."],
   care:"Ninguém conserta carro nem liga gerador. Procurem as revistas de Mecânica e o Generator Magazine."},
  {id:"equilibrado",nm:"Trio Equilibrado",para:"Trio · o que a wiki recomenda para co-op",m:["knine","enfermeiro","eletricista"],
   why:["Luta, cura e energia: os três papéis que mais fazem falta no segundo mês.","O Eletricista liga gerador sem precisar da revista quando a energia cair."],
   care:"Sem veículo. O Bombeiro é fumante."},
 
  {id:"quarteto",nm:"Quarteto Completo",para:"4 jogadores · base na cidade",m:["shivas","enfermeiro","eletricista","mecanico"],
-  why:["Cobre frente, construção, médico, energia e veículos.","O Construtor do Shivas segura a porta e constrói; os outros três mantêm a base funcionando."],
+  why:["Cobre frente, construção, médico, energia e veículos.","O Pedreiro do Shivas segura a porta e constrói; os outros três mantêm a base funcionando."],
   care:"Só um combatente. Em run grande, leve o Mecânico como motorista."},
  {id:"saque",nm:"Corrida de Loot",para:"4 jogadores · saquear muito e rápido",m:["egg","batedor","laughter_burglar","carpinteiro"],
-  why:["O Desempregado do OVERCHARGED EGG limpa, o Atropelador liga qualquer carro e abre caminho.","O Batedor explora o mato e traz carne e erva; o Carpinteiro transforma o loot em base."],
+  why:["O Profissão Personalizada do OVERCHARGED EGG limpa, o Atropelador liga qualquer carro e abre caminho.","O Batedor explora o mato e traz carne e erva; o Carpinteiro transforma o loot em base."],
   care:"Sem médico e sem energia."},
  {id:"fazenda",nm:"Fazenda Fortificada",para:"4 jogadores · vida no campo",m:["orbanjo","laughter_cozy","laughter_smith","enfermeiro"],
-  why:["O Construtor do Orbanjo defende; o Rancheiro cuida dos bichos e não precisa lutar.","O Ferreiro faz ferramenta e prego, e o Rancheiro tem Ferreiro (traço) para ajudar na forja.","O Enfermeiro cobre a parte médica que nenhum dos outros tem."],
+  why:["O Pedreiro do Orbanjo defende; o Pecuarista cuida dos bichos e não precisa lutar.","O Ferreiro faz ferramenta e prego, e o Pecuarista tem Conhecimento em Ferraria para ajudar na forja.","O Enfermeiro cobre a parte médica que nenhum dos outros tem."],
   care:"Sem energia e sem veículo. O Ferreiro começa com Força e Aptidão 3: deixe-o na base no início."},
 
  {id:"longo5",nm:"Base de Longo Prazo",para:"5 jogadores · não depender de lata",m:["shivas","enfermeiro","eletricista","mecanico","agricultor"],
   why:["O Quarteto Completo + Agricultor: com plantação andando, o inverno não mata ninguém de fome."],
   care:"Só um combatente para cinco pessoas."},
  {id:"duasfrentes",nm:"Duas Frentes",para:"5 jogadores · corpo a corpo e tiro",m:["shivas","laughter_cop","enfermeiro","eletricista","batedor"],
-  why:["O Construtor vai no corpo a corpo e o Policial no tiro: alternam as runs e a base nunca fica vazia.","O Batedor caça e o Eletricista mantém a luz."],
+  why:["O Pedreiro vai no corpo a corpo e o Policial no tiro: alternam as runs e a base nunca fica vazia.","O Batedor caça e o Eletricista mantém a luz."],
   care:"Sem veículo. Combinem quem dirige."},
 
  {id:"completo",nm:"Esquadrão Completo",para:"6 jogadores · todos os papéis cobertos",m:["orbanjo","laughter_cop","laughter_eng","laughter_burglar","laughter_cozy","enfermeiro"],
-  why:["Os 7 papéis têm dono: frente, construção, médico, energia, veículos, comida e loot.","Corpo a corpo (Orbanjo), tiro (Policial) e carro (Atropelador) dão três jeitos de limpar área.","O Engenheiro cuida de gerador e bomba de cano; o Rancheiro, de comida; o Enfermeiro, de todo mundo."],
+  why:["Os 7 papéis têm dono: frente, construção, médico, energia, veículos, comida e loot.","Corpo a corpo (Orbanjo), tiro (Policial) e carro (Atropelador) dão três jeitos de limpar área.","O Engenheiro cuida de gerador e bomba de cano; o Pecuarista, de comida; o Enfermeiro, de todo mundo."],
   care:"O Engenheiro é o único fumante: guardem cigarro para ele."},
  {id:"cidade",nm:"Cidade Fortificada",para:"6 jogadores · base de metal",m:["shivas","enfermeiro","soldador","eletricista","mecanico","chef"],
   why:["Um na frente e cinco especialistas.","O Soldador fecha a base com metal, e o Chef segura o humor do grupo nos meses longos."],
@@ -2187,7 +2268,7 @@ function renderProfs(){
     const free=[...(p.gr||[]).map(id=>ALL[id].pt),...(p.grn||[])];
     return `<button type="button" class="prof" data-p="${p.id}" aria-pressed="${p.id===state.prof}">
     <span class="top"><span class="nm">${esc(p.pt)}</span>${profCost(p)}</span>
-    ${p.meta?'<span><span class="tag v-obr">Meta do vídeo</span></span>':''}
+    <span class="ptags">${p.meta?'<span class="tag v-obr">Meta do vídeo</span>':''}${(()=>{const n=LIB.filter(b=>b.ch&&b.prof===p.id).length;return n?`<span class="tag v-meta" title="Usada em ${n} das ${LIB.filter(b=>b.ch).length} builds dos canais">${n}/${LIB.filter(b=>b.ch).length} builds</span>`:""})()}</span>
     <span class="sk">${esc((skillLine(p.sk)+(p.str?" · Força +"+p.str:"")+(p.fit?" · Aptidão +"+p.fit:""))||"Sem bônus")}${free.length?" · grátis: "+esc(free.join(", ")):""}${p.note?" · "+esc(p.note):""}</span>
   </button>`}).join("");
 }
@@ -2224,9 +2305,19 @@ function renderTraits(){
   $("posList").innerHTML=p.map(traitHTML).join("")||none;
 }
 function pips(n){let h="";for(let i=1;i<=10;i++)h+=`<i class="${i<=n?"on":""}"></i>`;return h}
+// pontos extras de traço definidos na aba Mundo (CharacterFreePoints) entram no saldo do montador
+function groupFree(){try{return mVals().CharacterFreePoints||0}catch(e){return 0}}
+function myTeamSlot(){try{return team.members.findIndex(m=>m.src==="me"||(myName&&m.who===myName))}catch(e){return -1}}
+function renderCtx(c){const el=$("myCtx");if(!el)return;let mv=null;try{mv=mVals()}catch(e){}if(!mv)return;const free=mv.CharacterFreePoints||0,xp=mv["MultiplierConfig.Global"],slot=myTeamSlot();
+  el.innerHTML=`<span class="ctx-i"><b>Mundo:</b> ${esc(MPRE[mundo.p].n)}${free?` · <b>${free>0?"+":""}${free}</b> pontos extras`:""}${xp&&xp!==1?` · XP ×${String(xp).replace(".",",")}`:""} <button type="button" class="linkbtn" data-go="mundo">mudar</button></span>
+    <span class="ctx-i"><b>Esquadrão:</b> ${slot>=0?`você está como J${slot+1}`:"sua build ainda não está lá"} <button type="button" class="linkbtn putme">${slot>=0?"atualizar":"pôr no esquadrão"}</button></span>`}
+function putMine(){const m={lib:"",prof:state.prof,sel:[...state.sel],nm:"Minha build",who:myName||"Eu",seed:"me",src:"me",look:myLook},i=myTeamSlot();
+  if(i>=0)team.members[i]=m;else if(team.members.length<6)team.members.push(m);else{let k=-1;team.members.forEach((x,j)=>{if(x.src==="meta")k=j});team.members[k<0?5:k]=m}
+  team.size=Math.max(2,team.members.length);team.comp=-1;renderTeam();renderSummary();flash("msg","Sua build está no esquadrão. Veja na aba Esquadrão.")}
+document.addEventListener("click",e=>{if(e.target.closest(".putme"))putMine()});
 function renderSummary(){
-  const c=compute(state.prof,state.sel);
-  $("saldoNum").textContent=c.saldo;
+  const c0=compute(state.prof,state.sel),free=groupFree(),c={...c0,saldo:c0.saldo+free};renderCtx(c);
+  $("saldoNum").textContent=c.saldo;$("saldo").title=free?`Inclui ${free>0?"+":""}${free} pontos extras do mundo do grupo (aba Mundo)`:"";
   $("saldo").className="saldo"+(c.saldo<0?" neg":c.saldo>0?" pos":"");
   $("sumNeg").textContent="+"+c.neg; $("sumPos").textContent="−"+c.pos;
   $("vStr").textContent=c.str; $("pStr").innerHTML=pips(c.str); $("stStr").classList.toggle("warn",c.str<5);
@@ -2245,8 +2336,8 @@ function renderSummary(){
   if(nun.length)w.push(["bad","Marcado como “nunca” no vídeo: "+nun.join(", ")+"."]);
   if(state.sel.has("speed_demon"))w.push(["","Bom de Volante: a ré chama muito zumbi. Se for iniciante, deixe o ponto sobrando."]);
   if(state.sel.has("claustrophobic"))w.push(["","Claustrofóbico: leve álcool e dê um gole antes de dormir em lugar fechado."]);
-  if(state.sel.has("short_sighted"))w.push(["","Míope: escolha óculos na roupa inicial."]);
-  if(state.prof==="construction"&&!state.sel.has("whittler"))w.push(["","Sem Entalhador vai demorar mais para chegar no Carving 9–10 e fabricar as armas."]);
+  if(state.sel.has("short_sighted"))w.push(["","Miopia: escolha óculos na roupa inicial."]);
+  if(state.prof==="construction"&&!state.sel.has("whittler"))w.push(["","Sem Entalhamento vai demorar mais para chegar no Carving 9–10 e fabricar as armas."]);
   $("warns").innerHTML=w.map(([k,t])=>`<li class="${k}">${esc(t)}</li>`).join("");
   const posSel=[...state.sel].filter(id=>ALL[id].side==="pos").map(id=>ALL[id].pt);
   const negSel=[...state.sel].filter(id=>ALL[id].side==="neg").map(id=>ALL[id].pt);
@@ -2282,7 +2373,8 @@ $("profs").addEventListener("click",e=>{const b=e.target.closest(".prof");if(!b)
 function onTrait(e){const b=e.target.closest(".trait");if(!b||b.disabled)return;const id=b.dataset.t;if(state.sel.has(id)){state.sel.delete(id);lastHow="remove"}else{state.sel.add(id);lastHow="add"}renderMontador()}
 $("negList").addEventListener("click",onTrait);$("posList").addEventListener("click",onTrait);
 document.querySelectorAll("#panel-montador .chip").forEach(c=>c.addEventListener("click",()=>{filter=c.dataset.f;document.querySelectorAll("#panel-montador .chip").forEach(x=>x.setAttribute("aria-pressed",x===c));renderTraits()}));
-$("btnClear").addEventListener("click",()=>{state={prof:state.prof,sel:new Set()};renderMontador();flash("msg","Traços zerados. Profissão mantida.")});
+$("btnClear").addEventListener("click",()=>{state={prof:state.prof,sel:new Set()};lastHow="remove";renderMontador();flash("mtMsg","Traços zerados. Profissão mantida.")});
+$("btnRestart").addEventListener("click",()=>{state={prof:"unemployed",sel:new Set()};lastHow="prof";renderMontador();flash("mtMsg","Build zerada: Profissão Personalizada e nenhum traço.")});
 
 function flash(id,t){$(id).textContent=t;clearTimeout(flash[id]);flash[id]=setTimeout(()=>$(id).textContent="",3500)}
 function code(prof,sel){return "B42:"+prof+":"+[...sel].join(",")}
@@ -2376,6 +2468,7 @@ function applyTeam(ms){team={size:Math.max(2,Math.min(6,ms.length)),comp:-1,memb
 function renderSizes(){
   $("sizes").innerHTML='<span class="hint" style="margin-right:4px">Jogadores:</span>'+Object.keys(COMPS).map(n=>`<button class="chip" type="button" data-size="${n}" aria-pressed="${+n===team.members.length}">${n}${n==="6"?"+":""}</button>`).join("");
   const n=Math.max(2,Math.min(6,team.members.length));
+  $("compsT").textContent=`Composições prontas para ${n} jogadores`+(team.comp>=0&&COMPS[n]&&COMPS[n][team.comp]?` · escolhida: ${COMPS[n][team.comp].nm}`:" · nenhuma escolhida");
   $("comps").innerHTML=(COMPS[n]||[]).map((c,i)=>`<button class="comp" type="button" data-comp="${i}" aria-pressed="${n===team.size&&i===team.comp}">
     <strong>${esc(c.nm)}</strong><span>${esc(c.para)}. ${esc(c.why[0])}</span>
     <span class="rolesrow">${c.m.map(id=>`<span class="role">${esc(LIBM[id].nm)}</span>`).join("")}</span></button>`).join("");
@@ -2383,6 +2476,7 @@ function renderSizes(){
 $("sizes").addEventListener("click",e=>{const b=e.target.closest("[data-size]");if(!b)return;const n=+b.dataset.size,ms=team.members.slice(0,n);
   while(ms.length<n)ms.push(memberFromLib(COMPS[n][0].m[ms.length]||"shivas"));team={size:n,comp:-1,members:ms};renderTeam()});
 $("comps").addEventListener("click",e=>{const b=e.target.closest("[data-comp]");if(!b)return;const n=Math.max(2,Math.min(6,team.members.length)),c=COMPS[n][+b.dataset.comp];
+  if(team.comp===+b.dataset.comp){team={...team,comp:-1};renderTeam();return} // clicar de novo desmarca (as vagas ficam como estão)
   // mantém quem já tinha nome e build própria; troca só as vagas de meta
   const ms=c.m.map((id,i)=>{const old=team.members[i];return old&&old.src!=="meta"?old:{...memberFromLib(id),who:old?old.who:""}});team={size:n,comp:+b.dataset.comp,members:ms};renderTeam()});
 
@@ -2447,7 +2541,7 @@ function renderTeamWarns(rs){
   const profs={};ms.forEach((m,i)=>{(profs[m.prof]=profs[m.prof]||[]).push(nm(i))});
   Object.entries(profs).filter(([,v])=>v.length>1).forEach(([p,v])=>w.push(["",`${PROF[p].pt} repetido (${v.join(", ")}). Perícias sobrepostas; considere trocar um.`]));
   const slow=ms.filter(m=>m.sel.includes("slow_reader")).length;
-  if(slow===ms.length&&ms.length>1)w.push(["","Todos com Semianalfabeto. No servidor, peça leitura acelerada ou alguém deixe de pegar."]);
+  if(slow===ms.length&&ms.length>1)w.push(["","Todos com Leitura Lenta. No servidor, peça leitura acelerada ou alguém deixe de pegar."]);
   if(!w.some(x=>x[0]==="bad"))w.unshift(["ok",w.length?"Time válido: todos com saldo ≥ 0 e alguém na linha de frente. Os avisos abaixo são papéis que alguém vai precisar upar.":"Time válido e com todos os papéis principais cobertos."]);
   $("teamWarns").innerHTML=w.map(([k,t])=>`<li class="${k}">${esc(t)}</li>`).join("");
 }
@@ -2523,7 +2617,7 @@ const rx=x=>x-C.M.B[0], ry=y=>y-C.M.B[1];
 const realUrl=(x,y,z=200)=>`https://projectzomboidmap.com/pt/#${x}x${y}x${z}`;
 function el(tag,attrs,parent){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
 // vista 3D: projeção isométrica como a do jogo (o mapa gira 45° e "deita"); P leva do recorte para a tela, Pinv volta
-let map3d=true;try{map3d=localStorage.getItem("pzMapa3d")!=="0"}catch(e){}
+let map3d=true;try{const c=JSON.parse(localStorage.getItem("pzConfig")||"{}");map3d=c.mapa?c.mapa!=="2d":localStorage.getItem("pzMapa3d")!=="0"}catch(e){}
 const ISO=Math.SQRT1_2;
 function P(x,y){return map3d?[(x-y)*ISO,(x+y)*ISO*.5]:[x,y]}
 function Pinv(X,Y){if(!map3d)return[X,Y];const a=X/ISO,b=Y/(ISO*.5);return[(a+b)/2,(b-a)/2]}
@@ -2536,17 +2630,18 @@ function drawMap(){
   el("rect",{x:V[0]-4000,y:V[1]-4000,width:V[2]+8000,height:V[3]+8000,fill:"#4a6a40"},svg);
   // chão: água, ruas e nomes de rua (inclinados junto no 3D)
   const world=el("g",{transform:map3d?`matrix(${ISO} ${ISO*.5} ${-ISO} ${ISO*.5} 0 0)`:""},svg);
+  const drawn=!map3d||tileFail; // com as imagens do jogo, água, ruas e prédios já estão nelas
   const wg=el("g",{fill:"#3f6f8c",stroke:"#3f6f8c","stroke-width":2,"stroke-linejoin":"round","fill-rule":"evenodd"},world);
-  (M.w||[]).forEach(rings=>{el("path",{d:rings.map(r=>{let d="M"+r[0]+","+r[1];for(let i=2;i<r.length;i+=2)d+="L"+r[i]+","+r[i+1];return d+"Z"}).join("")},wg)});
+  if(drawn)(M.w||[]).forEach(rings=>{el("path",{d:rings.map(r=>{let d="M"+r[0]+","+r[1];for(let i=2;i<r.length;i+=2)d+="L"+r[i]+","+r[i+1];return d+"Z"}).join("")},wg)});
   const roads=el("g",{fill:"none","stroke-linecap":"round","stroke-linejoin":"round"},world);
-  for(const [col,w] of [["#2f3a2d",14],["#8d918a",10]])M.st.forEach(([n,q])=>{const a=[];for(let i=0;i<q.length;i+=2)a.push(q[i]+","+q[i+1]);el("polyline",{points:a.join(" "),stroke:col,"stroke-width":w},roads)});
-  const lab=el("g",{"font-size":15,"font-family":"Barlow,sans-serif","font-weight":700,fill:"#f2efe6",stroke:"#2f3a2d","stroke-width":3,"paint-order":"stroke"},world);
+  if(drawn)for(const [col,w] of [["#2f3a2d",14],["#8d918a",10]])M.st.forEach(([n,q])=>{const a=[];for(let i=0;i<q.length;i+=2)a.push(q[i]+","+q[i+1]);el("polyline",{points:a.join(" "),stroke:col,"stroke-width":w},roads)});
+  const lab=el("g",{id:"rwStreets","font-size":15,"font-family":"Barlow,sans-serif","font-weight":700,fill:"#f2efe6",stroke:"#2f3a2d","stroke-width":3,"paint-order":"stroke"},world);
   (C.lab==="auto"?autoLabels():C.lab).forEach(([t,x,y,r])=>{const e=el("text",{x,y,transform:`rotate(${r} ${x} ${y})`},lab);e.textContent=t});
   // prédios: chapados no 2D; no 3D, com paredes e telhado, desenhados de trás para a frente
   const polys=[];for(let i=0;i<M.bl.length;i+=4){const x=M.bl[i],y=M.bl[i+1],w=M.bl[i+2],h=M.bl[i+3];polys.push([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])}
   (M.bp||[]).forEach(q=>polys.push(pts2(q)));
   if(!map3d){const bl=el("g",{fill:"#c8bba0",stroke:"#6b6252","stroke-width":1},svg);polys.forEach(q=>el("polygon",{points:q.map(v=>v.join(",")).join(" ")},bl))}
-  else{const bg=el("g",{stroke:"#5a5244","stroke-width":.6,"stroke-linejoin":"round"},svg);
+  else if(drawn){const bg=el("g",{stroke:"#5a5244","stroke-width":.6,"stroke-linejoin":"round"},svg);
     const items=polys.map(q=>{const pr=q.map(v=>P(v[0],v[1]));let area=0;for(let k=0;k<q.length;k++){const a=q[k],b=q[(k+1)%q.length];area+=a[0]*b[1]-b[0]*a[1]}
       const fx=q.map(v=>v[0]),fy=q.map(v=>v[1]),A=(Math.max(...fx)-Math.min(...fx))*(Math.max(...fy)-Math.min(...fy));return{q:pr,cw:area>0,H:A>900?16:A>300?12:8,key:Math.max(...pr.map(v=>v[1]))}}).sort((a,b)=>a.key-b.key);
     items.forEach(({q,cw,H})=>{const g=el("g",{},bg);let wl="",wr="";
@@ -2559,12 +2654,14 @@ function drawMap(){
   // por cima: rota, lugares, bússola, direções, paradas, marcações e nomes
   el("g",{id:"rwRoute"},svg);
   const pg=el("g",{id:"rwPois"},svg);
-  C.POI.forEach(([n,x,y,k],i)=>{const [X,Y]=P(rx(x),ry(y));const g=el("g",{class:"poi","data-poi":i,transform:`translate(${X.toFixed(1)},${Y.toFixed(1)})`},pg);if(map3d)el("line",{x1:0,y1:0,x2:0,y2:-10,stroke:"#1d2720","stroke-width":2},g);el("circle",{cy:map3d?-12:0,r:7,fill:PCOL[k]||"#999",stroke:"#1d2720","stroke-width":2},g);const t=el("title",{},g);t.textContent=n});
+  C.POI.forEach(([n,x,y,k],i)=>{const [X,Y]=P(rx(x),ry(y));const g=el("g",{class:"poi","data-poi":i,"data-k":k,transform:`translate(${X.toFixed(1)},${Y.toFixed(1)})`},pg);if(map3d)el("line",{x1:0,y1:0,x2:0,y2:-10,stroke:"#1d2720","stroke-width":2},g);el("circle",{cy:map3d?-12:0,r:7,fill:PCOL[k]||"#999",stroke:"#1d2720","stroke-width":2},g);const t=el("title",{},g);t.textContent=n});
   const nx=el("g",{transform:`translate(${V[0]+V[2]-55},${V[1]+60}) rotate(${map3d?63.43:0})`},svg);el("circle",{r:22,fill:"rgba(29,39,32,.8)"},nx);el("path",{d:"M0,-15 L7,6 L0,1 L-7,6 Z",fill:"#e09a3a"},nx);const nt=el("text",{y:17,"text-anchor":"middle","font-size":11,"font-weight":700,fill:"#f2efe6",transform:`rotate(${map3d?-63.43:0} 0 13)`},nx);nt.textContent="N";
   C.out.forEach(([t,x,y])=>{const [X,Y]=P(x,y);const e=el("text",{x:X,y:Y,"font-size":17,"font-weight":800,fill:"#f2efe6",stroke:"#2f3a2d","stroke-width":3,"paint-order":"stroke"},svg);e.textContent=t});
   el("g",{id:"rwStops"},svg);el("g",{id:"rwMarks"},svg);
   const lb=el("g",{id:"rwLabels"},svg);C.POI.forEach(([n,x,y])=>{const [X,Y]=P(rx(x),ry(y));const t=el("text",{x:X+9,y:Y+4-(map3d?12:0)},lb);t.textContent=n});
-  $("mapLeg").innerHTML=Object.entries(PLEG).map(([k,t])=>`<span><i style="background:${PCOL[k]}"></i>${t}</span>`).join("")+'<span><i style="background:#3f6f8c"></i>Água</span><span style="margin-left:auto">'+(map3d?'Imagem do mapa: <a href="https://projectzomboidmap.com/pt/" target="_blank" rel="noopener">projectzomboidmap.com</a> (B42.20)':'Mapa: arquivos do jogo 42.21')+'</span>';
+  const hid=new Set(CFG.mapHide||[]),used=new Set(C.POI.map(q=>q[3]));
+  $("mapLeg").innerHTML='<span class="leg-t">Mostrar:</span>'+Object.entries(PLEG).filter(([k])=>used.has(k)).map(([k,t])=>`<button type="button" class="lg" data-lk="${k}" aria-pressed="${!hid.has(k)}"><i style="background:${PCOL[k]}"></i>${t}</button>`).join("")+
+    `<button type="button" class="lg" data-lo="mapNomes" aria-pressed="${CFG.mapNomes!==false}">Nomes</button><button type="button" class="lg" data-lo="mapRuas" aria-pressed="${CFG.mapRuas!==false}">Ruas</button><button type="button" class="lg" data-lo="mapMarcas" aria-pressed="${CFG.mapMarcas!==false}">Marcações</button>`+'<span><i style="background:#3f6f8c"></i>Água</span><span style="margin-left:auto">'+(map3d?'Imagem do mapa: <a href="https://projectzomboidmap.com/pt/" target="_blank" rel="noopener">projectzomboidmap.com</a> (B42.20)':'Mapa: arquivos do jogo 42.21')+'</span>';
   $("rotaSteps").innerHTML=C.ROTA.map((r,i)=>`<button class="step" role="tab" type="button" data-step="${i}" aria-selected="false"><b>${i+1}</b>${esc(r.d)}</button>`).join("");
   $("hRota").textContent=`Rota de ${C.n}, dia a dia`;$("rotaHint").textContent=C.hint;$("rotaFonte").innerHTML=C.fonte;
   $("cidades").innerHTML=Object.entries(CIDADES).map(([k,c])=>`<button class="cid" type="button" data-cid="${k}" aria-pressed="${k===cid}">${esc(c.n)}</button>`).join("");
@@ -2612,20 +2709,22 @@ function roadPath(a,b){
 // ---------- imagens do mapa real (render do jogo feito com pzmap2dzi, hospedado em projectzomboidmap.com, B42.20.2) ----------
 // Um quadrado do jogo (X,Y) fica no pixel (x0+(X-Y)*64, y0+(X+Y)*32) da imagem cheia; a vista 3D da ficha usa a mesma inclinação, só muda a escala.
 const TILES={url:"https://tiles.projectzomboidmap.com/maps/b42.20.2-r1/base/layer0_files/",W:2314368,H:1019040,top:22,x0:1036288,y0:-139296,sz:1024};
-let tileState={lv:-1,keys:new Set()},tileT=null;
+let tileState={lv:-1,keys:new Set()},tileT=null,tileFail=false,tileOk=0,tileErr=0;
 function tileOrigin(){const B=C.M.B;return[TILES.x0+64*(B[0]-B[1]),TILES.y0+32*(B[0]+B[1])]}
+function visBox(){const r=$("rwMap").getBoundingClientRect();if(!r.width)return vb.slice();const u=Math.max(vb[2]/r.width,vb[3]/r.height),w=r.width*u,h=r.height*u;return[vb[0]+(vb[2]-w)/2,vb[1]+(vb[3]-h)/2,w,h]}
 function updateTiles(){const g=$("rwTiles");if(!g)return;if(!map3d){g.innerHTML="";return}
   const r=$("rwMap").getBoundingClientRect();if(!r.width)return;const k=64/ISO,[ox,oy]=tileOrigin(),u=Math.max(vb[2]/r.width,vb[3]/r.height),dpr=Math.min(2,window.devicePixelRatio||1);
   const add=(lv,x0,y0,x1,y1,cls)=>{const sc=Math.pow(2,lv-TILES.top),T=TILES.sz/sc,maxC=Math.ceil(TILES.W*sc/TILES.sz)-1,maxR=Math.ceil(TILES.H*sc/TILES.sz)-1;
     const c0=Math.max(0,Math.floor(x0/T)),c1=Math.min(maxC,Math.floor(x1/T)),r0=Math.max(0,Math.floor(y0/T)),r1=Math.min(maxR,Math.floor(y1/T));if((c1-c0+1)*(r1-r0+1)>80)return false;
     for(let c=c0;c<=c1;c++)for(let rr=r0;rr<=r1;rr++){const key=lv+"/"+c+"_"+rr;if(tileState.keys.has(key))continue;tileState.keys.add(key);
       const im=el("image",{href:TILES.url+key+".jpg",x:((c*T-ox)/k).toFixed(2),y:((rr*T-oy)/k).toFixed(2),width:(T/k+.4).toFixed(2),height:(T/k+.4).toFixed(2),preserveAspectRatio:"none",class:cls,"data-lv":lv},g);
-      im.style.opacity=0;im.addEventListener("load",()=>{im.style.opacity=1});im.addEventListener("error",()=>im.remove())}return true};
+      im.style.opacity=0;im.addEventListener("load",()=>{im.style.opacity=1;tileOk++});
+      im.addEventListener("error",()=>{im.remove();tileErr++;if(!tileFail&&!tileOk&&tileErr>=3){tileFail=true;drawMap();setStep(rotaI,false)}})}return true};
   // nível de fundo: a cidade inteira em poucas imagens; nível de detalhe: o que está na tela
   const V=projV(),bx0=ox+V[0]*k,by0=oy+V[1]*k,bx1=bx0+V[2]*k,by1=by0+V[3]*k;let blv=Math.max(8,Math.min(TILES.top,Math.round(TILES.top+Math.log2(4*TILES.sz/(bx1-bx0)))));
-  if(tileState.lv<0){add(blv,bx0,by0,bx1,by1,"tb");tileState.lv=blv}
+  if(tileState.lv<0){const [ax,ay,aw,ah]=visBox();add(blv,Math.min(bx0,ox+ax*k),Math.min(by0,oy+ay*k),Math.max(bx1,ox+(ax+aw)*k),Math.max(by1,oy+(ay+ah)*k),"tb");tileState.lv=blv}
   const lv=Math.max(blv,Math.min(TILES.top,Math.ceil(TILES.top+Math.log2(dpr/(u*k)))));
-  const vx0=ox+vb[0]*k,vy0=oy+vb[1]*k;if(lv>blv&&add(lv,vx0,vy0,vx0+vb[2]*k,vy0+vb[3]*k,"td"))g.querySelectorAll(".td").forEach(im=>{if(+im.dataset.lv!==lv){tileState.keys.delete(im.getAttribute("href").slice(TILES.url.length,-4));im.remove()}})}
+  const [ax,ay,aw,ah]=visBox(),vx0=ox+ax*k,vy0=oy+ay*k;if(lv>blv&&add(lv,vx0,vy0,vx0+aw*k,vy0+ah*k,"td"))g.querySelectorAll(".td").forEach(im=>{if(+im.dataset.lv!==lv){tileState.keys.delete(im.getAttribute("href").slice(TILES.url.length,-4));im.remove()}})}
 function setVB(t,anim){if(vbAnim)cancelAnimationFrame(vbAnim);const from=vb.slice(),t0=performance.now(),dur=anim===false||matchMedia("(prefers-reduced-motion: reduce)").matches?0:500;
   (function f(now){const k=dur?Math.min(1,(now-t0)/dur):1,e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;vb=from.map((v,i)=>v+(t[i]-v)*e);$("rwMap").setAttribute("viewBox",vb.join(" "));mapLabels();clearTimeout(tileT);tileT=setTimeout(updateTiles,k<1?140:40);if(k<1)vbAnim=requestAnimationFrame(f)})(t0)}
 // prioridade dos nomes: com o mapa afastado só aparecem polícia, bombeiros, saúde, armas e perigo; aproximado aparecem todos que couberem, sem um cobrir o outro
@@ -2636,9 +2735,11 @@ function mapLabels(){const svg=$("rwMap"),lb=$("rwLabels");if(!lb)return;const r
   const su=Math.min(1.6,Math.max(.3,u*1.05));
   svg.querySelectorAll("#rwPois>g,#rwStops>g,#rwMarks>g").forEach(g=>{if(!g.dataset.t)g.dataset.t=g.getAttribute("transform")||"";g.setAttribute("transform",g.dataset.t+` scale(${su.toFixed(3)})`)});
   svg.querySelectorAll("#rwStops>circle").forEach(c=>{if(!c.dataset.r)c.dataset.r=c.getAttribute("r");c.setAttribute("r",(c.dataset.r*su).toFixed(2));c.setAttribute("stroke-width",(3*su).toFixed(2))});
-  svg.querySelectorAll("#rwRoute polyline").forEach((pl,i)=>{pl.setAttribute("stroke-width",((i?6:11)*su).toFixed(2));if(i)pl.setAttribute("stroke-dasharray",`${(14*su).toFixed(1)} ${(14*su).toFixed(1)}`)});lb.setAttribute("font-size",(12*u).toFixed(2));lb.setAttribute("stroke-width",(3*u).toFixed(2));
-  const ts=[...lb.children],taken=[],ord=C.POI.map((q,i)=>i).sort((a,b)=>(LPRI[C.POI[a][3]]??5)-(LPRI[C.POI[b][3]]??5));
-  ord.forEach(i=>{const t=ts[i],q=C.POI[i],pr=LPRI[q[3]]??5;if(!t)return;const [X,Y]=P(rx(q[1]),ry(q[2])),sx=(X-vb[0])/u,sy=(Y-vb[1])/u-(map3d?12/u*0:0),w=q[0].length*6.4+14,box=[sx+6,sy-9-(map3d?12/u:0),sx+6+w,sy+6-(map3d?12/u:0)];
+  svg.querySelectorAll("#rwRoute polyline:not(.reveal)").forEach((pl,i)=>{pl.setAttribute("stroke-width",((i?6:11)*su).toFixed(2));if(i)pl.setAttribute("stroke-dasharray",`${(14*su).toFixed(1)} ${(14*su).toFixed(1)}`)});lb.setAttribute("font-size",(12*u).toFixed(2));lb.setAttribute("stroke-width",(3*u).toFixed(2));
+  const ts=[...lb.children],taken=[],ord=C.POI.map((q,i)=>i).sort((a,b)=>(LPRI[C.POI[a][3]]??5)-(LPRI[C.POI[b][3]]??5)),vbx=visBox(),hid=new Set(CFG.mapHide||[]);
+  svg.querySelectorAll("#rwPois>g").forEach(g=>{g.style.display=hid.has(g.dataset.k)?"none":""});
+  const st=$("rwStreets");if(st)st.style.display=CFG.mapRuas===false?"none":"";const mk=$("rwMarks");if(mk)mk.style.display=CFG.mapMarcas===false?"none":"";
+  ord.forEach(i=>{const t=ts[i],q=C.POI[i],pr=LPRI[q[3]]??5;if(!t)return;if(hid.has(q[3])||CFG.mapNomes===false){t.style.display="none";return}const [X,Y]=P(rx(q[1]),ry(q[2])),sx=(X-vbx[0])/u,sy=(Y-vbx[1])/u,w=q[0].length*6.4+14,box=[sx+6,sy-9-(map3d?12/u:0),sx+6+w,sy+6-(map3d?12/u:0)];
     const ok=(zoomed||pr<=1)&&sx>-20&&sy>-20&&sx<r.width+20&&sy<r.height+20&&!taken.some(b=>box[0]<b[2]&&box[2]>b[0]&&box[1]<b[3]&&box[3]>b[1]);
     t.style.display=ok?"":"none";if(ok)taken.push(box)})}
 // arrastar com o mouse, rodinha para zoom, pinça com dois dedos, botões + e −; clique abre o lugar ou põe marcação
@@ -2709,14 +2810,20 @@ function setStep(i,anim){
 $("rotaSteps").addEventListener("click",e=>{const b=e.target.closest("[data-step]");if(b){stopPlay();setStep(+b.dataset.step)}});
 $("rotaInfo").addEventListener("click",e=>{const b=e.target.closest("[data-rn]");if(b){stopPlay();setStep(rotaI+ +b.dataset.rn)}});
 $("mapAll").addEventListener("click",()=>{stopPlay();closePop();setVB(fitBox(projV()))});
-$("map3d").addEventListener("click",()=>{map3d=!map3d;try{localStorage.setItem("pzMapa3d",map3d?"1":"0")}catch(e){}drawMap();setStep(rotaI,false)});
+$("mapLeg").addEventListener("click",e=>{const b=e.target.closest("[data-lk],[data-lo]");if(!b)return;
+  if(b.dataset.lk){const h=new Set(CFG.mapHide||[]);h.has(b.dataset.lk)?h.delete(b.dataset.lk):h.add(b.dataset.lk);CFG.mapHide=[...h]}else CFG[b.dataset.lo]=CFG[b.dataset.lo]===false;
+  saveCfg();b.setAttribute("aria-pressed",b.dataset.lk?!(CFG.mapHide||[]).includes(b.dataset.lk):CFG[b.dataset.lo]!==false);mapLabels()});
+$("map3d").addEventListener("click",()=>{map3d=!map3d;CFG.mapa=map3d?"3d":"2d";saveCfg();applyCfg();drawMap();setStep(rotaI,false)});
 $("markBar").addEventListener("click",e=>{const b=e.target.closest("[data-mk]");if(b){setMarkMode(b.dataset.mk);return}
   const a=e.target.closest("[data-mka]");if(!a)return;
   if(a.dataset.mka==="link"){const link=BASE+"?k="+b64e(JSON.stringify({c:cid,m:getMarks()}))+"#guia";(navigator.clipboard?navigator.clipboard.writeText(link):Promise.reject()).then(()=>flash("mkFlash","Link copiado. Quem abrir vê as marcações de "+C.n+"."),()=>prompt("Copie o link:",link))}
   if(a.dataset.mka==="limpar"&&getMarks().length&&confirm("Apagar todas as marcações de "+C.n+"?"))setMarks([])});
 $("cidades").addEventListener("click",e=>{const b=e.target.closest("[data-cid]");if(b&&b.dataset.cid!==cid)setCity(b.dataset.cid)});
-function stopPlay(){if(playT){clearInterval(playT);playT=null;$("mapPlay").textContent="▶ Animar rota"}}
-$("mapPlay").addEventListener("click",()=>{if(playT){stopPlay();return}$("mapPlay").textContent="⏸ Parar";setStep(0);playT=setInterval(()=>{if(rotaI>=C.ROTA.length-1){stopPlay();return}setStep(rotaI+1)},3200)});
+// mostra o percurso do dia escolhido sendo traçado; para mudar de dia, use "Próximo passo"
+function stopPlay(){if(playT){cancelAnimationFrame(playT);playT=null;const r=$("rwRoute");if(r)r.querySelectorAll(".reveal").forEach(x=>x.remove())}}
+$("mapPlay").addEventListener("click",()=>{stopPlay();const lines=$("rwRoute").querySelectorAll("polyline");if(!lines.length){flash("mkFlash","Este passo tem uma parada só: não há percurso para mostrar.");return}
+  const base=lines[lines.length-1],L=base.getTotalLength(),sw=+base.getAttribute("stroke-width")||6,rv=base.cloneNode();rv.classList.remove("route-line");rv.classList.add("reveal");rv.setAttribute("stroke","#fff2c9");rv.setAttribute("stroke-width",sw*1.4);rv.setAttribute("stroke-dasharray",L+" "+L);rv.setAttribute("stroke-dashoffset",L);$("rwRoute").appendChild(rv);
+  const t0=performance.now(),dur=Math.min(4000,900+L*2.5);(function f(now){const k=Math.min(1,(now-t0)/dur);rv.setAttribute("stroke-dashoffset",L*(1-k));if(k<1)playT=requestAnimationFrame(f);else{playT=null;setTimeout(()=>rv.remove(),900)}})(t0)});
 document.querySelector(".realmap").addEventListener("toggle",e=>{const rm=$("realMap");if(e.target.open&&!rm.firstChild){const p=C.ROTA[rotaI].s[0];const f=document.createElement("iframe");f.title="Mapa real de Project Zomboid";f.loading="lazy";f.referrerPolicy="no-referrer";f.src=`https://projectzomboidmap.com/pt/?passo=${rotaI}#${p[1]}x${p[2]}x150`;rm.appendChild(f)}});
 
 // ---------- FABRICAR ----------
@@ -2728,17 +2835,24 @@ function renderFabOrder(){
   const G=[["Dia 1",["Dia 1","Dia 2"]],["Primeira semana",["Semana 1"]],["Semanas 2 a 4",["Semana 2","Semana 3"]],["Do mês 1 em diante",["Mês 1","Longo prazo"]]];
   $("fabOrder").innerHTML=G.map(([t,ps])=>`<div class="fo"><b>${t}</b>${FAB.filter(x=>ps.includes(x.pri)).sort((a,b)=>a.dif-b.dif).map(x=>`<button type="button" data-fq="${esc(x.n.split(" (")[0])}">${esc(x.n.split(" (")[0])}</button>`).join(" · ")}</div>`).join("");
 }
+// compara a perícia pedida com as perícias iniciais da sua build (aba Montador)
+let fabMine=false;
+function fabCan(x,sk){if(/nenhuma/i.test(x.sk))return{ok:true};const need=[...x.sk.matchAll(/([A-Za-zÀ-ú][A-Za-zÀ-ú ]*?)\s+(\d+)/g)].map(m=>[m[1].trim(),+m[2]]);if(!need.length)return{ok:null};
+  const [n,lv]=need[0],have=sk[n]||0;return{ok:have>=lv,n,lv,have}}
 function renderFab(){
-  const q=norm($("fabQ").value.trim());
+  const q=norm($("fabQ").value.trim()),mySk=compute(state.prof,state.sel).sk;
+  $("fabMine").innerHTML=`<span class="hint">Sua build (${esc(PROF[state.prof].pt)})</span>${chip("data-fm","1","Só o que já consigo fazer",fabMine)}`;
   $("fabCats").innerHTML='<span class="hint">Tipo</span>'+FABCATS.map(c=>chip("data-fc",c,c,c===fabCat)).join("");
   $("fabDifs").innerHTML='<span class="hint">Dificuldade</span>'+[[0,"Todas"],[1,"Fácil"],[2,"Médio"],[3,"Difícil"]].map(([d,t])=>chip("data-fd",d,t,d===fabDif)).join("");
-  const list=FAB.filter(x=>(fabCat==="Todas"||x.cat===fabCat)&&(!fabDif||x.dif===fabDif)&&(!q||norm([x.n,x.para,x.pr,x.sk,x.ap,x.cat].join(" ")).includes(q))).sort((a,b)=>PRIO.indexOf(a.pri)-PRIO.indexOf(b.pri)||a.dif-b.dif);
+  const list=FAB.filter(x=>(!fabMine||fabCan(x,mySk).ok)&&(fabCat==="Todas"||x.cat===fabCat)&&(!fabDif||x.dif===fabDif)&&(!q||norm([x.n,x.para,x.pr,x.sk,x.ap,x.cat].join(" ")).includes(q))).sort((a,b)=>PRIO.indexOf(a.pri)-PRIO.indexOf(b.pri)||a.dif-b.dif);
   $("fabCount").textContent=list.length+" de "+FAB.length+" receitas";
-  $("fabList").innerHTML=list.map(x=>`<article class="fcard"><div class="hd"><h3>${esc(x.n)}</h3><span class="tag d${x.dif}">${DIFL[x.dif]}</span><span class="tag pri">${esc(x.pri)}</span></div>
+  $("fabList").innerHTML=list.map(x=>{const cn=fabCan(x,mySk);return `<article class="fcard${cn.ok?" can":""}"><div class="hd"><h3>${esc(x.n)}</h3><span class="tag d${x.dif}">${DIFL[x.dif]}</span><span class="tag pri">${esc(x.pri)}</span></div>
+    ${cn.ok===true?'<span class="canm ok">✓ Sua build já faz</span>':cn.ok===false?`<span class="canm">Sua build tem ${esc(cn.n)} ${cn.have}; precisa de ${cn.lv}</span>`:""}
     <p>${esc(x.para)}</p><dl><dt>Precisa</dt><dd>${esc(x.pr)}</dd><dt>Perícia</dt><dd>${esc(x.sk)}</dd><dt>Aprende</dt><dd>${esc(x.ap)}</dd><dt>Tipo</dt><dd>${esc(x.cat)}</dd></dl>
-    <a href="${fabLink(x)}" target="_blank" rel="noopener">Receita completa ↗</a></article>`).join("")||'<p class="hint">Nada encontrado. Tente outra palavra, como “faca” ou “Carpintaria”.</p>';
+    <a href="${fabLink(x)}" target="_blank" rel="noopener">Receita completa ↗</a></article>`}).join("")||'<p class="hint">Nada encontrado. Tente outra palavra, como “faca” ou “Carpintaria”.</p>';
 }
 $("fabQ").addEventListener("input",renderFab);
+$("fabMine").addEventListener("click",e=>{if(e.target.closest("[data-fm]")){fabMine=!fabMine;renderFab()}});
 $("fabCats").addEventListener("click",e=>{const b=e.target.closest("[data-fc]");if(b){fabCat=b.dataset.fc;renderFab()}});
 $("fabDifs").addEventListener("click",e=>{const b=e.target.closest("[data-fd]");if(b){fabDif=+b.dataset.fd;renderFab()}});
 $("fabOrder").addEventListener("click",e=>{const b=e.target.closest("[data-fq]");if(b){$("fabQ").value=b.dataset.fq;fabCat="Todas";fabDif=0;renderFab();$("fabQ").scrollIntoView({block:"center"})}});
@@ -2788,6 +2902,7 @@ function renderMundoRes(){
   $("mResN").textContent=`Preset ${MPRE[mundo.p].n}`+(d.length?` com ${d.length} mudança${d.length>1?"s":""}`:", sem mudanças")+(nm?` e ${nm} mods (aba Mods)`:", sem mods")+(d.length?":":".");
   $("mResL").innerHTML=d.map(k=>`<li><b>${esc(MOPT[k][1])}:</b> ${esc(mShow(k,v[k]))} <span class="hint">(era ${esc(mShow(k,base[k]))})</span></li>`).join("");
   $("mResL").hidden=!d.length;
+  if(typeof renderSummary==="function"&&mapReady!==undefined)try{renderSummary()}catch(e){}
   const av=mundoAvisos();$("mWarn").innerHTML=av.map(t=>`<li>${esc(t)}</li>`).join("");$("mWarn").hidden=!av.length;renderIni();
 }
 function mundoTxt(){const v=mVals(),d=mDiff(),ms=modsComDeps();return `${mundo.n||"Mundo Evangeliteens"} · Project Zomboid 42.21\nPreset: ${MPRE[mundo.p].n}\n`+(d.length?d.map(k=>`- ${MOPT[k][1]}: ${mShow(k,v[k])}`).join("\n"):"Sem mudanças no preset.")+(ms.length?`\nMods (${ms.length}): ${ms.map(x=>x[1]).join(", ")}`:"")+`\n${mundoLink()}`}
@@ -2853,10 +2968,23 @@ $("modList").addEventListener("change",e=>{const id=e.target.dataset.mod;if(!id)
 $("modCopy").addEventListener("click",()=>mCopy($("modMods").value+"\n"+$("modWs").value,null,"Copiado.","modFlash"));
 $("modShare").addEventListener("click",()=>mCopy(mundoLink(),null,"Link copiado. Ele leva as regras do mundo e os mods.","modFlash"));
 
-// ---------- TEMA ----------
-{const lbl={auto:"Auto",light:"Claro",dark:"Escuro"};let th="auto";try{th=localStorage.getItem("pzTema")||"auto"}catch(e){}
-  const apply=()=>{if(th==="auto")document.documentElement.removeAttribute("data-theme");else document.documentElement.setAttribute("data-theme",th);$("themeLbl").textContent=lbl[th];$("btnTheme").title="Tema: "+lbl[th]};apply();
-  $("btnTheme").addEventListener("click",()=>{th={auto:"light",light:"dark",dark:"auto"}[th];try{localStorage.setItem("pzTema",th)}catch(e){}apply()})}
+// ---------- CONFIGURAÇÕES DA PÁGINA (tema, texto, animações, 3D, mapa) ----------
+const CFG={tema:"auto",fonte:"n",anim:"on",q3d:"alta",mapa:"3d"};
+try{Object.assign(CFG,JSON.parse(localStorage.getItem("pzConfig")||"{}"));const t=localStorage.getItem("pzTema");if(t&&!localStorage.getItem("pzConfig"))CFG.tema=t;const m=localStorage.getItem("pzMapa3d");if(m&&!localStorage.getItem("pzConfig"))CFG.mapa=m==="0"?"2d":"3d"}catch(e){}
+function saveCfg(){try{localStorage.setItem("pzConfig",JSON.stringify(CFG))}catch(e){}}
+function applyCfg(){const h=document.documentElement;if(CFG.tema==="auto")h.removeAttribute("data-theme");else h.setAttribute("data-theme",CFG.tema);
+  h.classList.toggle("big",CFG.fonte==="g");h.classList.toggle("noanim",CFG.anim==="off");h.classList.toggle("eco3d",CFG.q3d==="eco");
+  document.querySelectorAll("#cfg .seg").forEach(g=>g.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",CFG[g.dataset.cfg]===b.dataset.v)));
+  const dark=CFG.tema==="dark"||(CFG.tema==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);$("btnTheme").title=dark?"Mudar para o tema claro":"Mudar para o tema escuro"}
+applyCfg();
+$("btnTheme").addEventListener("click",()=>{const dark=CFG.tema==="dark"||(CFG.tema==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);CFG.tema=dark?"light":"dark";saveCfg();applyCfg()});
+$("btnCfg").addEventListener("click",()=>{$("cfg").hidden=false;$("btnCfg").setAttribute("aria-expanded","true");$("cfgClose").focus()});
+const closeCfg=()=>{$("cfg").hidden=true;$("btnCfg").setAttribute("aria-expanded","false")};
+$("cfgClose").addEventListener("click",closeCfg);$("cfg").addEventListener("click",e=>{if(e.target===$("cfg"))closeCfg()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("cfg").hidden)closeCfg()});
+$("cfg").addEventListener("click",e=>{const b=e.target.closest(".seg button");if(!b)return;const k=b.closest(".seg").dataset.cfg;CFG[k]=b.dataset.v;saveCfg();applyCfg();
+  if(k==="mapa"&&map3d!==(CFG.mapa==="3d")){map3d=CFG.mapa==="3d";if(mapReady){drawMap();setStep(rotaI,false)}}});
+$("cfgReset").addEventListener("click",()=>{if(!confirm("Apagar builds, mundo, marcações e preferências guardados neste navegador?"))return;try{Object.keys(localStorage).filter(k=>/^pz|ficha|b42/i.test(k)).forEach(k=>localStorage.removeItem(k))}catch(e){}location.reload()});
 // ---------- BUSCA GERAL ----------
 let SIDX=null;
 function searchIndex(){if(SIDX)return SIDX;const L=[];
@@ -2929,6 +3057,12 @@ function go(t){
   document.querySelector(".intro").hidden=t!=="montador";
   if(t==="esquadrao")renderTeam();
   if(t==="grupo")renderGrupo();
+  if(t==="fab")renderFab();
+  if(t==="esquadrao"||t==="guia"){let mv=null;try{mv=mVals()}catch(e){}const c=compute(state.prof,state.sel),ms=modsComDeps().length;
+    $("teamCtx").innerHTML=mv?`<span class="ctx-i"><b>Mundo do grupo:</b> ${esc(mundo.n||MPRE[mundo.p].n)} · ${esc(MPRE[mundo.p].n)} · ${ms} mods <button type="button" class="linkbtn" data-go="grupo">ver página do grupo</button></span><span class="ctx-i"><button type="button" class="linkbtn putme">Pôr a minha build (${esc(PROF[state.prof].pt)}) no esquadrão</button></span>`:"";
+    $("rotaCtx").innerHTML=`<span class="ctx-i"><b>Sua build:</b> ${esc(PROF[state.prof].pt)} · Força ${c.str} · Aptidão ${c.fit}${state.sel.has("short_sighted")?" · com Miopia, pegue óculos de grau cedo":""}${c.fit<5?" · Aptidão baixa: evite brigar com grupos":""} <button type="button" class="linkbtn" data-go="montador">mudar</button></span>`+((CFG.mapHide||[]).length?`<span class="ctx-i">Algumas categorias estão escondidas no mapa (botões “Mostrar” abaixo dele).</span>`:"")}
+  {const PT={montador:["Montador","Profissão, traços e o seu boneco"],builds:["Builds dos canais","16 builds de 7 canais, recalculadas na 42.21"],combos:["Combos","Esquadrões de 2 a 6 que se completam"],esquadrao:["Esquadrão","O time do grupo, com nome e build"],guia:["Sobrevivência","Rota dia a dia nas 6 cidades iniciais"],fab:["Fabricar","O que fazer primeiro e como"],mundo:["Mundo","Regras do servidor do grupo"],mods:["Mods","Os mais baixados da Oficina que rodam na B42"],grupo:["Grupo","Tudo o que o grupo combinou, num link"],refs:["Referências","Quem fez o conteúdo que usamos"]}[t];
+   if(PT){$("pageTitle").textContent=PT[0];$("pageSub").textContent=PT[1];document.title=PT[0]+" · Evangeliteens · Ficha B42"}}
   if(t==="refs"&&!$("refsList").children.length)renderRefs();
   if(t==="guia"&&!mapReady){let k=null;try{k=localStorage.getItem("pzCidade")}catch(e){}if(k&&CIDADES[k]){cid=k;C=CIDADES[k]}drawMap();setStep(0,false)}
   const tb=$("tab-"+t), nav=tb.parentElement; if(nav.scrollWidth>nav.clientWidth)nav.scrollLeft=tb.offsetLeft-nav.offsetLeft-(nav.clientWidth-tb.offsetWidth)/2;
