@@ -454,6 +454,18 @@ img.pt.lg{width:96px;height:120px}
 .mpre button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
 .mpre b{font-family:var(--f-display);font-size:17px;letter-spacing:.02em}
 .mpre small{font-size:12px;line-height:1.35;color:var(--muted)}
+.gpre b{display:flex;align-items:center;gap:6px;font-size:16px}.gpre b img{width:18px;height:18px}
+.gpre .gp-b{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;margin-top:auto;padding-top:4px}
+.dif{display:grid;gap:6px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.dif-hd{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}
+.dif-hd b{font-size:15px}
+.dif-l{padding:1px 8px;border-radius:999px;color:#111}
+.dif-l.l0{background:#5fbf6a}.dif-l.l1{background:#a5cf5a}.dif-l.l2{background:#e8c547}.dif-l.l3{background:#ec8a3a}.dif-l.l4{background:#e0533d;color:#fff}
+.dif-bar{position:relative;height:12px;border-radius:999px;background:linear-gradient(90deg,#5fbf6a,#a5cf5a 30%,#e8c547 48%,#ec8a3a 66%,#e0533d 85%)}
+.dif-bar i{position:absolute;top:50%;width:20px;height:20px;border-radius:50%;background:var(--surface);border:4px solid var(--ink);transform:translate(-50%,-50%);box-shadow:0 2px 6px rgba(0,0,0,.4);transition:left .3s}
+.dif-bar em{position:absolute;top:-3px;bottom:-3px;width:2px;background:color-mix(in srgb,var(--ink) 45%,transparent);transform:translateX(-1px)}
+.dif-sc{display:grid;grid-template-columns:repeat(5,1fr);font-size:11px;color:var(--muted);text-align:center}
+.dif-sc span:first-child{text-align:left}.dif-sc span:last-child{text-align:right}
 .mundo{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px;align-items:start}
 .mgrs{display:grid;gap:8px}
 .mgr{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
@@ -548,7 +560,9 @@ img.pt.lg{width:96px;height:120px}
 .fab-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr));gap:10px}
 .fcard{border:1px solid var(--line);background:var(--surface);border-radius:4px;padding:12px;display:grid;gap:6px;align-content:start}
 .fcard .hd{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
-.fcard h3{font-size:17px;flex:1 1 auto}
+.fcard h3{font-size:17px;flex:1 1 0;min-width:60%}
+.fcard .hd{align-items:center}
+.fic{width:34px;height:34px;padding:6px;border-radius:10px;background:color-mix(in srgb,var(--accent) 14%,var(--surface2));border:1px solid var(--line);flex:none}
 .fcard p{margin:0;font-size:13px}
 .fcard dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:3px 8px;font-size:12.5px}
 .fcard dt{color:var(--muted);font-weight:600}
@@ -707,8 +721,8 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
     <div class="col-left">
       <div class="slot-edit" id="slotEdit" hidden></div>
       <section class="section" aria-labelledby="hProf">
-        <div class="mtools"><span class="hint">Montando do zero ou ajustando uma build dos canais?</span><button class="btn sm" type="button" id="btnClear">Zerar traços</button><button class="btn sm" type="button" id="btnRestart">Começar do zero</button><span class="hint" id="mtMsg" role="status"></span></div>
-        <div class="sec-head"><h2 id="hProf">1 · Profissão</h2><span class="hint">Custo em pontos · <b>Meta do vídeo</b> = indicada pelo ShivasBR · “x/16” = quantas builds dos canais usam a profissão</span></div>
+        <div class="mtools"><span class="hint"><b>Desmarcar traços</b> mantém a profissão. <b>Recomeçar tudo</b> volta para a Profissão Personalizada, sem traços.</span><button class="btn sm" type="button" id="btnClear" title="Tira todos os traços e mantém a profissão escolhida">Desmarcar traços</button><button class="btn sm" type="button" id="btnRestart" title="Volta para a Profissão Personalizada, sem nenhum traço">Recomeçar tudo</button><span class="hint" id="mtMsg" role="status"></span></div>
+        <div class="sec-head"><h2 id="hProf">1 · Profissão</h2><span class="hint">Custo em pontos · <b>Meta</b> = indicada pelo ShivasBR · “x/16” = quantas builds dos canais usam a profissão</span></div>
         <div class="profs" id="profs"></div>
       </section>
 
@@ -959,6 +973,9 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
         <div class="mundo-msg" id="mundoMsg" hidden></div>
         <label class="mnome"><span>Nome do mundo</span><input id="mNome" type="text" maxlength="40" autocomplete="off" placeholder="Mundo Evangeliteens"></label>
         <div class="mpre" id="mPre" role="group" aria-label="Preset do jogo"></div>
+        <div class="sublbl">Presets do grupo <span class="hint" style="text-transform:none;letter-spacing:0;font-weight:400">· um preset do jogo com ajustes prontos; depois dá para mexer em tudo</span></div>
+        <div class="mpre gpre" id="mGPre" role="group" aria-label="Presets do grupo"></div>
+        <div class="dif" id="mDif"></div>
         <label class="mcmp">Comparar com <select id="mCmp"><option value="">nenhum preset</option></select><span class="hint">Mostra ao lado de cada opção o valor do outro preset quando é diferente.</span></label>
         <ul class="warns" id="mWarn" hidden></ul>
         <div class="mundo">
@@ -1019,8 +1036,8 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
             <div class="map-pop" id="mapPop" hidden></div>
             <div class="map-zoom"><button class="btn" type="button" id="mapZin" aria-label="Aproximar o mapa">+</button><button class="btn" type="button" id="mapZout" aria-label="Afastar o mapa">−</button></div>
             <div class="map-leg" id="mapLeg"></div>
-            <div class="mark-bar" id="markBar"><span class="sublbl">Marcar no mapa</span><button class="chip" type="button" data-mk="base" aria-pressed="false">🏠 Base</button><button class="chip" type="button" data-mk="saq" aria-pressed="false">✖ Saqueada</button><button class="chip" type="button" data-mk="perigo" aria-pressed="false">⚠ Perigo</button><button class="chip" type="button" data-mk="apagar" aria-pressed="false">Apagar</button>
-              <span class="hint" id="mkCount"></span><span class="mk-acts"><button class="btn sm" type="button" data-mka="link">Copiar link das marcações</button><button class="btn sm" type="button" data-mka="limpar">Limpar</button></span><span class="hint" id="mkFlash" aria-live="polite"></span></div>
+            <div class="mark-bar" id="markBar"><span class="sublbl">Marcar no mapa</span><button class="chip" type="button" data-mk="base" aria-pressed="false">🏠 Base</button><button class="chip" type="button" data-mk="saq" aria-pressed="false">✖ Saqueada</button><button class="chip" type="button" data-mk="perigo" aria-pressed="false">⚠ Perigo</button><button class="chip" type="button" data-mk="rota" aria-pressed="false" title="Clique no mapa para pôr os pontos; o caminho segue as ruas">〰 Minha rota</button><button class="chip" type="button" data-mk="apagar" aria-pressed="false">Apagar</button>
+              <span class="hint" id="mkCount"></span><span class="mk-acts"><button class="btn sm" type="button" data-mka="link">Copiar link das marcações</button><button class="btn sm" type="button" data-mka="undo">Desfazer ponto da rota</button><button class="btn sm" type="button" data-mka="semrota">Apagar minha rota</button><button class="btn sm" type="button" data-mka="limpar">Limpar tudo</button></span><span class="hint" id="mkFlash" aria-live="polite"></span></div>
           </div>
           <div class="rota-info" id="rotaInfo"></div>
         </div>
@@ -2318,7 +2335,7 @@ function renderProfs(){
     const free=[...(p.gr||[]).map(id=>ALL[id].pt),...(p.grn||[])];
     return `<button type="button" class="prof" data-p="${p.id}" aria-pressed="${p.id===state.prof}">
     <span class="top"><span class="nm">${esc(p.pt)}</span>${profCost(p)}</span>
-    <span class="ptags">${p.meta?'<span class="tag v-obr">Meta do vídeo</span>':''}${(()=>{const n=LIB.filter(b=>b.ch&&b.prof===p.id).length;return n?`<span class="tag v-meta" title="Usada em ${n} das ${LIB.filter(b=>b.ch).length} builds dos canais">${n}/${LIB.filter(b=>b.ch).length} builds</span>`:""})()}</span>
+    <span class="ptags">${p.meta?'<span class="tag v-obr" title="Profissão indicada pelo ShivasBR no vídeo de builds">Meta</span>':''}${(()=>{const n=LIB.filter(b=>b.ch&&b.prof===p.id).length;return n?`<span class="tag v-meta" title="Usada em ${n} das ${LIB.filter(b=>b.ch).length} builds dos canais">${n}/${LIB.filter(b=>b.ch).length} builds</span>`:""})()}</span>
     <span class="sk">${esc((skillLine(p.sk)+(p.str?" · Força +"+p.str:"")+(p.fit?" · Aptidão +"+p.fit:""))||"Sem bônus")}${free.length?" · grátis: "+esc(free.join(", ")):""}${p.note?" · "+esc(p.note):""}</span>
   </button>`}).join("");
 }
@@ -2420,8 +2437,8 @@ $("profs").addEventListener("click",e=>{const b=e.target.closest(".prof");if(!b)
 function onTrait(e){const b=e.target.closest(".trait");if(!b||b.disabled)return;const id=b.dataset.t;if(state.sel.has(id)){state.sel.delete(id);lastHow="remove"}else{state.sel.add(id);lastHow="add"}renderMontador()}
 $("negList").addEventListener("click",onTrait);$("posList").addEventListener("click",onTrait);
 document.querySelectorAll("#panel-montador .chip").forEach(c=>c.addEventListener("click",()=>{filter=c.dataset.f;document.querySelectorAll("#panel-montador .chip").forEach(x=>x.setAttribute("aria-pressed",x===c));renderTraits()}));
-$("btnClear").addEventListener("click",()=>{state={prof:state.prof,sel:new Set()};lastHow="remove";renderMontador();flash("mtMsg","Traços zerados. Profissão mantida.")});
-$("btnRestart").addEventListener("click",()=>{state={prof:"unemployed",sel:new Set()};lastHow="prof";renderMontador();flash("mtMsg","Build zerada: Profissão Personalizada e nenhum traço.")});
+$("btnClear").addEventListener("click",()=>{state={prof:state.prof,sel:new Set()};lastHow="remove";renderMontador();flash("mtMsg","Traços desmarcados. A profissão continua a mesma.")});
+$("btnRestart").addEventListener("click",()=>{state={prof:"unemployed",sel:new Set()};lastHow="prof";renderMontador();flash("mtMsg","Recomeçou: Profissão Personalizada e nenhum traço.")});
 
 function flash(id,t){$(id).textContent=t;clearTimeout(flash[id]);flash[id]=setTimeout(()=>$(id).textContent="",3500)}
 function code(prof,sel){return "B42:"+prof+":"+[...sel].join(",")}
@@ -2682,8 +2699,6 @@ function drawMap(){
   if(drawn)(M.w||[]).forEach(rings=>{el("path",{d:rings.map(r=>{let d="M"+r[0]+","+r[1];for(let i=2;i<r.length;i+=2)d+="L"+r[i]+","+r[i+1];return d+"Z"}).join("")},wg)});
   const roads=el("g",{fill:"none","stroke-linecap":"round","stroke-linejoin":"round"},world);
   if(drawn)for(const [col,w] of [["#2f3a2d",14],["#8d918a",10]])M.st.forEach(([n,q])=>{const a=[];for(let i=0;i<q.length;i+=2)a.push(q[i]+","+q[i+1]);el("polyline",{points:a.join(" "),stroke:col,"stroke-width":w},roads)});
-  const lab=el("g",{id:"rwStreets","font-size":15,"font-family":"Barlow,sans-serif","font-weight":700,fill:"#f2efe6",stroke:"#2f3a2d","stroke-width":3,"paint-order":"stroke"},world);
-  (C.lab==="auto"?autoLabels():C.lab).forEach(([t,x,y,r])=>{const e=el("text",{x,y,transform:`rotate(${r} ${x} ${y})`},lab);e.textContent=t});
   // prédios: chapados no 2D; no 3D, com paredes e telhado, desenhados de trás para a frente
   const polys=[];for(let i=0;i<M.bl.length;i+=4){const x=M.bl[i],y=M.bl[i+1],w=M.bl[i+2],h=M.bl[i+3];polys.push([[x,y],[x+w,y],[x+w,y+h],[x,y+h]])}
   (M.bp||[]).forEach(q=>polys.push(pts2(q)));
@@ -2698,6 +2713,11 @@ function drawMap(){
       el("polygon",{points:q.map(v=>v[0].toFixed(1)+","+(v[1]-H).toFixed(1)).join(" "),fill:"#d6c9ab"},g)})}
   // imagens reais do jogo (projectzomboidmap.com) cobrem o desenho quando carregam
   el("g",{id:"rwTiles","pointer-events":"none"},svg);tileState={lv:-1,keys:new Set()};
+  // nomes de rua ficam por cima das imagens (antes ficavam embaixo delas e sumiam)
+  const lab=el("g",{id:"rwStreets",transform:world.getAttribute("transform")||"","font-family":"Barlow,sans-serif","font-weight":700,fill:"#fff8e6",stroke:"#1d2720","stroke-linejoin":"round","paint-order":"stroke","pointer-events":"none"},svg);
+  // cidades com nomes posicionados à mão ganham também os outros nomes de rua, que só aparecem com zoom
+  (C.lab==="auto"?autoLabels():C.lab.concat(Array(Math.max(0,8-C.lab.length)).fill(null),autoLabels().filter(l=>!C.lab.some(h=>h[0]===l[0])))).forEach((L,i)=>{if(!L)return;const [t,x,y,r,a]=L;const e=el("text",{x,y,transform:`rotate(${r} ${x} ${y})`,"text-anchor":a||"start","data-r":i},lab);e.textContent=t});
+  el("g",{id:"rwMine","pointer-events":"none"},svg);
   // por cima: rota, lugares, bússola, direções, paradas, marcações e nomes
   el("g",{id:"rwRoute"},svg);
   const pg=el("g",{id:"rwPois"},svg);
@@ -2719,7 +2739,7 @@ function drawMap(){
 function autoLabels(){const V=C.V,inV=(x,y)=>x>V[0]+20&&x<V[0]+V[2]-20&&y>V[1]+20&&y<V[1]+V[3]-20,by={};
   C.M.st.forEach(([n,p])=>{for(let i=2;i<p.length;i+=2){const ax=p[i-2],ay=p[i-1],bx=p[i],by2=p[i+1],L=Math.hypot(bx-ax,by2-ay),mx=(ax+bx)/2,my=(ay+by2)/2;if(!inV(mx,my)||n.length*8>L)continue;
     const o=by[n]||(by[n]={tot:0,best:null});o.tot+=L;if(!o.best||L>o.best.L)o.best={L,mx,my,a:Math.atan2(by2-ay,bx-ax)*180/Math.PI}}});
-  return Object.entries(by).sort((a,b)=>b[1].tot-a[1].tot).slice(0,8).map(([n,o])=>{let a=o.best.a;if(a>90)a-=180;if(a<-90)a+=180;return [n,o.best.mx-Math.cos(a*Math.PI/180)*n.length*3.6,o.best.my-Math.sin(a*Math.PI/180)*n.length*3.6-6,Math.round(a)]})}
+  return Object.entries(by).sort((a,b)=>b[1].tot-a[1].tot).slice(0,26).map(([n,o])=>{let a=o.best.a;if(a>90)a-=180;if(a<-90)a+=180;return [n,+o.best.mx.toFixed(1),+o.best.my.toFixed(1),Math.round(a),"middle"]})}
 function setCity(k){if(!CIDADES[k])return;stopPlay();cid=k;C=CIDADES[k];try{localStorage.setItem("pzCidade",k)}catch(e){}drawMap();setStep(0,false)}
 // grafo das ruas para a rota seguir a rua (menor caminho)
 let RG=null;
@@ -2785,7 +2805,9 @@ function mapLabels(){const svg=$("rwMap"),lb=$("rwLabels");if(!lb)return;const r
   svg.querySelectorAll("#rwRoute polyline:not(.reveal)").forEach((pl,i)=>{pl.setAttribute("stroke-width",((i?6:11)*su).toFixed(2));if(i)pl.setAttribute("stroke-dasharray",`${(14*su).toFixed(1)} ${(14*su).toFixed(1)}`)});lb.setAttribute("font-size",(12*u).toFixed(2));lb.setAttribute("stroke-width",(3*u).toFixed(2));
   const ts=[...lb.children],taken=[],ord=C.POI.map((q,i)=>i).sort((a,b)=>(LPRI[C.POI[a][3]]??5)-(LPRI[C.POI[b][3]]??5)),vbx=visBox(),hid=new Set(CFG.mapHide||[]);
   svg.querySelectorAll("#rwPois>g").forEach(g=>{g.style.display=hid.has(g.dataset.k)?"none":""});
-  const st=$("rwStreets");if(st)st.style.display=CFG.mapRuas===false?"none":"";const mk=$("rwMarks");if(mk)mk.style.display=CFG.mapMarcas===false?"none":"";
+  const st=$("rwStreets");if(st){st.style.display=CFG.mapRuas===false?"none":"";const sk=map3d?.79:1;st.setAttribute("font-size",(12.5*u/sk).toFixed(2));st.setAttribute("stroke-width",(3.2*u/sk).toFixed(2));
+    st.querySelectorAll("text").forEach(t=>{t.style.display=(+t.dataset.r<8||zoomed)?"":"none"})}
+  const mn=$("rwMine");if(mn){mn.style.display=CFG.mapMarcas===false?"none":"";mn.querySelectorAll("polyline").forEach((pl,i)=>pl.setAttribute("stroke-width",((i?5:9)*su).toFixed(2)))}const mk=$("rwMarks");if(mk)mk.style.display=CFG.mapMarcas===false?"none":"";
   ord.forEach(i=>{const t=ts[i],q=C.POI[i],pr=LPRI[q[3]]??5;if(!t)return;if(hid.has(q[3])||CFG.mapNomes===false){t.style.display="none";return}const [X,Y]=P(rx(q[1]),ry(q[2])),sx=(X-vbx[0])/u,sy=(Y-vbx[1])/u,w=q[0].length*6.4+14,box=[sx+6,sy-9-(map3d?12/u:0),sx+6+w,sy+6-(map3d?12/u:0)];
     const ok=(zoomed||pr<=1)&&sx>-20&&sy>-20&&sx<r.width+20&&sy<r.height+20&&!taken.some(b=>box[0]<b[2]&&box[2]>b[0]&&box[1]<b[3]&&box[3]>b[1]);
     t.style.display=ok?"":"none";if(ok)taken.push(box)})}
@@ -2821,14 +2843,23 @@ function mapTap(e,tg){const poi=tg&&tg.closest&&tg.closest("[data-poi]");
   pop.innerHTML=`<b>${esc(n)}</b><span>${esc(PLEG[k]||"Lugar")} · ${x}×${y}</span><a href="${realUrl(x,y)}" target="_blank" rel="noopener">Ver no mapa real ↗</a>`;
   pop.hidden=false;const W=pop.offsetWidth,H=pop.offsetHeight;pop.style.left=Math.max(6,Math.min(box.width-W-6,e.clientX-box.left-W/2))+"px";pop.style.top=Math.max(6,e.clientY-box.top-H-14)+"px"}
 // ---------- marcações do grupo (base, saqueada, perigo), guardadas por cidade e compartilhadas por link ----------
-const MKT={base:["🏠","Base"],saq:["✖","Saqueada"],perigo:["⚠","Perigo"]};
+const MKT={base:["🏠","Base"],saq:["✖","Saqueada"],perigo:["⚠","Perigo"],rota:["","Ponto da minha rota"]};
+// trecho da rota manual: segue as ruas quando os dois pontos estão perto de uma; senão vai em linha reta (mato, campo)
+function mineSeg(a,b){if(!RG)RG=roadGraph();const A=snaps(a[0],a[1])[0],B=snaps(b[0],b[1])[0];if(!A||!B||A.d>35||B.d>35)return [a,b];return roadPath(a,b)}
 let markMode=null;
 function allMarks(){try{return JSON.parse(localStorage.getItem("pzMarcas")||"{}")||{}}catch(e){return window._pzMk||(window._pzMk={})}}
 function getMarks(){return (allMarks()[cid]||[]).slice()}
 function setMarks(L){const a=allMarks();a[cid]=L;try{localStorage.setItem("pzMarcas",JSON.stringify(a))}catch(e){window._pzMk=a}drawMarks()}
-function drawMarks(){const g=$("rwMarks");if(!g)return;g.innerHTML="";getMarks().forEach(([t,gx,gy])=>{const T=MKT[t];if(!T)return;const [X,Y]=P(rx(gx),ry(gy));const m=el("g",{transform:`translate(${X.toFixed(1)},${Y.toFixed(1)})`,class:"mk mk-"+t},g);
+let mineLen=0;
+function drawMine(){const g=$("rwMine");if(!g)return;g.innerHTML="";mineLen=0;const pts=getMarks().filter(m=>m[0]==="rota").map(m=>[rx(m[1]),ry(m[2])]);if(pts.length<2)return;
+  let path=[pts[0]];for(let k=1;k<pts.length;k++)path=path.concat(mineSeg(pts[k-1],pts[k]).slice(1));for(let k=1;k<path.length;k++)mineLen+=Math.hypot(path[k][0]-path[k-1][0],path[k][1]-path[k-1][1]);
+  const PL=path.map(q=>P(q[0],q[1])).map(q=>q[0].toFixed(1)+","+q[1].toFixed(1)).join(" ");
+  el("polyline",{points:PL,fill:"none",stroke:"#0d1a22",opacity:.75,"stroke-linecap":"round","stroke-linejoin":"round"},g);el("polyline",{points:PL,fill:"none",stroke:"#4fd1ff","stroke-linecap":"round","stroke-linejoin":"round"},g)}
+function drawMarks(){const g=$("rwMarks");if(!g)return;g.innerHTML="";drawMine();let rn=0;getMarks().forEach(([t,gx,gy])=>{const T=MKT[t];if(!T)return;const [X,Y]=P(rx(gx),ry(gy));const m=el("g",{transform:`translate(${X.toFixed(1)},${Y.toFixed(1)})`,class:"mk mk-"+t},g);
+  if(t==="rota"){rn++;el("circle",{r:9,fill:"#4fd1ff",stroke:"#0d1a22","stroke-width":2.5},m);const tx=el("text",{"text-anchor":"middle",y:4,"font-size":11,"font-weight":800,fill:"#0d1a22"},m);tx.textContent=rn;const tt=el("title",{},m);tt.textContent="Ponto "+rn+" da minha rota";return}
   el("circle",{r:12,fill:t==="base"?"#2f7d32":t==="perigo"?"#c8402a":"#4a4a4a",stroke:"#f7f4ea","stroke-width":2.5},m);const tx=el("text",{"text-anchor":"middle",y:5,"font-size":13,fill:"#fff"},m);tx.textContent=T[0];const tt=el("title",{},m);tt.textContent=T[1]});
-  if(mapReady)mapLabels();const n=getMarks().length;const c=$("mkCount");if(c)c.textContent=n?`${n} marcaç${n>1?"ões":"ão"} em ${C.n}`:"Nenhuma marcação nesta cidade."}
+  if(mapReady)mapLabels();const L=getMarks(),nr=L.filter(m=>m[0]==="rota").length,n=L.length-nr;const c=$("mkCount");
+  if(c)c.textContent=(n?`${n} marcaç${n>1?"ões":"ão"} em ${C.n}`:"Nenhuma marcação nesta cidade.")+(nr?` · Minha rota: ${nr} ponto${nr>1?"s":""}${nr>1?`, cerca de ${Math.round(mineLen)} quadrados de caminho (≈ ${mineLen>=1000?(mineLen/1000).toFixed(1).replace(".",",")+" km":Math.round(mineLen)+" m"})`:" (clique em mais um ponto)"}`:"")}
 function setMarkMode(m){markMode=markMode===m?null:m;document.querySelectorAll("#markBar [data-mk]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.mk===markMode));$("rwMap").classList.toggle("marking",!!markMode);closePop()}
 function setStep(i,anim){
   const ROTA=C.ROTA;rotaI=Math.max(0,Math.min(ROTA.length-1,i));const r=ROTA[rotaI];
@@ -2864,7 +2895,9 @@ $("map3d").addEventListener("click",()=>{map3d=!map3d;CFG.mapa=map3d?"3d":"2d";s
 $("markBar").addEventListener("click",e=>{const b=e.target.closest("[data-mk]");if(b){setMarkMode(b.dataset.mk);return}
   const a=e.target.closest("[data-mka]");if(!a)return;
   if(a.dataset.mka==="link"){const link=BASE+"?k="+b64e(JSON.stringify({c:cid,m:getMarks()}))+"#guia";(navigator.clipboard?navigator.clipboard.writeText(link):Promise.reject()).then(()=>flash("mkFlash","Link copiado. Quem abrir vê as marcações de "+C.n+"."),()=>prompt("Copie o link:",link))}
-  if(a.dataset.mka==="limpar"&&getMarks().length&&confirm("Apagar todas as marcações de "+C.n+"?"))setMarks([])});
+  if(a.dataset.mka==="undo"){const L=getMarks();for(let i=L.length-1;i>=0;i--)if(L[i][0]==="rota"){L.splice(i,1);setMarks(L);break}}
+  if(a.dataset.mka==="semrota"){const L=getMarks();if(L.some(m=>m[0]==="rota"))setMarks(L.filter(m=>m[0]!=="rota"))}
+  if(a.dataset.mka==="limpar"&&getMarks().length&&confirm("Apagar todas as marcações e a sua rota em "+C.n+"?"))setMarks([])});
 $("cidades").addEventListener("click",e=>{const b=e.target.closest("[data-cid]");if(b&&b.dataset.cid!==cid)setCity(b.dataset.cid)});
 // mostra o percurso do dia escolhido sendo traçado; para mudar de dia, use "Próximo passo"
 function stopPlay(){if(playT){cancelAnimationFrame(playT);playT=null;const r=$("rwRoute");if(r)r.querySelectorAll(".reveal").forEach(x=>x.remove())}}
@@ -2877,6 +2910,11 @@ document.querySelector(".realmap").addEventListener("toggle",e=>{const rm=$("rea
 let fabCat="Todas",fabDif=0;
 const norm=x=>String(x).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const FABCATS=["Todas",...new Set(FAB.map(x=>x.cat))];
+const FICO=[[/Clava de Osso|Tala/,"🦴"],[/Lança/,"🔱"],[/Pregos/,"🔩"],[/Martelo|Marreta/,"🔨"],[/Sílex|Lasca|Lascamento/,"🪨"],[/Machado/,"🪓"],[/Lâmina|Faca|Punhal/,"🔪"],[/Serra/,"🪚"],[/Cabo|Estaca/,"🪵"],[/Bastão|Taco/,"🏏"],
+  [/Molotov/,"🔥"],[/Bomba/,"💣"],[/Corda|Barbante/,"🪢"],[/Bolsa/,"🎒"],[/Barraca/,"⛺"],[/Pesca/,"🎣"],[/Armadilha/,"🪤"],[/Trapo/,"🧵"],[/Bandagem/,"🩹"],[/Cataplasma/,"🌿"],[/Armadura/,"🛡️"],[/Máscara/,"😷"],
+  [/Barricada/,"🚪"],[/Parede/,"🧱"],[/Caixote/,"📦"],[/Chuva/,"🛢️"],[/Compost/,"🌱"],[/Escada/,"🪜"]],
+  FCAT={Armas:"🗡️",Comida:"🍲",Construção:"🧱",Ferramentas:"🔧",Medicina:"🩹",Proteção:"🛡️",Sobrevivência:"🏕️"};
+function fabIco(x){const f=FICO.find(([r])=>r.test(x.n));return f?f[1]:FCAT[x.cat]||"🛠️"}
 const fabLink=x=>x.slug?`https://projectzomboidmap.com/pt/items/${x.slug}/`:`https://pzwiki.net/wiki/${x.wiki}`;
 function renderFabOrder(){
   const G=[["Dia 1",["Dia 1","Dia 2"]],["Primeira semana",["Semana 1"]],["Semanas 2 a 4",["Semana 2","Semana 3"]],["Do mês 1 em diante",["Mês 1","Longo prazo"]]];
@@ -2893,7 +2931,7 @@ function renderFab(){
   $("fabDifs").innerHTML='<span class="hint">Dificuldade</span>'+[[0,"Todas"],[1,"Fácil"],[2,"Médio"],[3,"Difícil"]].map(([d,t])=>chip("data-fd",d,t,d===fabDif)).join("");
   const list=FAB.filter(x=>(!fabMine||fabCan(x,mySk).ok)&&(fabCat==="Todas"||x.cat===fabCat)&&(!fabDif||x.dif===fabDif)&&(!q||norm([x.n,x.para,x.pr,x.sk,x.ap,x.cat].join(" ")).includes(q))).sort((a,b)=>PRIO.indexOf(a.pri)-PRIO.indexOf(b.pri)||a.dif-b.dif);
   $("fabCount").textContent=list.length+" de "+FAB.length+" receitas";
-  $("fabList").innerHTML=list.map(x=>{const cn=fabCan(x,mySk);return `<article class="fcard${cn.ok?" can":""}"><div class="hd"><h3>${esc(x.n)}</h3><span class="tag d${x.dif}">${DIFL[x.dif]}</span><span class="tag pri">${esc(x.pri)}</span></div>
+  $("fabList").innerHTML=list.map(x=>{const cn=fabCan(x,mySk);return `<article class="fcard${cn.ok?" can":""}"><div class="hd"><img class="fic" src="${twUrl(fabIco(x))}" alt="" width="34" height="34" loading="lazy"><h3>${esc(x.n)}</h3><span class="tag d${x.dif}">${DIFL[x.dif]}</span><span class="tag pri">${esc(x.pri)}</span></div>
     ${cn.ok===true?'<span class="canm ok">✓ Sua build já faz</span>':cn.ok===false?`<span class="canm">Sua build tem ${esc(cn.n)} ${cn.have}; precisa de ${cn.lv}</span>`:""}
     <p>${esc(x.para)}</p><dl><dt>Precisa</dt><dd>${esc(x.pr)}</dd><dt>Perícia</dt><dd>${esc(x.sk)}</dd><dt>Aprende</dt><dd>${esc(x.ap)}</dd><dt>Tipo</dt><dd>${esc(x.cat)}</dd></dl>
     <a href="${fabLink(x)}" target="_blank" rel="noopener">Receita completa ↗</a></article>`}).join("")||'<p class="hint">Nada encontrado. Tente outra palavra, como “faca” ou “Carpintaria”.</p>';
@@ -2919,10 +2957,42 @@ function mSet(k,v){const base=presetVals(mundo.p);if(v===base[k])delete mundo.c[
 function mShow(k,v){const o=MOPT[k];if(!o)return String(v);if(o[2]==="e")return o[3][v-1]||String(v);if(o[2]==="b")return v?"Sim":"Não";return String(v).replace(".",",")}
 function mDiff(){const base=presetVals(mundo.p);return Object.keys(mundo.c).filter(k=>MOPT[k]&&mundo.c[k]!==base[k])}
 let mCmp="";
+// presets do grupo: preset do jogo + ajustes (chaves e valores das opções do jogo)
+const GPRE=[
+  {n:"Primeira vez",ico:"🌱",d:"Para quem nunca jogou: menos zumbis e mais lentos, mordida que não mata, água e luz por até 6 meses e XP em dobro.",p:"Apocalypse",
+   c:{Zombies:5,"ZombieLore.Speed":3,"ZombieLore.Toughness":3,"ZombieLore.Transmission":2,WaterShut:4,ElecShut:4,WaterShutModifier:180,ElecShutModifier:180,"MultiplierConfig.Global":2,NightDarkness:3,CharacterFreePoints:4}},
+  {n:"Noite de jogo",ico:"🎮",d:"Sessões curtas com o grupo: dia de 1 hora, XP ×2, mais comida e kit inicial. Zumbis como no Apocalipse.",p:"Apocalypse",
+   c:{DayLength:3,"MultiplierConfig.Global":2,FoodLootNew:1.2,CannedFoodLootNew:1.2,StarterKit:true}},
+  {n:"Base dos sonhos",ico:"🏗️",d:"Para construir: Reconstrução, XP ×3, +10 pontos de traço, geradores comuns e mais ferramentas e materiais.",p:"Rising",
+   c:{"MultiplierConfig.Global":3,CharacterFreePoints:10,GeneratorSpawning:6,ToolLootNew:1.2,MaterialLootNew:1.2}},
+  {n:"Sobrevivência raiz",ico:"🔥",d:"Para veteranos: muitos zumbis, cambaleantes rápidos, água e luz cortam no 1º mês, noite breu.",p:"Apocalypse",
+   c:{Zombies:3,"ZombieLore.Speed":2,WaterShut:2,ElecShut:2,WaterShutModifier:30,ElecShutModifier:30,NightDarkness:1,FoodLootNew:0.4,CannedFoodLootNew:0.4,AmmoLootNew:0.3}},
+  {n:"Correria",ico:"🏃",d:"Extinção com todo zumbi correndo. Só para quem quer sofrer junto.",p:"Extinction",c:{"ZombieLore.Speed":1}}];
+function gpreApply(g){mundo.p=g.p;mundo.c={};Object.entries(g.c).forEach(([k,v])=>{if(MOPT[k])mSet(k,v);if(k==="Zombies")mSet("ZombieConfig.PopulationMultiplier",[2.5,1.6,1.2,0.65,0.15,0][v-1])});mundo.g=g.n;saveMundo();renderMundo()}
+// dificuldade estimada (conta nossa, não do jogo): soma o peso das opções que mais mudam o perigo
+function mDifc(v){const W=[],add=(p,t)=>{if(p)W.push([p,t])},pick=(k,a)=>a[(v[k]||1)-1]||0;
+  add(Math.min(26,(v["ZombieConfig.PopulationMultiplier"]||0)/2.5*26),"quantidade de zumbis");
+  const sp=v["ZombieLore.Speed"];add(sp===1?16:sp===2?10:sp===3?3:3+Math.min(13,(v["ZombieLore.SprinterPercentage"]||0)*.13),"velocidade dos zumbis");
+  add(pick("ZombieLore.Strength",[5,3,1,3])+pick("ZombieLore.Toughness",[5,3,1,3]),"força e resistência dos zumbis");
+  add(pick("ZombieLore.Transmission",[9,7,10,0]),"infecção");
+  add(pick("ZombieRespawn",[6,4,2,0]),"respawn de zumbis");
+  add(pick("ZombieLore.Cognition",[5,2,1,2]),"zumbis que abrem portas");
+  const lk=["FoodLootNew","CannedFoodLootNew","WeaponLootNew","MedicalLootNew","AmmoLootNew"],avg=lk.reduce((a,k)=>a+(v[k]??.6),0)/lk.length;add(Math.max(0,Math.min(10,(1.2-avg)/1.2*10)),"pouco loot");
+  const cut=d=>d<0?0:d<=0?8:d<=14?7:d<=30?6:d<=60?4:d<=180?3:d<=365?2:1;add((cut(v.WaterShutModifier??14)+cut(v.ElecShutModifier??14))/2,"corte de água e luz");
+  add(pick("NightDarkness",[4,2,1,0]),"noite escura");
+  const xp=v["MultiplierConfig.Global"]||1,fr=v.CharacterFreePoints||0;let tot=W.reduce((a,w)=>a+w[0],0);
+  if(xp>1)tot-=Math.min(8,Math.log2(xp)*3);if(fr>0)tot-=Math.min(6,fr/2);if(v.HoursForLootRespawn>0)tot-=3;if(v.StarterKit)tot-=1;
+  const pct=Math.max(0,Math.min(100,Math.round(tot/96*100)));return{pct,top:W.sort((a,b)=>b[0]-a[0]).slice(0,3).map(w=>w[1])}}
+const MDIFL=[[22,"Muito fácil"],[38,"Fácil"],[52,"Normal"],[66,"Difícil"],[101,"Muito difícil"]];
+function renderDif(){const v=mVals(),r=mDifc(v),lv=MDIFL.findIndex(x=>r.pct<x[0]),ref=Object.keys(MPRE).map(k=>[MPRE[k].n,mDifc(presetVals(k)).pct]);
+  $("mDif").innerHTML=`<div class="dif-hd"><b>Dificuldade: <span class="dif-l l${lv}">${MDIFL[lv][1]}</span></b><span class="hint">Estimativa nossa a partir das opções. O que mais pesa: ${esc(r.top.join(", "))}.</span></div>
+    <div class="dif-bar" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${r.pct}" aria-label="Dificuldade estimada"><i style="left:${r.pct}%"></i>${ref.map(([n,p])=>`<em style="left:${p}%" title="${esc(n)}"></em>`).join("")}</div>
+    <div class="dif-sc">${MDIFL.map(x=>`<span>${x[1]}</span>`).join("")}</div>`}
 function renderMundo(){
   $("mNome").value=mundo.n;
   if($("mCmp").options.length<2)$("mCmp").innerHTML='<option value="">nenhum preset</option>'+Object.entries(MPRE).map(([k,p])=>`<option value="${k}">${esc(p.n)}</option>`).join("");$("mCmp").value=mCmp;
-  $("mPre").innerHTML=Object.entries(MPRE).map(([k,p])=>`<button type="button" data-mp="${k}" aria-pressed="${k===mundo.p}"><b>${esc(p.n)}</b><small>${esc(p.d)}</small></button>`).join("");
+  $("mPre").innerHTML=Object.entries(MPRE).map(([k,p])=>`<button type="button" data-mp="${k}" aria-pressed="${k===mundo.p&&!mundo.g}"><b>${esc(p.n)}</b><small>${esc(p.d)}</small></button>`).join("");
+  $("mGPre").innerHTML=GPRE.map((g,i)=>`<button type="button" data-gp="${i}" aria-pressed="${mundo.g===g.n}"><b><img src="${twUrl(g.ico)}" alt="" width="18" height="18"> ${esc(g.n)}</b><small>${esc(g.d)}</small><small class="gp-b">Base: ${esc(MPRE[g.p].n)}</small></button>`).join("");
   const v=mVals(),base=presetVals(mundo.p);
   $("mGrupos").innerHTML=MGR.map(([g,L],gi)=>{const n=L.filter(o=>v[o[0]]!==base[o[0]]).length;
     return `<details class="mgr"${gi<2?" open":""}><summary>${esc(g)}<span class="hint">${n?n+" mudança"+(n>1?"s":""):L.length+" opções"}</span></summary>${L.map(([k,lab,t,o,tip])=>{const id="mo_"+k.replace(/\W/g,"_"),val=v[k];let ctl;
@@ -2953,6 +3023,7 @@ function renderMundoRes(){
   $("mKey").innerHTML=KEY.filter(([k])=>MOPT[k]).map(([k,l])=>{let x=mShow(k,v[k]);if(k==="MultiplierConfig.Global")x="×"+x;if(k==="WaterShutModifier"||k==="ElecShutModifier")x=v[k]<0?"nunca":v[k]===0?"já cortada":`até ${v[k]} dias`;
     return `<div class="${d.includes(k)?"chg":""}"><span>${l}</span><b>${esc(x)}</b></div>`}).join("");
   if(typeof renderSummary==="function"&&mapReady!==undefined)try{renderSummary()}catch(e){}
+  renderDif();
   const av=mundoAvisos();$("mWarn").innerHTML=av.map(t=>`<li>${esc(t)}</li>`).join("");$("mWarn").hidden=!av.length;renderIni();
 }
 function mundoTxt(){const v=mVals(),d=mDiff(),ms=modsComDeps();return `${mundo.n||"Mundo Evangeliteens"} · Project Zomboid 42.21\nPreset: ${MPRE[mundo.p].n}\n`+(d.length?d.map(k=>`- ${MOPT[k][1]}: ${mShow(k,v[k])}`).join("\n"):"Sem mudanças no preset.")+(ms.length?`\nMods (${ms.length}): ${ms.map(x=>x[1]).join(", ")}`:"")+`\n${mundoLink()}`}
@@ -2965,7 +3036,8 @@ function sandboxLua(){const v=mVals(),L=["SandboxVars = {","    VERSION = 6,"];
   L.push("}");return L.join("\n")+"\n"}
 function mCopy(txt,btn,ok,fid){(navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(()=>flash(fid||"mFlash",ok),()=>{prompt("Copie:",txt)})}
 $("mNome").addEventListener("input",e=>{mundo.n=e.target.value.slice(0,40);saveMundo()});
-$("mPre").addEventListener("click",e=>{const b=e.target.closest("[data-mp]");if(!b||b.dataset.mp===mundo.p)return;const n=Object.keys(mundo.c).length;mundo.p=b.dataset.mp;mundo.c={};saveMundo();renderMundo();flash("mFlash",`Preset ${MPRE[mundo.p].n}`+(n?". As mudanças anteriores foram descartadas.":"."))});
+$("mGPre").addEventListener("click",e=>{const b=e.target.closest("[data-gp]");if(!b)return;const g=GPRE[+b.dataset.gp];if(mundo.g!==g.n&&Object.keys(mundo.c).length&&!mundo.g&&!confirm("Trocar para “"+g.n+"”? As mudanças que você fez serão descartadas."))return;gpreApply(g);flash("mFlash",`Preset do grupo “${g.n}”. Ajuste o que quiser abaixo.`)});
+$("mPre").addEventListener("click",e=>{const b=e.target.closest("[data-mp]");if(!b||(b.dataset.mp===mundo.p&&!mundo.g))return;const n=Object.keys(mundo.c).length;mundo.p=b.dataset.mp;mundo.c={};delete mundo.g;saveMundo();renderMundo();flash("mFlash",`Preset ${MPRE[mundo.p].n}`+(n?". As mudanças anteriores foram descartadas.":"."))});
 $("mGrupos").addEventListener("change",e=>{const el=e.target,k=el.dataset.mk;if(!k)return;const o=MOPT[k];let v;
   if(o[2]==="b")v=el.checked;else if(o[2]==="e")v=+el.value;else{v=parseFloat(String(el.value).replace(",","."));if(!isFinite(v))v=presetVals(mundo.p)[k];v=Math.min(o[3][1],Math.max(o[3][0],v));if(o[2]==="i")v=Math.round(v);else v=Math.round(v*100)/100}
   mSet(k,v);
