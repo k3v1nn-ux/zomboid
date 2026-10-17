@@ -2759,7 +2759,7 @@ const LPRI={pol:0,fogo:0,perigo:0,med:1,arma:1,gas:2,comida:2,ferr:2,livro:2,car
 function mapLabels(){const svg=$("rwMap"),lb=$("rwLabels");if(!lb)return;const r=svg.getBoundingClientRect();if(!r.width)return;
   const u=Math.max(vb[2]/r.width,vb[3]/r.height),zoomed=vb[2]<projV()[2]*.62;
   // marcadores, paradas e rota com o mesmo tamanho na tela, perto ou longe
-  const su=Math.min(1.6,Math.max(.3,u*1.05));
+  const su=Math.min(1.6,Math.max(.04,u*1.05));
   svg.querySelectorAll("#rwPois>g,#rwStops>g,#rwMarks>g").forEach(g=>{if(!g.dataset.t)g.dataset.t=g.getAttribute("transform")||"";g.setAttribute("transform",g.dataset.t+` scale(${su.toFixed(3)})`)});
   svg.querySelectorAll("#rwStops>circle").forEach(c=>{if(!c.dataset.r)c.dataset.r=c.getAttribute("r");c.setAttribute("r",(c.dataset.r*su).toFixed(2));c.setAttribute("stroke-width",(3*su).toFixed(2))});
   svg.querySelectorAll("#rwRoute polyline:not(.reveal)").forEach((pl,i)=>{pl.setAttribute("stroke-width",((i?6:11)*su).toFixed(2));if(i)pl.setAttribute("stroke-dasharray",`${(14*su).toFixed(1)} ${(14*su).toFixed(1)}`)});lb.setAttribute("font-size",(12*u).toFixed(2));lb.setAttribute("stroke-width",(3*u).toFixed(2));
@@ -2771,7 +2771,7 @@ function mapLabels(){const svg=$("rwMap"),lb=$("rwLabels");if(!lb)return;const r
     t.style.display=ok?"":"none";if(ok)taken.push(box)})}
 // arrastar com o mouse, rodinha para zoom, pinça com dois dedos, botões + e −; clique abre o lugar ou põe marcação
 function svgPoint(cx,cy){const r=$("rwMap").getBoundingClientRect(),u=Math.max(vb[2]/r.width,vb[3]/r.height);return [vb[0]+(cx-r.left-(r.width-vb[2]/u)/2)*u,vb[1]+(cy-r.top-(r.height-vb[3]/u)/2)*u,u]}
-function zoomAt(px,py,f){const V=projV(),w=Math.min(V[2]*1.6,Math.max(V[2]*.1,vb[2]*f)),k=w/vb[2];setVB([px-(px-vb[0])*k,py-(py-vb[1])*k,w,vb[3]*k],false)}
+function zoomAt(px,py,f){const V=projV(),w=Math.min(V[2]*1.6,Math.max(V[2]*.02,vb[2]*f)),k=w/vb[2];setVB([px-(px-vb[0])*k,py-(py-vb[1])*k,w,vb[3]*k],false)}
 {const svg=$("rwMap"),pts=new Map();let drag=null,pinch=null,down=null;
   svg.addEventListener("pointerdown",e=>{if(e.pointerType==="mouse"&&e.button!==0)return;pts.set(e.pointerId,[e.clientX,e.clientY]);if(pts.size===1)down=[e.clientX,e.clientY,e.target];
     if(pts.size===1&&e.pointerType==="mouse"){stopPlay();drag={x:e.clientX,y:e.clientY,vb:vb.slice(),u:svgPoint(0,0)[2]};svg.setPointerCapture(e.pointerId);svg.classList.add("dragging")}
