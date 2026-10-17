@@ -440,6 +440,7 @@ img.pt.lg{width:96px;height:120px}
 .mapbox{position:relative;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:#3f5a3a}
 #rwMap{display:block;width:100%;height:auto;max-height:78vh;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
 #rwMap.iso{aspect-ratio:1/1;height:auto}
+#rwTiles image{transition:opacity .25s}
 #rwMap.dragging{cursor:grabbing}
 #rwMap.marking{cursor:crosshair}
 #rwMap .poi{cursor:pointer}
@@ -2553,6 +2554,8 @@ function drawMap(){
         const d=`M${a[0].toFixed(1)},${a[1].toFixed(1)}L${b[0].toFixed(1)},${b[1].toFixed(1)}L${b[0].toFixed(1)},${(b[1]-H).toFixed(1)}L${a[0].toFixed(1)},${(a[1]-H).toFixed(1)}Z`;if((cw?-ey:ey)<0)wl+=d;else wr+=d}
       if(wl)el("path",{d:wl,fill:"#8a7d64"},g);if(wr)el("path",{d:wr,fill:"#a39678"},g);
       el("polygon",{points:q.map(v=>v[0].toFixed(1)+","+(v[1]-H).toFixed(1)).join(" "),fill:"#d6c9ab"},g)})}
+  // imagens reais do jogo (projectzomboidmap.com) cobrem o desenho quando carregam
+  el("g",{id:"rwTiles","pointer-events":"none"},svg);tileState={lv:-1,keys:new Set()};
   // por cima: rota, lugares, bússola, direções, paradas, marcações e nomes
   el("g",{id:"rwRoute"},svg);
   const pg=el("g",{id:"rwPois"},svg);
@@ -2561,7 +2564,7 @@ function drawMap(){
   C.out.forEach(([t,x,y])=>{const [X,Y]=P(x,y);const e=el("text",{x:X,y:Y,"font-size":17,"font-weight":800,fill:"#f2efe6",stroke:"#2f3a2d","stroke-width":3,"paint-order":"stroke"},svg);e.textContent=t});
   el("g",{id:"rwStops"},svg);el("g",{id:"rwMarks"},svg);
   const lb=el("g",{id:"rwLabels"},svg);C.POI.forEach(([n,x,y])=>{const [X,Y]=P(rx(x),ry(y));const t=el("text",{x:X+9,y:Y+4-(map3d?12:0)},lb);t.textContent=n});
-  $("mapLeg").innerHTML=Object.entries(PLEG).map(([k,t])=>`<span><i style="background:${PCOL[k]}"></i>${t}</span>`).join("")+'<span><i style="background:#3f6f8c"></i>Água</span><span style="margin-left:auto">Mapa: arquivos do jogo 42.21</span>';
+  $("mapLeg").innerHTML=Object.entries(PLEG).map(([k,t])=>`<span><i style="background:${PCOL[k]}"></i>${t}</span>`).join("")+'<span><i style="background:#3f6f8c"></i>Água</span><span style="margin-left:auto">'+(map3d?'Imagem do mapa: <a href="https://projectzomboidmap.com/pt/" target="_blank" rel="noopener">projectzomboidmap.com</a> (B42.20)':'Mapa: arquivos do jogo 42.21')+'</span>';
   $("rotaSteps").innerHTML=C.ROTA.map((r,i)=>`<button class="step" role="tab" type="button" data-step="${i}" aria-selected="false"><b>${i+1}</b>${esc(r.d)}</button>`).join("");
   $("hRota").textContent=`Rota de ${C.n}, dia a dia`;$("rotaHint").textContent=C.hint;$("rotaFonte").innerHTML=C.fonte;
   $("cidades").innerHTML=Object.entries(CIDADES).map(([k,c])=>`<button class="cid" type="button" data-cid="${k}" aria-pressed="${k===cid}">${esc(c.n)}</button>`).join("");
@@ -2606,12 +2609,34 @@ function roadPath(a,b){
   if(!best)return [a,b];
   return [a,[best.A.px,best.A.py],...best.chain,[best.B.px,best.B.py],b];
 }
+// ---------- imagens do mapa real (render do jogo feito com pzmap2dzi, hospedado em projectzomboidmap.com, B42.20.2) ----------
+// Um quadrado do jogo (X,Y) fica no pixel (x0+(X-Y)*64, y0+(X+Y)*32) da imagem cheia; a vista 3D da ficha usa a mesma inclinação, só muda a escala.
+const TILES={url:"https://tiles.projectzomboidmap.com/maps/b42.20.2-r1/base/layer0_files/",W:2314368,H:1019040,top:22,x0:1036288,y0:-139296,sz:1024};
+let tileState={lv:-1,keys:new Set()},tileT=null;
+function tileOrigin(){const B=C.M.B;return[TILES.x0+64*(B[0]-B[1]),TILES.y0+32*(B[0]+B[1])]}
+function updateTiles(){const g=$("rwTiles");if(!g)return;if(!map3d){g.innerHTML="";return}
+  const r=$("rwMap").getBoundingClientRect();if(!r.width)return;const k=64/ISO,[ox,oy]=tileOrigin(),u=Math.max(vb[2]/r.width,vb[3]/r.height),dpr=Math.min(2,window.devicePixelRatio||1);
+  const add=(lv,x0,y0,x1,y1,cls)=>{const sc=Math.pow(2,lv-TILES.top),T=TILES.sz/sc,maxC=Math.ceil(TILES.W*sc/TILES.sz)-1,maxR=Math.ceil(TILES.H*sc/TILES.sz)-1;
+    const c0=Math.max(0,Math.floor(x0/T)),c1=Math.min(maxC,Math.floor(x1/T)),r0=Math.max(0,Math.floor(y0/T)),r1=Math.min(maxR,Math.floor(y1/T));if((c1-c0+1)*(r1-r0+1)>80)return false;
+    for(let c=c0;c<=c1;c++)for(let rr=r0;rr<=r1;rr++){const key=lv+"/"+c+"_"+rr;if(tileState.keys.has(key))continue;tileState.keys.add(key);
+      const im=el("image",{href:TILES.url+key+".jpg",x:((c*T-ox)/k).toFixed(2),y:((rr*T-oy)/k).toFixed(2),width:(T/k+.4).toFixed(2),height:(T/k+.4).toFixed(2),preserveAspectRatio:"none",class:cls,"data-lv":lv},g);
+      im.style.opacity=0;im.addEventListener("load",()=>{im.style.opacity=1});im.addEventListener("error",()=>im.remove())}return true};
+  // nível de fundo: a cidade inteira em poucas imagens; nível de detalhe: o que está na tela
+  const V=projV(),bx0=ox+V[0]*k,by0=oy+V[1]*k,bx1=bx0+V[2]*k,by1=by0+V[3]*k;let blv=Math.max(8,Math.min(TILES.top,Math.round(TILES.top+Math.log2(4*TILES.sz/(bx1-bx0)))));
+  if(tileState.lv<0){add(blv,bx0,by0,bx1,by1,"tb");tileState.lv=blv}
+  const lv=Math.max(blv,Math.min(TILES.top,Math.ceil(TILES.top+Math.log2(dpr/(u*k)))));
+  const vx0=ox+vb[0]*k,vy0=oy+vb[1]*k;if(lv>blv&&add(lv,vx0,vy0,vx0+vb[2]*k,vy0+vb[3]*k,"td"))g.querySelectorAll(".td").forEach(im=>{if(+im.dataset.lv!==lv){tileState.keys.delete(im.getAttribute("href").slice(TILES.url.length,-4));im.remove()}})}
 function setVB(t,anim){if(vbAnim)cancelAnimationFrame(vbAnim);const from=vb.slice(),t0=performance.now(),dur=anim===false||matchMedia("(prefers-reduced-motion: reduce)").matches?0:500;
-  (function f(now){const k=dur?Math.min(1,(now-t0)/dur):1,e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;vb=from.map((v,i)=>v+(t[i]-v)*e);$("rwMap").setAttribute("viewBox",vb.join(" "));mapLabels();if(k<1)vbAnim=requestAnimationFrame(f)})(t0)}
+  (function f(now){const k=dur?Math.min(1,(now-t0)/dur):1,e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;vb=from.map((v,i)=>v+(t[i]-v)*e);$("rwMap").setAttribute("viewBox",vb.join(" "));mapLabels();clearTimeout(tileT);tileT=setTimeout(updateTiles,k<1?140:40);if(k<1)vbAnim=requestAnimationFrame(f)})(t0)}
 // prioridade dos nomes: com o mapa afastado só aparecem polícia, bombeiros, saúde, armas e perigo; aproximado aparecem todos que couberem, sem um cobrir o outro
 const LPRI={pol:0,fogo:0,perigo:0,med:1,arma:1,gas:2,comida:2,ferr:2,livro:2,carro:3,vhs:3,roupa:4,casa:4};
 function mapLabels(){const svg=$("rwMap"),lb=$("rwLabels");if(!lb)return;const r=svg.getBoundingClientRect();if(!r.width)return;
-  const u=Math.max(vb[2]/r.width,vb[3]/r.height),zoomed=vb[2]<projV()[2]*.62;lb.setAttribute("font-size",(12*u).toFixed(2));lb.setAttribute("stroke-width",(3*u).toFixed(2));
+  const u=Math.max(vb[2]/r.width,vb[3]/r.height),zoomed=vb[2]<projV()[2]*.62;
+  // marcadores, paradas e rota com o mesmo tamanho na tela, perto ou longe
+  const su=Math.min(1.6,Math.max(.3,u*1.05));
+  svg.querySelectorAll("#rwPois>g,#rwStops>g,#rwMarks>g").forEach(g=>{if(!g.dataset.t)g.dataset.t=g.getAttribute("transform")||"";g.setAttribute("transform",g.dataset.t+` scale(${su.toFixed(3)})`)});
+  svg.querySelectorAll("#rwStops>circle").forEach(c=>{if(!c.dataset.r)c.dataset.r=c.getAttribute("r");c.setAttribute("r",(c.dataset.r*su).toFixed(2));c.setAttribute("stroke-width",(3*su).toFixed(2))});
+  svg.querySelectorAll("#rwRoute polyline").forEach((pl,i)=>{pl.setAttribute("stroke-width",((i?6:11)*su).toFixed(2));if(i)pl.setAttribute("stroke-dasharray",`${(14*su).toFixed(1)} ${(14*su).toFixed(1)}`)});lb.setAttribute("font-size",(12*u).toFixed(2));lb.setAttribute("stroke-width",(3*u).toFixed(2));
   const ts=[...lb.children],taken=[],ord=C.POI.map((q,i)=>i).sort((a,b)=>(LPRI[C.POI[a][3]]??5)-(LPRI[C.POI[b][3]]??5));
   ord.forEach(i=>{const t=ts[i],q=C.POI[i],pr=LPRI[q[3]]??5;if(!t)return;const [X,Y]=P(rx(q[1]),ry(q[2])),sx=(X-vb[0])/u,sy=(Y-vb[1])/u-(map3d?12/u*0:0),w=q[0].length*6.4+14,box=[sx+6,sy-9-(map3d?12/u:0),sx+6+w,sy+6-(map3d?12/u:0)];
     const ok=(zoomed||pr<=1)&&sx>-20&&sy>-20&&sx<r.width+20&&sy<r.height+20&&!taken.some(b=>box[0]<b[2]&&box[2]>b[0]&&box[1]<b[3]&&box[3]>b[1]);
@@ -2655,7 +2680,7 @@ function getMarks(){return (allMarks()[cid]||[]).slice()}
 function setMarks(L){const a=allMarks();a[cid]=L;try{localStorage.setItem("pzMarcas",JSON.stringify(a))}catch(e){window._pzMk=a}drawMarks()}
 function drawMarks(){const g=$("rwMarks");if(!g)return;g.innerHTML="";getMarks().forEach(([t,gx,gy])=>{const T=MKT[t];if(!T)return;const [X,Y]=P(rx(gx),ry(gy));const m=el("g",{transform:`translate(${X.toFixed(1)},${Y.toFixed(1)})`,class:"mk mk-"+t},g);
   el("circle",{r:12,fill:t==="base"?"#2f7d32":t==="perigo"?"#c8402a":"#4a4a4a",stroke:"#f7f4ea","stroke-width":2.5},m);const tx=el("text",{"text-anchor":"middle",y:5,"font-size":13,fill:"#fff"},m);tx.textContent=T[0];const tt=el("title",{},m);tt.textContent=T[1]});
-  const n=getMarks().length;const c=$("mkCount");if(c)c.textContent=n?`${n} marcaç${n>1?"ões":"ão"} em ${C.n}`:"Nenhuma marcação nesta cidade."}
+  if(mapReady)mapLabels();const n=getMarks().length;const c=$("mkCount");if(c)c.textContent=n?`${n} marcaç${n>1?"ões":"ão"} em ${C.n}`:"Nenhuma marcação nesta cidade."}
 function setMarkMode(m){markMode=markMode===m?null:m;document.querySelectorAll("#markBar [data-mk]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.mk===markMode));$("rwMap").classList.toggle("marking",!!markMode);closePop()}
 function setStep(i,anim){
   const ROTA=C.ROTA;rotaI=Math.max(0,Math.min(ROTA.length-1,i));const r=ROTA[rotaI];
@@ -2860,7 +2885,7 @@ function renderRefs(){const vids={};Object.entries(CH).forEach(([k,c])=>vids[k]=
   $("refsList").innerHTML=Object.entries(CH).map(([k,c])=>card(`<h3>${esc(c.nm)}<small>${c.lg}</small></h3>`,`<ul>${vids[k].map(v=>`<li><a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.t)}</a><br><span class="hint">${esc(v.dt)} · gravado na ${esc(v.pt)}</span></li>`).join("")}</ul>`+(uso(k).length?`<span class="hint">Usado em: ${esc(uso(k).join(", "))}${k==="shivas"?"; etiquetas Obrigatório, Meta etc.":""}${k==="knine"?"; rota de Rosewood e dicas de sobrevivência":""}.</span>`:"")
   )).join("")+
   card("<h3>PZwiki</h3>",`<ul>${[["Riverside","42.20"],["Muldraugh","42.0"],["West_Point","42.13"],["Echo_Creek","42.16"],["March_Ridge","42.18"]].map(([pg,v])=>`<li><a href="https://pzwiki.net/wiki/${pg}" target="_blank" rel="noopener">${pg.replace("_"," ")}</a> <span class="hint">(página da ${v})</span></li>`).join("")}</ul><span class="hint">Lugares, dicas das cidades e coordenadas.</span>`)+
-  card("<h3>Mapas</h3>",`<ul><li><a href="https://pzmap.org/" target="_blank" rel="noopener">pzmap.org</a> <span class="hint">· lugares de cada cidade (42.20)</span></li><li><a href="https://projectzomboidmap.com/pt/" target="_blank" rel="noopener">projectzomboidmap.com</a> <span class="hint">· links "mapa real" e mapa embutido</span></li></ul>`)+
+  card("<h3>Mapas</h3>",`<ul><li><a href="https://pzmap.org/" target="_blank" rel="noopener">pzmap.org</a> <span class="hint">· lugares de cada cidade (42.20)</span></li><li><a href="https://projectzomboidmap.com/pt/" target="_blank" rel="noopener">projectzomboidmap.com</a> <span class="hint">· imagens da vista 3D (render do jogo B42.20.2 feito com pzmap2dzi), links "mapa real" e mapa embutido</span></li></ul>`)+
   card("<h3>Project Zomboid (The Indie Stone)</h3>",`<ul><li>Arquivos do jogo 42.21: ruas, prédios e água (streets.xml, worldmap.xml), pontos de nascimento, presets e nomes das opções de sandbox em português, opções do servidor.</li><li><a href="https://projectzomboid.com/" target="_blank" rel="noopener">projectzomboid.com</a></li></ul>`)+
   card("<h3>Oficina Steam</h3>",`<ul><li><a href="https://steamcommunity.com/app/108600/workshop/" target="_blank" rel="noopener">Spiffo's Workshop</a> <span class="hint">· lista e descrição dos mods (autores na página de cada mod, aba Mods)</span></li></ul>`)+
   card("<h3>Bibliotecas e fontes</h3>",`<ul><li><a href="https://threejs.org/" target="_blank" rel="noopener">three.js</a> <span class="hint">· bonecos 3D (MIT)</span></li><li><a href="https://github.com/jdecked/twemoji" target="_blank" rel="noopener">Twemoji</a> <span class="hint">· ícones dos selos, © Twitter/X e colaboradores, CC-BY 4.0</span></li><li>Fontes Stardos Stencil, Barlow e JetBrains Mono <span class="hint">· Google Fonts (OFL)</span></li></ul>`)+
