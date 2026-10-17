@@ -641,6 +641,43 @@ img.pt:not([src]){background:linear-gradient(180deg,var(--surface2),transparent)
 .mkey span{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
 .mkey b{font-size:14px}
 .mkey .chg{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+/* Aprender */
+.apr-nav{display:flex;flex-wrap:wrap;gap:6px;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--barh,64px));z-index:4;background:var(--bg);padding:8px 0}
+.apr-nav a{border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;font-weight:600;font-size:13px;padding:6px 12px;border-radius:999px}
+.apr-nav a:hover{border-color:var(--accent)}
+#panel-aprender .section{scroll-margin-top:calc(var(--barh,64px) + 56px)}
+.apr-notes{margin:0;padding-left:18px;display:grid;gap:4px;font-size:13.5px;color:var(--muted)}
+.apr-notes b{color:var(--ink)}
+.tv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:10px}
+.tv-day{border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:10px 12px;display:grid;gap:6px;align-content:start}
+.tv-day h3{font-size:16px;display:flex;justify-content:space-between;align-items:baseline;gap:6px}.tv-day h3 small{font-family:var(--f-body,inherit);font-size:12px;color:var(--muted);font-weight:500}
+.tv-r{display:grid;grid-template-columns:38px minmax(0,1fr);gap:8px;align-items:start;font-size:13px;padding-top:6px;border-top:1px dashed var(--line)}
+.tv-r img{width:16px;height:16px;vertical-align:-3px}.tv-r small{display:block;color:var(--muted);font-size:11.5px}
+.tv-h{font-family:var(--f-mono);color:var(--accent)}
+.tv-r.miss{opacity:.5}.tv-r.miss b{text-decoration:line-through}
+.tblw{overflow-x:auto}
+.apr-t{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.apr-t th,.apr-t td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+.apr-t th{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);background:var(--surface2)}
+.apr-t caption{caption-side:bottom;text-align:left;font-size:12px;color:var(--muted);padding-top:6px;white-space:normal}
+.mono{font-family:var(--f-mono)}
+.crop-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted)}
+.crop-leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-2px}
+.m-b{background:#3f9a4a}.m-s{background:#8cc76a}.m-r{background:#e2b93b}.m-x{background:#c8573f}.m-n{background:var(--line)}
+.crop-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:8px}
+.crop{display:grid;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 11px}
+.crop.k-x,.crop.k-n{opacity:.6}
+.crop-n{display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline}.crop-n small{color:var(--muted);font-size:11.5px}
+.crop-t{margin-left:auto;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:999px;color:#14200f}.crop-t.m-x{color:#fff}.crop-t.m-n{color:var(--muted)}
+.crop-m{display:grid;grid-template-columns:repeat(12,1fr);gap:2px}
+.crop-m i{font-style:normal;text-align:center;font-size:9.5px;letter-spacing:-.02em;overflow:hidden;font-weight:700;line-height:18px;border-radius:3px;color:#14200f}
+.crop-m i.m-x{color:#fff}.crop-m i.m-n{color:var(--muted)}
+.crop-m i.cur{outline:2px solid var(--ink);outline-offset:1px}
+.ani-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:10px}
+.ani{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px}
+.ani img{width:40px;height:40px}.ani h3{font-size:17px}.ani p{margin:2px 0 6px;font-size:13px;color:var(--muted)}
+.ani dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:2px 8px;font-size:12.5px}.ani dt{color:var(--muted)}.ani dd{margin:0}
+.srv-tips ul{margin:8px 0;padding-left:18px;display:grid;gap:4px;font-size:13.5px}
 /* filtros dos traços ficam à mão enquanto a lista desce */
 section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--barh,64px));z-index:4;background:var(--bg);padding-top:8px}
 @media (min-width:1100px){
@@ -670,6 +707,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
       <span class="tgrp" aria-hidden="true">Jogo</span>
       <button class="tab" role="tab" id="tab-guia" data-tab="guia" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Sobrevivência</span></button>
       <button class="tab" role="tab" id="tab-fab" data-tab="fab" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4.5l5 5-2.5 2.5-5-5z"/><path d="M12 7l-8.5 8.5a1.8 1.8 0 0 0 2.5 2.5L14.5 9.5"/></svg><span>Fabricar</span></button>
+      <button class="tab" role="tab" id="tab-aprender" data-tab="aprender" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 8h7M9 11.5h5"/></svg><span>Aprender</span></button>
       <span class="tgrp" aria-hidden="true">Servidor</span>
       <button class="tab" role="tab" id="tab-mundo" data-tab="mundo" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span>Mundo</span></button>
       <button class="tab" role="tab" id="tab-mods" data-tab="mods" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h4V5a2 2 0 1 1 4 0v2h4v4h-2a2 2 0 1 0 0 4h2v4H4v-4h2a2 2 0 1 0 0-4H4z"/></svg><span>Mods</span></button>
@@ -964,6 +1002,63 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
     </div>
   </div>
 
+  <!-- APRENDER -->
+  <div id="panel-aprender" role="tabpanel" aria-labelledby="tab-aprender" hidden>
+    <div class="panel">
+      <nav class="apr-nav" aria-label="Seções"><a href="#aTV">📺 TV</a><a href="#aLivros">📚 Livros</a><a href="#aPlantio">🌱 Plantio</a><a href="#aAnimais">🐄 Animais</a></nav>
+      <section class="section" id="aTV" aria-labelledby="hTV">
+        <div class="sec-head"><h2 id="hTV">TV: Life and Living (canal 203)</h2><span class="hint">9 dias de programas que dão XP e receitas</span></div>
+        <div class="ctx" id="tvCtx"></div>
+        <ul class="apr-notes">
+          <li>Cada programa dá XP até a perícia chegar ao <b>nível 3</b>. Depois disso o programa ainda ensina a receita, mas não dá mais XP. O limite muda nas opções do mundo.</li>
+          <li>O dia 1 é a data de início do mundo. Com início às 9h, o programa da meia-noite do dia 1 já passou.</li>
+          <li>Precisa de TV ligada: com a luz cortada, só com gerador.</li>
+        </ul>
+        <div class="tv-grid" id="tvGrid"></div>
+        <p class="hint">Grade e XP: <a href="https://pzwiki.net/wiki/Life_and_Living_TV" target="_blank" rel="noopener">PZwiki</a> (revisada na 42.20.2). XP base, sem Aprendiz Rápido ou Aprendiz Lento.</p>
+      </section>
+      <section class="section" id="aLivros" aria-labelledby="hLivros">
+        <div class="sec-head"><h2 id="hLivros">Livros de perícia</h2><span class="hint">Multiplicam o XP até terminar o nível</span></div>
+        <div class="ctx" id="bookCtx"></div>
+        <div class="frow" id="bookOpts"></div>
+        <div class="tblw"><table class="apr-t" id="bookT"></table></div>
+        <ul class="apr-notes">
+          <li>Só dá para ler com o nível mínimo do volume. Com nível acima, o personagem lê, mas não ganha bônus.</li>
+          <li>Cada 10% de páginas lidas dá 10% do bônus: ler pela metade já ajuda.</li>
+          <li>O bônus acaba quando você termina os dois níveis daquele volume. Livros de perícias diferentes valem ao mesmo tempo.</li>
+          <li>Pontaria, Recarga e Lâminas Longas têm metade do bônus (coluna “combate”).</li>
+        </ul>
+        <p class="hint">Multiplicadores: arquivos do jogo 42.21 (XPSystem_SkillBook.lua). Páginas e tempo de leitura: <a href="https://pzwiki.net/wiki/Skill_book" target="_blank" rel="noopener">PZwiki</a> (42.13.2); cada página leva cerca de 2 minutos do jogo.</p>
+      </section>
+      <section class="section" id="aPlantio" aria-labelledby="hPlantio">
+        <div class="sec-head"><h2 id="hPlantio">Calendário de plantio</h2><span class="hint" id="cropCount"></span></div>
+        <div class="ctx" id="cropCtx"></div>
+        <div class="frow" role="group" aria-label="Mês" id="cropMes"></div>
+        <div class="frow" role="group" aria-label="Tipo" id="cropTipo"></div>
+        <div class="crop-leg"><span><i class="m-b"></i>Melhor mês</span><span><i class="m-s"></i>Época de plantio</span><span><i class="m-r"></i>Mês desfavorável</span><span><i class="m-x"></i>Fora de época</span><span><i class="m-n"></i>Sem efeito</span></div>
+        <div class="crop-list" id="cropList"></div>
+        <ul class="apr-notes">
+          <li>Plantado na época de plantio, não fica amaldiçoado. No mês desfavorável há risco de 50% a 5%, conforme a Agricultura.</li>
+          <li>“Água” é o nível mínimo que a planta precisa para crescer sem atraso.</li>
+          <li>Só vale com as estações ligadas nas opções do mundo.</li>
+        </ul>
+        <p class="hint">Meses, água e resistência ao frio: arquivos do jogo 42.21 (farming_vegetableconf). Nomes: tradução oficial do jogo. Regras: <a href="https://pzwiki.net/wiki/Agriculture" target="_blank" rel="noopener">PZwiki</a> (42.18).</p>
+      </section>
+      <section class="section" id="aAnimais" aria-labelledby="hAnimais">
+        <div class="sec-head"><h2 id="hAnimais">Animais</h2><span class="hint">Novidade da B42: criação, cruzamento e rastros</span></div>
+        <div class="ctx" id="aniCtx"></div>
+        <div class="ani-list" id="aniList"></div>
+        <ul class="apr-notes">
+          <li>Animal de fazenda precisa de uma <b>Zona de Criação</b>. Ele só sai dela se estiver estressado, com fome ou com sede. Zonas encostadas viram uma só.</li>
+          <li>Cocho e galinheiro têm que ficar dentro da zona. Cada cocho leva comida <b>ou</b> água, não os dois.</li>
+          <li>Cerca serve para proteger de predadores. Barulho, zumbis perto e gente correndo estressam os animais.</li>
+          <li>Zona menor que o mínimo deixa o animal crescer menos.</li>
+        </ul>
+        <p class="hint">Raças, zonas mínimas, ovos e acasalamento: arquivos do jogo 42.21 (Definitions/animal). Nomes: tradução oficial do jogo. Regras de zona: texto do próprio jogo e <a href="https://pzwiki.net/wiki/Animal" target="_blank" rel="noopener">PZwiki</a> (42.20.4).</p>
+      </section>
+    </div>
+  </div>
+
   <!-- MUNDO -->
   <div id="panel-mundo" role="tabpanel" aria-labelledby="tab-mundo" hidden>
     <div class="panel">
@@ -978,6 +1073,13 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
         <div class="dif" id="mDif"></div>
         <label class="mcmp">Comparar com <select id="mCmp"><option value="">nenhum preset</option></select><span class="hint">Mostra ao lado de cada opção o valor do outro preset quando é diferente.</span></label>
         <ul class="warns" id="mWarn" hidden></ul>
+        <details class="howto srv-tips"><summary>Antes de abrir o servidor</summary><ul>
+          <li><b>Mesma versão para todos.</b> Servidor e jogadores na 42.21. Se alguém estiver em outra versão, não entra. Combinem quando atualizar.</li>
+          <li><b>Mesmos mods.</b> Mande o link do grupo (aba Grupo): ele leva a lista de mods e o mundo juntos.</li>
+          <li><b>Senha ou lista de convidados.</b> Durante os testes do multiplayer da B42, a The Indie Stone recomendou servidor fechado e até 20 jogadores. A 42.20.3 liberou até 254, mas isso não quer dizer que aguente: depende da máquina e dos mods.</li>
+          <li><b>Animais pesam no servidor.</b> Eles continuam simulados mesmo sem ninguém por perto.</li>
+          <li><b>Faça backup do save</b> antes de atualizar o jogo ou trocar mods.</li>
+        </ul><p class="hint">Fontes: <a href="https://low.ms/blog/project-zomboid-build-42-multiplayer-survival-guide" target="_blank" rel="noopener">low.ms</a>, <a href="https://www.verygames.com/en/khao/pg-31-project-zomboid-42-20-3-server-254-players" target="_blank" rel="noopener">VeryGames</a> e <a href="https://supercraft.host/wiki/project-zomboid/pz-b42-animal-husbandry-server-guide/" target="_blank" rel="noopener">Supercraft</a>.</p></details>
         <div class="mundo">
           <div class="mgrs" id="mGrupos"></div>
           <aside class="mres" aria-labelledby="hRes">
@@ -3116,6 +3218,8 @@ function searchIndex(){if(SIDX)return SIDX;const L=[];
   LIB.forEach(b=>L.push({k:"Build",t:b.nm,d:(CH[b.ch]?CH[b.ch].nm+" · ":"")+PROF[b.prof].pt,go:()=>{go("builds");const c=document.querySelector(`[data-open="${b.id}"]`);if(c)c.scrollIntoView({block:"center"})}}));
   FAB.forEach(x=>L.push({k:"Receita",t:x.n,d:x.cat+" · "+x.para,go:()=>{go("fab");$("fabQ").value=x.n.split(" (")[0];fabCat="Todas";fabDif=0;renderFab();$("fabQ").scrollIntoView({block:"center"})}}));
   Object.entries(CIDADES).forEach(([ck,c])=>c.POI.forEach(([n,x,y,k],i)=>L.push({k:"Lugar",t:n,d:c.n+" · "+(PLEG[k]||""),go:()=>{go("guia");if(cid!==ck)setCity(ck);const [X,Y]=P(rx(x),ry(y)),r=$("rwMap").getBoundingClientRect(),a=r.height?r.width/r.height:1,w=projV()[2]*.35;setVB([X-w/2,Y-w/a/2,w,w/a]);$("rwMap").scrollIntoView({block:"center"})}})));
+  CROPS.forEach(c=>L.push({k:"Planta",t:c[0],d:"Plantio: "+c[3].map(m=>MESES[m-1]).join(", "),go:()=>{cropMes=c[4][0]||c[3][0];cropTipo="all";go("aprender");renderCrops();$("aPlantio").scrollIntoView({block:"start"})}}));
+  [["TV Life and Living","Grade de 9 dias com XP de Culinária, Carpintaria, Pesca e mais","aTV"],["Livros de perícia","Volumes, bônus e tempo de leitura","aLivros"],["Animais","Galinha, vaca, porco, ovelha, peru e selvagens","aAnimais"]].forEach(([t,d,id])=>L.push({k:"Aprender",t,d,go:()=>{go("aprender");$(id).scrollIntoView({block:"start"})}}));
   MODS.forEach(m=>L.push({k:"Mod",t:m[1],d:m[3]+" · "+m[5],go:()=>{go("mods");$("modQ").value=m[1];renderMods()}}));
   MODX.forEach(m=>L.push({k:"Mod",t:m[1],d:"Lista ampla da Oficina",go:()=>{go("mods");$("modQ").value=m[1];renderMods();document.querySelector(".modx").open=true}}));
   return SIDX=L}
@@ -3173,8 +3277,61 @@ $("inbox").addEventListener("click",e=>{const b=e.target.closest("[data-ib]");if
   if(a==="loadteam"&&box._team){applyTeam(box._team);go("esquadrao")}
   box.hidden=true});
 
+// ---------- APRENDER: TV, livros, plantio e animais ----------
+// Life and Living: [dia, [[hora, perícia, XP base, receita]]] (PZwiki, 42.20.2)
+const TVD=[[1,[[0,"Pesca",75,""],[6,"Culinária",112.5,""],[12,"Carpintaria",75,""],[18,"Pesca",62.5,""]]],[2,[[6,"Culinária",75,""],[12,"Carpintaria",75,""],[18,"Agricultura",75,""]]],
+  [3,[[6,"Culinária",62.5,""],[12,"Carpintaria",100,""],[18,"Pesca",75,"Vara de Pesca"]]],[4,[[6,"Culinária",87.5,""],[12,"Carpintaria",75,""]]],[5,[[6,"Culinária",75,""],[12,"Carpintaria",100,""],[18,"Coleta",50,""]]],
+  [6,[[6,"Culinária",62.5,"Massa de Torta"],[12,"Carpintaria",75,""],[18,"Armadilhas",100,"Armadilha de Caixa (o wiki aponta um bug nessa receita)"]]],[7,[[6,"Culinária",87.5,"Massa de Bolo"],[12,"Carpintaria",112.5,""],[18,"Coleta",100,""]]],
+  [8,[[6,"Culinária",125,""],[18,"Carpintaria",37.5,""]]],[9,[[6,"Culinária",75,""]]]];
+const TVSHOW={Culinária:["The Cook Show","🍳"],Carpintaria:["Woodcraft","🪚"],Pesca:["Exposure Survival","🎣"],Agricultura:["Exposure Survival","🌱"],Coleta:["Exposure Survival","🍄"],Armadilhas:["Exposure Survival","🪤"]};
+const MESES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],MES3=MESES.map(m=>m.slice(0,3));
+function mvSafe(){try{return mVals()}catch(e){return {}}}
+function renderTV(){const v=mvSafe(),sm=v.StartMonth||7,sd=v.StartDay||9,sh=[7,9,12,14,17,21,0,2,5][(v.StartTime||2)-1]??9;
+  const d0=new Date(1993,sm-1,sd),dt=n=>{const d=new Date(d0);d.setDate(d.getDate()+n-1);return d.getDate()+" de "+MESES[d.getMonth()].toLowerCase()};
+  $("tvCtx").innerHTML=`<span class="ctx-i"><b>Mundo do grupo:</b> começa em ${dt(1)}, às ${String(sh).padStart(2,"0")}:00 <button type="button" class="linkbtn" data-go="mundo">mudar</button></span>`;
+  $("tvGrid").innerHTML=TVD.map(([d,L])=>`<article class="tv-day"><h3>Dia ${d}<small>${dt(d)}</small></h3>${L.map(([h,sk,xp,rc])=>{const miss=d===1&&sh>=h+6,late=d===1&&!miss&&sh>h,S=TVSHOW[sk];
+    return `<div class="tv-r${miss?" miss":""}"><b class="tv-h">${String(h).padStart(2,"0")}h</b><span><img src="${twUrl(S[1])}" alt="" width="16" height="16"> <b>${sk}</b> +${String(xp).replace(".",",")} XP<small>${S[0]}${rc?` · ensina <b>${rc}</b>`:""}${miss?" · já passou quando o mundo começa":late?` · já começou: fica no ar até ${h+6}h`:""}</small></span></div>`}).join("")}</article>`).join("")}
+const BOOKV=[["I",220,"1–2",3,1.5],["II",260,"3–4",5,2.5],["III",300,"5–6",8,4],["IV",340,"7–8",12,6],["V",380,"9–10",16,8]];
+const BOOKSK="Abate, Agricultura, Alvenaria, Armadilhas, Carpintaria, Cerâmica, Coleta, Costura, Culinária, Cuidados com Animais, Elétrica, Entalhamento, Ferraria, Lascamento, Manutenção, Mecânica, Pesca, Primeiros Socorros, Rastreamento, Soldagem e Vidraria";
+let bookOpt={oc:false,sent:true};
+function renderBooks(){const fast=state.sel.has("fast_reader"),slow=state.sel.has("slow_reader"),m=(fast?.7:slow?1.3:1)*(bookOpt.oc?.9:1)*(bookOpt.sent?.9:1);
+  const hm=min=>{const h=Math.floor(min/60),r=Math.round(min%60);return h+"h"+(r?String(r).padStart(2,"0"):"")};
+  $("bookCtx").innerHTML=`<span class="ctx-i"><b>Sua build:</b> ${fast?"Leitura Dinâmica (lê 30% mais rápido)":slow?"Leitura Lenta (lê 30% mais devagar)":"sem traço de leitura"} <button type="button" class="linkbtn" data-go="montador">mudar</button></span>`;
+  $("bookOpts").innerHTML='<span class="hint">Lendo</span>'+chip("data-bo","sent","sentado (−10%)",bookOpt.sent)+chip("data-bo","oc","de óculos de leitura (−10%)",bookOpt.oc);
+  $("bookT").innerHTML=`<thead><tr><th>Volume</th><th>Níveis</th><th>Páginas</th><th>Bônus</th><th>Combate</th><th>Seu tempo de leitura</th></tr></thead><tbody>${BOOKV.map(([v,pg,lv,x,xc])=>`<tr><td><b>${v}</b></td><td>${lv}</td><td>${pg}</td><td class="mono">×${x}</td><td class="mono">×${String(xc).replace(".",",")}</td><td class="mono">${hm(pg*2*m)} do jogo</td></tr>`).join("")}</tbody>`+
+    `<caption>Bônus normal vale para ${BOOKSK}. Combate: Pontaria, Recarga e Lâminas Longas.</caption>`}
+const CROPS=[["Abobrinha","v",70,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Abóbora","v",70,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Alecrim","e",30,[3,4,5,6,7,8,9],[],[],[12,1,10,11],0],["Alface","v",70,[2,3,4,7,8,9],[3,7],[9],[10,11,12,1],0],["Alho","v",30,[7,8,9],[8],[9],[6],1],["Alho Selvagem","e",30,[7,8,9],[8],[9],[6],1],["Alho-poró","e",70,[3,4,5,6,7,8,9],[],[],[12,1,10,11],1],["Batatas","v",60,[2,3,4],[3],[4],[8,9,10,11,12,1],0],["Batatas-doces","v",60,[5,6,7],[6],[7],[10,11,12,1,2],0],["Beterraba Doce","v",40,[2,3,4,5,6,7],[3,6],[7],[9,10,11,12,1],0],["Brócolis","v",70,[2,3,4,5,6,7],[3,6],[7],[9,10,11,12,1],0],["Calêndula","e",80,[3,4,5],[4],[5],[8,9,10,11,12,1],0],["Camomila","e",80,[3,4,5],[4],[],[8,9,10,11,12,1],0],["Capim-limão","e",70,[3,4,5,6,7,8,9],[],[],[12,1,10,11],0],["Cebolas","v",30,[2,3],[2],[3],[7,8,9,10,11,12,1],0],["Cebolinha","e",60,[3,4,5,6,7,8],[4],[6,7],[12,1,2,10,11],0],["Cenouras","v",30,[2,3,4,5,6,7],[2,6],[7],[1,10,11,12],0],["Centeio","v",30,[8,9,10],[9],[10],[6,7],1],["Cevada","v",30,[8,9,10],[9],[10],[6,7],1],["Coentro","e",70,[3,4,5],[4],[5],[7,8,9,10,11,12,1],0],["Confrei","e",60,[3,4,5,6,7,8],[3,4],[6,7],[12,1,2,10,11],0],["Couve","v",70,[2,3,4,5,6,7,8],[3,7],[8],[11,12,1],1],["Couve-flor","v",70,[2,3,4],[3],[4],[9,10,11,12,1],0],["Cânhamo","v",30,[8,9,10],[9],[10],[6,7],0],["Ervilhas Verdes","v",70,[2,3,4],[3],[4],[10,11,12,1],0],["Espinafre","v",70,[2,3,4,5,6,7],[3,6],[7],[9,10,11,12,1],0],["Girassol","v",30,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Hortelã","e",70,[2,3,4],[3],[],[6,7,8,9,10,11,12,1],0],["Lavanda","e",80,[3,4,5],[4],[5],[8,9,10,11,12,1],0],["Linho","v",30,[8,9,10],[9],[10],[6,7],1],["Lúpulo","v",30,[8,9,10],[9],[10],[6,7],0],["Malva-comum","e",60,[3,4,5,6,7,8],[3,4],[6,7],[12,1,2,10,11],0],["Manjericão","e",80,[3,4,5],[3],[4],[8,9,10,11,12,1],0],["Melancia","v",70,[3,4,5],[4],[5],[10,11,12,1,2],0],["Milho","v",30,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Nabo","v",60,[5,6,7,8,9,10],[6,9],[7,10],[11,12,1,2],0],["Orégano","e",60,[2,3,4],[3],[4],[7,8,9,10,11,12,1],0],["Papoulas","e",80,[3,4,5],[4],[5],[8,9,10,11,12,1],0],["Pepino","v",70,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Pimenta Habanero","e",70,[4,5,6],[5],[6],[10,11,12,1,2,3],0],["Pimenta Jalapeño","e",70,[4,5,6],[5],[6],[10,11,12,1,2,3],0],["Pimentão","v",70,[4,5,6],[5],[6],[10,11,12,1,2,3],0],["Pé de Morango","v",80,[2,3,4],[3],[4],[7,8,9,10,11,12,1],0],["Pé de Tomate","v",70,[4,5,6],[5],[6],[10,11,12,1,2,3],0],["Rabanetes","v",40,[2,3,4,5,6,7,8],[3,7],[8],[9,10,11,12,1],0],["Repolhos","v",80,[2,3,4,5,6,7],[3,5],[7],[10,11,12,1],1],["Rosas","e",80,[3,4,5],[4],[5],[8,9,10,11,12,1],0],["Salsinha","e",70,[2,3,4],[3],[4],[6,7,8,9,10,11,12,1],0],["Soja","v",60,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Sálvia","e",30,[2,3,4],[3],[4],[7,8,9,10,11,12],0],["Sálvia-negra","e",60,[3,4,5,6,7,8],[4,5],[7,8],[12,1,2,10,11],0],["Tabaco","v",70,[3,4,5,6,7],[3],[7],[9,10,11,12,1,2],0],["Tanchagem","e",60,[3,4,5,6,7,8],[4],[6,7],[12,1,2,10,11],0],["Tomilho","e",30,[2,3,4],[3],[4],[8,9,10,11,12,1],0],["Trigo de Inverno","v",30,[8,9,10],[9],[10],[6,7],1]];
+let cropMes=0,cropTipo="all";
+function renderCrops(){const v=mvSafe();if(!cropMes)cropMes=v.StartMonth||7;
+  $("cropCtx").innerHTML=`<span class="ctx-i"><b>Mundo do grupo:</b> começa em ${MESES[(v.StartMonth||7)-1].toLowerCase()}. Escolha o mês para ver o que plantar.</span>`;
+  $("cropMes").innerHTML='<span class="hint">Mês</span>'+MESES.map((m,i)=>chip("data-cm",i+1,MES3[i],cropMes===i+1)).join("");
+  $("cropTipo").innerHTML='<span class="hint">Tipo</span>'+[["all","Todas"],["v","Verduras e grãos"],["e","Ervas"]].map(([k,l])=>chip("data-ct",k,l,cropTipo===k)).join("");
+  const st=(c,m)=>c[4].includes(m)?"b":c[5].includes(m)?"r":c[3].includes(m)?"s":c[6].includes(m)?"x":"n";
+  const L=CROPS.filter(c=>cropTipo==="all"||c[1]===cropTipo).map(c=>({c,k:st(c,cropMes)})).sort((a,b)=>"bsrnx".indexOf(a.k)-"bsrnx".indexOf(b.k)||a.c[0].localeCompare(b.c[0]));
+  const ok=L.filter(o=>o.k==="b"||o.k==="s"||o.k==="r").length;$("cropCount").textContent=`${ok} de ${L.length} para plantar em ${MESES[cropMes-1].toLowerCase()}`;
+  const TT={b:"Época de Plantio - Melhor Mês",s:"Época de Plantio",r:"Época de Plantio - Mês Desfavorável",x:"Fora de Época",n:"Sem efeito"};
+  $("cropList").innerHTML=L.map(({c,k})=>`<div class="crop k-${k}"><div class="crop-n"><b>${esc(c[0])}</b><small>${c[1]==="e"?"Erva":"Verdura"} · água ${c[2]}${c[7]?" · aguenta frio":""}</small><span class="crop-t m-${k}">${TT[k]}</span></div>
+    <div class="crop-m" aria-label="Meses">${MES3.map((m,i)=>{const kk=st(c,i+1);return `<i class="m-${kk}${i+1===cropMes?" cur":""}" title="${MESES[i]}: ${TT[kk]}">${m}</i>`}).join("")}</div></div>`).join("")}
+const ANI=[["🐔","Galinha","Pintinho, Galinha e Galo","Rhode Island Red e Legorne","Fazenda. A galinha põe 1 ovo por dia no galinheiro; ovo fecundado choca em 21 dias. Penas ao abater. Acasala o ano todo.",40],
+  ["🐄","Vaca","Bezerro, Vaca e Touro","Angus (carne), Simental (carne e leite) e Holandesa (leite)","Fazenda. Dá leite depois de prenhe, tirado com balde. Acasala o ano todo.",80],
+  ["🐖","Porco","Leitão, Porca e Porco","Landrace Americana e Large Black","Fazenda. Carne. Acasala de setembro a fevereiro.",40],
+  ["🐑","Ovelha","Cordeiro, Ovelha e Carneiro","Suffolk (carne), Rambouillet (lã) e Frísia Oriental (leite)","Fazenda. Lã com tesoura a partir de adolescente; a ovelha dá leite depois de prenhe. Acasala de setembro a fevereiro.",40],
+  ["🦃","Peru","Filhote de Peru, Perua e Peru Macho","Meleagris","Fazenda. A perua põe ovos no galinheiro; ovo fecundado choca em 28 dias. Acasala em abril e maio.",40],
+  ["🦌","Veado","Filhote de Veado, Cerva e Cervo Macho","Cauda-branca","Selvagem. Deixa rastros que aparecem no modo de busca (Rastreamento).",0],
+  ["🐇","Coelho","Filhote, Coelho Fêmea e Coelho Macho","Apalache, Coelho-de-cauda-de-algodão e Pântano","Selvagem. Deixa rastros (Rastreamento) e cai em armadilha.",0],
+  ["🦝","Guaxinim","Filhote, Guaxinim Fêmea e Guaxinim Macho","Cinza","Selvagem pequeno: dá para pegar e criar.",40],
+  ["🐀","Rato","Filhote, Rato Fêmea e Rato Macho","Cinza e Branco","Selvagem pequeno: dá para pegar e criar.",20],
+  ["🐁","Camundongo","Filhote, Camundongo Fêmea e Macho","Veado, Dourado e Branco","Selvagem pequeno: dá para pegar e criar.",20]];
+function renderAni(){const v=mvSafe(),at=v.AnimalSoundAttractZombies;
+  $("aniCtx").innerHTML=`<span class="ctx-i"><b>Mundo do grupo:</b> ${at?"o barulho dos animais <b>atrai zumbis</b>":"o barulho dos animais não atrai zumbis"} · chance de animais nas fazendas: ${esc(mShow("AnimalRanchChance",v.AnimalRanchChance))} <button type="button" class="linkbtn" data-go="mundo">mudar</button></span>`;
+  $("aniList").innerHTML=ANI.map(([ic,n,st,br,d,z])=>`<article class="ani"><img src="${twUrl(ic)}" alt="" width="40" height="40" loading="lazy"><div><h3>${n}</h3><p>${d}</p><dl><dt>Fases</dt><dd>${st}</dd><dt>Raças</dt><dd>${br}</dd>${z?`<dt>Zona mínima</dt><dd>${z} quadrados</dd>`:""}</dl></div></article>`).join("")}
+function renderAprender(){renderTV();renderBooks();renderCrops();renderAni()}
+$("panel-aprender").addEventListener("click",e=>{const a=e.target.closest(".apr-nav a");if(a){e.preventDefault();const t=$(a.getAttribute("href").slice(1));if(t)t.scrollIntoView({behavior:"smooth",block:"start"});return}
+  const b=e.target.closest("[data-bo],[data-cm],[data-ct]");if(!b)return;
+  if(b.dataset.bo){bookOpt[b.dataset.bo]=!bookOpt[b.dataset.bo];renderBooks()}if(b.dataset.cm){cropMes=+b.dataset.cm;renderCrops()}if(b.dataset.ct){cropTipo=b.dataset.ct;renderCrops()}});
+
 // ---------- ABAS ----------
-const TABS=["montador","builds","combos","esquadrao","guia","fab","mundo","mods","grupo","refs"];
+const TABS=["montador","builds","combos","esquadrao","guia","fab","aprender","mundo","mods","grupo","refs"];
 let curTab=null;const tabY={};
 function go(t,how){
   if(!TABS.includes(t))t="montador";if(curTab)tabY[curTab]=scrollY;const prev=curTab;curTab=t;
@@ -3183,10 +3340,11 @@ function go(t,how){
   if(t==="esquadrao")renderTeam();
   if(t==="grupo")renderGrupo();
   if(t==="fab")renderFab();
+  if(t==="aprender")renderAprender();
   if(t==="esquadrao"||t==="guia"){let mv=null;try{mv=mVals()}catch(e){}const c=compute(state.prof,state.sel),ms=modsComDeps().length;
     $("teamCtx").innerHTML=mv?`<span class="ctx-i"><b>Mundo do grupo:</b> ${esc(mundo.n||MPRE[mundo.p].n)} · ${esc(MPRE[mundo.p].n)} · ${ms} mods <button type="button" class="linkbtn" data-go="grupo">ver página do grupo</button></span><span class="ctx-i"><button type="button" class="linkbtn putme">Pôr a minha build (${esc(PROF[state.prof].pt)}) no esquadrão</button></span>`:"";
     $("rotaCtx").innerHTML=`<span class="ctx-i"><b>Sua build:</b> ${esc(PROF[state.prof].pt)} · Força ${c.str} · Aptidão ${c.fit}${state.sel.has("short_sighted")?" · com Miopia, pegue óculos de grau cedo":""}${c.fit<5?" · Aptidão baixa: evite brigar com grupos":""} <button type="button" class="linkbtn" data-go="montador">mudar</button></span>`+((CFG.mapHide||[]).length?`<span class="ctx-i">Algumas categorias estão escondidas no mapa (botões “Mostrar” abaixo dele).</span>`:"")}
-  {const PT={montador:["Montador","Profissão, traços e o seu boneco"],builds:["Builds dos canais","16 builds de 7 canais, recalculadas na 42.21"],combos:["Combos","Esquadrões de 2 a 6 que se completam"],esquadrao:["Esquadrão","O time do grupo, com nome e build"],guia:["Sobrevivência","Rota dia a dia nas 6 cidades iniciais"],fab:["Fabricar","O que fazer primeiro e como"],mundo:["Mundo","Regras do servidor do grupo"],mods:["Mods","Os mais baixados da Oficina que rodam na B42"],grupo:["Grupo","Tudo o que o grupo combinou, num link"],refs:["Referências","Quem fez o conteúdo que usamos"]}[t];
+  {const PT={montador:["Montador","Profissão, traços e o seu boneco"],builds:["Builds dos canais","16 builds de 7 canais, recalculadas na 42.21"],combos:["Combos","Esquadrões de 2 a 6 que se completam"],esquadrao:["Esquadrão","O time do grupo, com nome e build"],guia:["Sobrevivência","Rota dia a dia nas 6 cidades iniciais"],fab:["Fabricar","O que fazer primeiro e como"],aprender:["Aprender","TV, livros, plantio e animais"],mundo:["Mundo","Regras do servidor do grupo"],mods:["Mods","Os mais baixados da Oficina que rodam na B42"],grupo:["Grupo","Tudo o que o grupo combinou, num link"],refs:["Referências","Quem fez o conteúdo que usamos"]}[t];
    if(PT){$("pageTitle").textContent=PT[0];$("pageSub").textContent=PT[1];document.title=PT[0]+" · Evangeliteens · Ficha B42"}}
   if(t==="refs"&&!$("refsList").children.length)renderRefs();
   if(t==="guia"&&!mapReady){let k=null;try{k=localStorage.getItem("pzCidade")}catch(e){}if(k&&CIDADES[k]){cid=k;C=CIDADES[k]}drawMap();setStep(0,false)}
