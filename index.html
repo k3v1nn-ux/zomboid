@@ -641,6 +641,18 @@ img.pt:not([src]){background:linear-gradient(180deg,var(--surface2),transparent)
 .mkey span{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
 .mkey b{font-size:14px}
 .mkey .chg{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+/* foco geral, mod, canais */
+.sk-gen{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:10px 12px}
+.sk-gen summary{cursor:pointer;font-weight:700}.sk-gen .vids{margin-top:10px}
+.totop{position:fixed;right:18px;bottom:18px;z-index:40;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--accent);color:var(--accent-ink);font-size:20px;font-weight:800;cursor:pointer;box-shadow:0 8px 20px -8px rgba(0,0,0,.6)}
+.totop[hidden]{display:none}
+.foco-sw{flex:0 0 auto;padding:2px;border-radius:999px;background:color-mix(in srgb,var(--shell-ink) 8%,transparent);border-color:var(--shell-line)}
+.foco-sw[hidden]{display:none}
+.foco-sw button{padding:5px 11px;border-radius:999px;font-size:12.5px;color:var(--shell-mut)}
+.foco-sw button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);box-shadow:none}
+@media (max-width:680px){.foco-sw span{display:none}.foco-sw button{padding:5px 9px;font-size:14px}}
+.tag.v-mod{background:#5b3fb8;color:#fff;border-color:#5b3fb8}
+.ch-a{display:inline-block;margin:2px 0 6px;font-size:13px;font-weight:700;color:var(--accent)}
 /* Time, meta, sugestões */
 .tab-hid{display:none!important}
 .subnav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
@@ -756,6 +768,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
     <a class="brand" href="#montador" aria-label="Evangeliteens · Ficha de Sobrevivente B42"><svg class="logo" viewBox="0 0 40 40" aria-hidden="true"><rect x="1" y="1" width="38" height="38" rx="9" fill="#e09a3a"/><path d="M20 7v26M7 20h26" stroke="#1b1408" stroke-width="5" stroke-linecap="round"/><circle cx="20" cy="20" r="6.5" fill="#1b1408"/><circle cx="20" cy="20" r="2.6" fill="#e09a3a"/></svg><span class="bt"><b>Evangeliteens</b><small>Ficha B42.21</small></span></a>
     <div class="ptitle" aria-live="polite"><h1 id="pageTitle">Montador</h1><span id="pageSub"></span></div>
     <div class="tools"><button class="tbtn wide" type="button" id="btnSearch" aria-label="Buscar na ficha" title="Buscar na ficha (/)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m20 20-4.2-4.2"/></svg><span>Buscar</span><kbd>/</kbd></button>
+      <div class="seg foco-sw" id="focoSw" role="group" aria-label="Ver direcionado à sua build ou tudo"><button type="button" data-fg="build" title="Destaca o que serve para a sua build">🎯 <span>Minha build</span></button><button type="button" data-fg="tudo" title="Mostra tudo, sem direcionar">🌐 <span>Tudo</span></button></div>
       <button class="tbtn ico" type="button" id="btnTheme" aria-label="Trocar tema claro e escuro"><svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg><svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></svg></button>
       <button class="tbtn ico" type="button" id="btnCfg" aria-label="Configurações da página" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
     <div class="saldo" id="saldo" aria-live="polite">
@@ -825,7 +838,8 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
       <div class="slot-edit" id="slotEdit" hidden></div>
       <section class="section" aria-labelledby="hProf">
         <div class="mtools"><span class="hint"><b>Desmarcar traços</b> mantém a profissão. <b>Recomeçar tudo</b> volta para a Profissão Personalizada, sem traços.</span><button class="btn sm" type="button" id="btnClear" title="Tira todos os traços e mantém a profissão escolhida">Desmarcar traços</button><button class="btn sm" type="button" id="btnRestart" title="Volta para a Profissão Personalizada, sem nenhum traço">Recomeçar tudo</button><span class="hint" id="mtMsg" role="status"></span></div>
-        <div class="sec-head"><h2 id="hProf">1 · Profissão</h2><span class="hint">Custo em pontos · <b>Meta</b> = indicada pelo ShivasBR · “x/16” = quantas builds dos canais usam a profissão</span></div>
+        <div class="sec-head"><h2 id="hProf">1 · Profissão</h2><span class="hint">Custo em pontos · <b>★ Meta</b>, Forte, Nicho e Desafio: ShivasBR e tier list do projectzomboid.wiki (passe o mouse na etiqueta) · “x/16” = quantas builds dos canais usam</span></div>
+        <div class="frow" role="group" aria-label="Filtrar profissões" id="profFil"></div>
         <div class="profs" id="profs"></div>
       </section>
 
@@ -918,6 +932,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
       <section class="section">
         <div class="sec-head"><h2>Builds dos canais</h2><span class="hint" id="libCount"></span></div>
         <details class="howto"><summary>Como funciona</summary><p>Só entram builds de vídeos gravados com a B42 (42.19 em diante) cujo saldo fecha com os custos da 42.21. Os traços foram tirados da transcrição de cada vídeo. Quando a conta do vídeo não fecha ou o vídeo não mostra tudo, a ficha diz o que ajustou. “Abrir no montador” carrega a build para você mexer.</p></details>
+        <div class="ctx" id="libFoco"></div>
         <div class="frow" role="group" aria-label="Filtrar por canal" id="chFilters"></div>
         <div class="frow" role="group" aria-label="Filtrar por estilo" id="styFilters"></div>
         <div class="lib ch" id="lib"></div>
@@ -936,6 +951,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
       <nav class="subnav" aria-label="Partes do Time"></nav>
       <section class="section">
         <div class="sec-head"><h2>Combos de esquadrão</h2><span class="hint" id="comboCount"></span></div>
+        <div class="ctx" id="comboFoco"></div>
         <details class="howto"><summary>Como funciona</summary><p>Grupos de builds que se completam: um cobre o ponto fraco do outro e, juntos, dão conta dos papéis que um time precisa. Cada combo diz por que as builds combinam, quais papéis ficam cobertos e o que ainda falta. “Montar no Esquadrão” carrega o grupo para você trocar quem quiser.</p></details>
         <div class="frow" role="group" aria-label="Filtrar por tamanho" id="comboSizes"></div>
         <div class="combos" id="comboList"></div>
@@ -1095,6 +1111,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
       <nav class="apr-nav" aria-label="Seções"><a href="#aSkills">🎓 Perícias</a><a href="#aTV">📺 TV</a><a href="#aLivros">📚 Livros</a><a href="#aPlantio">🌱 Plantio</a><a href="#aAnimais">🐄 Animais</a></nav>
       <section class="section" id="aSkills" aria-labelledby="hSkills">
         <div class="sec-head"><h2 id="hSkills">Como upar cada perícia</h2><span class="hint">Toque numa perícia para ver como ganhar XP, macetes e vídeos</span></div>
+        <details class="sk-gen"><summary>▶ Para começar: vídeos sobre todas as perícias da B42</summary><div class="vids" id="skGen"></div></details>
         <div class="frow" role="group" aria-label="Categoria" id="skCats"></div>
         <div id="skGrid"></div>
         <p class="hint">Como ganhar XP: <a href="https://pzwiki.net/wiki/Skill" target="_blank" rel="noopener">PZwiki</a> (páginas de cada perícia, revisadas entre 42.18 e 42.20). Vídeos: canais citados em cada perícia; tocam aqui mesmo, pelo YouTube.</p>
@@ -1336,6 +1353,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
   <div class="cfg-row"><b>Mapa ao abrir</b><div class="seg" data-cfg="mapa"><button type="button" data-v="3d">3D (imagens do jogo)</button><button type="button" data-v="2d">2D (desenho)</button></div></div>
   <div class="cfg-row"><b>Seus dados</b><span class="hint">Builds, mundo, marcações e preferências ficam só neste navegador.</span><button class="btn sm" type="button" id="cfgReset">Apagar tudo deste navegador</button></div>
 </div></div>
+<button type="button" class="totop" id="toTop" aria-label="Voltar ao topo" hidden>↑</button>
 <div class="skm" id="skm" hidden role="dialog" aria-modal="true" aria-labelledby="skmT"><div class="skm-box" id="skmBox"></div></div>
 <div class="search" id="search" hidden><div class="search-box" role="dialog" aria-modal="true" aria-label="Buscar na ficha"><input id="searchQ" type="search" placeholder="Traço, receita, lugar, mod ou build…" autocomplete="off"><ul id="searchRes" role="listbox"></ul><p class="hint" style="margin:0">Enter abre o primeiro resultado · Esc fecha</p></div></div>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
@@ -1370,7 +1388,8 @@ const LOOK={
  blacksmith:{shirt:0x5a4a3a,apron:0x3d2a1a,pants:0x2f2a26,tool:"hammer"},
  burglar:{shirt:0x1e1e22,pants:0x1e1e22,hat:"beanie",hatC:0x111111,mask:1,tool:"crowbar"},
  fitness:{shirt:0xff4f8a,pants:0x2a2a4a,band:0x3ad0ff},
- veteran:{shirt:0x5b6340,camo:1,pants:0x4b5236,hat:"beret",hatC:0x3a4a2a,tool:"rifle"}
+ veteran:{shirt:0x5b6340,camo:1,pants:0x4b5236,hat:"beret",hatC:0x3a4a2a,tool:"rifle"},
+ sfo:{shirt:0x2a2e2a,camo:1,pants:0x23271f,vest:0x3a3f33,hat:"cap",hatC:0x1b1e19,tool:"rifle"}
 };
 const SKIN=[0xf1c9a5,0xe0ac7e,0xc68642,0x8d5524,0x5c3a21];
 const HAIR=[0x2b1d14,0x4a2f1b,0x8a5a2b,0xc9a15a,0x1a1a1a,0x6b6b6b];
@@ -1730,7 +1749,9 @@ const PROFS=[
  {id:"blacksmith",pt:"Ferreiro",en:"Blacksmith",cost:6,sk:{"Ferraria":4,"Manutenção":1,"Contundente Curto":1},gr:["blacksmith_k"]},
  {id:"burglar",pt:"Ladrão",en:"Burglar",cost:6,sk:{"Agilidade":2,"Furtividade":2,"Passos Leves":2},grn:["Ligação direta"]},
  {id:"fitness",pt:"Personal Trainer",en:"Fitness Instructor",cost:6,sk:{"Corrida":2},fit:3,str:1},
- {id:"veteran",pt:"Veterano",en:"Veteran",cost:8,sk:{"Mira":2,"Recarga":2},grn:["Desensitized"],ex:["claustrophobic","agoraphobic","hemophobic","cowardly","adrenaline"]}
+ {id:"veteran",pt:"Veterano",en:"Veteran",cost:8,sk:{"Mira":2,"Recarga":2},grn:["Desensitized"],ex:["claustrophobic","agoraphobic","hemophobic","cowardly","adrenaline"]},
+ // do mod Rain's Firearms & Gun Parts (Oficina 3773858287), lido no professionsandtraits.txt do mod
+ {id:"sfo",pt:"Special Forces Operator",en:"Special Forces Operator",cost:16,sk:{"Mira":4,"Recarga":3,"Agilidade":1},str:1,fit:1,mod:"Rain's Firearms & Gun Parts",note:"só com o mod Rain's Firearms & Gun Parts ativo"}
 ];
 
 const POS=[
@@ -1749,6 +1770,9 @@ const POS=[
  {id:"brave",pt:"Corajoso",en:"Brave",cost:4,v:"opc",note:"Menos pânico no começo. Depois de alguns meses vivo faz pouca diferença.",ex:["cowardly"]},
  {id:"graceful",pt:"Gracioso",en:"Graceful",cost:4,v:"opc",note:"Passos mais silenciosos e menos tropeço. Tanto faz.",ex:["clumsy"]},
  {id:"outdoorsy",pt:"Andarilho",en:"Outdoorsman",cost:2,v:"opc",note:"Só obrigatório se o servidor tiver clima muito frio."},
+ {id:"rain_steady",pt:"Steady Hands",en:"Mod Rain's Firearms",cost:2,v:"neu",mod:1,note:"Do mod Rain's Firearms & Gun Parts: +1 Mira. Só existe no jogo com o mod ativo.",sk:{"Mira":1}},
+ {id:"rain_reload",pt:"Speed Reloader",en:"Mod Rain's Firearms",cost:2,v:"neu",mod:1,note:"Do mod Rain's Firearms & Gun Parts: +1 Recarga. Só existe no jogo com o mod ativo.",sk:{"Recarga":1}},
+ {id:"rain_gun",pt:"Gun Enthusiast",en:"Mod Rain's Firearms",cost:6,v:"dis",mod:1,note:"Do mod: +1 Mira, +1 Recarga e +1 Agilidade. Steady Hands + Speed Reloader dão quase o mesmo por 4.",sk:{"Mira":1,"Recarga":1,"Agilidade":1}},
  {id:"target_shooter",pt:"Atirador de Tiro ao Alvo",en:"Target Shooter",cost:5,v:"opc",note:"Traço novo da B42, +1 Mira. Só se a build for de tiro.",sk:{"Mira":1}},
  {id:"athletic",pt:"Atlético",en:"Athletic",cost:10,v:"dis",note:"+4 Aptidão. Ótimo, mas não cabe nos pontos da build do Shivas.",fit:4,ex:["fit","out_of_shape","unfit","smoker"]},
  {id:"strong",pt:"Musculoso",en:"Strong",cost:10,v:"dis",note:"+4 Força. Não cabe na build do Shivas.",str:4,ex:["stout","weak","puny"]},
@@ -1838,6 +1862,10 @@ const ROLES=[
 const FRONT_PROFS=["construction","firefighter","lumberjack","security","veteran","police","fitness"];
 
 // Canais de referência. pt = patch em que o vídeo foi gravado.
+// canal de cada YouTuber (endereço tirado do próprio YouTube)
+const YTC={"ShivasBR":"@ShivasBR","GabrielKnine":"@GabrielKnine","Gambarine":"@gambarine","Laughter":"@LaughterVonZedlands","OVERCHARGED EGG":"@OVERCHARGEDEGG","Orbanjo Gaming":"@OrbanjoGaming","Anzony Kaiser":"@AnzonyKaiser",
+  "LOSTT":"@LOSTTgg","Eoenki":"@Eoenki","ShadowNimbus":"@ShadowNimbusbr","JoefaceGG":"@JoefaceGG","FireSpark81":"@Firespark81","Friendly Frenzy Games":"@friendlyfrenzygames","discreader":"@discreader","Fran Games":"@Frangamess"};
+function chUrl(n){n=String(n).replace(/ · em inglês$/,"");return YTC[n]?"https://www.youtube.com/"+YTC[n]:""}
 const CH={
  shivas:{nm:"ShivasBR",lg:"PT",url:"https://www.youtube.com/watch?v=C_mnw8MkdEY",t:"Dicas de Criação de Personagem Que Funcionam na Build 42",dt:"28/06/2026",pt:"42.19"},
  knine:{nm:"GabrielKnine",lg:"PT",url:"https://www.youtube.com/watch?v=gDiWSBv_W0g",t:"Como sobreviver no Project Zomboid em 2026",dt:"22/08/2026",pt:"42.20"},
@@ -2534,12 +2562,21 @@ function fillPt(){if(window.PZ3D)requestAnimationFrame(()=>window.PZ3D.fill(docu
 let hero=null, squad3=null, lastHow=null;
 
 // ---------- MONTADOR ----------
+// classificação das profissões: ShivasBR (vídeo de builds), uso nas 16 builds dos canais e a tier list do projectzomboid.wiki (B42, ago/2026)
+const PTW="tier list de profissões do projectzomboid.wiki (B42)";
+const PTIER={construction:["meta","Indicada pelo ShivasBR e usada em 7 das 16 builds dos canais"],firefighter:["meta","Tier S na "+PTW+" e usada em 2 builds dos canais"],ranger:["meta","Tier S na "+PTW],security:["meta","Tier S na "+PTW],
+  electrician:["forte","Tier A na "+PTW+": rende depois que a base começa"],carpenter:["forte","Tier A na "+PTW],mechanic:["forte","Tier A na "+PTW],nurse:["forte","Tier A na "+PTW],
+  burglar:["nicho","Tier B na "+PTW+": bom para um estilo, precisa de traços de combate"],chef:["nicho","Tier B na "+PTW],farmer:["nicho","Tier B na "+PTW],rancher:["nicho","Tier B na "+PTW],
+  unemployed:["desafio","Tier C na "+PTW+": máxima liberdade de traços, sem equipamento inicial"],burger:["desafio","Tier C na "+PTW]};
+const PTL={meta:["★ Meta","v-obr"],forte:["Forte","v-meta"],nicho:["Nicho","v-opc"],desafio:["Desafio","v-evi"]};
+let profFilter="all";
 function renderProfs(){
-  $("profs").innerHTML=PROFS.map(p=>{
+  $("profFil").innerHTML='<span class="hint">Mostrar</span>'+[["all","Todas"],["meta","★ Meta"],["forte","Fortes"],["mod","De mod"]].map(([k,l])=>chip("data-pf",k,l,profFilter===k)).join("");
+  $("profs").innerHTML=PROFS.filter(p=>profFilter==="all"||(profFilter==="mod"?p.mod:(PTIER[p.id]||[])[0]===profFilter)||p.id===state.prof).map(p=>{
     const free=[...(p.gr||[]).map(id=>ALL[id].pt),...(p.grn||[])];
     return `<button type="button" class="prof" data-p="${p.id}" aria-pressed="${p.id===state.prof}">
     <span class="top"><span class="nm">${esc(p.pt)}</span>${profCost(p)}</span>
-    <span class="ptags">${p.meta?'<span class="tag v-obr" title="Profissão indicada pelo ShivasBR no vídeo de builds">Meta</span>':''}${(()=>{const n=LIB.filter(b=>b.ch&&b.prof===p.id).length;return n?`<span class="tag v-meta" title="Usada em ${n} das ${LIB.filter(b=>b.ch).length} builds dos canais">${n}/${LIB.filter(b=>b.ch).length} builds</span>`:""})()}</span>
+    <span class="ptags">${p.mod?`<span class="tag v-mod" title="Profissão do mod ${esc(p.mod)}">Mod</span>`:""}${PTIER[p.id]?`<span class="tag ${PTL[PTIER[p.id][0]][1]}" title="${esc(PTIER[p.id][1])}">${PTL[PTIER[p.id][0]][0]}</span>`:""}${(()=>{const n=LIB.filter(b=>b.ch&&b.prof===p.id).length;return n?`<span class="tag v-meta" title="Usada em ${n} das ${LIB.filter(b=>b.ch).length} builds dos canais">${n}/${LIB.filter(b=>b.ch).length} builds</span>`:""})()}</span>
     <span class="sk">${esc((skillLine(p.sk)+(p.str?" · Força +"+p.str:"")+(p.fit?" · Aptidão +"+p.fit:""))||"Sem bônus")}${free.length?" · grátis: "+esc(free.join(", ")):""}${p.note?" · "+esc(p.note):""}</span>
   </button>`}).join("");
 }
@@ -2562,7 +2599,7 @@ function traitHTML(t){
   const sk=skillLine(t.sk)+(t.str?(t.sk?" · ":"")+"Força "+(t.str>0?"+":"")+t.str:"")+(t.fit?((t.sk||t.str)?" · ":"")+"Aptidão "+(t.fit>0?"+":"")+t.fit:"");
   return `<button type="button" class="trait" data-t="${t.id}" aria-pressed="${on}" ${b?"disabled":""}>
     <span class="top"><span class="nm">${esc(t.pt)}</span><span class="en">${esc(t.en)}</span>${fmtCost(t.cost,t.side==="neg"?"gain":"spend")}</span>
-    <span class="top"><span class="tag v-${t.v}">${VLABEL[t.v]}</span>${sk?`<span class="en">${esc(sk)}</span>`:""}<span class="cons" style="margin-left:auto" title="Em quantas das ${CHLIB.length} builds dos canais este traço aparece"><b>${CONS[t.id]||0}</b>/${CHLIB.length}</span></span>
+    <span class="top">${t.mod?'<span class="tag v-mod" title="Traço de mod: só aparece no jogo com o mod instalado">Mod</span>':""}<span class="tag v-${t.v}">${VLABEL[t.v]}</span>${sk?`<span class="en">${esc(sk)}</span>`:""}<span class="cons" style="margin-left:auto" title="Em quantas das ${CHLIB.length} builds dos canais este traço aparece"><b>${CONS[t.id]||0}</b>/${CHLIB.length}</span></span>
     <span class="note">${esc(t.note)}</span>
     ${b?`<span class="lock">Bloqueado por ${esc(b.pt)}</span>`:""}
   </button>`;
@@ -2720,7 +2757,10 @@ function teamCard(b){
   </article>`;
 }
 function renderLib(){
-  const list=CHLIB.filter(b=>(chFilter==="all"||b.ch===chFilter)&&(styFilter==="all"||b.sty.includes(styFilter)));
+  const sim=b=>(b.prof===state.prof?100:0)+b.traits.filter(id=>state.sel.has(id)).length;
+  let list=CHLIB.filter(b=>(chFilter==="all"||b.ch===chFilter)&&(styFilter==="all"||b.sty.includes(styFilter)));
+  if(isFoco())list=list.slice().sort((a,b)=>sim(b)-sim(a));
+  $("libFoco").innerHTML=isFoco()?`<span class="ctx-i">🎯 Ordenadas pela sua build: primeiro as de ${esc(PROF[state.prof].pt)}, depois as com mais traços iguais aos seus. <button type="button" class="linkbtn" data-fg2="tudo">ver na ordem normal</button></span>`:"";
   $("libCount").textContent=list.length+" de "+CHLIB.length+" builds";
   $("lib").innerHTML=list.map(chCard).join("")||'<p class="hint">Nenhuma build com esse canal e estilo. Tente outro filtro.</p>';
   $("libTeam").innerHTML=TEAMLIB.map(teamCard).join("");
@@ -2856,7 +2896,9 @@ function comboWarns(c){
 function renderCombos(){
   const sizes=[...new Set(COMBOS.map(c=>c.m.length))].sort();
   $("comboSizes").innerHTML='<span class="hint">Jogadores</span>'+chip("data-cs","all","Todos",comboSize==="all")+sizes.map(n=>chip("data-cs",n,n+(n===6?"+":""),String(comboSize)===String(n))).join("");
-  const list=COMBOS.filter(c=>comboSize==="all"||c.m.length===+comboSize);
+  let list=COMBOS.filter(c=>comboSize==="all"||c.m.length===+comboSize);
+  if(isFoco()){const hp=c=>c.m.some(id=>LIBM[id].prof===state.prof)?1:0;list=list.slice().sort((a,b)=>hp(b)-hp(a))}
+  $("comboFoco").innerHTML=isFoco()?`<span class="ctx-i">🎯 Primeiro os combos com ${esc(PROF[state.prof].pt)}, a profissão da sua build. <button type="button" class="linkbtn" data-fg2="tudo">ver na ordem normal</button></span>`:"";
   $("comboCount").textContent=list.length+" combos";
   $("comboList").innerHTML=list.map(c=>{
     const rs=coverage(c.m), has=id=>rs.some(r=>r.has(id)), miss=ROLES.filter(r=>!has(r.id)).length, w=comboWarns(c);
@@ -3136,7 +3178,7 @@ function renderFab(){
   $("fabMine").innerHTML=`<span class="hint">Sua build (${esc(PROF[state.prof].pt)})</span>${chip("data-fm","1","Só o que já consigo fazer",fabMine)}`;
   $("fabCats").innerHTML='<span class="hint">Tipo</span>'+FABCATS.map(c=>chip("data-fc",c,c,c===fabCat)).join("");
   $("fabDifs").innerHTML='<span class="hint">Dificuldade</span>'+[[0,"Todas"],[1,"Fácil"],[2,"Médio"],[3,"Difícil"]].map(([d,t])=>chip("data-fd",d,t,d===fabDif)).join("");
-  const list=FAB.filter(x=>(!fabMine||fabCan(x,mySk).ok)&&(fabCat==="Todas"||x.cat===fabCat)&&(!fabDif||x.dif===fabDif)&&(!q||norm([x.n,x.para,x.pr,x.sk,x.ap,x.cat].join(" ")).includes(q))).sort((a,b)=>PRIO.indexOf(a.pri)-PRIO.indexOf(b.pri)||a.dif-b.dif);
+  const list=FAB.filter(x=>(!fabMine||fabCan(x,mySk).ok)&&(fabCat==="Todas"||x.cat===fabCat)&&(!fabDif||x.dif===fabDif)&&(!q||norm([x.n,x.para,x.pr,x.sk,x.ap,x.cat].join(" ")).includes(q))).sort((a,b)=>(isFoco()?(fabCan(b,mySk).ok?1:0)-(fabCan(a,mySk).ok?1:0):0)||PRIO.indexOf(a.pri)-PRIO.indexOf(b.pri)||a.dif-b.dif);
   $("fabCount").textContent=list.length+" de "+FAB.length+" receitas";
   $("fabList").innerHTML=list.map(x=>{const cn=fabCan(x,mySk);return `<article class="fcard${cn.ok?" can":""}"><div class="hd"><img class="fic" src="${twUrl(fabIco(x))}" alt="" width="34" height="34" loading="lazy"><h3>${esc(x.n)}</h3><span class="tag d${x.dif}">${DIFL[x.dif]}</span><span class="tag pri">${esc(x.pri)}</span></div>
     ${cn.ok===true?'<span class="canm ok">✓ Sua build já faz</span>':cn.ok===false?`<span class="canm">Sua build tem ${esc(cn.n)} ${cn.have}; precisa de ${cn.lv}</span>`:""}
@@ -3308,6 +3350,7 @@ function applyCfg(){const h=document.documentElement;if(CFG.tema==="auto")h.remo
 applyCfg();
 $("btnTheme").addEventListener("click",()=>{const dark=CFG.tema==="dark"||(CFG.tema==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);CFG.tema=dark?"light":"dark";saveCfg();applyCfg()});
 {const t=$("notesT"),set=()=>{const on=CFG.notas==="todas";t.setAttribute("aria-pressed",on);$("traitsCols").classList.toggle("compact",!on)};set();t.addEventListener("click",()=>{CFG.notas=CFG.notas==="todas"?"sel":"todas";saveCfg();set()})}
+$("profFil").addEventListener("click",e=>{const b=e.target.closest("[data-pf]");if(b){profFilter=b.dataset.pf;renderProfs()}});
 $("introHide").addEventListener("click",()=>{CFG.intro="off";saveCfg();applyCfg()});
 $("introShow").addEventListener("click",()=>{CFG.intro="on";saveCfg();applyCfg()});
 $("btnCfg").addEventListener("click",()=>{$("cfg").hidden=false;$("btnCfg").setAttribute("aria-expanded","true");$("cfgClose").focus()});
@@ -3341,14 +3384,20 @@ $("searchRes").addEventListener("click",e=>{const b=e.target.closest("[data-si]"
 $("search").addEventListener("click",e=>{if(e.target===$("search"))closeSearch()});
 document.addEventListener("keydown",e=>{if(e.key==="/"&&!/input|textarea|select/i.test(document.activeElement.tagName)){e.preventDefault();openSearch()}if(e.key==="Escape"&&!$("search").hidden)closeSearch()});
 // ---------- REFERÊNCIAS ----------
+const CH_N=new Set(Object.values(CH).map(c=>c.nm));
 function renderRefs(){const vids={};Object.entries(CH).forEach(([k,c])=>vids[k]=[{url:c.url,t:c.t,dt:c.dt,pt:c.pt}]);
   LIB.forEach(b=>{if(b.v&&vids[b.ch]&&!vids[b.ch].some(v=>v.url===b.v.url))vids[b.ch].push(b.v)});
   const uso=k=>LIB.filter(b=>b.ch===k).map(b=>b.nm);
   const card=(h,inner)=>`<article class="ref">${h}${inner}</article>`;
-  $("refsList").innerHTML=Object.entries(CH).map(([k,c])=>card(`<h3>${esc(c.nm)}<small>${c.lg}</small></h3>`,`<ul>${vids[k].map(v=>`<li><a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.t)}</a><br><span class="hint">${esc(v.dt)} · gravado na ${esc(v.pt)}</span></li>`).join("")}</ul>`+(uso(k).length?`<span class="hint">Usado em: ${esc(uso(k).join(", "))}${k==="shivas"?"; etiquetas Obrigatório, Meta etc.":""}${k==="knine"?"; rota de Rosewood e dicas de sobrevivência":""}.</span>`:"")
+  const chA=n=>chUrl(n)?`<a class="ch-a" href="${chUrl(n)}" target="_blank" rel="noopener">▶ Canal no YouTube ↗</a>`:"";
+  $("refsList").innerHTML=Object.entries(CH).map(([k,c])=>card(`<h3>${esc(c.nm)}<small>${c.lg}</small></h3>${chA(c.nm)}`,`<ul>${vids[k].map(v=>`<li><a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.t)}</a><br><span class="hint">${esc(v.dt)} · gravado na ${esc(v.pt)}</span></li>`).join("")}</ul>`+(uso(k).length?`<span class="hint">Usado em: ${esc(uso(k).join(", "))}${k==="shivas"?"; etiquetas Obrigatório, Meta etc.":""}${k==="knine"?"; rota de Rosewood e dicas de sobrevivência":""}.</span>`:"")
   )).join("")+
   card("<h3>PZwiki</h3>",`<ul>${[["Riverside","42.20"],["Muldraugh","42.0"],["West_Point","42.13"],["Echo_Creek","42.16"],["March_Ridge","42.18"]].map(([pg,v])=>`<li><a href="https://pzwiki.net/wiki/${pg}" target="_blank" rel="noopener">${pg.replace("_"," ")}</a> <span class="hint">(página da ${v})</span></li>`).join("")}</ul><span class="hint">Lugares, dicas das cidades e coordenadas.</span>`)+
-  card("<h3>Vídeos de perícias (aba Aprender)</h3>",`<ul>${[...new Set(SKILLS.flatMap(S=>S[9].map(v=>v[2])))].sort().map(c=>`<li>${esc(c)}</li>`).join("")}</ul><p class="hint">Cada vídeo toca pelo YouTube, com link para o canal original.</p>`)+
+  (()=>{const by={};[...SKILLS.map(S=>S[9]),SKGEN].forEach(L=>L.forEach(([v,t,c])=>{const n=c.replace(/ · em inglês$/,"");if(CH_N.has(n))return;(by[n]=by[n]||{en:/inglês/.test(c),v:new Map()}).v.set(v,t)}));
+    return Object.entries(by).sort((a,b)=>a[0].localeCompare(b[0])).map(([n,o])=>card(`<h3>${esc(n)}<small>${o.en?"EN":"PT"}</small></h3>${chA(n)}`,`<ul>${[...o.v].map(([v,t])=>`<li><a href="https://www.youtube.com/watch?v=${v}" target="_blank" rel="noopener">${esc(t)}</a></li>`).join("")}</ul><span class="hint">Vídeos usados na aba Aprender › Perícias.</span>`)).join("")})()+
+  card("<h3>Vídeos dos canais acima na aba Aprender</h3>",`<ul>${SKILLS.flatMap(S=>S[9].filter(v=>CH_N.has(v[2].replace(/ · em inglês$/,""))).map(v=>[v,S[1]])).filter((x,i,a)=>a.findIndex(y=>y[0][0]===x[0][0])===i).map(([[v,t,c],sk])=>`<li><a href="https://www.youtube.com/watch?v=${v}" target="_blank" rel="noopener">${esc(t)}</a> <span class="hint">· ${esc(c)} · ${esc(sk)}</span></li>`).join("")}</ul>`)+
+  card("<h3>PZwiki: aba Aprender</h3>",`<ul>${[["Skill","Perícias"],["Skill_book","Livros de perícia"],["Life_and_Living_TV","TV Life and Living"],["Agriculture","Agricultura e plantio"],["Animal","Animais"]].map(([pg,t])=>`<li><a href="https://pzwiki.net/wiki/${pg}" target="_blank" rel="noopener">${t}</a></li>`).join("")}</ul><span class="hint">Cada perícia também tem o link da sua página na janela de detalhe.</span>`)+
+  card("<h3>Guias e servidores</h3>",`<ul><li><a href="https://projectzomboid.wiki/builds/occupations/" target="_blank" rel="noopener">projectzomboid.wiki · profissões</a> <span class="hint">· tier list usada nas etiquetas de profissão</span></li><li><a href="https://pzfans.com/how-to-quickly-level-up-carpentry-in-project-zomboid" target="_blank" rel="noopener">pzfans · Carpintaria</a> <span class="hint">· XP das construções baratas</span></li><li><a href="https://low.ms/blog/project-zomboid-build-42-multiplayer-survival-guide" target="_blank" rel="noopener">low.ms</a>, <a href="https://www.verygames.com/en/khao/pg-31-project-zomboid-42-20-3-server-254-players" target="_blank" rel="noopener">VeryGames</a> e <a href="https://supercraft.host/wiki/project-zomboid/pz-b42-animal-husbandry-server-guide/" target="_blank" rel="noopener">Supercraft</a> <span class="hint">· dicas de servidor</span></li><li><a href="https://steamcommunity.com/sharedfiles/filedetails/?id=3773858287" target="_blank" rel="noopener">Rain's Firearms & Gun Parts</a> <span class="hint">· mod da Special Forces Operator</span></li></ul>`)+
   card("<h3>Mapas</h3>",`<ul><li><a href="https://pzmap.org/" target="_blank" rel="noopener">pzmap.org</a> <span class="hint">· lugares de cada cidade (42.20)</span></li><li><a href="https://projectzomboidmap.com/pt/" target="_blank" rel="noopener">projectzomboidmap.com</a> <span class="hint">· imagens da vista 3D (render do jogo B42.20.2 feito com pzmap2dzi), links "mapa real" e mapa embutido</span></li></ul>`)+
   card("<h3>Project Zomboid (The Indie Stone)</h3>",`<ul><li>Arquivos do jogo 42.21: ruas, prédios e água (streets.xml, worldmap.xml), pontos de nascimento, presets e nomes das opções de sandbox em português, opções do servidor.</li><li><a href="https://projectzomboid.com/" target="_blank" rel="noopener">projectzomboid.com</a></li></ul>`)+
   card("<h3>Oficina Steam</h3>",`<ul><li><a href="https://steamcommunity.com/app/108600/workshop/" target="_blank" rel="noopener">Spiffo's Workshop</a> <span class="hint">· lista e descrição dos mods (autores na página de cada mod, aba Mods)</span></li></ul>`)+
@@ -3445,12 +3494,19 @@ const SKGEN=[["nFlgBgEg_g4","Every Skill in Project Zomboid B42","discreader · 
 const SKWIKI={carp:"Carpentry",cook:"Cooking",agri:"Agriculture",fa:"First_Aid",elec:"Electrical",mech:"Mechanics",tail:"Tailoring",fish:"Fishing",trap:"Trapping",forage:"Foraging",maint:"Maintenance",carv:"Carving",knap:"Knapping",mason:"Masonry",smith:"Blacksmithing",weld:"Welding",glass:"Glassmaking",pot:"Pottery",str:"Strength",fit:"Fitness",sprint:"Sprinting",light:"Lightfooted",sneak:"Sneaking",nimble:"Nimble",aim:"Aiming",reload:"Reloading",axe:"Axe",lblunt:"Long_Blunt",sblunt:"Short_Blunt",lblade:"Long_Blade",sblade:"Short_Blade",spear:"Spear",animal:"Animal_Care",butch:"Butchering",track:"Tracking"};
 // foco: perícias com que a sua build começa (profissão + traços); "tudo" mostra todas
 function mySkills(){const c=compute(state.prof,state.sel),m={};SKILLS.forEach(S=>{const lv=Math.max(0,...S[4].map(a=>c.sk[a]||0));if(lv)m[S[0]]=lv});return m}
-function aprFocus(){return CFG.aprFoco!=="tudo"&&Object.keys(mySkills()).length>0}
+function aprFocus(){return CFG.foco!=="tudo"&&Object.keys(mySkills()).length>0}
+// foco geral (cabeçalho): vale para Builds, Time, Sobrevivência, Fabricar e Aprender; nada some, só muda a ordem e o destaque
+const FOCO_TABS=["builds","combos","guia","fab","aprender"];
+function isFoco(){return CFG.foco!=="tudo"}
+function renderFocoSw(t){const sw=$("focoSw");sw.hidden=!FOCO_TABS.includes(t);sw.querySelectorAll("[data-fg]").forEach(b=>b.setAttribute("aria-pressed",(b.dataset.fg==="tudo")!==isFoco()))}
+$("focoSw").addEventListener("click",e=>{const b=e.target.closest("[data-fg]");if(!b)return;CFG.foco=b.dataset.fg;saveCfg();if(curTab)go(curTab,"pop")});
 let skCat="all";
 function skCard(S,lv){const tv=TVD.some(([,L])=>L.some(r=>r[1]===S[1]));
   return `<button type="button" class="skc" data-sk="${S[0]}"><img src="${twUrl(S[3])}" alt="" width="28" height="28" loading="lazy"><span class="skc-n"><b>${esc(S[1])}</b>${lv?`<small>sua build: nível ${lv}</small>`:`<small>${SKCAT[S[2]][0]}</small>`}</span>
     <span class="skc-i">${tv?'<i title="Passa na TV">📺</i>':""}${S[8].length?'<i title="Tem fita VHS">📼</i>':""}${S[7]?'<i title="Tem livro">📚</i>':""}${S[9].length?`<i title="Vídeos">▶${S[9].length}</i>`:""}</span></button>`}
-function renderSkills(){const my=mySkills(),foc=aprFocus();
+function vidCard([v,t,c]){return `<div class="vid"><button type="button" class="vid-p" data-play="${v}" aria-label="Tocar: ${esc(t)}"><img src="https://i.ytimg.com/vi/${v}/mqdefault.jpg" alt="" loading="lazy"><span>▶</span></button><b>${esc(t)}</b><small>${chUrl(c)?`<a href="${chUrl(c)}" target="_blank" rel="noopener">${esc(c)}</a>`:esc(c)} · <a href="https://www.youtube.com/watch?v=${v}" target="_blank" rel="noopener">abrir no YouTube ↗</a></small></div>`}
+function playVid(b){const v=b.dataset.play;b.outerHTML=`<iframe class="vid-f" src="https://www.youtube-nocookie.com/embed/${v}?autoplay=1&rel=0" title="Vídeo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`}
+function renderSkills(){const my=mySkills(),foc=aprFocus();if(!$("skGen").children.length)$("skGen").innerHTML=SKGEN.map(vidCard).join("");
   $("skCats").innerHTML='<span class="hint">Mostrar</span>'+chip("data-skc","all","Todas",skCat==="all")+Object.entries(SKCAT).map(([k,[n,ic]])=>chip("data-skc",k,ic+" "+n,skCat===k)).join("");
   const L=SKILLS.filter(S=>skCat==="all"||S[2]===skCat);
   if(foc){const mine=L.filter(S=>my[S[0]]),rest=L.filter(S=>!my[S[0]]);
@@ -3467,13 +3523,13 @@ function openSkill(id){const S=SKILLS.find(x=>x[0]===id);if(!S)return;const lv=m
       ${S[6].length?`<section><h3>Macetes</h3>${li(S[6])}</section>`:""}
       <div class="skm-row"><section><h3>📺 TV</h3>${tv.length?li(tv):'<p class="hint">Não passa na TV.</p>'}</section><section><h3>📼 VHS</h3>${S[8].length?li(S[8]):'<p class="hint">Nenhuma fita.</p>'}</section><section><h3>📚 Livros</h3><p>${bk}</p></section></div>
       <p class="hint">TV e VHS só dão XP até o nível 3. Aprendiz Rápido dá +30% de XP em tudo, menos Força e Aptidão.</p>
-      ${S[9].length?`<section><h3>Vídeos</h3><div class="vids">${S[9].map(([v,t,c])=>`<div class="vid" data-vid="${v}"><button type="button" class="vid-p" data-play="${v}" aria-label="Tocar: ${esc(t)}"><img src="https://i.ytimg.com/vi/${v}/mqdefault.jpg" alt="" loading="lazy"><span>▶</span></button><b>${esc(t)}</b><small>${esc(c)} · <a href="https://www.youtube.com/watch?v=${v}" target="_blank" rel="noopener">abrir no YouTube ↗</a></small></div>`).join("")}</div></section>`:""}
+      ${S[9].length?`<section><h3>Vídeos</h3><div class="vids">${S[9].map(([v,t,c])=>`<div class="vid" data-vid="${v}"><button type="button" class="vid-p" data-play="${v}" aria-label="Tocar: ${esc(t)}"><img src="https://i.ytimg.com/vi/${v}/mqdefault.jpg" alt="" loading="lazy"><span>▶</span></button><b>${esc(t)}</b><small>${chUrl(c)?`<a href="${chUrl(c)}" target="_blank" rel="noopener">${esc(c)}</a>`:esc(c)} · <a href="https://www.youtube.com/watch?v=${v}" target="_blank" rel="noopener">abrir no YouTube ↗</a></small></div>`).join("")}</div></section>`:""}
       <p class="hint">Fonte: <a href="https://pzwiki.net/wiki/${SKWIKI[id]}" target="_blank" rel="noopener">PZwiki · ${SKWIKI[id].replace(/_/g," ")}</a>.</p>
     </div>`;
   $("skm").hidden=false;$("skmBox").querySelector("[data-skx]").focus()}
 function closeSkill(){$("skm").hidden=true;$("skmBox").innerHTML=""}
 $("skm").addEventListener("click",e=>{if(e.target===$("skm")||e.target.closest("[data-skx]")){closeSkill();return}
-  const b=e.target.closest("[data-play]");if(b){const v=b.dataset.play;b.outerHTML=`<iframe class="vid-f" src="https://www.youtube-nocookie.com/embed/${v}?autoplay=1&rel=0" title="Vídeo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`}});
+  const b=e.target.closest("[data-play]");if(b)playVid(b)});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("skm").hidden)closeSkill()});
 function renderFoco(){const my=mySkills(),has=Object.keys(my).length,foc=aprFocus();
   $("aprFoco").innerHTML=`<div class="seg" role="group" aria-label="Foco"><button type="button" data-foco="build" aria-pressed="${foc}"${has?"":" disabled"}>🎯 Minha build${has?` (${esc(PROF[state.prof].pt)})`:""}</button><button type="button" data-foco="tudo" aria-pressed="${!foc}">🌐 Tudo</button></div>
@@ -3512,12 +3568,15 @@ function renderAni(){const v=mvSafe(),at=v.AnimalSoundAttractZombies;
   $("aniList").innerHTML=ANI.map(([ic,n,st,br,d,z])=>`<article class="ani"><img src="${twUrl(ic)}" alt="" width="40" height="40" loading="lazy"><div><h3>${n}</h3><p>${d}</p><dl><dt>Fases</dt><dd>${st}</dd><dt>Raças</dt><dd>${br}</dd>${z?`<dt>Zona mínima</dt><dd>${z} quadrados</dd>`:""}</dl></div></article>`).join("")}
 function renderAprender(){renderFoco();renderSkills();renderTV();renderBooks();renderCrops();renderAni()}
 $("panel-aprender").addEventListener("click",e=>{const a=e.target.closest(".apr-nav a");if(a){e.preventDefault();const t=$(a.getAttribute("href").slice(1));if(t)t.scrollIntoView({behavior:"smooth",block:"start"});return}
-  const f=e.target.closest("[data-foco]");if(f){CFG.aprFoco=f.dataset.foco;saveCfg();renderAprender();return}
+  const f=e.target.closest("[data-foco]");if(f){CFG.foco=f.dataset.foco;saveCfg();renderAprender();renderFocoSw("aprender");return}
+  const pv=e.target.closest("[data-play]");if(pv){playVid(pv);return}
   const k=e.target.closest("[data-sk]");if(k){openSkill(k.dataset.sk);return}
   const c=e.target.closest("[data-skc]");if(c){skCat=c.dataset.skc;renderSkills();return}
   const b=e.target.closest("[data-bo],[data-cm],[data-ct]");if(!b)return;
   if(b.dataset.bo){bookOpt[b.dataset.bo]=!bookOpt[b.dataset.bo];renderBooks()}if(b.dataset.cm){cropMes=+b.dataset.cm;renderCrops()}if(b.dataset.ct){cropTipo=b.dataset.ct;renderCrops()}});
 
+// botão de voltar ao topo nas páginas longas
+{const b=$("toTop");let t=0;addEventListener("scroll",()=>{if(t)return;t=requestAnimationFrame(()=>{t=0;b.hidden=scrollY<900})},{passive:true});b.addEventListener("click",()=>scrollTo({top:0,behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"}))}
 // ---------- SUGESTÕES ----------
 const SUGT=[["ideia","💡","Ideia nova"],["problema","🐞","Algo errado"],["build","🧟","Build ou time"],["mod","🧩","Mod"],["texto","✏️","Texto confuso"]];let sugTipo="ideia";
 function renderSug(){$("sugTipo").innerHTML=SUGT.map(([k,ic,n])=>`<button type="button" class="sug-t" data-st="${k}" aria-pressed="${k===sugTipo}"><span>${ic}</span>${n}</button>`).join("");if(!$("sugN").value&&myName)$("sugN").value=myName}
@@ -3534,6 +3593,7 @@ const TABS=["montador","builds","combos","esquadrao","guia","fab","aprender","mu
 const TEAMT=[["esquadrao","👥","Esquadrão","quem joga com qual build"],["combos","🧩","Combos prontos","times que se completam"],["grupo","🔗","Link do grupo","mundo, mods e time num link"]];
 function renderSubnav(t){document.querySelectorAll(".subnav").forEach(n=>{n.innerHTML=TEAMT.map(([id,ic,nm,d])=>`<button type="button" data-go="${id}" aria-current="${id===t?"page":"false"}"><span class="sn-i">${ic}</span><span><b>${nm}</b><small>${d}</small></span></button>`).join("")})}
 document.addEventListener("click",e=>{const b=e.target.closest(".subnav [data-go]");if(b)go(b.dataset.go)});
+document.addEventListener("click",e=>{const b=e.target.closest("[data-fg2]");if(b){CFG.foco=b.dataset.fg2;saveCfg();if(curTab)go(curTab,"pop")}});
 let curTab=null;const tabY={};
 function go(t,how){
   if(!TABS.includes(t))t="montador";if(curTab)tabY[curTab]=scrollY;const prev=curTab;curTab=t;
@@ -3544,10 +3604,12 @@ function go(t,how){
   if(t==="grupo")renderGrupo();
   if(t==="fab")renderFab();
   if(t==="aprender")renderAprender();
+  if(t==="builds")renderLib();if(t==="combos")renderCombos();
+  renderFocoSw(t);
   if(t==="sugestao"){curPrevTab=prev||"";renderSug()}
   if(t==="esquadrao"||t==="guia"){let mv=null;try{mv=mVals()}catch(e){}const c=compute(state.prof,state.sel),ms=modsComDeps().length;
     $("teamCtx").innerHTML=mv?`<span class="ctx-i"><b>Mundo do grupo:</b> ${esc(mundo.n||MPRE[mundo.p].n)} · ${esc(MPRE[mundo.p].n)} · ${ms} mods <button type="button" class="linkbtn" data-go="grupo">ver página do grupo</button></span><span class="ctx-i"><button type="button" class="linkbtn putme">Pôr a minha build (${esc(PROF[state.prof].pt)}) no esquadrão</button></span>`:"";
-    $("rotaCtx").innerHTML=`<span class="ctx-i"><b>Sua build:</b> ${esc(PROF[state.prof].pt)} · Força ${c.str} · Aptidão ${c.fit}${state.sel.has("short_sighted")?" · com Miopia, pegue óculos de grau cedo":""}${c.fit<5?" · Aptidão baixa: evite brigar com grupos":""} <button type="button" class="linkbtn" data-go="montador">mudar</button></span>`+((CFG.mapHide||[]).length?`<span class="ctx-i">Algumas categorias estão escondidas no mapa (botões “Mostrar” abaixo dele).</span>`:"")}
+    $("rotaCtx").innerHTML=!isFoco()?"":`<span class="ctx-i"><b>Sua build:</b> ${esc(PROF[state.prof].pt)} · Força ${c.str} · Aptidão ${c.fit}${state.sel.has("short_sighted")?" · com Miopia, pegue óculos de grau cedo":""}${c.fit<5?" · Aptidão baixa: evite brigar com grupos":""} <button type="button" class="linkbtn" data-go="montador">mudar</button></span>`+((CFG.mapHide||[]).length?`<span class="ctx-i">Algumas categorias estão escondidas no mapa (botões “Mostrar” abaixo dele).</span>`:"")}
   {const PT={montador:["Montador","Profissão, traços e o seu boneco"],builds:["Builds dos canais","16 builds de 7 canais, recalculadas na 42.21"],combos:["Time","Combos prontos: times de 2 a 6 que se completam"],esquadrao:["Time","Esquadrão: quem joga com qual build"],guia:["Sobrevivência","Rota dia a dia nas 6 cidades iniciais"],fab:["Fabricar","O que fazer primeiro e como"],aprender:["Aprender","TV, livros, plantio e animais"],mundo:["Mundo","Regras do servidor do grupo"],mods:["Mods","Os mais baixados da Oficina que rodam na B42"],grupo:["Time","Link do grupo: mundo, mods e time num link só"],sugestao:["Sugestões","Ideias, problemas e pedidos para a ficha"],refs:["Referências","Quem fez o conteúdo que usamos"]}[t];
    if(PT){$("pageTitle").textContent=PT[0];$("pageSub").textContent=PT[1];document.title=PT[0]+" · Evangeliteens · Ficha B42"}}
   if(t==="refs"&&!$("refsList").children.length)renderRefs();
