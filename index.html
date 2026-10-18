@@ -641,6 +641,69 @@ img.pt:not([src]){background:linear-gradient(180deg,var(--surface2),transparent)
 .mkey span{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
 .mkey b{font-size:14px}
 .mkey .chg{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+/* Time, meta, sugestões */
+.tab-hid{display:none!important}
+.subnav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.subnav button{display:flex;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 12px;cursor:pointer;font:inherit}
+.subnav button:hover{border-color:var(--accent)}
+.subnav button[aria-current="page"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--surface));box-shadow:inset 0 0 0 1px var(--accent)}
+.subnav .sn-i{font-size:22px}.subnav b{display:block;font-size:15px}.subnav small{display:block;font-size:12.5px;color:var(--muted)}
+@media (max-width:680px){.subnav{grid-template-columns:minmax(0,1fr)}.subnav small{display:none}.subnav button{padding:8px 10px}}
+.mt{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--muted);white-space:nowrap;vertical-align:1px}
+.mt-meta{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.mt-boa{background:var(--good-soft);border-color:var(--good);color:var(--good)}
+.mt-fora{border-color:var(--bad);color:var(--bad);border-style:dashed}
+.mt-outro{border-style:dashed}
+.mt-nf{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.mt-box{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:13px;color:var(--muted)}
+.btn.rm{color:var(--bad)}.btn.rm:hover{border-color:var(--bad)}
+.traits-cols.compact .trait:not([aria-pressed="true"]):not(:hover):not(:focus-visible) .note{display:none}
+.chip.notes-t[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.sug{max-width:760px}
+.sug-tipos{display:flex;flex-wrap:wrap;gap:8px}
+.sug-t{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 14px;font:inherit;font-weight:600;cursor:pointer}
+.sug-t span{font-size:20px}.sug-t[aria-pressed="true"]{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 14%,var(--surface));box-shadow:inset 0 0 0 1px var(--accent)}
+.sug-f{display:grid;gap:4px;font-weight:600;font-size:14px}
+.sug-f input,.sug-f textarea{font:inherit;font-weight:400;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);resize:vertical}
+.sug-acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+/* texto maior: o mínimo fica em 12,5px e as explicações em 14px */
+.hint,.sec-head .hint{font-size:13px}
+.trait .note,.prof .sk{font-size:13.5px}
+.trait .en{font-size:12px}
+.tag{font-size:11px}
+.sublbl{font-size:11.5px}
+.warns li,.picked,.ctx-i{font-size:13.5px}
+.tip{font-size:14.5px}
+.fcard dl,.canm{font-size:13.5px}
+.bcard,.combo{font-size:14.5px}
+/* Aprender: perícias */
+.foco{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.foco .seg{flex:0 0 auto}.foco .seg button:disabled{opacity:.45;cursor:not-allowed}
+.sk-h{font-size:15px;margin:2px 0 8px}
+.sk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:8px}
+.skc{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 12px;cursor:pointer;font:inherit;transition:border-color .15s,transform .15s}
+.skc:hover{border-color:var(--accent);transform:translateY(-1px)}
+.skc img{width:28px;height:28px}
+.skc-n{display:grid;min-width:0}.skc-n b{font-size:15px}.skc-n small{font-size:12.5px;color:var(--muted)}
+.skc-i{display:flex;gap:4px;font-style:normal;font-size:12px;color:var(--muted)}.skc-i i{font-style:normal}
+.sk-more{margin-top:10px}.sk-more summary{cursor:pointer;font-weight:700;padding:6px 0}
+.skm{position:fixed;inset:0;z-index:70;background:rgba(8,12,9,.62);display:grid;place-items:center;padding:16px}
+.skm-box{width:min(760px,100%);max-height:calc(100vh - 32px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 30px 80px -30px rgba(0,0,0,.7)}
+.skm-hd{position:sticky;top:0;z-index:1;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
+.skm-hd h2{font-size:22px}.skm-hd .tbtn{color:var(--ink);border-color:var(--line)}
+.skm-body{display:grid;gap:14px;padding:14px 16px 18px;font-size:15px}
+.skm-body h3{font-size:15px;margin-bottom:4px}
+.skm-body ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.skm-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.skm-row section{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--surface2);font-size:14px}
+.vids{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px}
+.vid{display:grid;gap:4px}.vid b{font-size:14px;line-height:1.3}.vid small{color:var(--muted);font-size:12.5px}
+.vid-p{position:relative;display:block;padding:0;border:0;border-radius:10px;overflow:hidden;cursor:pointer;aspect-ratio:16/9;background:#000}
+.vid-p img{width:100%;height:100%;object-fit:cover;display:block}
+.vid-p span{position:absolute;inset:0;display:grid;place-items:center;font-size:34px;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.35));text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.vid-p:hover span{background:rgba(0,0,0,.25)}
+.vid-f{width:100%;aspect-ratio:16/9;border:0;border-radius:10px;background:#000}
+.tv-r.off{opacity:.35}
 /* Aprender */
 .apr-nav{display:flex;flex-wrap:wrap;gap:6px;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--barh,64px));z-index:4;background:var(--bg);padding:8px 0}
 .apr-nav a{border:1px solid var(--line);background:var(--surface);color:var(--ink);text-decoration:none;font-weight:600;font-size:13px;padding:6px 12px;border-radius:999px}
@@ -702,8 +765,10 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
       <span class="tgrp" aria-hidden="true">Personagem</span>
       <button class="tab" role="tab" id="tab-montador" data-tab="montador" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="7" r="3.5"/><path d="M5 21a7 7 0 0 1 14 0"/></svg><span>Montador</span></button>
       <button class="tab" role="tab" id="tab-builds" data-tab="builds" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg><span>Builds dos canais</span></button>
-      <button class="tab" role="tab" id="tab-combos" data-tab="combos" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg><span>Combos</span></button>
-      <button class="tab" role="tab" id="tab-esquadrao" data-tab="esquadrao" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M6.5 19a5.5 5.5 0 0 1 11 0M1.5 18a3.6 3.6 0 0 1 5-3.2M22.5 18a3.6 3.6 0 0 0-5-3.2"/></svg><span>Esquadrão</span></button>
+      <span class="tgrp" aria-hidden="true">Time</span>
+      <button class="tab" role="tab" id="tab-esquadrao" data-tab="esquadrao" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="3"/><circle cx="5" cy="10" r="2.2"/><circle cx="19" cy="10" r="2.2"/><path d="M6.5 19a5.5 5.5 0 0 1 11 0M1.5 18a3.6 3.6 0 0 1 5-3.2M22.5 18a3.6 3.6 0 0 0-5-3.2"/></svg><span>Time</span></button>
+      <button class="tab tab-hid" role="tab" id="tab-combos" data-tab="combos" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5"/><circle cx="15" cy="12" r="5"/></svg><span>Combos</span></button>
+      <button class="tab tab-hid" role="tab" id="tab-grupo" data-tab="grupo" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg><span>Grupo</span></button>
       <span class="tgrp" aria-hidden="true">Jogo</span>
       <button class="tab" role="tab" id="tab-guia" data-tab="guia" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2z"/><path d="M9 4v14M15 6v14"/></svg><span>Sobrevivência</span></button>
       <button class="tab" role="tab" id="tab-fab" data-tab="fab" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4.5l5 5-2.5 2.5-5-5z"/><path d="M12 7l-8.5 8.5a1.8 1.8 0 0 0 2.5 2.5L14.5 9.5"/></svg><span>Fabricar</span></button>
@@ -711,8 +776,8 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
       <span class="tgrp" aria-hidden="true">Servidor</span>
       <button class="tab" role="tab" id="tab-mundo" data-tab="mundo" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg><span>Mundo</span></button>
       <button class="tab" role="tab" id="tab-mods" data-tab="mods" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h4V5a2 2 0 1 1 4 0v2h4v4h-2a2 2 0 1 0 0 4h2v4H4v-4h2a2 2 0 1 0 0-4H4z"/></svg><span>Mods</span></button>
-      <button class="tab" role="tab" id="tab-grupo" data-tab="grupo" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg><span>Grupo</span></button>
       <span class="tgrp" aria-hidden="true">Sobre</span>
+      <button class="tab" role="tab" id="tab-sugestao" data-tab="sugestao" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg><span>Sugestões</span></button>
       <button class="tab" role="tab" id="tab-refs" data-tab="refs" type="button"><svg class="ti" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/></svg><span>Referências</span></button>
     </nav>
   </div>
@@ -773,9 +838,10 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
             <button class="chip" type="button" data-f="opc" aria-pressed="false">Opcionais</button>
             <button class="chip" type="button" data-f="bad" aria-pressed="false">Evitar / Nunca</button>
             <button class="chip" type="button" data-f="sel" aria-pressed="false">Só marcados</button>
+            <button class="chip notes-t" type="button" id="notesT" aria-pressed="false" title="Mostra a explicação de todos os traços, não só dos marcados">ℹ Explicações</button>
           </div>
         </div>
-        <div class="traits-cols">
+        <div class="traits-cols compact" id="traitsCols">
           <div class="section">
             <div class="sec-head"><h3>Negativos <span class="hint">· dão pontos</span></h3><span class="hint mono" id="sumNeg">+0</span></div>
             <div class="tlist" id="negList"></div>
@@ -804,6 +870,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
 
     <aside class="summary" aria-labelledby="hSum">
       <h2 id="hSum">Seu sobrevivente</h2>
+      <div class="mt-box" id="myMeta"></div>
       <div class="ctx" id="myCtx"></div>
       <div class="hero3d" id="hero3d" aria-label="Boneco 3D do personagem. Arraste para girar."><span class="hero-hint">Arraste para girar · aponte um selo para ver o traço</span></div>
       <p class="hero-cues" id="heroCues"></p>
@@ -866,6 +933,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
   <!-- COMBOS -->
   <div id="panel-combos" role="tabpanel" aria-labelledby="tab-combos" hidden>
     <div class="panel">
+      <nav class="subnav" aria-label="Partes do Time"></nav>
       <section class="section">
         <div class="sec-head"><h2>Combos de esquadrão</h2><span class="hint" id="comboCount"></span></div>
         <details class="howto"><summary>Como funciona</summary><p>Grupos de builds que se completam: um cobre o ponto fraco do outro e, juntos, dão conta dos papéis que um time precisa. Cada combo diz por que as builds combinam, quais papéis ficam cobertos e o que ainda falta. “Montar no Esquadrão” carrega o grupo para você trocar quem quiser.</p></details>
@@ -878,6 +946,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
   <!-- ESQUADRÃO -->
   <div id="panel-esquadrao" role="tabpanel" aria-labelledby="tab-esquadrao" hidden>
     <div class="panel">
+      <nav class="subnav" aria-label="Partes do Time"></nav>
       <section class="section">
         <div class="sec-head"><h2>1 · Tamanho do grupo</h2><span class="hint">Quantos vão jogar</span></div>
         <div class="sizes" id="sizes"></div>
@@ -941,12 +1010,29 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
   <!-- GRUPO -->
   <div id="panel-grupo" role="tabpanel" aria-labelledby="tab-grupo" hidden>
     <div class="panel">
+      <nav class="subnav" aria-label="Partes do Time"></nav>
       <section class="section" aria-labelledby="hGrupo">
         <div class="sec-head"><h2 id="hGrupo">Página do grupo</h2><span class="hint">Regras, mods, esquadrão e mapa num link só</span></div>
         <details class="howto"><summary>Como funciona</summary><p>Junta o que vocês combinaram nas outras abas: as regras do Mundo, os Mods, o Esquadrão e as marcações do mapa. Mande o link no grupo: quem abrir carrega tudo de uma vez. A ficha não tem servidor próprio, então cada pessoa guarda a cópia no próprio navegador; quando algo mudar, mande o link de novo.</p></details>
         <div class="grupo-msg mundo-msg" id="grupoMsg" hidden></div>
         <div class="grupo" id="grupoView"></div>
         <div class="mres-acts"><button class="btn primary" type="button" id="grupoLink">Copiar link do grupo</button><button class="btn" type="button" id="grupoTxt">Copiar resumo em texto</button><span class="hint" id="grupoFlash" aria-live="polite"></span></div>
+      </section>
+    </div>
+  </div>
+
+  <!-- SUGESTÕES -->
+  <div id="panel-sugestao" role="tabpanel" aria-labelledby="tab-sugestao" hidden>
+    <div class="panel">
+      <section class="section sug" aria-labelledby="hSug">
+        <div class="sec-head"><h2 id="hSug">Mande uma sugestão</h2><span class="hint">Ideia, problema, build ou mod: a gente lê tudo</span></div>
+        <div class="sug-tipos" role="group" aria-label="Tipo" id="sugTipo"></div>
+        <label class="sug-f"><span>Resumo</span><input id="sugT" type="text" maxlength="90" placeholder="Ex.: mostrar o horário da TV no mapa"></label>
+        <label class="sug-f"><span>Conte com detalhes</span><textarea id="sugD" rows="5" maxlength="2000" placeholder="O que você quer, onde no site e por quê."></textarea></label>
+        <label class="sug-f"><span>Seu nome (opcional)</span><input id="sugN" type="text" maxlength="24" placeholder="Como o grupo te chama"></label>
+        <div class="sug-acts"><button class="btn primary" type="button" id="sugGit">Enviar pelo GitHub</button><button class="btn" type="button" id="sugCopy">Copiar para mandar no grupo</button><span class="hint" id="sugMsg" role="status"></span></div>
+        <textarea id="sugFb" hidden readonly style="width:100%;height:110px"></textarea>
+        <p class="hint">“Enviar pelo GitHub” abre a página de sugestões do projeto já preenchida; precisa de uma conta no GitHub para confirmar. Sem conta, copie e mande no grupo.</p>
       </section>
     </div>
   </div>
@@ -1005,7 +1091,14 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
   <!-- APRENDER -->
   <div id="panel-aprender" role="tabpanel" aria-labelledby="tab-aprender" hidden>
     <div class="panel">
-      <nav class="apr-nav" aria-label="Seções"><a href="#aTV">📺 TV</a><a href="#aLivros">📚 Livros</a><a href="#aPlantio">🌱 Plantio</a><a href="#aAnimais">🐄 Animais</a></nav>
+      <div class="foco" id="aprFoco"></div>
+      <nav class="apr-nav" aria-label="Seções"><a href="#aSkills">🎓 Perícias</a><a href="#aTV">📺 TV</a><a href="#aLivros">📚 Livros</a><a href="#aPlantio">🌱 Plantio</a><a href="#aAnimais">🐄 Animais</a></nav>
+      <section class="section" id="aSkills" aria-labelledby="hSkills">
+        <div class="sec-head"><h2 id="hSkills">Como upar cada perícia</h2><span class="hint">Toque numa perícia para ver como ganhar XP, macetes e vídeos</span></div>
+        <div class="frow" role="group" aria-label="Categoria" id="skCats"></div>
+        <div id="skGrid"></div>
+        <p class="hint">Como ganhar XP: <a href="https://pzwiki.net/wiki/Skill" target="_blank" rel="noopener">PZwiki</a> (páginas de cada perícia, revisadas entre 42.18 e 42.20). Vídeos: canais citados em cada perícia; tocam aqui mesmo, pelo YouTube.</p>
+      </section>
       <section class="section" id="aTV" aria-labelledby="hTV">
         <div class="sec-head"><h2 id="hTV">TV: Life and Living (canal 203)</h2><span class="hint">9 dias de programas que dão XP e receitas</span></div>
         <div class="ctx" id="tvCtx"></div>
@@ -1243,6 +1336,7 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
   <div class="cfg-row"><b>Mapa ao abrir</b><div class="seg" data-cfg="mapa"><button type="button" data-v="3d">3D (imagens do jogo)</button><button type="button" data-v="2d">2D (desenho)</button></div></div>
   <div class="cfg-row"><b>Seus dados</b><span class="hint">Builds, mundo, marcações e preferências ficam só neste navegador.</span><button class="btn sm" type="button" id="cfgReset">Apagar tudo deste navegador</button></div>
 </div></div>
+<div class="skm" id="skm" hidden role="dialog" aria-modal="true" aria-labelledby="skmT"><div class="skm-box" id="skmBox"></div></div>
 <div class="search" id="search" hidden><div class="search-box" role="dialog" aria-modal="true" aria-label="Buscar na ficha"><input id="searchQ" type="search" placeholder="Traço, receita, lugar, mod ou build…" autocomplete="off"><ul id="searchRes" role="listbox"></ul><p class="hint" style="margin:0">Enter abre o primeiro resultado · Esc fecha</p></div></div>
 <script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"}}</script>
 <script type="module">
@@ -2393,6 +2487,14 @@ const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",
 function fmtCost(n,side){if(n===0)return '<span class="cost zero">0</span>';if(side==="gain")return '<span class="cost gain">+'+n+'</span>';return '<span class="cost spend">−'+n+'</span>'}
 function profCost(p){return p.cost>0?fmtCost(p.cost,"spend"):p.cost<0?fmtCost(-p.cost,"gain"):fmtCost(0)}
 function skillLine(sk){return Object.entries(sk||{}).map(([k,v])=>k+" "+v).join(" · ")}
+// classificação da build: Meta = fecha, sem traço "Nunca" e com 5+ dos 7 obrigatórios do vídeo; Boa = 3 ou 4
+function metaTier(prof,sel){sel=sel instanceof Set?sel:new Set(sel);const c=compute(prof,sel),obr=Object.values(ALL).filter(t=>t.v==="obr"),has=obr.filter(t=>sel.has(t.id)),nun=Object.values(ALL).filter(t=>t.v==="nun"&&sel.has(t.id)),miss=obr.filter(t=>!sel.has(t.id)).map(t=>t.pt);
+  if(c.saldo<0)return{k:"nf",l:"Não fecha",w:"O saldo está negativo: o jogo não aceita."};
+  if(nun.length)return{k:"fora",l:"Fora do meta",w:"Tem "+nun.map(t=>t.pt).join(", ")+", que os canais marcam como Nunca."};
+  if(has.length>=5)return{k:"meta",l:"Meta",w:`Tem ${has.length} dos 7 obrigatórios`+(miss.length?` (falta ${miss.join(", ")})`:"")+"."};
+  if(has.length>=3)return{k:"boa",l:"Boa",w:`Tem ${has.length} dos 7 obrigatórios. Falta ${miss.join(", ")}.`};
+  return{k:"outro",l:"Outro estilo",w:`Fecha, mas tem só ${has.length} dos 7 obrigatórios do vídeo do Shivas: segue outro caminho. Falta ${miss.join(", ")}.`}}
+function metaBadge(prof,sel){const t=metaTier(prof,sel);return `<span class="mt mt-${t.k}" title="${esc(t.w)}">${t.k==="meta"?"★ ":""}${t.l}</span>`}
 function roleChips(r){return [...r].map(id=>`<span class="role">${esc(ROLEPT[id])}</span>`).join("")||'<span class="hint">Sem papel definido ainda</span>'}
 
 // ---------- COMPARTILHAR (link com a build e o nome de quem mandou) ----------
@@ -2485,6 +2587,7 @@ function putMine(){const m={lib:"",prof:state.prof,sel:[...state.sel],nm:"Minha 
   team.size=Math.max(2,team.members.length);team.comp=-1;renderTeam();renderSummary();flash("msg","Sua build está no esquadrão. Veja na aba Esquadrão.")}
 document.addEventListener("click",e=>{if(e.target.closest(".putme"))putMine()});
 function renderSummary(){
+  {const t=metaTier(state.prof,state.sel);$("myMeta").innerHTML=`${metaBadge(state.prof,state.sel)}<span>${esc(t.w)}</span>`}
   const c0=compute(state.prof,state.sel),free=groupFree(),c={...c0,saldo:c0.saldo+free};renderCtx(c);
   $("saldoNum").textContent=c.saldo;$("saldo").title=free?`Inclui ${free>0?"+":""}${free} pontos extras do mundo do grupo (aba Mundo)`:"";
   $("saldo").className="saldo"+(c.saldo<0?" neg":c.saldo>0?" pos":"");
@@ -2591,7 +2694,7 @@ function chCard(b){
   return `<article class="bcard">
     <div class="hd2">${ptImg(spec3d(b.prof,b.traits,b.id),"lg")}<div style="display:grid;gap:6px;min-width:0">
       <div class="hd"><h3>${esc(b.nm)}</h3><span class="chn">${esc(ch.nm)}</span></div>
-      <div class="src"><span>${esc(c.p.pt)} · ${profCost(c.p)}</span><span class="lang">${ch.lg}</span><span>gravada na ${v.pt} · ${v.dt}</span>${c.saldo>=0?'<span class="valid">Fecha na 42.21</span>':'<span class="valid no">Não fecha na 42.21</span>'}</div>
+      <div class="src"><span>${esc(c.p.pt)} · ${profCost(c.p)}</span><span class="lang">${ch.lg}</span><span>gravada na ${v.pt} · ${v.dt}</span>${c.saldo>=0?'<span class="valid">Fecha na 42.21</span>':'<span class="valid no">Não fecha na 42.21</span>'}${metaBadge(b.prof,sel)}</div>
       ${statsRow(b,c)}
     </div></div>
     <p class="idea">${esc(b.d)}</p>
@@ -2658,11 +2761,11 @@ function renderSlots(){
         <div style="display:grid;gap:5px;min-width:0"><span class="who">Jogador ${i+1} · <span class="src-tag">${esc(SRCL[m.src]||"Meta")}</span></span>
         <input class="pname" data-pn="${i}" value="${esc(m.who||"")}" placeholder="Nome de quem joga" maxlength="24" aria-label="Nome do jogador ${i+1}">
         <h3>${esc(m.nm)}</h3></div></div>
-      <div class="pf hint">${esc(c.p.pt)} · Força ${c.str} · Aptidão ${c.fit} · Saldo <span class="mono ${c.saldo<0?"bad-n":"ok-n"}">${c.saldo}</span></div>
+      <div class="pf hint">${esc(c.p.pt)} · Força ${c.str} · Aptidão ${c.fit} · Saldo <span class="mono ${c.saldo<0?"bad-n":"ok-n"}">${c.saldo}</span> ${metaBadge(m.prof,sel)}</div>
       <div class="rolesrow">${roleChips(rolesOf(m.prof,sel,m.lib))}</div>
       <select data-slot="${i}" aria-label="Trocar build da vaga ${i+1}">${opts}</select>
       <div class="imp" data-imp="${i}" hidden><input type="text" placeholder="Cole o link ou código" aria-label="Link ou código da build"><button class="btn sm" type="button" data-impok="${i}">Usar</button></div>
-      <div class="btns"><button class="btn sm" type="button" data-edit="${i}">Editar no montador</button><button class="btn sm" type="button" data-share="${i}">Copiar link desta build</button></div>
+      <div class="btns"><button class="btn sm" type="button" data-edit="${i}">Editar no montador</button><button class="btn sm" type="button" data-share="${i}">Copiar link desta build</button><button class="btn sm rm" type="button" data-rm="${i}" title="Tirar ${esc(m.who||"esta vaga")} do esquadrão">Remover</button></div>
     </div>`}).join("");
 }
 $("slots").addEventListener("change",e=>{const s=e.target.closest("select[data-slot]");if(!s||!s.value)return;const i=+s.dataset.slot,v=s.value,keep=team.members[i].who||"";
@@ -2674,6 +2777,8 @@ $("slots").addEventListener("change",e=>{const s=e.target.closest("select[data-s
   team.comp=-1;renderTeam()});
 $("slots").addEventListener("input",e=>{const p=e.target.closest("[data-pn]");if(!p)return;team.members[+p.dataset.pn].who=p.value.slice(0,24);saveTeam();renderTeam3d();renderMatrix()});
 $("slots").addEventListener("click",e=>{
+  const rm=e.target.closest("[data-rm]");if(rm){const i=+rm.dataset.rm,m=team.members[i];if(!confirm(`Tirar ${m.who||"o Jogador "+(i+1)} (${m.nm}) do esquadrão?`))return;
+    team.members.splice(i,1);team.size=Math.max(1,team.members.length);team.comp=-1;renderTeam();flash("teamMsg",`${m.who||"Jogador "+(i+1)} saiu do esquadrão.`+(team.members.length?"":" O esquadrão ficou vazio: escolha um tamanho ou uma composição."));return}
   const ed=e.target.closest("[data-edit]"), sh=e.target.closest("[data-share]"), ok=e.target.closest("[data-impok]");
   if(ed)startEdit(+ed.dataset.edit,false);
   if(sh){const m=team.members[+sh.dataset.share];copy(buildLink(m),"Link da build de "+(m.who||"Jogador "+(+sh.dataset.share+1))+" copiado.","teamMsg","teamFallback")}
@@ -2713,7 +2818,7 @@ function renderTeamWarns(rs){
 }
 function renderRecv(){const el=$("recvList");
   if(!recv.length){el.innerHTML='<p class="hint" style="margin:0">Quando um amigo te mandar o link de uma build, ela aparece aqui para você pôr numa vaga.</p>';return}
-  el.innerHTML=recv.map(r=>`<div class="r">${ptImg(spec3d(r.prof,r.sel,r.who||r.id,r.look),"sm")}<div style="min-width:0"><b>${esc(r.who||"Amigo")}</b>${esc(r.nm||PROF[r.prof].pt)}</div><div class="btns" style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end"><button class="btn sm" type="button" data-rput="${r.id}">Pôr no time</button><button class="btn sm" type="button" data-ropen="${r.id}">Ver</button><button class="btn sm" type="button" data-rdel="${r.id}" aria-label="Apagar build de ${esc(r.who||"amigo")}">×</button></div></div>`).join("");
+  el.innerHTML=recv.map(r=>`<div class="r">${ptImg(spec3d(r.prof,r.sel,r.who||r.id,r.look),"sm")}<div style="min-width:0"><b>${esc(r.who||"Amigo")}</b>${esc(r.nm||PROF[r.prof].pt)} ${metaBadge(r.prof,r.sel)}</div><div class="btns" style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end"><button class="btn sm" type="button" data-rput="${r.id}">Pôr no time</button><button class="btn sm" type="button" data-ropen="${r.id}">Ver</button><button class="btn sm" type="button" data-rdel="${r.id}" aria-label="Apagar build de ${esc(r.who||"amigo")}">×</button></div></div>`).join("");
 }
 function putRecv(r){const m={lib:"",rid:r.id,prof:r.prof,sel:r.sel.slice(),nm:r.nm,who:r.who,seed:r.who||r.id,src:"recv"};
   if(team.members.length<6){team.members.push(m)}else{let k=-1;team.members.forEach((x,i)=>{if(x.src==="meta")k=i});team.members[k<0?5:k]=m}
@@ -3202,6 +3307,7 @@ function applyCfg(){const h=document.documentElement;if(CFG.tema==="auto")h.remo
   const dark=CFG.tema==="dark"||(CFG.tema==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);$("btnTheme").title=dark?"Mudar para o tema claro":"Mudar para o tema escuro"}
 applyCfg();
 $("btnTheme").addEventListener("click",()=>{const dark=CFG.tema==="dark"||(CFG.tema==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);CFG.tema=dark?"light":"dark";saveCfg();applyCfg()});
+{const t=$("notesT"),set=()=>{const on=CFG.notas==="todas";t.setAttribute("aria-pressed",on);$("traitsCols").classList.toggle("compact",!on)};set();t.addEventListener("click",()=>{CFG.notas=CFG.notas==="todas"?"sel":"todas";saveCfg();set()})}
 $("introHide").addEventListener("click",()=>{CFG.intro="off";saveCfg();applyCfg()});
 $("introShow").addEventListener("click",()=>{CFG.intro="on";saveCfg();applyCfg()});
 $("btnCfg").addEventListener("click",()=>{$("cfg").hidden=false;$("btnCfg").setAttribute("aria-expanded","true");$("cfgClose").focus()});
@@ -3218,6 +3324,7 @@ function searchIndex(){if(SIDX)return SIDX;const L=[];
   LIB.forEach(b=>L.push({k:"Build",t:b.nm,d:(CH[b.ch]?CH[b.ch].nm+" · ":"")+PROF[b.prof].pt,go:()=>{go("builds");const c=document.querySelector(`[data-open="${b.id}"]`);if(c)c.scrollIntoView({block:"center"})}}));
   FAB.forEach(x=>L.push({k:"Receita",t:x.n,d:x.cat+" · "+x.para,go:()=>{go("fab");$("fabQ").value=x.n.split(" (")[0];fabCat="Todas";fabDif=0;renderFab();$("fabQ").scrollIntoView({block:"center"})}}));
   Object.entries(CIDADES).forEach(([ck,c])=>c.POI.forEach(([n,x,y,k],i)=>L.push({k:"Lugar",t:n,d:c.n+" · "+(PLEG[k]||""),go:()=>{go("guia");if(cid!==ck)setCity(ck);const [X,Y]=P(rx(x),ry(y)),r=$("rwMap").getBoundingClientRect(),a=r.height?r.width/r.height:1,w=projV()[2]*.35;setVB([X-w/2,Y-w/a/2,w,w/a]);$("rwMap").scrollIntoView({block:"center"})}})));
+  SKILLS.forEach(S=>L.push({k:"Perícia",t:S[1],d:"Como upar: "+S[5][0],go:()=>{go("aprender");openSkill(S[0])}}));
   CROPS.forEach(c=>L.push({k:"Planta",t:c[0],d:"Plantio: "+c[3].map(m=>MESES[m-1]).join(", "),go:()=>{cropMes=c[4][0]||c[3][0];cropTipo="all";go("aprender");renderCrops();$("aPlantio").scrollIntoView({block:"start"})}}));
   [["TV Life and Living","Grade de 9 dias com XP de Culinária, Carpintaria, Pesca e mais","aTV"],["Livros de perícia","Volumes, bônus e tempo de leitura","aLivros"],["Animais","Galinha, vaca, porco, ovelha, peru e selvagens","aAnimais"]].forEach(([t,d,id])=>L.push({k:"Aprender",t,d,go:()=>{go("aprender");$(id).scrollIntoView({block:"start"})}}));
   MODS.forEach(m=>L.push({k:"Mod",t:m[1],d:m[3]+" · "+m[5],go:()=>{go("mods");$("modQ").value=m[1];renderMods()}}));
@@ -3241,6 +3348,7 @@ function renderRefs(){const vids={};Object.entries(CH).forEach(([k,c])=>vids[k]=
   $("refsList").innerHTML=Object.entries(CH).map(([k,c])=>card(`<h3>${esc(c.nm)}<small>${c.lg}</small></h3>`,`<ul>${vids[k].map(v=>`<li><a href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.t)}</a><br><span class="hint">${esc(v.dt)} · gravado na ${esc(v.pt)}</span></li>`).join("")}</ul>`+(uso(k).length?`<span class="hint">Usado em: ${esc(uso(k).join(", "))}${k==="shivas"?"; etiquetas Obrigatório, Meta etc.":""}${k==="knine"?"; rota de Rosewood e dicas de sobrevivência":""}.</span>`:"")
   )).join("")+
   card("<h3>PZwiki</h3>",`<ul>${[["Riverside","42.20"],["Muldraugh","42.0"],["West_Point","42.13"],["Echo_Creek","42.16"],["March_Ridge","42.18"]].map(([pg,v])=>`<li><a href="https://pzwiki.net/wiki/${pg}" target="_blank" rel="noopener">${pg.replace("_"," ")}</a> <span class="hint">(página da ${v})</span></li>`).join("")}</ul><span class="hint">Lugares, dicas das cidades e coordenadas.</span>`)+
+  card("<h3>Vídeos de perícias (aba Aprender)</h3>",`<ul>${[...new Set(SKILLS.flatMap(S=>S[9].map(v=>v[2])))].sort().map(c=>`<li>${esc(c)}</li>`).join("")}</ul><p class="hint">Cada vídeo toca pelo YouTube, com link para o canal original.</p>`)+
   card("<h3>Mapas</h3>",`<ul><li><a href="https://pzmap.org/" target="_blank" rel="noopener">pzmap.org</a> <span class="hint">· lugares de cada cidade (42.20)</span></li><li><a href="https://projectzomboidmap.com/pt/" target="_blank" rel="noopener">projectzomboidmap.com</a> <span class="hint">· imagens da vista 3D (render do jogo B42.20.2 feito com pzmap2dzi), links "mapa real" e mapa embutido</span></li></ul>`)+
   card("<h3>Project Zomboid (The Indie Stone)</h3>",`<ul><li>Arquivos do jogo 42.21: ruas, prédios e água (streets.xml, worldmap.xml), pontos de nascimento, presets e nomes das opções de sandbox em português, opções do servidor.</li><li><a href="https://projectzomboid.com/" target="_blank" rel="noopener">projectzomboid.com</a></li></ul>`)+
   card("<h3>Oficina Steam</h3>",`<ul><li><a href="https://steamcommunity.com/app/108600/workshop/" target="_blank" rel="noopener">Spiffo's Workshop</a> <span class="hint">· lista e descrição dos mods (autores na página de cada mod, aba Mods)</span></li></ul>`)+
@@ -3286,20 +3394,97 @@ const TVD=[[1,[[0,"Pesca",75,""],[6,"Culinária",112.5,""],[12,"Carpintaria",75,
 const TVSHOW={Culinária:["The Cook Show","🍳"],Carpintaria:["Woodcraft","🪚"],Pesca:["Exposure Survival","🎣"],Agricultura:["Exposure Survival","🌱"],Coleta:["Exposure Survival","🍄"],Armadilhas:["Exposure Survival","🪤"]};
 const MESES=["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],MES3=MESES.map(m=>m.slice(0,3));
 function mvSafe(){try{return mVals()}catch(e){return {}}}
-function renderTV(){const v=mvSafe(),sm=v.StartMonth||7,sd=v.StartDay||9,sh=[7,9,12,14,17,21,0,2,5][(v.StartTime||2)-1]??9;
+function renderTV(){const foc=aprFocus(),my=mySkills(),fs=new Set(SKILLS.filter(S=>my[S[0]]).map(S=>S[1])),v=mvSafe(),sm=v.StartMonth||7,sd=v.StartDay||9,sh=[7,9,12,14,17,21,0,2,5][(v.StartTime||2)-1]??9;
   const d0=new Date(1993,sm-1,sd),dt=n=>{const d=new Date(d0);d.setDate(d.getDate()+n-1);return d.getDate()+" de "+MESES[d.getMonth()].toLowerCase()};
-  $("tvCtx").innerHTML=`<span class="ctx-i"><b>Mundo do grupo:</b> começa em ${dt(1)}, às ${String(sh).padStart(2,"0")}:00 <button type="button" class="linkbtn" data-go="mundo">mudar</button></span>`;
+  $("tvCtx").innerHTML=`<span class="ctx-i"><b>Mundo do grupo:</b> começa em ${dt(1)}, às ${String(sh).padStart(2,"0")}:00 <button type="button" class="linkbtn" data-go="mundo">mudar</button></span>`+(foc?`<span class="ctx-i">Em destaque: programas de ${[...fs].filter(n=>TVSHOW[n]).join(", ")||"nenhuma perícia da sua build"}.</span>`:"");
   $("tvGrid").innerHTML=TVD.map(([d,L])=>`<article class="tv-day"><h3>Dia ${d}<small>${dt(d)}</small></h3>${L.map(([h,sk,xp,rc])=>{const miss=d===1&&sh>=h+6,late=d===1&&!miss&&sh>h,S=TVSHOW[sk];
-    return `<div class="tv-r${miss?" miss":""}"><b class="tv-h">${String(h).padStart(2,"0")}h</b><span><img src="${twUrl(S[1])}" alt="" width="16" height="16"> <b>${sk}</b> +${String(xp).replace(".",",")} XP<small>${S[0]}${rc?` · ensina <b>${rc}</b>`:""}${miss?" · já passou quando o mundo começa":late?` · já começou: fica no ar até ${h+6}h`:""}</small></span></div>`}).join("")}</article>`).join("")}
+    const off=foc&&!fs.has(sk);return `<div class="tv-r${miss?" miss":""}${off?" off":""}"><b class="tv-h">${String(h).padStart(2,"0")}h</b><span><img src="${twUrl(S[1])}" alt="" width="16" height="16"> <b>${sk}</b> +${String(xp).replace(".",",")} XP<small>${S[0]}${rc?` · ensina <b>${rc}</b>`:""}${miss?" · já passou quando o mundo começa":late?` · já começou: fica no ar até ${h+6}h`:""}</small></span></div>`}).join("")}</article>`).join("")}
 const BOOKV=[["I",220,"1–2",3,1.5],["II",260,"3–4",5,2.5],["III",300,"5–6",8,4],["IV",340,"7–8",12,6],["V",380,"9–10",16,8]];
 const BOOKSK="Abate, Agricultura, Alvenaria, Armadilhas, Carpintaria, Cerâmica, Coleta, Costura, Culinária, Cuidados com Animais, Elétrica, Entalhamento, Ferraria, Lascamento, Manutenção, Mecânica, Pesca, Primeiros Socorros, Rastreamento, Soldagem e Vidraria";
+// perícias: como upar (PZwiki, páginas revisadas entre 42.18 e 42.20), VHS (PZwiki) e vídeos da B42 de YouTubers
+// [id, nome no jogo, categoria, ícone, outros nomes usados na ficha, como ganhar XP, macetes, livro (1 normal, .5 combate, 0 sem), VHS, vídeos [id, título, canal]]
+const SKILLS=[
+ ["carp","Carpintaria","fab","🪚",["Carpintaria"],["Construir e fabricar com madeira.","Do 0 ao 1: serrar toras em tábuas e barricar janelas.","Depois: pisos, paredes, caixotes e tudo que a base precisa."],["Na B42, desmontar móveis não dá mais XP.","Construções baratas dão XP rápido: piso cerca de 10, armação de parede 20, cerca ou caixote 30 (pzfans).","Engenhoso dá +30% de XP."],1,["Woodcraft, episódios 1 a 7","Exposure Survival 4, 5 e 8"],[["ha4bl4Ixyxo","Como subir Carpintaria rápido e 100% efetivo (B42)","ShadowNimbus"],["ztfRNw9TWYA","How to Level Carpentry 0-10 (42.21)","JoefaceGG · em inglês"]]],
+ ["cook","Culinária","sobr","🍳",["Culinária"],["Cozinhar no fogo ou no fogão.","Fazer receitas de culinária.","Pôr ingredientes em pratos que vão crescendo (sopa, ensopado, salada): cada ingrediente dá XP."],["Monte sopas e ensopados ingrediente por ingrediente.","Engenhoso dá +30% de XP."],1,["The Cook Show, episódios 1 a 7","Making Sushi at Home"],[["xS-UtkeSckA","Transforme alimento podre em fresco usando Culinária","LOSTT"]]],
+ ["agri","Agricultura","sobr","🌱",["Agricultura"],["Só dá XP colher o que você mesmo plantou.","Arar, semear, regar, capinar e adubar não dão XP."],["O XP é a saúde da planta na colheita dividida por 2: +25 se estava bem cuidada, −15 se estava mal cuidada (máximo 100 por planta).","Plante na época certa (calendário abaixo) para a planta chegar saudável."],1,["Growing Fruit and Veg at Home 1 e 2","Growing Herbs at Home","Exposure Survival 3: Farming","Tree Planting Guide"],[["LE1G87n8ILo","Aprenda a cultivar os seus próprios alimentos (B42)","LOSTT"],["8riUQFNQK5c","Agricultura: como plantar (B41/B42)","Fran Games"]]],
+ ["fa","Primeiros Socorros","sobr","🩹",["Primeiros Socorros"],["Fazer tratamentos médicos em você ou em outros jogadores."],["No multijogador, um cuida do outro: os dois ganham com os machucados do dia a dia.","TV e VHS só levam até o nível 3."],1,["Emergency First Aid","Rosewood Medical First Aid","Combat Wound Management"],[["azU3O6LwIMQ","Se recupere mais rápido de ferimentos com essa habilidade","LOSTT"]]],
+ ["elec","Elétrica","fab","⚡",["Elétrica"],["Desmontar eletrônicos com chave de fenda: 0,5 XP cada.","Desmontar móveis pequenos: 1,25 XP; móveis e aparelhos de cozinha: 2,5 XP.","Consertar gerador com sucata eletrônica: 1,25 XP por uso."],["Cozinhas industriais (restaurantes) têm muitos aparelhos para desmontar.","Engenhoso dá +30% de XP."],1,["How Electricity Works","Muldraugh AV Club","TV repair"],[["3FbKFSxOJZs","Forma mais fácil de subir Elétrica (B42)","ShadowNimbus"],["5FUtx2oaFTM","Faça bombas para explodir hordas com Elétrica","LOSTT"]]],
+ ["mech","Mecânica","fab","🔧",["Mecânica"],["Consertar, tirar e pôr peças no menu de mecânica do carro, dando certo ou não."],["Treine nos carros abandonados da rua.","As revistas de mecânica ensinam a mexer em cada tipo de carro."],1,["Carzone, episódios 1 a 3"],[["35sPPEEbEKE","A melhor forma de upar Mecânica (B42)","LOSTT"],["Vz2xIRxXBhY","How to Level Mechanics 0-10 (42.21)","JoefaceGG · em inglês"]]],
+ ["tail","Costura","fab","🧵",["Costura"],["Pôr e tirar remendos e acolchoamento na roupa: 0,5 XP cada (tirar só dá XP se o remendo voltar).","Receitas de costura."],["Do 0 ao 1: costure bandanas de trapo com barbante, que sai de cânhamo ou apócino."],1,["A Stitch in Time","Granny Nani","Tailoring 101"],[["uxNmlxRK_c0","Como upar Costura e ficar 100% protegido (B42)","ShivasBR"],["vEkPJaYvw94","How to Level Tailoring 0-10 (42.21)","JoefaceGG · em inglês"]]],
+ ["fish","Pesca","sobr","🎣",["Pesca"],["Pegar peixe: quanto mais pesado, mais XP."],["Quanto maior a Pesca, maiores e mais nutritivos os peixes."],1,["Better Fishing With Jason Master","Exposure Survival 1 e 2"],[["0LiHtsUy9lA","Como pescar na Build 42: guia completo","ShivasBR"],["hPz0R1y8NXY","Guia prático de pescaria na B42","Gambarine"]]],
+ ["trap","Armadilhas","sobr","🪤",["Armadilhas","Armadilha"],["Tirar um animal de uma armadilha que você armou.","Quanto maior o animal, mais XP (mínimo 3)."],["Espalhe várias armadilhas e passe para recolher todas de uma vez."],1,["Exposure Survival 6: Trapping"],[["aXBfMuxEa0k","Capture animais silvestres com essa habilidade (B42)","LOSTT"]]],
+ ["forage","Coleta","sobr","🍄",["Coleta"],["Cada item achado no modo de busca (lupa) dá XP."],["Ande pela mata com a busca ligada enquanto vai de um lugar a outro."],1,["Exposure Survival 5 e 7"],[["qeAjhsglwNg","Guia completo de coleta (B42)","LOSTT"],["pyuufvmOPeQ","How to Level Foraging 0-10 (42.21)","JoefaceGG · em inglês"]]],
+ ["maint","Manutenção","comb","🛠️",["Manutenção"],["Acertar zumbi, árvore, carro ou porta com arma corpo a corpo: 50% de chance de XP por golpe."],["Arma que estraga fácil dá mais XP de Manutenção; arma muito resistente dá bem menos."],1,[],[["98sZdKL0Qtc","The Easiest Way to Max Maintenance (B42)","FireSpark81 · em inglês"],["UpL5Jzr4yNo","Leveling Maintenance in B42","Laughter · em inglês"]]],
+ ["carv","Entalhamento","fab","🪵",["Entalhamento"],["Fazer receitas da categoria Entalhamento."],["Nível 0: muda em vara longa e depois lança (10 XP); galho em estaca (1,3 XP).","Nível 1: galho em vara, 4 cabos e 4 colheres: 60 XP por galho. Sobra de madeira em 2 cabos e 2 colheres: 30 XP.","Nível 2+: colheres em garfos: +80 XP (140 por galho). Galho grande em tábua: 20 XP."],1,[],[["bgck1XH2kf4","Como upar Entalhamento na Build 42","ShivasBR"]]],
+ ["knap","Lascamento","fab","🪨",["Lascamento"],["Fazer receitas da categoria Lascamento."],["Nível 0: lascas de sílex; 1: foice e cinzel de pedra; 2: serra de sílex; 3: cabeça de machado grande; 4: cabeça de marreta.","Depois do nível 6 não há mais receitas: pare de treinar."],1,["Knapping: The Ancient Art"],[["hMtNLUvBeFw","Faça a melhor arma da Build 42 (Lascamento)","ShivasBR"],["pNGLfhRf3Yg","Machados infinitos com Lascamento e Entalhamento","ShivasBR"]]],
+ ["mason","Alvenaria","fab","🧱",["Alvenaria"],["Fazer receitas e construções de alvenaria."],["Do 0 ao 1, a única receita é quebrar pedras grandes.","Pedra grande: clique com o botão direito no chão da mata onde ela aparece, menu de jardinagem, remover pedra grande."],1,[],[["RJbO4U7BN8M","Como upar Alvenaria na Build 42","Eoenki"]]],
+ ["smith","Ferraria","fab","⚒️",["Ferraria"],["Fazer receitas e construções de ferraria."],["É perícia de fim de jogo: precisa de forja, várias revistas e semanas de jogo, mas dá as melhores armas e armaduras de metal."],1,["From Ore to Store"],[["0IZ_wehc2GY","Tutorial de forja da Build 42","ShivasBR"],["nc5lwGun8Vw","How to Level Blacksmithing 0-10 (42.20)","JoefaceGG · em inglês"]]],
+ ["weld","Soldagem","fab","🔥",["Soldagem"],["Fazer receitas e construções com maçarico."],["1–2: desmontar carcaças de carro (cerca de 17 XP a cada 10 usos do maçarico).","3–4: faca de sucata (20 XP por 4 usos) ou cortar barra (10 XP por uso).","5–10: chapa de metal (25 XP por 2 usos).","Na B42, desmontar móveis de metal não dá mais XP."],1,["Home Welding Guide","Adefope Fencing Special"],[["eZsFfk-eCPc","Tutorial de Soldagem e Metalurgia (B42)","Fran Games"],["gSUmCP6I7cA","How to Level Welding 0-10 (42.21)","JoefaceGG · em inglês"]]],
+ ["glass","Vidraria","fab","🫙",["Vidraria"],["Fabricar objetos de vidro."],["Nível 0: vidraça (com Carpintaria 5); 2: copo; 3: garrafas; 5+: potes de conserva (com Culinária 8)."],1,[],[]],
+ ["pot","Cerâmica","fab","🏺",["Cerâmica"],["Fazer receitas de cerâmica."],[],1,["Pottery for Anyone","Working Clay at Home"],[["AhfBAznEY4o","Guia completo de cerâmica (B42)","LOSTT"]]],
+ ["str","Força","fis","💪",["Força"],["Exercícios.","Carregar mais de 50% do peso que aguenta.","Correr, bater em zumbi corpo a corpo e cortar árvore."],[],0,[],[["tezAABSerG4","Como upar Força e Aptidão mais rápido","ShivasBR"],["Usy0le56_gw","Melhores exercícios para Força e Aptidão (B42)","LOSTT"]]],
+ ["fit","Aptidão Física","fis","🏃",["Aptidão","Aptidão Física"],["Exercícios.","Bater em zumbi corpo a corpo sem estar exausto.","Correr e disparar (a XP sai às vezes para Corrida, às vezes para Aptidão)."],[],0,[],[["tezAABSerG4","Como upar Força e Aptidão mais rápido","ShivasBR"],["Usy0le56_gw","Melhores exercícios para Força e Aptidão (B42)","LOSTT"]]],
+ ["sprint","Corrida","fis","👟",["Corrida"],["Correr (Shift) e disparar (Alt) dão XP de tempos em tempos, mesmo sem zumbi por perto."],["Disparando você pode tropeçar em obstáculos e ficar exposto: treine em campo aberto."],0,[],[]],
+ ["light","Discrição","fis","🦶",["Passos Leves","Discrição"],["Andar agachado perto de zumbis sem ser notado. Quanto mais zumbis perto, mais XP."],["Junte zumbis com um despertador e passe agachado perto deles.","Vale mesmo em postura de combate, se você agachou antes."],0,["Grady v King"],[]],
+ ["sneak","Furtividade","fis","🥷",["Furtividade"],["Andar agachado (C) perto de zumbis sem ser detectado."],["Vale mesmo em postura de combate, se você agachou antes."],0,[],[]],
+ ["nimble","Agilidade","fis","🤸",["Agilidade"],["Andar em postura de combate (Ctrl). Precisa estar saindo do lugar: andar contra a parede não conta."],["Ande em postura de combate nas viagens a pé pela base."],0,[],[["aXq8xEY7tp8","Como upar Agilidade na Build 42","Eoenki"]]],
+ ["aim","Pontaria","comb","🎯",["Mira","Pontaria"],["Acertar tiro em inimigo."],["A partir do nível 5, o XP cai para cerca de 37%.","Tiro chama horda: treine com o grupo cobrindo."],.5,["Knox Gun Owners Club's Guide to Guns","Basic Gun Handling"],[["6iL5SfObn_k","Aprenda a upar Pontaria e Recarga (B42)","LOSTT"]]],
+ ["reload","Recarga","comb","🔫",["Recarga"],["Pôr balas no pente, pôr o pente na arma ou pôr balas direto na arma."],["Dá para treinar em segurança: descarregue e recarregue pentes e armas em casa.","A partir do nível 5, o XP cai para cerca de 37%."],.5,["Knox Gun Owners Club's Guide to Guns","Basic Gun Handling"],[["6iL5SfObn_k","Aprenda a upar Pontaria e Recarga (B42)","LOSTT"]]],
+ ["axe","Machados","comb","🪓",["Machado","Machados"],["Acertar inimigos com machado."],["Cortar árvore não dá mais XP de Machados (dá de Força)."],0,[],[["nBsxIKR4GIs","Upe suas armas 3x mais rápido (B42)","LOSTT"]]],
+ ["lblunt","Contundentes Longos","comb","🏏",["Contundente Longo","Contundentes Longos"],["Acertar inimigos com taco, pé de cabra e outras armas contundentes longas."],[],0,[],[["nBsxIKR4GIs","Upe suas armas 3x mais rápido (B42)","LOSTT"]]],
+ ["sblunt","Contundentes Curtos","comb","🔨",["Contundente Curto","Contundentes Curtos"],["Acertar inimigos com chave inglesa, cassetete, martelo e outras contundentes curtas."],[],0,[],[["nBsxIKR4GIs","Upe suas armas 3x mais rápido (B42)","LOSTT"]]],
+ ["lblade","Lâminas Longas","comb","⚔️",["Lâmina Longa","Lâminas Longas"],["Acertar inimigos com katana, facão e outras lâminas longas."],["Ferraria e Soldagem ajudam a conseguir lâminas longas."],.5,[],[["nBsxIKR4GIs","Upe suas armas 3x mais rápido (B42)","LOSTT"]]],
+ ["sblade","Lâminas Curtas","comb","🔪",["Lâmina Curta","Lâminas Curtas"],["Acertar inimigos com faca de cozinha, faca de caça e outras lâminas curtas."],[],0,[],[["nBsxIKR4GIs","Upe suas armas 3x mais rápido (B42)","LOSTT"]]],
+ ["spear","Lanças","comb","🔱",["Lança","Lanças"],["Acertar inimigos com lança."],["A lança de madeira sai cedo (aba Fabricar) e dá para treinar desde o dia 1."],0,[],[["IwgiYmB39VM","Usar lanças na B42 compensa?","Gambarine"]]],
+ ["animal","Cuidados com Animais","sobr","🐄",["Cuidado Animal","Cuidados com Animais"],["Dar água direto ao animal: 2 XP a cada 0,05 L.","Recolher ovos: 1 XP por ovo.","Outras interações com os animais também dão XP."],[],1,["A Day on the Farm","The Petting Zoo"],[["8nemkGceidM","Tutorial de cuidados com animais (B42)","Gambarine"],["zpTBbJzCglI","Como cuidar dos animais: tutorial completo","ShivasBR"]]],
+ ["butch","Abate","sobr","🥩",["Açougue","Abate"],["Processar carcaças: cada parte ou corte tirado dá XP; cortes melhores dão mais.","Tirar couro ou cabeça no gancho de abate.","Abater animal pequeno e filetar peixe: 10 XP cada."],["Filetar peixe é um jeito fácil de treinar."],1,[],[["-uQ2ErX0alg","Guia completo de açougue (B42)","LOSTT"]]],
+ ["track","Rastreamento","sobr","🐾",["Rastreamento"],["Achar rastros de tipos diferentes.","Andar agachado perto de veados ou coelhos."],[],1,[],[["p2t5iRUpY7c","How to Track & Hunt Deer in 5 Minutes (B42)","Friendly Frenzy Games · em inglês"]]]];
+const SKCAT={comb:["Combate","⚔️"],fis:["Corpo","💪"],fab:["Fabricação","🛠️"],sobr:["Sobrevivência","🏕️"]};
+const SKGEN=[["nFlgBgEg_g4","Every Skill in Project Zomboid B42","discreader · em inglês"],["CrPn2O1USDQ","As novas habilidades da B42","Gambarine"]];
+
+const SKWIKI={carp:"Carpentry",cook:"Cooking",agri:"Agriculture",fa:"First_Aid",elec:"Electrical",mech:"Mechanics",tail:"Tailoring",fish:"Fishing",trap:"Trapping",forage:"Foraging",maint:"Maintenance",carv:"Carving",knap:"Knapping",mason:"Masonry",smith:"Blacksmithing",weld:"Welding",glass:"Glassmaking",pot:"Pottery",str:"Strength",fit:"Fitness",sprint:"Sprinting",light:"Lightfooted",sneak:"Sneaking",nimble:"Nimble",aim:"Aiming",reload:"Reloading",axe:"Axe",lblunt:"Long_Blunt",sblunt:"Short_Blunt",lblade:"Long_Blade",sblade:"Short_Blade",spear:"Spear",animal:"Animal_Care",butch:"Butchering",track:"Tracking"};
+// foco: perícias com que a sua build começa (profissão + traços); "tudo" mostra todas
+function mySkills(){const c=compute(state.prof,state.sel),m={};SKILLS.forEach(S=>{const lv=Math.max(0,...S[4].map(a=>c.sk[a]||0));if(lv)m[S[0]]=lv});return m}
+function aprFocus(){return CFG.aprFoco!=="tudo"&&Object.keys(mySkills()).length>0}
+let skCat="all";
+function skCard(S,lv){const tv=TVD.some(([,L])=>L.some(r=>r[1]===S[1]));
+  return `<button type="button" class="skc" data-sk="${S[0]}"><img src="${twUrl(S[3])}" alt="" width="28" height="28" loading="lazy"><span class="skc-n"><b>${esc(S[1])}</b>${lv?`<small>sua build: nível ${lv}</small>`:`<small>${SKCAT[S[2]][0]}</small>`}</span>
+    <span class="skc-i">${tv?'<i title="Passa na TV">📺</i>':""}${S[8].length?'<i title="Tem fita VHS">📼</i>':""}${S[7]?'<i title="Tem livro">📚</i>':""}${S[9].length?`<i title="Vídeos">▶${S[9].length}</i>`:""}</span></button>`}
+function renderSkills(){const my=mySkills(),foc=aprFocus();
+  $("skCats").innerHTML='<span class="hint">Mostrar</span>'+chip("data-skc","all","Todas",skCat==="all")+Object.entries(SKCAT).map(([k,[n,ic]])=>chip("data-skc",k,ic+" "+n,skCat===k)).join("");
+  const L=SKILLS.filter(S=>skCat==="all"||S[2]===skCat);
+  if(foc){const mine=L.filter(S=>my[S[0]]),rest=L.filter(S=>!my[S[0]]);
+    $("skGrid").innerHTML=`<h3 class="sk-h">Para a sua build (${esc(PROF[state.prof].pt)})</h3><div class="sk-grid">${mine.map(S=>skCard(S,my[S[0]])).join("")||'<p class="hint">Nenhuma perícia desta categoria na sua build.</p>'}</div>
+      <details class="sk-more"><summary>Outras perícias (${rest.length})</summary><div class="sk-grid">${rest.map(S=>skCard(S,0)).join("")}</div></details>`}
+  else $("skGrid").innerHTML=`<div class="sk-grid">${L.map(S=>skCard(S,my[S[0]])).join("")}</div>`}
+function openSkill(id){const S=SKILLS.find(x=>x[0]===id);if(!S)return;const lv=mySkills()[id]||0;
+  const tv=[];TVD.forEach(([d,L])=>L.forEach(([h,n,xp,rc])=>{if(n===S[1])tv.push(`Dia ${d}, ${String(h).padStart(2,"0")}h · +${String(xp).replace(".",",")} XP${rc?` · ensina ${rc}`:""}`)}));
+  const bk=S[7]===1?"Volumes I a V, bônus de ×3 a ×16 (aba Aprender › Livros).":S[7]?"Volumes I a V com metade do bônus: ×1,5 a ×8.":"Não tem livro: só sobe praticando.";
+  const li=a=>a.length?`<ul>${a.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>`:"";
+  $("skmBox").innerHTML=`<div class="skm-hd"><img src="${twUrl(S[3])}" alt="" width="40" height="40"><div><h2 id="skmT">${esc(S[1])}</h2><span class="hint">${SKCAT[S[2]][0]}${lv?` · sua build começa no nível ${lv}`:""}</span></div><button type="button" class="tbtn ico" data-skx aria-label="Fechar">✕</button></div>
+    <div class="skm-body">
+      <section><h3>Como ganhar XP</h3>${li(S[5])}</section>
+      ${S[6].length?`<section><h3>Macetes</h3>${li(S[6])}</section>`:""}
+      <div class="skm-row"><section><h3>📺 TV</h3>${tv.length?li(tv):'<p class="hint">Não passa na TV.</p>'}</section><section><h3>📼 VHS</h3>${S[8].length?li(S[8]):'<p class="hint">Nenhuma fita.</p>'}</section><section><h3>📚 Livros</h3><p>${bk}</p></section></div>
+      <p class="hint">TV e VHS só dão XP até o nível 3. Aprendiz Rápido dá +30% de XP em tudo, menos Força e Aptidão.</p>
+      ${S[9].length?`<section><h3>Vídeos</h3><div class="vids">${S[9].map(([v,t,c])=>`<div class="vid" data-vid="${v}"><button type="button" class="vid-p" data-play="${v}" aria-label="Tocar: ${esc(t)}"><img src="https://i.ytimg.com/vi/${v}/mqdefault.jpg" alt="" loading="lazy"><span>▶</span></button><b>${esc(t)}</b><small>${esc(c)} · <a href="https://www.youtube.com/watch?v=${v}" target="_blank" rel="noopener">abrir no YouTube ↗</a></small></div>`).join("")}</div></section>`:""}
+      <p class="hint">Fonte: <a href="https://pzwiki.net/wiki/${SKWIKI[id]}" target="_blank" rel="noopener">PZwiki · ${SKWIKI[id].replace(/_/g," ")}</a>.</p>
+    </div>`;
+  $("skm").hidden=false;$("skmBox").querySelector("[data-skx]").focus()}
+function closeSkill(){$("skm").hidden=true;$("skmBox").innerHTML=""}
+$("skm").addEventListener("click",e=>{if(e.target===$("skm")||e.target.closest("[data-skx]")){closeSkill();return}
+  const b=e.target.closest("[data-play]");if(b){const v=b.dataset.play;b.outerHTML=`<iframe class="vid-f" src="https://www.youtube-nocookie.com/embed/${v}?autoplay=1&rel=0" title="Vídeo" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("skm").hidden)closeSkill()});
+function renderFoco(){const my=mySkills(),has=Object.keys(my).length,foc=aprFocus();
+  $("aprFoco").innerHTML=`<div class="seg" role="group" aria-label="Foco"><button type="button" data-foco="build" aria-pressed="${foc}"${has?"":" disabled"}>🎯 Minha build${has?` (${esc(PROF[state.prof].pt)})`:""}</button><button type="button" data-foco="tudo" aria-pressed="${!foc}">🌐 Tudo</button></div>
+    <span class="hint">${foc?`Mostrando primeiro o que serve para a sua build: ${SKILLS.filter(S=>my[S[0]]).map(S=>S[1]).join(", ")}.`:has?"Mostrando tudo, sem destacar a sua build.":"Monte sua build no Montador para ver o que serve para ela."} <button type="button" class="linkbtn" data-go="montador">mudar build</button></span>`}
 let bookOpt={oc:false,sent:true};
 function renderBooks(){const fast=state.sel.has("fast_reader"),slow=state.sel.has("slow_reader"),m=(fast?.7:slow?1.3:1)*(bookOpt.oc?.9:1)*(bookOpt.sent?.9:1);
   const hm=min=>{const h=Math.floor(min/60),r=Math.round(min%60);return h+"h"+(r?String(r).padStart(2,"0"):"")};
   $("bookCtx").innerHTML=`<span class="ctx-i"><b>Sua build:</b> ${fast?"Leitura Dinâmica (lê 30% mais rápido)":slow?"Leitura Lenta (lê 30% mais devagar)":"sem traço de leitura"} <button type="button" class="linkbtn" data-go="montador">mudar</button></span>`;
   $("bookOpts").innerHTML='<span class="hint">Lendo</span>'+chip("data-bo","sent","sentado (−10%)",bookOpt.sent)+chip("data-bo","oc","de óculos de leitura (−10%)",bookOpt.oc);
   $("bookT").innerHTML=`<thead><tr><th>Volume</th><th>Níveis</th><th>Páginas</th><th>Bônus</th><th>Combate</th><th>Seu tempo de leitura</th></tr></thead><tbody>${BOOKV.map(([v,pg,lv,x,xc])=>`<tr><td><b>${v}</b></td><td>${lv}</td><td>${pg}</td><td class="mono">×${x}</td><td class="mono">×${String(xc).replace(".",",")}</td><td class="mono">${hm(pg*2*m)} do jogo</td></tr>`).join("")}</tbody>`+
-    `<caption>Bônus normal vale para ${BOOKSK}. Combate: Pontaria, Recarga e Lâminas Longas.</caption>`}
+    `<caption>Bônus normal vale para ${BOOKSK}. Combate: Pontaria, Recarga e Lâminas Longas.${aprFocus()?` <b>Para a sua build, procure: ${SKILLS.filter(S=>mySkills()[S[0]]&&S[7]).map(S=>S[1]).join(", ")||"nenhuma perícia com livro"}.</b>`:""}</caption>`}
 const CROPS=[["Abobrinha","v",70,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Abóbora","v",70,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Alecrim","e",30,[3,4,5,6,7,8,9],[],[],[12,1,10,11],0],["Alface","v",70,[2,3,4,7,8,9],[3,7],[9],[10,11,12,1],0],["Alho","v",30,[7,8,9],[8],[9],[6],1],["Alho Selvagem","e",30,[7,8,9],[8],[9],[6],1],["Alho-poró","e",70,[3,4,5,6,7,8,9],[],[],[12,1,10,11],1],["Batatas","v",60,[2,3,4],[3],[4],[8,9,10,11,12,1],0],["Batatas-doces","v",60,[5,6,7],[6],[7],[10,11,12,1,2],0],["Beterraba Doce","v",40,[2,3,4,5,6,7],[3,6],[7],[9,10,11,12,1],0],["Brócolis","v",70,[2,3,4,5,6,7],[3,6],[7],[9,10,11,12,1],0],["Calêndula","e",80,[3,4,5],[4],[5],[8,9,10,11,12,1],0],["Camomila","e",80,[3,4,5],[4],[],[8,9,10,11,12,1],0],["Capim-limão","e",70,[3,4,5,6,7,8,9],[],[],[12,1,10,11],0],["Cebolas","v",30,[2,3],[2],[3],[7,8,9,10,11,12,1],0],["Cebolinha","e",60,[3,4,5,6,7,8],[4],[6,7],[12,1,2,10,11],0],["Cenouras","v",30,[2,3,4,5,6,7],[2,6],[7],[1,10,11,12],0],["Centeio","v",30,[8,9,10],[9],[10],[6,7],1],["Cevada","v",30,[8,9,10],[9],[10],[6,7],1],["Coentro","e",70,[3,4,5],[4],[5],[7,8,9,10,11,12,1],0],["Confrei","e",60,[3,4,5,6,7,8],[3,4],[6,7],[12,1,2,10,11],0],["Couve","v",70,[2,3,4,5,6,7,8],[3,7],[8],[11,12,1],1],["Couve-flor","v",70,[2,3,4],[3],[4],[9,10,11,12,1],0],["Cânhamo","v",30,[8,9,10],[9],[10],[6,7],0],["Ervilhas Verdes","v",70,[2,3,4],[3],[4],[10,11,12,1],0],["Espinafre","v",70,[2,3,4,5,6,7],[3,6],[7],[9,10,11,12,1],0],["Girassol","v",30,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Hortelã","e",70,[2,3,4],[3],[],[6,7,8,9,10,11,12,1],0],["Lavanda","e",80,[3,4,5],[4],[5],[8,9,10,11,12,1],0],["Linho","v",30,[8,9,10],[9],[10],[6,7],1],["Lúpulo","v",30,[8,9,10],[9],[10],[6,7],0],["Malva-comum","e",60,[3,4,5,6,7,8],[3,4],[6,7],[12,1,2,10,11],0],["Manjericão","e",80,[3,4,5],[3],[4],[8,9,10,11,12,1],0],["Melancia","v",70,[3,4,5],[4],[5],[10,11,12,1,2],0],["Milho","v",30,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Nabo","v",60,[5,6,7,8,9,10],[6,9],[7,10],[11,12,1,2],0],["Orégano","e",60,[2,3,4],[3],[4],[7,8,9,10,11,12,1],0],["Papoulas","e",80,[3,4,5],[4],[5],[8,9,10,11,12,1],0],["Pepino","v",70,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Pimenta Habanero","e",70,[4,5,6],[5],[6],[10,11,12,1,2,3],0],["Pimenta Jalapeño","e",70,[4,5,6],[5],[6],[10,11,12,1,2,3],0],["Pimentão","v",70,[4,5,6],[5],[6],[10,11,12,1,2,3],0],["Pé de Morango","v",80,[2,3,4],[3],[4],[7,8,9,10,11,12,1],0],["Pé de Tomate","v",70,[4,5,6],[5],[6],[10,11,12,1,2,3],0],["Rabanetes","v",40,[2,3,4,5,6,7,8],[3,7],[8],[9,10,11,12,1],0],["Repolhos","v",80,[2,3,4,5,6,7],[3,5],[7],[10,11,12,1],1],["Rosas","e",80,[3,4,5],[4],[5],[8,9,10,11,12,1],0],["Salsinha","e",70,[2,3,4],[3],[4],[6,7,8,9,10,11,12,1],0],["Soja","v",60,[3,4,5],[4],[5],[8,9,10,11,12,1,2],0],["Sálvia","e",30,[2,3,4],[3],[4],[7,8,9,10,11,12],0],["Sálvia-negra","e",60,[3,4,5,6,7,8],[4,5],[7,8],[12,1,2,10,11],0],["Tabaco","v",70,[3,4,5,6,7],[3],[7],[9,10,11,12,1,2],0],["Tanchagem","e",60,[3,4,5,6,7,8],[4],[6,7],[12,1,2,10,11],0],["Tomilho","e",30,[2,3,4],[3],[4],[8,9,10,11,12,1],0],["Trigo de Inverno","v",30,[8,9,10],[9],[10],[6,7],1]];
 let cropMes=0,cropTipo="all";
 function renderCrops(){const v=mvSafe();if(!cropMes)cropMes=v.StartMonth||7;
@@ -3325,26 +3510,45 @@ const ANI=[["🐔","Galinha","Pintinho, Galinha e Galo","Rhode Island Red e Lego
 function renderAni(){const v=mvSafe(),at=v.AnimalSoundAttractZombies;
   $("aniCtx").innerHTML=`<span class="ctx-i"><b>Mundo do grupo:</b> ${at?"o barulho dos animais <b>atrai zumbis</b>":"o barulho dos animais não atrai zumbis"} · chance de animais nas fazendas: ${esc(mShow("AnimalRanchChance",v.AnimalRanchChance))} <button type="button" class="linkbtn" data-go="mundo">mudar</button></span>`;
   $("aniList").innerHTML=ANI.map(([ic,n,st,br,d,z])=>`<article class="ani"><img src="${twUrl(ic)}" alt="" width="40" height="40" loading="lazy"><div><h3>${n}</h3><p>${d}</p><dl><dt>Fases</dt><dd>${st}</dd><dt>Raças</dt><dd>${br}</dd>${z?`<dt>Zona mínima</dt><dd>${z} quadrados</dd>`:""}</dl></div></article>`).join("")}
-function renderAprender(){renderTV();renderBooks();renderCrops();renderAni()}
+function renderAprender(){renderFoco();renderSkills();renderTV();renderBooks();renderCrops();renderAni()}
 $("panel-aprender").addEventListener("click",e=>{const a=e.target.closest(".apr-nav a");if(a){e.preventDefault();const t=$(a.getAttribute("href").slice(1));if(t)t.scrollIntoView({behavior:"smooth",block:"start"});return}
+  const f=e.target.closest("[data-foco]");if(f){CFG.aprFoco=f.dataset.foco;saveCfg();renderAprender();return}
+  const k=e.target.closest("[data-sk]");if(k){openSkill(k.dataset.sk);return}
+  const c=e.target.closest("[data-skc]");if(c){skCat=c.dataset.skc;renderSkills();return}
   const b=e.target.closest("[data-bo],[data-cm],[data-ct]");if(!b)return;
   if(b.dataset.bo){bookOpt[b.dataset.bo]=!bookOpt[b.dataset.bo];renderBooks()}if(b.dataset.cm){cropMes=+b.dataset.cm;renderCrops()}if(b.dataset.ct){cropTipo=b.dataset.ct;renderCrops()}});
 
+// ---------- SUGESTÕES ----------
+const SUGT=[["ideia","💡","Ideia nova"],["problema","🐞","Algo errado"],["build","🧟","Build ou time"],["mod","🧩","Mod"],["texto","✏️","Texto confuso"]];let sugTipo="ideia";
+function renderSug(){$("sugTipo").innerHTML=SUGT.map(([k,ic,n])=>`<button type="button" class="sug-t" data-st="${k}" aria-pressed="${k===sugTipo}"><span>${ic}</span>${n}</button>`).join("");if(!$("sugN").value&&myName)$("sugN").value=myName}
+$("sugTipo").addEventListener("click",e=>{const b=e.target.closest("[data-st]");if(b){sugTipo=b.dataset.st;renderSug()}});
+function sugData(){const T=SUGT.find(x=>x[0]===sugTipo),t=$("sugT").value.trim(),d=$("sugD").value.trim(),n=$("sugN").value.trim();if(!t&&!d){flash("sugMsg","Escreva pelo menos o resumo.");return null}
+  return{title:`[${T[2]}] ${t||d.slice(0,60)}`,body:`${d||t}\n\n—\nTipo: ${T[2]}${n?"\nDe: "+n:""}\nAba aberta antes: ${curPrevTab||"—"}`}}
+let curPrevTab="";
+$("sugGit").addEventListener("click",()=>{const o=sugData();if(!o)return;window.open("https://github.com/k3v1nn-ux/zomboid/issues/new?title="+encodeURIComponent(o.title)+"&body="+encodeURIComponent(o.body),"_blank","noopener");flash("sugMsg","Abrimos o GitHub em outra aba: confira e clique em Create.")});
+$("sugCopy").addEventListener("click",()=>{const o=sugData();if(!o)return;copy(o.title+"\n"+o.body,"Copiado. Cole no grupo.","sugMsg","sugFb")});
+
 // ---------- ABAS ----------
-const TABS=["montador","builds","combos","esquadrao","guia","fab","aprender","mundo","mods","grupo","refs"];
+const TABS=["montador","builds","combos","esquadrao","guia","fab","aprender","mundo","mods","grupo","sugestao","refs"];
+// Time = Esquadrão + Combos prontos + Link do grupo, com um menu em cima das três
+const TEAMT=[["esquadrao","👥","Esquadrão","quem joga com qual build"],["combos","🧩","Combos prontos","times que se completam"],["grupo","🔗","Link do grupo","mundo, mods e time num link"]];
+function renderSubnav(t){document.querySelectorAll(".subnav").forEach(n=>{n.innerHTML=TEAMT.map(([id,ic,nm,d])=>`<button type="button" data-go="${id}" aria-current="${id===t?"page":"false"}"><span class="sn-i">${ic}</span><span><b>${nm}</b><small>${d}</small></span></button>`).join("")})}
+document.addEventListener("click",e=>{const b=e.target.closest(".subnav [data-go]");if(b)go(b.dataset.go)});
 let curTab=null;const tabY={};
 function go(t,how){
   if(!TABS.includes(t))t="montador";if(curTab)tabY[curTab]=scrollY;const prev=curTab;curTab=t;
   TABS.forEach(x=>{$("panel-"+x).hidden=x!==t;$("tab-"+x).setAttribute("aria-selected",x===t)});
+  if(t==="combos"||t==="grupo")$("tab-esquadrao").setAttribute("aria-selected","true");if(TEAMT.some(x=>x[0]===t))renderSubnav(t);
   document.querySelector(".intro").hidden=t!=="montador";$("patch").hidden=t!=="montador";
   if(t==="esquadrao")renderTeam();
   if(t==="grupo")renderGrupo();
   if(t==="fab")renderFab();
   if(t==="aprender")renderAprender();
+  if(t==="sugestao"){curPrevTab=prev||"";renderSug()}
   if(t==="esquadrao"||t==="guia"){let mv=null;try{mv=mVals()}catch(e){}const c=compute(state.prof,state.sel),ms=modsComDeps().length;
     $("teamCtx").innerHTML=mv?`<span class="ctx-i"><b>Mundo do grupo:</b> ${esc(mundo.n||MPRE[mundo.p].n)} · ${esc(MPRE[mundo.p].n)} · ${ms} mods <button type="button" class="linkbtn" data-go="grupo">ver página do grupo</button></span><span class="ctx-i"><button type="button" class="linkbtn putme">Pôr a minha build (${esc(PROF[state.prof].pt)}) no esquadrão</button></span>`:"";
     $("rotaCtx").innerHTML=`<span class="ctx-i"><b>Sua build:</b> ${esc(PROF[state.prof].pt)} · Força ${c.str} · Aptidão ${c.fit}${state.sel.has("short_sighted")?" · com Miopia, pegue óculos de grau cedo":""}${c.fit<5?" · Aptidão baixa: evite brigar com grupos":""} <button type="button" class="linkbtn" data-go="montador">mudar</button></span>`+((CFG.mapHide||[]).length?`<span class="ctx-i">Algumas categorias estão escondidas no mapa (botões “Mostrar” abaixo dele).</span>`:"")}
-  {const PT={montador:["Montador","Profissão, traços e o seu boneco"],builds:["Builds dos canais","16 builds de 7 canais, recalculadas na 42.21"],combos:["Combos","Esquadrões de 2 a 6 que se completam"],esquadrao:["Esquadrão","O time do grupo, com nome e build"],guia:["Sobrevivência","Rota dia a dia nas 6 cidades iniciais"],fab:["Fabricar","O que fazer primeiro e como"],aprender:["Aprender","TV, livros, plantio e animais"],mundo:["Mundo","Regras do servidor do grupo"],mods:["Mods","Os mais baixados da Oficina que rodam na B42"],grupo:["Grupo","Tudo o que o grupo combinou, num link"],refs:["Referências","Quem fez o conteúdo que usamos"]}[t];
+  {const PT={montador:["Montador","Profissão, traços e o seu boneco"],builds:["Builds dos canais","16 builds de 7 canais, recalculadas na 42.21"],combos:["Time","Combos prontos: times de 2 a 6 que se completam"],esquadrao:["Time","Esquadrão: quem joga com qual build"],guia:["Sobrevivência","Rota dia a dia nas 6 cidades iniciais"],fab:["Fabricar","O que fazer primeiro e como"],aprender:["Aprender","TV, livros, plantio e animais"],mundo:["Mundo","Regras do servidor do grupo"],mods:["Mods","Os mais baixados da Oficina que rodam na B42"],grupo:["Time","Link do grupo: mundo, mods e time num link só"],sugestao:["Sugestões","Ideias, problemas e pedidos para a ficha"],refs:["Referências","Quem fez o conteúdo que usamos"]}[t];
    if(PT){$("pageTitle").textContent=PT[0];$("pageSub").textContent=PT[1];document.title=PT[0]+" · Evangeliteens · Ficha B42"}}
   if(t==="refs"&&!$("refsList").children.length)renderRefs();
   if(t==="guia"&&!mapReady){let k=null;try{k=localStorage.getItem("pzCidade")}catch(e){}if(k&&CIDADES[k]){cid=k;C=CIDADES[k]}drawMap();setStep(0,false)}
