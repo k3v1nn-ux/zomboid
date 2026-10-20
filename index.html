@@ -2644,6 +2644,11 @@ function renderSummary(){
   const sks=Object.entries(c.sk).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
   $("skills").innerHTML=sks.length?sks.map(([k,v])=>`<div class="skill"><span>${esc(k)}</span><span class="lv" aria-label="nível ${v}">${Array.from({length:Math.max(v,3)},(_,i)=>`<i class="${i<v?"on":""}"></i>`).join("")}<span class="mono" style="font-size:11px;margin-left:4px">${v}</span></span></div>`).join(""):'<span style="color:var(--muted);font-size:12.5px">Nenhuma perícia acima de 0.</span>';
   const w=[];
+  // Em Forma/Forte (e Atlético/Musculoso) aparecem sozinhos na ficha do jogo conforme Aptidão e Força: quem copia os ícones da ficha costuma marcar sem ter comprado
+  {const base=compute(state.prof,new Set([...state.sel].filter(id=>!["fit","stout","athletic","strong"].includes(id)))),auto=[];
+    if(state.sel.has("fit")&&base.fit>=6)auto.push("Em Forma");if(state.sel.has("stout")&&base.str>=6)auto.push("Forte");
+    if(state.sel.has("athletic")&&base.fit>=9)auto.push("Atlético");if(state.sel.has("strong")&&base.str>=9)auto.push("Musculoso");
+    if(auto.length)w.push(["",`${auto.join(" e ")}: a sua profissão já deixa Força ou Aptidão em ${Math.max(base.str,base.fit)}, e o jogo mostra esse traço sozinho na ficha do personagem (6 a 8 = Em Forma/Forte, 9 a 10 = Atlético/Musculoso). Se você copiou os traços da ficha, provavelmente não comprou: desmarque e o saldo volta.`])}
   if(c.saldo<0)w.push(["bad",`Faltam ${-c.saldo} ponto${c.saldo===-1?"":"s"}. Tire um positivo ou marque mais um negativo. Se no seu servidor essa build fecha, ele dá pontos extras: ajuste “Pontos extras do servidor” acima.`]);
   else if(c.saldo>0)w.push(["",`Sobram ${c.saldo} ponto${c.saldo===1?"":"s"}. Dá para pegar ${c.saldo>=4?"Herbalista ou Organizado":c.saldo>=2?"Andarilho ou um traço de 2":"Bom de Volante"}, ou deixar sobrando.`]);
   else w.push(["ok","Saldo zerado. Build válida para o jogo."]);
