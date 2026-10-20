@@ -641,6 +641,11 @@ img.pt:not([src]){background:linear-gradient(180deg,var(--surface2),transparent)
 .mkey span{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
 .mkey b{font-size:14px}
 .mkey .chg{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface))}
+/* pontos extras do servidor */
+.freept{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:10px 12px;border:1px dashed var(--line);border-radius:12px;background:var(--surface2)}
+.freept b{display:block;font-size:14px}.freept small{display:block;font-size:12.5px;color:var(--muted);line-height:1.35}
+.freept-c{display:flex;gap:4px;align-items:center}
+.freept-c input{width:56px;text-align:center;font:inherit;font-family:var(--f-mono);font-weight:700;padding:5px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
 /* foco geral, mod, canais */
 .sk-gen{border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:10px 12px}
 .sk-gen summary{cursor:pointer;font-weight:700}.sk-gen .vids{margin-top:10px}
@@ -885,6 +890,8 @@ section[aria-labelledby="hTraits"]>.sec-head{position:sticky;top:calc(env(safe-a
     <aside class="summary" aria-labelledby="hSum">
       <h2 id="hSum">Seu sobrevivente</h2>
       <div class="mt-box" id="myMeta"></div>
+      <div class="freept"><span><b>Pontos extras do servidor</b><small>Opção “Pontos Extras de Traços” do mundo. Se a build fecha no jogo e aqui não, o servidor dá pontos a mais.</small></span>
+        <span class="freept-c"><button type="button" class="btn sm" data-fp="-1" aria-label="Menos um ponto">−</button><input id="freePts" type="number" inputmode="numeric" min="-100" max="100" step="1" aria-label="Pontos extras do servidor"><button type="button" class="btn sm" data-fp="1" aria-label="Mais um ponto">+</button></span></div>
       <div class="ctx" id="myCtx"></div>
       <div class="hero3d" id="hero3d" aria-label="Boneco 3D do personagem. Arraste para girar."><span class="hero-hint">Arraste para girar · aponte um selo para ver o traço</span></div>
       <p class="hero-cues" id="heroCues"></p>
@@ -2517,7 +2524,8 @@ function profCost(p){return p.cost>0?fmtCost(p.cost,"spend"):p.cost<0?fmtCost(-p
 function skillLine(sk){return Object.entries(sk||{}).map(([k,v])=>k+" "+v).join(" · ")}
 // classificação da build: Meta = fecha, sem traço "Nunca" e com 5+ dos 7 obrigatórios do vídeo; Boa = 3 ou 4
 function metaTier(prof,sel){sel=sel instanceof Set?sel:new Set(sel);const c=compute(prof,sel),obr=Object.values(ALL).filter(t=>t.v==="obr"),has=obr.filter(t=>sel.has(t.id)),nun=Object.values(ALL).filter(t=>t.v==="nun"&&sel.has(t.id)),miss=obr.filter(t=>!sel.has(t.id)).map(t=>t.pt);
-  if(c.saldo<0)return{k:"nf",l:"Não fecha",w:"O saldo está negativo: o jogo não aceita."};
+  const fr=typeof groupFree==="function"?groupFree():0;
+  if(c.saldo+fr<0)return{k:"nf",l:"Não fecha",w:`O saldo fica em ${c.saldo+fr}${fr?` mesmo com os ${fr} pontos extras do servidor`:""}: o jogo não aceita. Se no seu servidor fecha, ajuste os pontos extras no Montador.`};
   if(nun.length)return{k:"fora",l:"Fora do meta",w:"Tem "+nun.map(t=>t.pt).join(", ")+", que os canais marcam como Nunca."};
   if(has.length>=5)return{k:"meta",l:"Meta",w:`Tem ${has.length} dos 7 obrigatórios`+(miss.length?` (falta ${miss.join(", ")})`:"")+"."};
   if(has.length>=3)return{k:"boa",l:"Boa",w:`Tem ${has.length} dos 7 obrigatórios. Falta ${miss.join(", ")}.`};
@@ -2626,6 +2634,7 @@ document.addEventListener("click",e=>{if(e.target.closest(".putme"))putMine()});
 function renderSummary(){
   {const t=metaTier(state.prof,state.sel);$("myMeta").innerHTML=`${metaBadge(state.prof,state.sel)}<span>${esc(t.w)}</span>`}
   const c0=compute(state.prof,state.sel),free=groupFree(),c={...c0,saldo:c0.saldo+free};renderCtx(c);
+  if(document.activeElement!==$("freePts"))$("freePts").value=free;
   $("saldoNum").textContent=c.saldo;$("saldo").title=free?`Inclui ${free>0?"+":""}${free} pontos extras do mundo do grupo (aba Mundo)`:"";
   $("saldo").className="saldo"+(c.saldo<0?" neg":c.saldo>0?" pos":"");
   $("sumNeg").textContent="+"+c.neg; $("sumPos").textContent="−"+c.pos;
@@ -2635,7 +2644,7 @@ function renderSummary(){
   const sks=Object.entries(c.sk).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0]));
   $("skills").innerHTML=sks.length?sks.map(([k,v])=>`<div class="skill"><span>${esc(k)}</span><span class="lv" aria-label="nível ${v}">${Array.from({length:Math.max(v,3)},(_,i)=>`<i class="${i<v?"on":""}"></i>`).join("")}<span class="mono" style="font-size:11px;margin-left:4px">${v}</span></span></div>`).join(""):'<span style="color:var(--muted);font-size:12.5px">Nenhuma perícia acima de 0.</span>';
   const w=[];
-  if(c.saldo<0)w.push(["bad",`Faltam ${-c.saldo} ponto${c.saldo===-1?"":"s"}. Tire um positivo ou marque mais um negativo. O jogo não deixa começar assim.`]);
+  if(c.saldo<0)w.push(["bad",`Faltam ${-c.saldo} ponto${c.saldo===-1?"":"s"}. Tire um positivo ou marque mais um negativo. Se no seu servidor essa build fecha, ele dá pontos extras: ajuste “Pontos extras do servidor” acima.`]);
   else if(c.saldo>0)w.push(["",`Sobram ${c.saldo} ponto${c.saldo===1?"":"s"}. Dá para pegar ${c.saldo>=4?"Herbalista ou Organizado":c.saldo>=2?"Andarilho ou um traço de 2":"Bom de Volante"}, ou deixar sobrando.`]);
   else w.push(["ok","Saldo zerado. Build válida para o jogo."]);
   if(!state.sel.has("keen_hearing"))w.push(["","Sem Audição Aguçada. O Shivas só passou de 1 ano de sobrevivência depois que começou a pegar (Laughter e OVERCHARGED EGG abrem mão dela para comprar atributo)."]);
@@ -2801,7 +2810,7 @@ function renderSlots(){
         <div style="display:grid;gap:5px;min-width:0"><span class="who">Jogador ${i+1} · <span class="src-tag">${esc(SRCL[m.src]||"Meta")}</span></span>
         <input class="pname" data-pn="${i}" value="${esc(m.who||"")}" placeholder="Nome de quem joga" maxlength="24" aria-label="Nome do jogador ${i+1}">
         <h3>${esc(m.nm)}</h3></div></div>
-      <div class="pf hint">${esc(c.p.pt)} · Força ${c.str} · Aptidão ${c.fit} · Saldo <span class="mono ${c.saldo<0?"bad-n":"ok-n"}">${c.saldo}</span> ${metaBadge(m.prof,sel)}</div>
+      <div class="pf hint">${esc(c.p.pt)} · Força ${c.str} · Aptidão ${c.fit} · Saldo <span class="mono ${c.saldo+groupFree()<0?"bad-n":"ok-n"}">${c.saldo+groupFree()}</span> ${metaBadge(m.prof,sel)}</div>
       <div class="rolesrow">${roleChips(rolesOf(m.prof,sel,m.lib))}</div>
       <select data-slot="${i}" aria-label="Trocar build da vaga ${i+1}">${opts}</select>
       <div class="imp" data-imp="${i}" hidden><input type="text" placeholder="Cole o link ou código" aria-label="Link ou código da build"><button class="btn sm" type="button" data-impok="${i}">Usar</button></div>
@@ -2838,7 +2847,7 @@ function renderMatrix(){
 function renderTeamWarns(rs){
   const w=[], ms=team.members, cs=ms.map(m=>compute(m.prof,new Set(m.sel))), nm=i=>ms[i].who||"J"+(i+1);
   const cover=id=>rs.some(s=>s.has(id));
-  const neg=cs.map((c,i)=>c.saldo<0?nm(i):0).filter(Boolean);
+  const neg=cs.map((c,i)=>c.saldo+groupFree()<0?nm(i):0).filter(Boolean);
   if(neg.length)w.push(["bad",`${neg.join(", ")} com saldo negativo. O jogo não deixa criar.`]);
   if(!cover("frente"))w.push(["bad","Ninguém na linha de frente. Alguém precisa limpar prédio e segurar porta."]);
   else if(rs.filter(s=>s.has("frente")).length===ms.length&&ms.length>2)w.push(["bad","Todo mundo é combatente. A wiki alerta: sem gerador e sem médico o time trava no 2º mês."]);
@@ -3350,6 +3359,10 @@ function applyCfg(){const h=document.documentElement;if(CFG.tema==="auto")h.remo
 applyCfg();
 $("btnTheme").addEventListener("click",()=>{const dark=CFG.tema==="dark"||(CFG.tema==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);CFG.tema=dark?"light":"dark";saveCfg();applyCfg()});
 {const t=$("notesT"),set=()=>{const on=CFG.notas==="todas";t.setAttribute("aria-pressed",on);$("traitsCols").classList.toggle("compact",!on)};set();t.addEventListener("click",()=>{CFG.notas=CFG.notas==="todas"?"sel":"todas";saveCfg();set()})}
+// pontos extras do servidor: o mesmo valor da aba Mundo (CharacterFreePoints)
+function setFree(n){n=Math.max(-100,Math.min(100,Math.round(+n||0)));mSet("CharacterFreePoints",n);saveMundo();renderSummary();if(typeof renderMundoRes==="function")try{renderMundo()}catch(e){}}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-fp]");if(b)setFree(groupFree()+ +b.dataset.fp)});
+$("freePts").addEventListener("change",e=>setFree(e.target.value));
 $("profFil").addEventListener("click",e=>{const b=e.target.closest("[data-pf]");if(b){profFilter=b.dataset.pf;renderProfs()}});
 $("introHide").addEventListener("click",()=>{CFG.intro="off";saveCfg();applyCfg()});
 $("introShow").addEventListener("click",()=>{CFG.intro="on";saveCfg();applyCfg()});
@@ -3421,7 +3434,7 @@ document.addEventListener("click",e=>{const b=e.target.closest(".linkbtn[data-go
 // ---------- LINK RECEBIDO ----------
 function showInbox(r){const box=$("inbox");
   if(r.kind==="build"){const rec=addRecv(r.b),c=compute(rec.prof,new Set(rec.sel));box.dataset.rid=rec.id;
-    box.innerHTML=`${ptImg(spec3d(rec.prof,rec.sel,rec.who||rec.id,rec.look),"lg")}<div><div class="sublbl">Você recebeu uma build</div><h3>${esc(rec.who?"Build de "+rec.who:"Build de um amigo")}</h3><div class="hint">${esc(PROF[rec.prof].pt)} · Força ${c.str} · Aptidão ${c.fit} · Saldo ${c.saldo}${c.saldo<0?" (não fecha no jogo)":""}</div>
+    box.innerHTML=`${ptImg(spec3d(rec.prof,rec.sel,rec.who||rec.id,rec.look),"lg")}<div><div class="sublbl">Você recebeu uma build</div><h3>${esc(rec.who?"Build de "+rec.who:"Build de um amigo")}</h3><div class="hint">${esc(PROF[rec.prof].pt)} · Força ${c.str} · Aptidão ${c.fit} · Saldo ${c.saldo+groupFree()}${c.saldo+groupFree()<0?" (não fecha: o servidor dá pontos extras? ajuste no Montador)":""}</div>
       <div class="acts"><button class="btn primary sm" type="button" data-ib="open">Ver no montador</button><button class="btn sm" type="button" data-ib="team">Pôr no meu esquadrão</button><button class="btn sm" type="button" data-ib="close">Fechar</button></div>
       <p class="hint" style="margin:4px 0 0">Ela ficou guardada em Esquadrão › Builds recebidas.</p></div>`}
   else{box._team=r.m;box.innerHTML=`<div class="ppl">${r.m.map(m=>ptImg(spec3d(m.prof,m.sel,m.who||m.lib||"",m.look),"sm")).join("")}</div><div><div class="sublbl">Você recebeu um esquadrão</div><h3>${r.m.length} jogadores${r.m.some(m=>m.who)?": "+esc(r.m.map(m=>m.who||"?").join(", ")):""}</h3>
